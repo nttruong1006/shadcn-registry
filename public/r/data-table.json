@@ -17,8 +17,7 @@
     "@radix-ui/react-separator",
     "@radix-ui/react-tooltip",
     "@radix-ui/react-popover",
-    "@radix-ui/react-select",
-    "lodash.debounce"
+    "@radix-ui/react-select"
   ],
   "registryDependencies": [
     "https://ntt-shadcn-registry.vercel.app/r/button.json",
@@ -37,7 +36,8 @@
     "https://ntt-shadcn-registry.vercel.app/r/tooltip.json",
     "https://ntt-shadcn-registry.vercel.app/r/loading-overlay.json",
     "https://ntt-shadcn-registry.vercel.app/r/popover.json",
-    "https://ntt-shadcn-registry.vercel.app/r/select.json"
+    "https://ntt-shadcn-registry.vercel.app/r/select.json",
+    "https://ntt-shadcn-registry.vercel.app/r/pagination.json"
   ],
   "files": [
     {
