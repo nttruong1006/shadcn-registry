@@ -16,7 +16,7 @@ export const DataTableCheckboxHeader = <TData extends RowData>({
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => {
           table.toggleAllPageRowsSelected(!!value)
-          table.options.meta?.onSetIsSelectAllRows?.(false)
+          table.options.meta?.setIsSelectAllRows?.(false)
         }}
         {...checkboxProps}
       />

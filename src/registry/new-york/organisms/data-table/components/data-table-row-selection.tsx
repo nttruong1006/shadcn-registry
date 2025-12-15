@@ -10,12 +10,11 @@ const DataTableRowSelection = <TData extends RowData>({ table }: Pick<DataTableP
   const rowCount = table.getRowCount()
   const rowSelectionLength = Object.keys(table.getState().rowSelection).length
   const pageRowCount = table.getPreFilteredRowModel().rows.length
-  const { isSelectAllRows, onSetIsSelectAllRows } = table.options.meta ?? {}
+  const { isSelectAllRows, setIsSelectAllRows } = table.options.meta ?? {}
 
   // Methods
-  // Handle toggle select all rows
-  const handleToggleSelectAllRows = () => {
-    onSetIsSelectAllRows?.((prev) => !prev)
+  const toggleSelectAllRows = () => {
+    setIsSelectAllRows?.((prev) => !prev)
     table.toggleAllPageRowsSelected(!isSelectAllRows)
   }
 
@@ -38,7 +37,7 @@ const DataTableRowSelection = <TData extends RowData>({ table }: Pick<DataTableP
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='outline' size='icon-sm' onClick={handleToggleSelectAllRows}>
+              <Button variant='outline' size='icon-sm' onClick={toggleSelectAllRows}>
                 <ListChecks />
               </Button>
             </TooltipTrigger>

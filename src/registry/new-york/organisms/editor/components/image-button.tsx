@@ -20,13 +20,13 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
-// [E] Form mode
+// Form mode
 export enum FormMode {
   Url = 'Url',
   Files = 'Files'
 }
 
-// [C] Image form schema
+// Image form schema
 export const imageFormSchema = z
   .object({
     mode: z.enum(FormMode),
@@ -69,14 +69,14 @@ export const imageFormSchema = z
     }
   })
 
-// [C] Default image form value
+// Default image form value
 export const defaultImageFormValue: z.input<typeof imageFormSchema> = {
   mode: FormMode.Url,
   url: '',
   files: []
 }
 
-// [C] File uploader dropzone options
+// File uploader dropzone options
 export const fileUploaderDropzoneOptions: DropzoneOptions = {
   maxFiles: 10,
   multiple: true,

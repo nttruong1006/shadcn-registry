@@ -18,7 +18,7 @@ export const DataTableCheckboxCell = <TData extends RowData>({
         checked={row.getIsSelected()}
         onCheckedChange={(value) => {
           row.toggleSelected(value as boolean)
-          table?.options.meta?.onSetIsSelectAllRows?.(false)
+          table?.options.meta?.setIsSelectAllRows?.(false)
         }}
         {...checkboxProps}
       />

@@ -13,8 +13,8 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/utils/ui'
 
-// [C] Text styles
-const TEXT_STYLES: Array<{
+// Text styles
+const textStyles: Array<{
   label: string
   level: Level | null
   shortcut: string
@@ -68,7 +68,7 @@ const TextStyleButton = React.memo(() => {
   })
 
   // Methods
-  const changeTextStyle = (textStyle: (typeof TEXT_STYLES)[number]) => {
+  const changeTextStyle = (textStyle: (typeof textStyles)[number]) => {
     const { level } = textStyle
     if (level) {
       editor?.chain().focus().toggleHeading({ level }).run()
@@ -94,7 +94,7 @@ const TextStyleButton = React.memo(() => {
       </Tooltip>
 
       <DropdownMenuContent>
-        {TEXT_STYLES.map((textStyle) => (
+        {textStyles.map((textStyle) => (
           <DropdownMenuItem
             key={textStyle.level}
             className={cn({

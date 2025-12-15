@@ -19,7 +19,11 @@
     "date-fns",
     "react-day-picker",
     "@radix-ui/react-label",
-    "@uidotdev/usehooks"
+    "@uidotdev/usehooks",
+    "@hookform/resolvers",
+    "zod",
+    "@radix-ui/react-toggle-group",
+    "@radix-ui/react-toggle"
   ],
   "registryDependencies": [
     "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
@@ -40,7 +44,9 @@
     "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
     "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
     "https://ntt-shadcn-registry.vercel.app/r/field.json",
-    "https://ntt-shadcn-registry.vercel.app/r/label.json"
+    "https://ntt-shadcn-registry.vercel.app/r/label.json",
+    "https://ntt-shadcn-registry.vercel.app/r/toggle-group.json",
+    "https://ntt-shadcn-registry.vercel.app/r/toggle.json"
   ],
   "files": [
     {

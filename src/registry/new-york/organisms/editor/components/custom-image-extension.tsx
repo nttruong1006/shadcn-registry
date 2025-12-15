@@ -16,23 +16,22 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/utils/ui'
 import { type Alignment, alignments, containerClassNamePerAlignment, minWidth } from './lib'
 
-// [T] Image attributes
+// Image attributes
 type ImageAttributes = Pick<React.ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'height' | 'src' | 'title' | 'width'> & {
   alignment: Alignment
   containerStyle: React.CSSProperties
 }
 
-// [T] Resizing position
+// Resizing position
 type ResizingPosition = 'left' | 'right'
 
-// [C] Base resize handler class name
+// Base resize handler class name
 const BASE_RESIZE_HANDLER_CLASS_NAME =
   'invisible absolute top-0 bottom-0 cursor-ew-resize px-2 transition-[visibility_width] group-hover:visible before:absolute before:top-1/2 before:h-1/2 before:max-h-36 before:w-1 before:-translate-y-1/2 before:rounded-md before:bg-muted before:border-muted-foreground before:content-[""]'
 
 // Component
-const ImageComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
+const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewProps<HTMLImageElement>) => {
   // Props
-  const { node, updateAttributes, deleteNode } = props
   const { alignment, containerStyle, ...imageAttributes } = node.attrs as ImageAttributes
 
   // Hooks

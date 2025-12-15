@@ -16,16 +16,16 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/utils/ui'
 import { type Alignment, alignments, containerClassNamePerAlignment, isValidYoutubeUrl, minWidth } from './lib'
 
-// [T] youtube attributes
+// Youtube attributes
 type YoutubeAttributes = React.IframeHTMLAttributes<HTMLIFrameElement> & {
   alignment: Alignment
   containerStyle: React.CSSProperties
 }
 
-// [C] Width sizes
+// Width sizes
 const widthSizes: string[] = ['25%', '50%', '75%', '100%']
 
-// [U] Get youtube embed url
+// Get youtube embed url
 export const getYoutubeEmbedUrl = (nocookie?: boolean, isPlaylist?: boolean) => {
   if (isPlaylist) {
     return 'https://www.youtube-nocookie.com/embed/videoseries?list='
@@ -33,7 +33,7 @@ export const getYoutubeEmbedUrl = (nocookie?: boolean, isPlaylist?: boolean) => 
   return nocookie ? 'https://www.youtube-nocookie.com/embed/' : 'https://www.youtube.com/embed/'
 }
 
-// [U] Get embed url from youtube url
+// Get embed url from youtube url
 const getEmbedUrlFromYoutubeUrl = (options: {
   url: string
   allowFullscreen?: boolean

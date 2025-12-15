@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/utils/ui'
 
-// [C] Link form schema
+// Link form schema
 const linkFormSchema = z.object({
   url: z
     .string()
@@ -29,7 +29,7 @@ const linkFormSchema = z.object({
   isOpenInNewTab: z.boolean()
 })
 
-// [C] Default link form value
+// Default link form value
 const defaultLinkFormValue: z.input<typeof linkFormSchema> = {
   url: '',
   displayText: '',

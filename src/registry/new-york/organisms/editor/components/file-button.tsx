@@ -20,17 +20,17 @@ import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
-// [C] File form schema
+// File form schema
 export const fileFormSchema = z.object({
   files: z.array(z.custom<File>()).min(1, 'Please select the file')
 })
 
-// [C]  Default file form value
+// Default file form value
 export const defaultFileFormValue: z.input<typeof fileFormSchema> = {
   files: []
 }
 
-// [C]  File uploader dropzone options
+// File uploader dropzone options
 export const fileUploaderDropzoneOptions: DropzoneOptions = {
   maxFiles: 10,
   multiple: true,

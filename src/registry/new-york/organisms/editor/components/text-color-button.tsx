@@ -8,8 +8,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 const ColorPickerButton = React.lazy(() => import('./color-picker-button'))
 
-// [C] Colors
-const COLORS: string[] = [
+// Colors
+const colors: string[] = [
   'oklch(0.27 0.01 34)',
   'oklch(0.27 0.01 286)',
   'oklch(0.28 0.04 260)',
@@ -74,7 +74,7 @@ const TextColorButton = React.memo(() => {
 
       <PopoverContent className='space-y-2'>
         <div className='grid grid-cols-5 gap-2'>
-          {COLORS.map((color) => (
+          {colors.map((color) => (
             <Button
               key={color}
               size='icon'

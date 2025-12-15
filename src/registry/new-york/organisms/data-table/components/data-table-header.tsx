@@ -11,8 +11,6 @@ const DataTableHeader = <TData extends RowData>({
   table,
   className
 }: Pick<DataTableProps<TData>, 'table'> & { className?: string }) => {
-  // const isGroupColumn = table.getAllColumns().length < table.getAllFlatColumns().length
-
   // Template
   return (
     <TableHeader className={cn('sticky top-0 z-20 bg-background', className)}>

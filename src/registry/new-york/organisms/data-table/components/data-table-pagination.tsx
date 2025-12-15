@@ -24,14 +24,10 @@ const DataTablePagination = <TData extends RowData>({
   // Methods
   // Change number input value
   const changeNumberInputValue = debounce((values: NumberFormatValues) => {
-    if (values.floatValue == null || values.floatValue < 1) {
-      return
-    }
-
+    if (values.floatValue == null || values.floatValue < 1) return
     if (values.floatValue > pageCount) {
       return table.setPageIndex(pageCount - 1)
     }
-
     return table.setPageIndex(values.floatValue - 1)
   }, 400)
 

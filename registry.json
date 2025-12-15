@@ -1408,7 +1408,10 @@
         "lodash.debounce",
         "react-number-format",
         "@radix-ui/react-separator",
-        "@radix-ui/react-tooltip"
+        "@radix-ui/react-tooltip",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-select",
+        "lodash.debounce"
       ],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/button.json",
@@ -1425,7 +1428,9 @@
         "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
         "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
         "https://ntt-shadcn-registry.vercel.app/r/tooltip.json",
-        "https://ntt-shadcn-registry.vercel.app/r/loading-overlay.json"
+        "https://ntt-shadcn-registry.vercel.app/r/loading-overlay.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
+        "https://ntt-shadcn-registry.vercel.app/r/select.json"
       ]
     },
     {
@@ -1589,16 +1594,21 @@
         "@radix-ui/react-slot",
         "class-variance-authority",
         "@tiptap/react",
+        "@tiptap/extension-image",
+        "@tiptap/extension-youtube",
+        "@tiptap/extension-color",
+        "@tiptap/extension-highlight",
+        "@tiptap/extension-list",
+        "@tiptap/extensions",
+        "@tiptap/starter-kit",
         "lucide-react",
         "@radix-ui/react-slider",
         "color",
         "@radix-ui/react-select",
         "@radix-ui/react-popover",
         "@radix-ui/react-tooltip",
-        "@tiptap/extension-image",
         "@radix-ui/react-dropdown-menu",
         "@radix-ui/react-separator",
-        "@tiptap/extension-youtube",
         "html-react-parser",
         "lodash.throttle",
         "@hookform/resolvers",
@@ -1687,7 +1697,11 @@
         "date-fns",
         "react-day-picker",
         "@radix-ui/react-label",
-        "@uidotdev/usehooks"
+        "@uidotdev/usehooks",
+        "@hookform/resolvers",
+        "zod",
+        "@radix-ui/react-toggle-group",
+        "@radix-ui/react-toggle"
       ],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
@@ -1708,7 +1722,9 @@
         "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
         "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
         "https://ntt-shadcn-registry.vercel.app/r/field.json",
-        "https://ntt-shadcn-registry.vercel.app/r/label.json"
+        "https://ntt-shadcn-registry.vercel.app/r/label.json",
+        "https://ntt-shadcn-registry.vercel.app/r/toggle-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/toggle.json"
       ]
     },
     {
@@ -1893,7 +1909,9 @@
         "https://ntt-shadcn-registry.vercel.app/r/kbd.json",
         "https://ntt-shadcn-registry.vercel.app/r/field.json",
         "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
-        "https://ntt-shadcn-registry.vercel.app/r/combobox.json"
+        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/autocomplete.json",
+        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json"
       ]
     }
   ]

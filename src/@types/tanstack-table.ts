@@ -4,7 +4,7 @@ declare module '@tanstack/react-table' {
   // @ts-expect-error
   interface TableMeta {
     isSelectAllRows?: boolean
-    onSetIsSelectAllRows?: Dispatch<SetStateAction<boolean>>
+    setIsSelectAllRows?: Dispatch<SetStateAction<boolean>>
   }
 
   // @ts-expect-error

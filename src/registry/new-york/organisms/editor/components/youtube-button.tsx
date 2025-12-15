@@ -12,8 +12,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import type { CallbackRef, SetExtensions } from './editor'
 import { isValidYoutubeUrl, minWidth } from './lib'
 
-// [C] Youtube form schema
-const YOUTUBE_FORM_SCHEMA = z.object({
+// Youtube form schema
+const youtubeFormSchema = z.object({
   url: z
     .string()
     .trim()
@@ -21,8 +21,8 @@ const YOUTUBE_FORM_SCHEMA = z.object({
     .refine((value) => isValidYoutubeUrl(value), 'URL is invalid')
 })
 
-// [C] Default youtube form value
-const DEFAULT_YOUTUBE_FORM_VALUE: z.input<typeof YOUTUBE_FORM_SCHEMA> = {
+// Default youtube form value
+const defaultYoutubeFormValue: z.input<typeof youtubeFormSchema> = {
   url: ''
 }
 
@@ -44,12 +44,12 @@ const YoutubeButton = React.memo<{
 
   // Form
   const youtubeForm = useForm({
-    resolver: zodResolver(YOUTUBE_FORM_SCHEMA),
-    defaultValues: DEFAULT_YOUTUBE_FORM_VALUE
+    resolver: zodResolver(youtubeFormSchema),
+    defaultValues: defaultYoutubeFormValue
   })
 
   // Methods
-  const insertYoutubeNode = (fieldValues: z.output<typeof YOUTUBE_FORM_SCHEMA>) => {
+  const insertYoutubeNode = (fieldValues: z.output<typeof youtubeFormSchema>) => {
     const callback: CallbackRef['current'] = (editor) => {
       editor
         ?.chain()

@@ -9,13 +9,13 @@ import type React from 'react'
 import CustomImageExtension from './custom-image-extension'
 import FileExtension from './file-extension'
 
-// [T] Alignment
+// Alignment
 export type Alignment = 'left' | 'center' | 'right' | 'justify'
 
-// [C] Min width
+// Min width
 export const minWidth = 320
 
-// [C] Default extensions
+// Default extensions
 export const defaultExtensions = [
   StarterKit.configure({
     heading: {
@@ -89,7 +89,7 @@ export const defaultExtensions = [
   // })
 ]
 
-// [C] Container class name per alignment
+// Container class name per alignment
 export const containerClassNamePerAlignment: Record<Alignment, string> = {
   left: 'justify-start',
   center: 'justify-center',
@@ -97,7 +97,7 @@ export const containerClassNamePerAlignment: Record<Alignment, string> = {
   justify: 'justify-stretch'
 }
 
-// [C] Alignments
+// Alignments
 export const alignments: Array<{
   value: Alignment
   icon: React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>
@@ -130,7 +130,7 @@ export const alignments: Array<{
   }
 ]
 
-// [U] Get editor value
+// Get editor value
 export const getEditorValue = (editor: Editor, format: 'html' | 'json' | 'text'): object | string => {
   switch (format) {
     case 'json':
@@ -142,7 +142,7 @@ export const getEditorValue = (editor: Editor, format: 'html' | 'json' | 'text')
   }
 }
 
-// [U] Is valid youtube url
+// Is valid youtube url
 export const isValidYoutubeUrl = (url: string) => {
   return url.match(
     /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu\.be|youtube-nocookie\.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/

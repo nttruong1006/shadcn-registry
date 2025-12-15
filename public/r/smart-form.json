@@ -59,7 +59,9 @@
     "https://ntt-shadcn-registry.vercel.app/r/kbd.json",
     "https://ntt-shadcn-registry.vercel.app/r/field.json",
     "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
-    "https://ntt-shadcn-registry.vercel.app/r/combobox.json"
+    "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+    "https://ntt-shadcn-registry.vercel.app/r/autocomplete.json",
+    "https://ntt-shadcn-registry.vercel.app/r/date-picker.json"
   ],
   "files": [
     {
