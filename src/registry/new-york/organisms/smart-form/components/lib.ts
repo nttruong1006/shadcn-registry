@@ -8,7 +8,7 @@ import type { NumberInputProps } from '@/components/molecules/number-input'
 import type { DatePickerProps } from '@/components/ui/date-picker'
 import type { Option } from '@/types/base'
 
-// [T] Smart form data
+// Smart form data
 export interface SmartFormData {
   code: string
   templates: Array<{
@@ -101,20 +101,20 @@ export interface SmartFormData {
   }>
 }
 
-// [T] Smart form field data
+// Smart form field data
 export type SmartFormFieldData = SmartFormData['templates'][number]['fields'][number]
 
-// [T] Smart form field type
+// Smart form field type
 export type SmartFormFieldType = SmartFormData['templates'][number]['fields'][number]['type']
 
-// [T] Schema options
+// Schema options
 export type SchemaOptions<T = FieldValues> = {
   hiddenFields?: Record<string, boolean | undefined>
   slots?: Record<string, z.ZodTypeAny>
   refinement?: (arg: T, ctx: z.core.$RefinementCtx<T>) => void | Promise<void>
 }
 
-// [T] Smart form props
+// Smart form props
 export interface SmartFormProps {
   form: UseFormReturn
   formData: SmartFormData
@@ -131,7 +131,7 @@ export interface SmartFormProps {
   submit?: (fieldValues: FieldValues) => void | Promise<void>
 }
 
-// [C] Default field values
+// Default field values
 export const defaultFieldValues: Record<SmartFormFieldType, string | number | boolean | null | string[]> = {
   input: '', // string
   textarea: '', // string
@@ -157,7 +157,7 @@ export const defaultFieldValues: Record<SmartFormFieldType, string | number | bo
   slot: null
 } as const
 
-// [U] Get default form value
+// Get default form value
 export const getDefaultFormValue = (formData: SmartFormData, slots?: FieldValues) => {
   const defaultValues: FieldValues = {}
   formData.templates.forEach((template) => {
@@ -174,7 +174,7 @@ export const getDefaultFormValue = (formData: SmartFormData, slots?: FieldValues
   return defaultValues
 }
 
-// [U] Get form schema
+// Get form schema
 export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOptions) => {
   const shape: Record<string, ZodType> = {}
 

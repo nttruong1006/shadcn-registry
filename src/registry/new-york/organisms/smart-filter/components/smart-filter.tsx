@@ -107,18 +107,17 @@ export const SmartFilter = ({
             <div className='flex items-center gap-2'>
               <ToggleGroup
                 type='single'
-                size='lg'
                 variant='outline'
                 value={mode}
                 className='data-[variant=outline]:shadow-none'
                 onValueChange={changeMode}
               >
                 <ToggleGroupItem value={Mode.BasicSearch}>
-                  <Search className='size-4' />
+                  <Search />
                 </ToggleGroupItem>
 
                 <ToggleGroupItem value={Mode.AdvancedFilter}>
-                  <ListFilter className='size-4' />
+                  <ListFilter />
                 </ToggleGroupItem>
               </ToggleGroup>
 
