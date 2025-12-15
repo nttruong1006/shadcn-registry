@@ -30,6 +30,7 @@
     "@radix-ui/react-dropdown-menu",
     "html-react-parser",
     "lodash.throttle",
+    "@types/lodash.throttle",
     "@hookform/resolvers",
     "react-dropzone",
     "react-hook-form",

@@ -1601,6 +1601,10 @@
         "@tiptap/extension-list",
         "@tiptap/extensions",
         "@tiptap/starter-kit",
+        "@tiptap/extension-heading",
+        "@tiptap/extension-table",
+        "@tiptap/extension-text-align",
+        "@tiptap/pm",
         "lucide-react",
         "@radix-ui/react-slider",
         "color",
@@ -1611,6 +1615,7 @@
         "@radix-ui/react-separator",
         "html-react-parser",
         "lodash.throttle",
+        "@types/lodash.throttle",
         "@hookform/resolvers",
         "react-dropzone",
         "react-hook-form",
@@ -1618,7 +1623,9 @@
         "zod",
         "@radix-ui/react-label",
         "@radix-ui/react-tabs",
-        "motion"
+        "motion",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-dialog"
       ],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/button.json",
@@ -1632,7 +1639,12 @@
         "https://ntt-shadcn-registry.vercel.app/r/skeleton.json",
         "https://ntt-shadcn-registry.vercel.app/r/label.json",
         "https://ntt-shadcn-registry.vercel.app/r/tooltip.json",
-        "https://ntt-shadcn-registry.vercel.app/r/kbd.json"
+        "https://ntt-shadcn-registry.vercel.app/r/kbd.json",
+        "https://ntt-shadcn-registry.vercel.app/r/file-upload.json",
+        "https://ntt-shadcn-registry.vercel.app/r/field.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tabs.json",
+        "https://ntt-shadcn-registry.vercel.app/r/checkbox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dialog.json"
       ]
     },
     {
@@ -1880,6 +1892,7 @@
         "@radix-ui/react-dropdown-menu",
         "html-react-parser",
         "lodash.throttle",
+        "@types/lodash.throttle",
         "@hookform/resolvers",
         "react-dropzone",
         "react-hook-form",
