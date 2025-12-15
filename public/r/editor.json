@@ -134,10 +134,10 @@
       "target": "src/components/organisms/editor/image-button.tsx"
     },
     {
-      "path": "src/registry/new-york/organisms/editor/components/index.ts",
+      "path": "src/registry/new-york/organisms/editor/components/index.tsx",
       "content": "export * from './editor'\nexport * from './editor-content'\nexport * from './lib'\n",
       "type": "registry:file",
-      "target": "src/components/organisms/editor/index.ts"
+      "target": "src/components/organisms/editor/index.tsx"
     },
     {
       "path": "src/registry/new-york/organisms/editor/components/internal-editor-content.tsx",

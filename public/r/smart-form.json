@@ -130,10 +130,10 @@
       "target": "src/components/organisms/smart-form/file-field.tsx"
     },
     {
-      "path": "src/registry/new-york/organisms/smart-form/components/index.ts",
+      "path": "src/registry/new-york/organisms/smart-form/components/index.tsx",
       "content": "export * from './lib'\nexport * from './smart-form'\n",
       "type": "registry:file",
-      "target": "src/components/organisms/smart-form/index.ts"
+      "target": "src/components/organisms/smart-form/index.tsx"
     },
     {
       "path": "src/registry/new-york/organisms/smart-form/components/input-field.tsx",

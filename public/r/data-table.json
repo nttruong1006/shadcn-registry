@@ -13,6 +13,7 @@
     "cmdk",
     "@radix-ui/react-dialog",
     "lodash.debounce",
+    "@types/lodash.debounce",
     "react-number-format",
     "@radix-ui/react-separator",
     "@radix-ui/react-tooltip",
@@ -119,10 +120,10 @@
       "target": "src/@types/tanstack-table.ts"
     },
     {
-      "path": "src/registry/new-york/organisms/data-table/components/index.ts",
+      "path": "src/registry/new-york/organisms/data-table/components/index.tsx",
       "content": "export * from './data-table'\nexport * from './data-table-action-cell'\nexport * from './data-table-checkbox-cell'\nexport * from './data-table-checkbox-header'\nexport * from './data-table-column-visibility-selection'\nexport * from './lib'\n",
       "type": "registry:file",
-      "target": "src/components/organisms/data-table/index.ts"
+      "target": "src/components/organisms/data-table/index.tsx"
     },
     {
       "path": "src/registry/new-york/organisms/data-table/components/lib.ts",

@@ -976,14 +976,14 @@
           "target": "src/components/molecules/file-upload/file-upload.tsx"
         },
         {
+          "path": "src/registry/new-york/molecules/file-upload/components/index.tsx",
+          "type": "registry:file",
+          "target": "src/components/molecules/file-upload/index.tsx"
+        },
+        {
           "path": "src/registry/new-york/molecules/file-upload/components/lib.ts",
           "type": "registry:file",
           "target": "src/components/molecules/file-upload/lib.ts"
-        },
-        {
-          "path": "src/registry/new-york/molecules/file-upload/components/index.ts",
-          "type": "registry:file",
-          "target": "src/components/molecules/file-upload/index.ts"
         }
       ],
       "dependencies": [
@@ -1240,6 +1240,11 @@
       "description": "A button to toggle the theme.",
       "files": [
         {
+          "path": "src/registry/new-york/molecules/theme-toggle-button/components/index.tsx",
+          "type": "registry:file",
+          "target": "src/components/molecules/theme-toggle-button/index.tsx"
+        },
+        {
           "path": "src/registry/new-york/molecules/theme-toggle-button/components/theme-toggle-button.tsx",
           "type": "registry:ui",
           "target": "src/components/molecules/theme-toggle-button/theme-toggle-button.tsx"
@@ -1248,11 +1253,6 @@
           "path": "src/registry/new-york/molecules/theme-toggle-button/components/lib.ts",
           "type": "registry:file",
           "target": "src/components/molecules/theme-toggle-button/lib.ts"
-        },
-        {
-          "path": "src/registry/new-york/molecules/theme-toggle-button/components/index.ts",
-          "type": "registry:file",
-          "target": "src/components/molecules/theme-toggle-button/index.ts"
         }
       ],
       "dependencies": [
@@ -1387,9 +1387,9 @@
           "target": "src/@types/tanstack-table.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/data-table/components/index.ts",
+          "path": "src/registry/new-york/organisms/data-table/components/index.tsx",
           "type": "registry:file",
-          "target": "src/components/organisms/data-table/index.ts"
+          "target": "src/components/organisms/data-table/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/data-table/components/lib.ts",
@@ -1406,6 +1406,7 @@
         "cmdk",
         "@radix-ui/react-dialog",
         "lodash.debounce",
+        "@types/lodash.debounce",
         "react-number-format",
         "@radix-ui/react-separator",
         "@radix-ui/react-tooltip",
@@ -1500,9 +1501,9 @@
           "target": "src/components/organisms/editor/image-button.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/editor/components/index.ts",
+          "path": "src/registry/new-york/organisms/editor/components/index.tsx",
           "type": "registry:file",
-          "target": "src/components/organisms/editor/index.ts"
+          "target": "src/components/organisms/editor/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/editor/components/internal-editor-content.tsx",
@@ -1679,9 +1680,9 @@
           "target": "src/components/organisms/smart-filter/basic-search.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/index.ts",
+          "path": "src/registry/new-york/organisms/smart-filter/components/index.tsx",
           "type": "registry:file",
-          "target": "src/components/organisms/smart-filter/index.ts"
+          "target": "src/components/organisms/smart-filter/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-filter/components/lib.ts",
@@ -1791,9 +1792,9 @@
           "target": "src/components/organisms/smart-form/file-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/index.ts",
+          "path": "src/registry/new-york/organisms/smart-form/components/index.tsx",
           "type": "registry:file",
-          "target": "src/components/organisms/smart-form/index.ts"
+          "target": "src/components/organisms/smart-form/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-form/components/input-field.tsx",

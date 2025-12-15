@@ -80,10 +80,10 @@
       "target": "src/components/organisms/smart-filter/basic-search.tsx"
     },
     {
-      "path": "src/registry/new-york/organisms/smart-filter/components/index.ts",
+      "path": "src/registry/new-york/organisms/smart-filter/components/index.tsx",
       "content": "export * from './lib'\nexport * from './smart-filter'\n",
       "type": "registry:file",
-      "target": "src/components/organisms/smart-filter/index.ts"
+      "target": "src/components/organisms/smart-filter/index.tsx"
     },
     {
       "path": "src/registry/new-york/organisms/smart-filter/components/lib.ts",

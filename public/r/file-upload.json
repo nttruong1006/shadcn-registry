@@ -24,16 +24,16 @@
       "target": "src/components/molecules/file-upload/file-upload.tsx"
     },
     {
+      "path": "src/registry/new-york/molecules/file-upload/components/index.tsx",
+      "content": "export * from './file-upload'\nexport * from './lib'\n",
+      "type": "registry:file",
+      "target": "src/components/molecules/file-upload/index.tsx"
+    },
+    {
       "path": "src/registry/new-york/molecules/file-upload/components/lib.ts",
       "content": "import React from 'react'\nimport { toast } from 'sonner'\n\n// [T] Uploaded file\nexport interface UploadedFile {\n  id: string\n  path: string\n  original: string\n  mime: string\n  compress_info: Record<\n    string,\n    {\n      ext: string\n      size: number\n    }\n  >\n}\n\n// [U] Get file\nexport const getFileUrl = (path: string) => {\n  if (path.startsWith('https')) {\n    return path\n  }\n  return `${path}`\n}\n\n// [U] Get size text\nexport const getSizeText = (size: number) => {\n  return size < 1024 * 1024 ? `${(size / 1024).toFixed(2)}Kb` : `${(size / 1024 / 1024).toFixed(2)}MB`\n}\n\n// [H] Use file upload\nexport const useFileUpload = (args?: { isThrowError?: boolean }) => {\n  // Args\n  const { isThrowError = false } = args ?? {}\n\n  // Methods\n  const uploadFile = React.useCallback(\n    async (file: File): Promise<UploadedFile | null> => {\n      try {\n        console.log(file)\n        // Mutate\n\n        // Extract response and return value\n        return null\n      } catch {\n        if (isThrowError) {\n          throw new Error('An error occurred when upload the file')\n        }\n        toast.error('Failure', {\n          description: 'An error occurred when upload the file'\n        })\n        return null\n      }\n    },\n    [isThrowError]\n  )\n\n  return {\n    uploadFile,\n    isUploadFilePending: false\n  }\n}\n",
       "type": "registry:file",
       "target": "src/components/molecules/file-upload/lib.ts"
-    },
-    {
-      "path": "src/registry/new-york/molecules/file-upload/components/index.ts",
-      "content": "export * from './file-upload'\nexport * from './lib'\n",
-      "type": "registry:file",
-      "target": "src/components/molecules/file-upload/index.ts"
     }
   ]
 }
