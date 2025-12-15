@@ -1866,14 +1866,18 @@
         "date-fns",
         "react-day-picker",
         "@tiptap/react",
+        "@tiptap/extension-image",
+        "@tiptap/extension-youtube",
+        "@tiptap/extension-highlight",
+        "@tiptap/extension-list",
+        "@tiptap/extensions",
+        "@tiptap/starter-kit",
         "@radix-ui/react-slider",
         "color",
         "@radix-ui/react-select",
         "@radix-ui/react-popover",
         "@radix-ui/react-tooltip",
-        "@tiptap/extension-image",
         "@radix-ui/react-dropdown-menu",
-        "@tiptap/extension-youtube",
         "html-react-parser",
         "lodash.throttle",
         "@hookform/resolvers",
@@ -1911,7 +1915,13 @@
         "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
         "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
         "https://ntt-shadcn-registry.vercel.app/r/autocomplete.json",
-        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json"
+        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/editor.json",
+        "https://ntt-shadcn-registry.vercel.app/r/file-upload.json",
+        "https://ntt-shadcn-registry.vercel.app/r/number-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/password-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/phone-number-input.json"
       ]
     }
   ]
