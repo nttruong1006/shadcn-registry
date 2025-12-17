@@ -1747,14 +1747,59 @@
       "description": "Entire form component with dynamic fields render on top of the configuration.",
       "files": [
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/autocomplete-with-infinite-query-field.tsx",
-          "type": "registry:ui",
-          "target": "src/components/organisms/smart-form/autocomplete-with-infinite-query-field.tsx"
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/base.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/base.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/dependency.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/dependency.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/index.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/index.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/query.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/query.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schema.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schema.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/value.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/value.ts"
         },
         {
           "path": "src/types/base.ts",
           "type": "registry:file",
           "target": "src/types/base.ts"
+        },
+        {
+          "path": "src/types/api.ts",
+          "type": "registry:file",
+          "target": "src/types/api.ts"
+        },
+        {
+          "path": "src/lib/axios.ts",
+          "type": "registry:file",
+          "target": "src/lib/axios.ts"
+        },
+        {
+          "path": "src/lib/tanstack-query.ts",
+          "type": "registry:file",
+          "target": "src/lib/tanstack-query.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/autocomplete-with-infinite-query-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-form/autocomplete-with-infinite-query-field.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-form/components/autocomplete-with-options-field.tsx",
@@ -1800,11 +1845,6 @@
           "path": "src/registry/new-york/organisms/smart-form/components/input-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/input-field.tsx"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/lib.ts"
         },
         {
           "path": "src/registry/new-york/organisms/smart-form/components/multi-file-field.tsx",
@@ -1903,7 +1943,9 @@
         "@radix-ui/react-tabs",
         "motion",
         "react-phone-number-input",
-        "react-number-format"
+        "react-number-format",
+        "@uidotdev/usehooks",
+        "@tanstack/react-query"
       ],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/multi-select.json",
