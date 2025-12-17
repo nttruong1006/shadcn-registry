@@ -1,0 +1,54 @@
+---
+title: Animated Testimonial
+description: Minimal testimonials with clean, modern design.
+---
+
+import CodePreview from '@/components/molecules/code-preview/index.astro'
+import InstallationCard from '@/components/molecules/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/molecules/shadcn-link-button/index.astro'
+import { Badge } from '@/components/ui/badge'
+import { ArrowUpRight } from 'lucide-react'
+import DocLinkButton from '@/components/molecules/doc-link-button/index.astro'
+
+<DocLinkButton link='https://www.scrollxui.dev/docs/components/animated-testimonials'  />
+
+<CodePreview path='molecules/animated-testimonial/demo' />
+
+## Installation
+
+<InstallationCard registryName='animated-testimonial' />
+
+###### Add these animations to `global.css`
+```css
+--animate-canopy-horizontal: canopy-x var(--transition-duration) linear infinite;
+--animate-canopy-vertical: canopy-y var(--transition-duration) linear infinite;
+
+@keyframes canopy-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes canopy-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+```
+
+## Usage
+
+```tsx
+import { AnimatedText } from '@/components/molecules/animated-testimonial'
+```
+
+```tsx
+// Template
+<AnimatedText text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
+```

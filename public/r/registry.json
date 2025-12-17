@@ -887,6 +887,19 @@
       ]
     },
     {
+      "name": "animated-testimonial",
+      "type": "registry:component",
+      "title": "Animated Testimonial",
+      "description": "Minimal testimonials with clean, modern design.",
+      "files": [
+        {
+          "path": "src/registry/new-york/molecules/animated-testimonial/components/animated-testimonial.tsx",
+          "type": "registry:ui",
+          "target": "src/components/molecules/animated-testimonial/index.tsx"
+        }
+      ]
+    },
+    {
       "name": "animated-text",
       "type": "registry:component",
       "title": "Animated text",

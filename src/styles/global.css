@@ -46,6 +46,27 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --color-code: var(--code);
+
+  --animate-canopy-horizontal: canopy-x var(--transition-duration) linear infinite;
+  --animate-canopy-vertical: canopy-y var(--transition-duration) linear infinite;
+
+  @keyframes canopy-x {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes canopy-y {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
 }
 
 :root {
