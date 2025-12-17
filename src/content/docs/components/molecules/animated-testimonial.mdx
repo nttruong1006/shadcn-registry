@@ -18,7 +18,7 @@ import DocLinkButton from '@/components/molecules/doc-link-button/index.astro'
 
 <InstallationCard registryName='animated-testimonial' />
 
-###### Add these animations to `global.css`
+###### Add these animations to `global.css` `theme`
 ```css
 --animate-canopy-horizontal: canopy-x var(--transition-duration) linear infinite;
 --animate-canopy-vertical: canopy-y var(--transition-duration) linear infinite;
@@ -45,10 +45,25 @@ import DocLinkButton from '@/components/molecules/doc-link-button/index.astro'
 ## Usage
 
 ```tsx
-import { AnimatedText } from '@/components/molecules/animated-testimonial'
+import {
+  AnimatedTestimonial,
+  AnimatedTestimonialCanopy,
+  AnimatedTestimonialCard
+} from '@/components/molecules/animated-testimonial'
 ```
 
 ```tsx
-// Template
-<AnimatedText text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
+<AnimatedTestimonial>
+  <AnimatedTestimonialCanopy isPauseOnHover isApplyMask maskClassName='rounded-md' className='py-4'>
+    {Array.from({ length: 20 }).map((_, index) => (
+      <AnimatedTestimonialCard
+        // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+        key={index}
+        className='flex size-20 items-center justify-center rounded-md bg-primary text-primary-foreground'
+      >
+        {index + 1}
+      </AnimatedTestimonialCard>
+    ))}
+  </AnimatedTestimonialCanopy>
+</AnimatedTestimonial>
 ```
