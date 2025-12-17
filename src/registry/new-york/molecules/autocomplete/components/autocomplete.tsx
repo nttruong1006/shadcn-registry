@@ -88,40 +88,37 @@ export const Autocomplete = ({
           <PopoverContent
             align='start'
             className={cn(
-              'min-w-(--radix-popover-trigger-width) border-0 p-0 has-[[cmdk-group-items]:not(:empty)]:border'
+              'min-w-(--radix-popover-trigger-width) border-0 p-0 has-[[cmdk-group-items]:not(:empty)]:border',
+              {
+                hidden: options.length === 0
+              }
             )}
             onOpenAutoFocus={openAuto}
             onInteractOutside={interactOutside}
           >
             {isOpenPopover ? (
-              isLoading ? (
-                <div className='p-4'>
-                  <Spinner className='mx-auto' />
-                </div>
-              ) : (
-                <CommandList {...commandListProps}>
-                  <CommandGroup>
-                    {options.map((option) => {
-                      const optionValue = isValueAsLabel ? option.label : option.value
-                      const isSelected = optionValue === value
+              <CommandList {...commandListProps}>
+                <CommandGroup>
+                  {options.map((option) => {
+                    const optionValue = isValueAsLabel ? option.label : option.value
+                    const isSelected = optionValue === value
 
-                      return (
-                        <CommandItem
-                          key={option.value}
-                          value={option.label}
-                          className='group/selected'
-                          onSelect={() => onValueChange(optionValue)}
-                        >
-                          {option.label}
-                          <Check className={cn('ml-auto size-4', isSelected ? 'visible' : 'invisible')} />
-                        </CommandItem>
-                      )
-                    })}
+                    return (
+                      <CommandItem
+                        key={option.value}
+                        value={option.label}
+                        className='group/selected'
+                        onSelect={() => onValueChange(optionValue)}
+                      >
+                        {option.label}
+                        <Check className={cn('ml-auto size-4', isSelected ? 'visible' : 'invisible')} />
+                      </CommandItem>
+                    )
+                  })}
 
-                    {commandGroupSlot && commandGroupSlot}
-                  </CommandGroup>
-                </CommandList>
-              )
+                  {commandGroupSlot && commandGroupSlot}
+                </CommandGroup>
+              </CommandList>
             ) : null}
           </PopoverContent>
         </Command>

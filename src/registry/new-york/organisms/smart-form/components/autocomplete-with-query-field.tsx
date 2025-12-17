@@ -1,29 +1,26 @@
-import React from 'react'
-import { MultiSelect } from '@/components/molecules/multi-select'
-import type { Option } from '@/types/base'
+import { Autocomplete } from '@/components/molecules/autocomplete'
 import FieldContainer, { type FieldProps } from './field-container'
+import { useOptionsQuery } from './lib'
 
 // Component
 const AutocompleteWithQueryField = ({ fieldData, disabledFields }: FieldProps) => {
-  // Todo: fetch query and extract options
-
-  // Memos
-  const options = React.useMemo<Option[]>(() => {
-    return []
-  }, [])
+  // Hooks
+  const { optionsQuery, options } = useOptionsQuery({ fieldData })
 
   // Template
   return (
     <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
-      {({ field }) => (
-        <MultiSelect
+      {({ field, fieldState }) => (
+        <Autocomplete
           {...field}
           options={options}
-          placeholder={`Select ${fieldData.label.toLowerCase()}`}
-          buttonTriggerProps={{
+          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
+          inputProps={{
             id: fieldData.code,
-            disabled: disabledFields?.[fieldData.code]
+            disabled: disabledFields?.[fieldData.code],
+            'aria-invalid': fieldState.invalid
           }}
+          isLoading={optionsQuery.isFetching}
           onValueChange={field.onChange}
         />
       )}

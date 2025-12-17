@@ -1,7 +1,7 @@
 import { Controller, type ControllerProps, type FieldPath, type FieldValues, useFormContext } from 'react-hook-form'
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field'
 import { cn } from '@/utils/ui'
-import type { SmartFormFieldData, SmartFormProps } from './lib'
+import type { DependentGraph, SmartFormData, SmartFormFieldData, SmartFormProps } from './lib'
 
 export type FieldContainerProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -17,7 +17,10 @@ export type FieldContainerProps<
   ) => React.ReactNode
 }
 
-export type FieldProps = Omit<FieldContainerProps, 'children'>
+export type FieldProps = Omit<FieldContainerProps, 'children'> & {
+  formData: SmartFormData
+  dependentGraphRef: React.RefObject<DependentGraph | null>
+}
 
 // Component
 const FieldContainer = <

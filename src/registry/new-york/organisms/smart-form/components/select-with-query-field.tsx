@@ -1,16 +1,13 @@
-import React from 'react'
+import { useFormContext } from 'react-hook-form'
 import { Combobox } from '@/components/ui/combobox'
-import type { Option } from '@/types/base'
 import FieldContainer, { type FieldProps } from './field-container'
+import { buildDependentGraph, getAllDependents, useOptionsQuery } from './lib'
 
 // Component
-const SelectWithQueryField = ({ fieldData, disabledFields }: FieldProps) => {
-  // Todo: fetch query and extract options
-
-  // Memos
-  const options = React.useMemo<Option[]>(() => {
-    return []
-  }, [])
+const SelectWithQueryField = ({ formData, dependentGraphRef, fieldData, disabledFields }: FieldProps) => {
+  // Hooks
+  const { formState, setValue } = useFormContext()
+  const { optionsQuery, options } = useOptionsQuery({ fieldData })
 
   // Template
   return (
@@ -22,9 +19,24 @@ const SelectWithQueryField = ({ fieldData, disabledFields }: FieldProps) => {
           placeholder={`Select ${fieldData.label.toLowerCase()}`}
           buttonTriggerProps={{
             id: fieldData.code,
-            disabled: disabledFields?.[fieldData.code]
+            disabled: disabledFields?.[fieldData.code],
+            isLoading: optionsQuery.isFetching
           }}
-          onValueChange={field.onChange}
+          onValueChange={(value) => {
+            field.onChange(value)
+
+            // Reset all dependent fields values
+            if (!dependentGraphRef.current) {
+              dependentGraphRef.current = buildDependentGraph(formData.templates.flatMap((template) => template.fields))
+            }
+
+            const dependents = getAllDependents(dependentGraphRef.current, fieldData.code)
+            dependents.forEach((dependent) => {
+              setValue(dependent, null, {
+                shouldValidate: formState.submitCount > 0
+              })
+            })
+          }}
         />
       )}
     </FieldContainer>

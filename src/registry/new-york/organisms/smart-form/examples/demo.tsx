@@ -20,6 +20,63 @@ const FORM_DATA: SmartFormData = {
       label: 'Personal',
       fields: [
         {
+          code: 'province',
+          type: 'select-with-query',
+          label: 'Province',
+          className: 'xl:col-span-4',
+          config: {
+            validation: {
+              required: {
+                value: true,
+                message: 'Please select the province'
+              }
+            },
+            apiPath: '/version/1.0/options/province'
+          }
+        },
+        {
+          code: 'district',
+          type: 'select-with-query',
+          label: 'District',
+          className: 'xl:col-span-4',
+          config: {
+            validation: {
+              required: {
+                value: true,
+                message: 'Please select the district'
+              }
+            },
+            apiPath: '/version/1.0/options/district_by_province/{province}',
+            referenceFields: [
+              {
+                code: 'province',
+                message: 'Please select the province first'
+              }
+            ]
+          }
+        },
+        {
+          code: 'ward',
+          type: 'select-with-query',
+          label: 'Ward',
+          className: 'xl:col-span-4',
+          config: {
+            validation: {
+              required: {
+                value: true,
+                message: 'Please select the ward'
+              }
+            },
+            apiPath: '/version/1.0/options/ward_by_district/{district}',
+            referenceFields: [
+              {
+                code: 'district',
+                message: 'Please select the district first'
+              }
+            ]
+          }
+        },
+        {
           code: 'fullName',
           type: 'input',
           label: 'Full name',
@@ -303,7 +360,6 @@ const FORM_DATA: SmartFormData = {
             referenceFields: [
               {
                 code: 'password',
-                key: 'password-confirmation',
                 message: 'Password confirmation does not match with the password'
               }
             ],

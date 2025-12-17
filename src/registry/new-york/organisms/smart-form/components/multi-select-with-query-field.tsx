@@ -1,16 +1,11 @@
-import React from 'react'
 import { MultiSelect } from '@/components/molecules/multi-select'
-import type { Option } from '@/types/base'
 import FieldContainer, { type FieldProps } from './field-container'
+import { useOptionsQuery } from './lib'
 
 // Component
 const MultiSelectWithQueryField = ({ fieldData, disabledFields }: FieldProps) => {
-  // Todo: fetch query and extract options
-
-  // Memos
-  const options = React.useMemo<Option[]>(() => {
-    return []
-  }, [])
+  // Hooks
+  const { optionsQuery, options } = useOptionsQuery({ fieldData })
 
   // Template
   return (
@@ -22,7 +17,8 @@ const MultiSelectWithQueryField = ({ fieldData, disabledFields }: FieldProps) =>
           placeholder={`Select ${fieldData.label.toLowerCase()}`}
           buttonTriggerProps={{
             id: fieldData.code,
-            disabled: disabledFields?.[fieldData.code]
+            disabled: disabledFields?.[fieldData.code],
+            isLoading: optionsQuery.isFetching
           }}
           onValueChange={field.onChange}
         />

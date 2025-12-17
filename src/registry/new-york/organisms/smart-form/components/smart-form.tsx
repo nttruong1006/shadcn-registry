@@ -22,7 +22,7 @@ import EditorField from './editor-field'
 import type { FieldProps } from './field-container'
 import FileField from './file-field'
 import InputField from './input-field'
-import type { SmartFormFieldType, SmartFormProps } from './lib'
+import type { DependentGraph, SmartFormFieldType, SmartFormProps } from './lib'
 import MultiFileField from './multi-file-field'
 import MultiSelectWithInfiniteQueryField from './multi-select-with-infinite-query-field'
 import MultiSelectWithOptionsField from './multi-select-with-options-field'
@@ -78,6 +78,7 @@ export const SmartForm = ({
 }: SmartFormProps) => {
   // Refs
   const formValueRef = React.useRef<FieldValues>(() => form.getValues())
+  const dependentGraphRef = React.useRef<DependentGraph>(null)
 
   // States
   const [isOpenConfirmationDialog, setIsOpenConfirmationDialog] = React.useState(false)
@@ -99,7 +100,7 @@ export const SmartForm = ({
 
   // Template
   if (form.formState.isLoading) {
-    return <Spinner className='size-6' />
+    return <Spinner className='mx-auto size-6' />
   }
 
   return (
@@ -140,7 +141,15 @@ export const SmartForm = ({
 
                 // Others
                 const FieldComponent = fieldComponents[fieldData.type]
-                return <FieldComponent key={fieldData.code} fieldData={fieldData} disabledFields={disabledFields} />
+                return (
+                  <FieldComponent
+                    key={fieldData.code}
+                    formData={formData}
+                    dependentGraphRef={dependentGraphRef}
+                    fieldData={fieldData}
+                    disabledFields={disabledFields}
+                  />
+                )
               })}
             </div>
           </FieldSet>
