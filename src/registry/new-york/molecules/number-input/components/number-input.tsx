@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import React from 'react'
 import { NumericFormat, type NumericFormatProps } from 'react-number-format'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
@@ -71,19 +72,6 @@ export const NumberInput = ({
         className
       )}
     >
-      {isDisplayStepper && (
-        <Button
-          aria-invalid={props['aria-invalid']}
-          aria-label='Decrease value'
-          variant='outline'
-          size='icon'
-          onClick={decrement}
-          disabled={disabled || (value != null && +value <= +min)}
-        >
-          <ChevronDown />
-        </Button>
-      )}
-
       <InputGroup>
         <NumericFormat
           value={value}
@@ -96,7 +84,7 @@ export const NumberInput = ({
           step={step}
           min={min}
           max={max}
-          className={cn(isDisplayStepper && 'rounded-none')}
+          className={cn(isDisplayStepper && 'rounded-r-none border-0')}
           disabled={disabled}
           {...props}
           onBlur={blur}
@@ -104,16 +92,29 @@ export const NumberInput = ({
       </InputGroup>
 
       {isDisplayStepper && (
-        <Button
-          aria-label='Increase value'
-          size='icon'
-          variant='outline'
-          aria-invalid={props['aria-invalid']}
-          onClick={increment}
-          disabled={disabled || (value != null && +value >= +max)}
-        >
-          <ChevronUp />
-        </Button>
+        <React.Fragment>
+          <Button
+            aria-invalid={props['aria-invalid']}
+            aria-label='Decrease value'
+            variant='outline'
+            size='icon'
+            onClick={decrement}
+            disabled={disabled || (value != null && +value <= +min)}
+          >
+            <ChevronDown />
+          </Button>
+
+          <Button
+            aria-label='Increase value'
+            size='icon'
+            variant='outline'
+            aria-invalid={props['aria-invalid']}
+            onClick={increment}
+            disabled={disabled || (value != null && +value >= +max)}
+          >
+            <ChevronUp />
+          </Button>
+        </React.Fragment>
       )}
     </ButtonGroup>
   )
