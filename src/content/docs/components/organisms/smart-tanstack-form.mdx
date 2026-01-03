@@ -1,0 +1,36 @@
+---
+title: Smart Tanstack Form
+description: Entire form component with dynamic fields render on top of the configuration.
+---
+
+import CodePreview from '@/components/molecules/code-preview/index.astro'
+import InstallationCard from '@/components/molecules/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/molecules/shadcn-link-button/index.astro'
+
+<CodePreview path='organisms/smart-tanstack-form/demo' />
+
+## Installation
+
+<InstallationCard registryName='smart-tanstack-form' />
+
+## Usage
+```tsx
+import { getDefaultFormValue, getFormSchema, SmartForm, type SmartFormData } from '@/components/organisms/smart-tanstack-form'
+```
+
+```tsx
+const FORM_DATA: SmartFormData = {}
+
+const FORM_SCHEMA = getFormSchema(FORM_DATA)
+
+const DEFAULT_FORM_VALUE = getDefaultFormValue(FORM_DATA)
+
+// Hooks
+const form = useForm({
+  resolver: zodResolver(FORM_SCHEMA),
+  defaultValues: DEFAULT_FORM_VALUE
+  })
+
+// Template
+<SmartForm form={form} formData={FORM_DATA} />
+```

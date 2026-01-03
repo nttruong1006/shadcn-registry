@@ -4,7 +4,8 @@ import type { InputProps } from '@/components/ui/input'
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
 
 // Password input
-export const PasswordInput = ({ className, ...props }: InputProps) => {
+export type PasswordInputProps = InputProps
+export const PasswordInput = ({ className, ...props }: PasswordInputProps) => {
   // States
   const [passwordVisibility, setPasswordVisibility] = useState(false)
 

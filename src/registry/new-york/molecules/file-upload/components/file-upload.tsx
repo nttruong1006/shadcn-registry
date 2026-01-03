@@ -216,7 +216,7 @@ export const FileUploadItem = ({ value, index, className, children }: FileUpload
 
       <Button
         variant='ghost'
-        size='icon'
+        size='icon-sm'
         onClick={() => {
           const newFileUploadValue = [...fileUploadValue]
           newFileUploadValue.splice(index, 1)

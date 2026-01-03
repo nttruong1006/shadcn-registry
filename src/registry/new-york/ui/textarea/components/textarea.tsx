@@ -2,7 +2,8 @@ import type * as React from 'react'
 import { cn } from '@/utils/ui'
 
 // Component
-export const Textarea = ({ className, ...props }: React.ComponentProps<'textarea'>) => {
+export type TextareaProps = React.ComponentProps<'textarea'>
+export const Textarea = ({ className, ...props }: TextareaProps) => {
   // Template
   return (
     <textarea
