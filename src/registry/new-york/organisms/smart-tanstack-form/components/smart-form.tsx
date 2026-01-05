@@ -10,55 +10,37 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 import { FieldDescription, FieldLegend, FieldSet } from '@/components/ui/field'
+import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/utils/ui'
-import AutocompleteWithInfiniteQueryField from './autocomplete-with-infinite-query-field'
-import AutocompleteWithOptionsField from './autocomplete-with-options-field'
-import AutocompleteWithQueryField from './autocomplete-with-query-field'
-import CheckboxField from './checkbox-field'
-import DateField from './date-field'
-import EditorField from './editor-field'
 import type { FieldProps } from './field-container'
-import FileField from './file-field'
-import InputField from './input-field'
 import type { DependentGraph, SmartFormFieldType, SmartFormProps } from './lib'
-import MultiFileField from './multi-file-field'
-import MultiSelectWithInfiniteQueryField from './multi-select-with-infinite-query-field'
-import MultiSelectWithOptionsField from './multi-select-with-options-field'
-import MultiSelectWithQueryField from './multi-select-with-query-field'
-import NumberField from './number-field'
-import PasswordField from './password-field'
-import PhoneNumberField from './phone-number-field'
-import SelectWithInfiniteQueryField from './select-with-infinite-query-field'
-import SelectWithOptionsField from './select-with-options-field'
-import SelectWithQueryField from './select-with-query-field'
-import TextareaField from './textarea-field'
 
-// const fieldComponents: Record<SmartFormFieldType, React.LazyExoticComponent<({ fieldData, disabledFields }: FieldProps) => React.JSX.Element>>
-
-const fieldComponents: Record<SmartFormFieldType, React.FC<FieldProps>> = {
-  // input: React.lazy(() => import('./input-field') ),
-  input: InputField,
-  textarea: TextareaField,
-  number: NumberField,
-  'phone-number': PhoneNumberField,
-  password: PasswordField,
-  'select-with-options': SelectWithOptionsField,
-  'select-with-query': SelectWithQueryField,
-  'select-with-infinite-query': SelectWithInfiniteQueryField,
-  'multi-select-with-options': MultiSelectWithOptionsField,
-  'multi-select-with-query': MultiSelectWithQueryField,
-  'multi-select-with-infinite-query': MultiSelectWithInfiniteQueryField,
-  'autocomplete-with-options': AutocompleteWithOptionsField,
-  'autocomplete-with-query': AutocompleteWithQueryField,
-  'autocomplete-with-infinite-query': AutocompleteWithInfiniteQueryField,
-  date: DateField,
-  checkbox: CheckboxField,
-  radio: () => null,
-  file: FileField,
-  'multi-file': MultiFileField,
-  editor: EditorField,
-  label: () => null,
-  slot: () => null
+const fieldComponents: Record<
+  SmartFormFieldType,
+  React.LazyExoticComponent<({ fieldData, disabledFields }: FieldProps) => React.JSX.Element> | null
+> = {
+  input: React.lazy(() => import('./input-field')),
+  textarea: React.lazy(() => import('./textarea-field')),
+  number: React.lazy(() => import('./number-field')),
+  'phone-number': React.lazy(() => import('./phone-number-field')),
+  password: React.lazy(() => import('./password-field')),
+  'select-with-options': React.lazy(() => import('./select-with-options-field')),
+  'select-with-query': React.lazy(() => import('./select-with-query-field')),
+  'select-with-infinite-query': React.lazy(() => import('./select-with-infinite-query-field')),
+  'multi-select-with-options': React.lazy(() => import('./multi-select-with-options-field')),
+  'multi-select-with-query': React.lazy(() => import('./multi-select-with-query-field')),
+  'multi-select-with-infinite-query': React.lazy(() => import('./multi-select-with-infinite-query-field')),
+  'autocomplete-with-options': React.lazy(() => import('./autocomplete-with-options-field')),
+  'autocomplete-with-query': React.lazy(() => import('./autocomplete-with-query-field')),
+  'autocomplete-with-infinite-query': React.lazy(() => import('./autocomplete-with-infinite-query-field')),
+  date: React.lazy(() => import('./date-field')),
+  checkbox: React.lazy(() => import('./checkbox-field')),
+  radio: null,
+  file: React.lazy(() => import('./file-field')),
+  'multi-file': React.lazy(() => import('./multi-file-field')),
+  editor: React.lazy(() => import('./editor-field')),
+  label: null,
+  slot: null
 }
 
 // Smart form
@@ -91,7 +73,7 @@ export const SmartForm = ({
 
   // Template
   return (
-    <React.Fragment>
+    <React.Suspense fallback={<Spinner className='mx-auto' />}>
       {/* Form */}
       <form
         id={formId}
@@ -139,7 +121,7 @@ export const SmartForm = ({
 
                 // Others
                 const FieldComponent = fieldComponents[fieldData.type]
-                return (
+                return FieldComponent ? (
                   <form.AppField key={fieldData.code} name={fieldData.code}>
                     {() => (
                       <FieldComponent
@@ -150,7 +132,7 @@ export const SmartForm = ({
                       />
                     )}
                   </form.AppField>
-                )
+                ) : null
               })}
             </div>
           </FieldSet>
@@ -197,6 +179,6 @@ export const SmartForm = ({
           </DialogContent>
         </Dialog>
       )}
-    </React.Fragment>
+    </React.Suspense>
   )
 }

@@ -1754,6 +1754,97 @@
       ]
     },
     {
+      "name": "smart-tanstack-filter",
+      "type": "registry:component",
+      "title": "Smart Tanstack Filter",
+      "description": "Powerful component with search and filter by multiple conditions that can switch back and forth.",
+      "files": [
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter-name-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-name-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter-operation-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-operation-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter-value-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/basic-search.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/basic-search.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/index.tsx",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-filter/index.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/lib.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-filter/lib.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-filter/components/smart-filter.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/smart-filter.tsx"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-form",
+        "lucide-react",
+        "cmdk",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-popover",
+        "date-fns",
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-separator",
+        "react-number-format",
+        "date-fns",
+        "react-day-picker",
+        "@radix-ui/react-label",
+        "@uidotdev/usehooks",
+        "zod",
+        "@radix-ui/react-toggle-group",
+        "@radix-ui/react-toggle"
+      ],
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/multi-select.json",
+        "https://ntt-shadcn-registry.vercel.app/r/badge.json",
+        "https://ntt-shadcn-registry.vercel.app/r/checkbox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/command.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dialog.json",
+        "https://ntt-shadcn-registry.vercel.app/r/number-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
+        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
+        "https://ntt-shadcn-registry.vercel.app/r/field.json",
+        "https://ntt-shadcn-registry.vercel.app/r/label.json",
+        "https://ntt-shadcn-registry.vercel.app/r/toggle-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/toggle.json"
+      ]
+    },
+    {
       "name": "smart-form",
       "type": "registry:component",
       "title": "Smart Form",
