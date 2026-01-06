@@ -1760,44 +1760,119 @@
       "description": "Powerful component with search and filter by multiple conditions that can switch back and forth.",
       "files": [
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter-name-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/base.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-filter/lib/base.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/form.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-filter/lib/form.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/index.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-filter/lib/index.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/query.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-filter/lib/query.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-name-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/advanced-filter-name-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter-operation-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-operation-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/advanced-filter-operation-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter-value-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-date-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-date-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/advanced-filter-value-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/advanced-filter.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-input-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-input-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-multi-select-with-infinite-query-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-multi-select-with-infinite-query-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-multi-select-with-options-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-multi-select-with-options-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-multi-select-with-query-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-multi-select-with-query-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-number-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-number-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-select-with-infinite-query-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-select-with-infinite-query-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-select-with-options-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-select-with-options-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter-value-select-with-query-field.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-filter/advanced-filter-value-select-with-query-field.tsx"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/advanced-filter.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/advanced-filter.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/basic-search.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/basic-search.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/basic-search.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/index.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/index.tsx",
           "type": "registry:file",
           "target": "src/components/organisms/smart-filter/index.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/lib.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-filter/lib.ts"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-filter/components/smart-filter.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/smart-filter.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/smart-filter.tsx"
+        },
+        {
+          "path": "src/lib/axios.ts",
+          "type": "registry:file",
+          "target": "src/lib/axios.ts"
+        },
+        {
+          "path": "src/types/api.ts",
+          "type": "registry:file",
+          "target": "src/types/api.ts"
+        },
+        {
+          "path": "src/types/base.ts",
+          "type": "registry:file",
+          "target": "src/types/base.ts"
         }
       ],
       "dependencies": [
@@ -1818,7 +1893,9 @@
         "@uidotdev/usehooks",
         "zod",
         "@radix-ui/react-toggle-group",
-        "@radix-ui/react-toggle"
+        "@radix-ui/react-toggle",
+        "axios",
+        "@tanstack/react-query"
       ],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
@@ -2091,32 +2168,32 @@
       "description": "Entire form component with dynamic fields render on top of the configuration.",
       "files": [
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/base.ts",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/base.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/base.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/dependency.ts",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/dependency.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/dependency.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/index.ts",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/index.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/index.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/query.ts",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/query.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/query.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/schema.ts",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/schema.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/schema.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/value.ts",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/value.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/value.ts"
         },
@@ -2141,112 +2218,112 @@
           "target": "src/lib/tanstack-query.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/autocomplete-with-infinite-query-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/autocomplete-with-infinite-query-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/autocomplete-with-infinite-query-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/autocomplete-with-options-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/autocomplete-with-options-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/autocomplete-with-options-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/autocomplete-with-query-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/autocomplete-with-query-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/autocomplete-with-query-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/checkbox-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/checkbox-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/checkbox-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/date-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/date-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/date-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/editor-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/editor-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/editor-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/field-container.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/field-container.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/field-container.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/file-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/file-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/file-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/index.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/index.tsx",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/index.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/input-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/input-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/input-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/multi-file-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/multi-file-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/multi-file-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/multi-select-with-infinite-query-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/multi-select-with-infinite-query-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/multi-select-with-infinite-query-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/multi-select-with-options-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/multi-select-with-options-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/multi-select-with-options-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/multi-select-with-query-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/multi-select-with-query-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/multi-select-with-query-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/number-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/number-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/number-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/password-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/password-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/password-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/phone-number-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/phone-number-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/phone-number-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/select-with-infinite-query-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/select-with-infinite-query-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/select-with-infinite-query-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/select-with-options-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/select-with-options-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/select-with-options-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/select-with-query-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/select-with-query-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/select-with-query-field.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/smart-form.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/smart-form.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/smart-form.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/textarea-field.tsx",
+          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/textarea-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/textarea-field.tsx"
         }

@@ -17,7 +17,7 @@ import type { DependentGraph, SmartFormFieldType, SmartFormProps } from './lib'
 
 const fieldComponents: Record<
   SmartFormFieldType,
-  React.LazyExoticComponent<({ fieldData, disabledFields }: FieldProps) => React.JSX.Element> | null
+  React.LazyExoticComponent<(props: FieldProps) => React.JSX.Element> | null
 > = {
   input: React.lazy(() => import('./input-field')),
   textarea: React.lazy(() => import('./textarea-field')),

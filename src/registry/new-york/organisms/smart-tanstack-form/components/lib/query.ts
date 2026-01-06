@@ -63,7 +63,7 @@ export const useOptionsQuery = ({ fieldData }: { fieldData: SmartFormFieldData }
     return (
       optionsQuery.data?.responseData?.rows.map((option) => ({
         value: option.value,
-        label: JSON.stringify(option.label)
+        label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label)
       })) ?? []
     )
   }, [isEnabled, optionsQuery.data])

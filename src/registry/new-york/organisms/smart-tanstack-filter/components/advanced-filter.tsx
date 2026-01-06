@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError } from '@/components/ui/field'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Spinner } from '@/components/ui/spinner'
 import AdvancedFilterNameField from './advanced-filter-name-field'
 import AdvancedFilterOperationField from './advanced-filter-operation-field'
 import AdvancedFilterValueField from './advanced-filter-value-field'
@@ -194,32 +195,40 @@ const AdvancedFilter = React.memo(() => {
                             </advancedFilterForm.AppField>
 
                             {/* Value */}
-                            <advancedFilterForm.AppField name={`filters[${index}].value`}>
-                              {(subField) => {
-                                const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
-                                return (
-                                  <Field data-invalid={isInvalid} className='w-full shrink-0 xl:w-52'>
-                                    <advancedFilterForm.Subscribe
-                                      selector={(state) => ({
-                                        formFilterName: state.values.filters[index].name,
-                                        formFilterOperation: state.values.filters[index].operation,
-                                        formFilterValueAdditional: state.values.filters[index].value.additional
-                                      })}
-                                    >
-                                      {({ formFilterName, formFilterOperation, formFilterValueAdditional }) => (
-                                        <AdvancedFilterValueField
-                                          index={index}
-                                          formFilterName={formFilterName}
-                                          formFilterOperation={formFilterOperation}
-                                          formFilterValueAdditional={formFilterValueAdditional}
-                                        />
-                                      )}
-                                    </advancedFilterForm.Subscribe>
-                                    {isInvalid && <FieldError errors={subField.state.meta.errors} />}
-                                  </Field>
-                                )
-                              }}
-                            </advancedFilterForm.AppField>
+                            <React.Suspense
+                              fallback={
+                                <div className='flex items-center'>
+                                  <Spinner />
+                                </div>
+                              }
+                            >
+                              <advancedFilterForm.AppField name={`filters[${index}].value`}>
+                                {(subField) => {
+                                  const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
+                                  return (
+                                    <Field data-invalid={isInvalid} className='w-full shrink-0 xl:w-52'>
+                                      <advancedFilterForm.Subscribe
+                                        selector={(state) => ({
+                                          formFilterName: state.values.filters[index].name,
+                                          formFilterOperation: state.values.filters[index].operation,
+                                          formFilterValueAdditional: state.values.filters[index].value.additional
+                                        })}
+                                      >
+                                        {({ formFilterName, formFilterOperation, formFilterValueAdditional }) => (
+                                          <AdvancedFilterValueField
+                                            index={index}
+                                            formFilterName={formFilterName}
+                                            formFilterOperation={formFilterOperation}
+                                            formFilterValueAdditional={formFilterValueAdditional}
+                                          />
+                                        )}
+                                      </advancedFilterForm.Subscribe>
+                                      {isInvalid && <FieldError errors={subField.state.meta.errors} />}
+                                    </Field>
+                                  )
+                                }}
+                              </advancedFilterForm.AppField>
+                            </React.Suspense>
                           </div>
 
                           {/* Remove button */}

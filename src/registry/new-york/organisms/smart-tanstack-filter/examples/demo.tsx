@@ -14,7 +14,7 @@ export const SmartFilterDemo = () => {
       {
         name: 'fullName',
         label: 'Full name',
-        type: SmartFilterType.Text
+        type: SmartFilterType.Input
       },
       {
         name: 'age',
@@ -29,7 +29,7 @@ export const SmartFilterDemo = () => {
       {
         name: 'department',
         label: 'Department',
-        type: SmartFilterType.Select,
+        type: SmartFilterType.SelectWithOptions,
         options: [
           { value: 'front-end', label: 'Front-end' },
           { value: 'back-end', label: 'Back-end' }
@@ -38,7 +38,8 @@ export const SmartFilterDemo = () => {
       {
         name: 'technologies',
         label: 'Technologies',
-        type: SmartFilterType.MultiSelect,
+        type: SmartFilterType.SelectWithQuery,
+        apiPath: '/version/1.0/options/role',
         options: [
           { value: 'react', label: 'React' },
           { value: 'tailwind-css', label: 'TailwindCSS' },
