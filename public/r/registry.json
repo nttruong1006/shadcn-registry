@@ -536,6 +536,11 @@
           "path": "src/registry/new-york/ui/navigation-menu/components/navigation-menu.tsx",
           "type": "registry:ui",
           "target": "src/components/ui/navigation-menu.tsx"
+        },
+        {
+          "path": "src/hooks/use-device.ts",
+          "type": "registry:file",
+          "target": "src/hooks/use-device.ts"
         }
       ],
       "dependencies": [
