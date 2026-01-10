@@ -114,10 +114,10 @@
       "target": "src/components/organisms/data-table/data-table.tsx"
     },
     {
-      "path": "src/@types/tanstack-table.ts",
+      "path": "src/@types/tanstack-table.d.ts",
       "content": "import type { Dispatch, SetStateAction } from 'react'\n\ndeclare module '@tanstack/react-table' {\n  // @ts-expect-error\n  interface TableMeta {\n    isSelectAllRows?: boolean\n    setIsSelectAllRows?: Dispatch<SetStateAction<boolean>>\n  }\n\n  // @ts-expect-error\n  interface ColumnMeta {\n    className?: string\n  }\n}\n",
       "type": "registry:file",
-      "target": "src/@types/tanstack-table.ts"
+      "target": "src/@types/tanstack-table.d.ts"
     },
     {
       "path": "src/registry/new-york/organisms/data-table/components/index.tsx",

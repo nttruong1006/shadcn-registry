@@ -5,7 +5,7 @@ export interface FileAttributes {
   size: number
 }
 
-declare module '@tiptap/react' {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     file: {
       insertFile: (options: FileAttributes) => ReturnType

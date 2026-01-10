@@ -1400,9 +1400,9 @@
           "target": "src/components/organisms/data-table/data-table.tsx"
         },
         {
-          "path": "src/@types/tanstack-table.ts",
+          "path": "src/@types/tanstack-table.d.ts",
           "type": "registry:file",
-          "target": "src/@types/tanstack-table.ts"
+          "target": "src/@types/tanstack-table.d.ts"
         },
         {
           "path": "src/registry/new-york/organisms/data-table/components/index.tsx",
@@ -1604,9 +1604,9 @@
           "target": "src/components/organisms/editor/zoom-button.tsx"
         },
         {
-          "path": "src/@types/tiptap.ts",
+          "path": "src/@types/tiptap.d.ts",
           "type": "registry:file",
-          "target": "src/@types/tiptap.ts"
+          "target": "src/@types/tiptap.d.ts"
         }
       ],
       "dependencies": [

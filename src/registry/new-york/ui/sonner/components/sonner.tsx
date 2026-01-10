@@ -2,12 +2,13 @@ import { CircleCheckIcon, InfoIcon, Loader2Icon, OctagonXIcon, TriangleAlertIcon
 import { Toaster as Sonner, type ToasterProps } from 'sonner'
 
 // Toaster
-export const Toaster = ({ theme = 'system', ...props }: ToasterProps) => {
+export const Toaster = ({ richColors = true, closeButton = true, ...props }: ToasterProps) => {
   // Template
   return (
     <Sonner
-      theme={theme}
       className='toaster group'
+      closeButton={closeButton}
+      richColors={richColors}
       icons={{
         success: <CircleCheckIcon className='size-4' />,
         info: <InfoIcon className='size-4' />,

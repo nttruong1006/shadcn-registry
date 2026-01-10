@@ -86,7 +86,7 @@ export const SmartForm = ({
         {formData.templates.map((template) => (
           <FieldSet key={template.code}>
             {/* Form template label */}
-            <FieldLegend>{template.label}</FieldLegend>
+            {template.label && <FieldLegend>{template.label}</FieldLegend>}
             {template.description && <FieldDescription>{template.description}</FieldDescription>}
 
             {/* Form template fields */}

@@ -10,7 +10,7 @@ export interface SmartFormData {
   code: string
   templates: Array<{
     code: string
-    label: string
+    label?: string
     description?: string
     className?: string
     fields: Array<{

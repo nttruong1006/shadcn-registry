@@ -1,5 +1,5 @@
 import {
-  type ChainedCommands,
+  type CommandProps,
   mergeAttributes,
   Node,
   NodeViewWrapper,
@@ -137,7 +137,7 @@ const FileExtension = Node.create({
     return {
       insertFile:
         (options: FileAttributes) =>
-        ({ commands }: { commands: ChainedCommands }) => {
+        ({ commands }: CommandProps) => {
           return commands.insertContent({
             type: this.name,
             attrs: {

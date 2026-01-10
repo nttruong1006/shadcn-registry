@@ -1,14 +1,10 @@
 import { Moon, Sun } from 'lucide-react'
 import React from 'react'
-import z from 'zod'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/utils/ui'
+import { defaultThemeLocalStorageKey, getDefaultTheme, type Theme } from './lib'
 
 // Theme toggle button
-const themeSchema = z.object({
-  theme: z.union([z.literal('light'), z.literal('dark')])
-})
-
 type AnimationVariant = 'circle' | 'circle-blur' | 'gif' | 'polygon'
 
 type StartPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
@@ -22,7 +18,7 @@ export type ThemeToggleButtonProps = Omit<ButtonProps, 'variant' | 'onClick'> & 
 }
 
 export const ThemeToggleButton = ({
-  themeLocalStorageKey = 'theme',
+  themeLocalStorageKey = defaultThemeLocalStorageKey,
   showLabel = false,
   variant = 'circle',
   startPosition = 'center',
@@ -31,7 +27,7 @@ export const ThemeToggleButton = ({
   ...props
 }: ThemeToggleButtonProps) => {
   // States
-  const [theme, setTheme] = React.useState<z.output<typeof themeSchema>['theme']>()
+  const [theme, setTheme] = React.useState<Theme>()
 
   // Methods
   const toggleTheme = () => {
@@ -189,16 +185,7 @@ export const ThemeToggleButton = ({
   return (
     <Button
       ref={() => {
-        const themeReference = localStorage.getItem(themeLocalStorageKey)
-        const { success, data } = themeSchema.safeParse({
-          theme: themeReference
-        })
-
-        if (success) {
-          return setTheme(data.theme)
-        }
-
-        setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        setTheme(getDefaultTheme())
       }}
       variant='ghost'
       size={showLabel ? 'default' : 'icon'}
