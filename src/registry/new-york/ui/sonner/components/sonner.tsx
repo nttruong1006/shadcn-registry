@@ -17,7 +17,7 @@ export const Toaster = ({ richColors = true, closeButton = true, ...props }: Toa
         loading: <Loader2Icon className='size-4 animate-spin' />
       }}
       toastOptions={{
-        duration: 100000,
+        duration: 3000,
         classNames: {
           closeButton: '!cursor-default'
         }
