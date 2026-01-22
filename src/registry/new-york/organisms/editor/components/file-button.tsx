@@ -1,9 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircle, Paperclip } from 'lucide-react'
 import { memo, useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
-import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import z from 'zod'
 import {
@@ -11,6 +10,7 @@ import {
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
+  type FileUploadProps,
   getFileUrl,
   type UploadedFile,
   useFileUpload
@@ -56,46 +56,49 @@ const FileButton = memo<{
 
   // Form
   const fileForm = useForm({
-    resolver: zodResolver(fileFormSchema),
-    defaultValues: defaultFileFormValue
-  })
+    formId: `${id}-file-form`,
+    defaultValues: defaultFileFormValue,
+    validators: {
+      onSubmit: fileFormSchema
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        const { files } = fileFormSchema.parse(value)
 
-  // Methods
-  const insertFileNodes = async (fieldValues: z.output<typeof fileFormSchema>) => {
-    try {
-      // Upload file
-      const uploadedFiles = (await Promise.all(fieldValues.files.map(async (file) => await uploadFile(file)))).filter(
-        Boolean
-      ) as UploadedFile[]
+        // Upload file
+        const uploadedFiles = (await Promise.all(files.map(async (file) => await uploadFile(file)))).filter(
+          Boolean
+        ) as UploadedFile[]
 
-      // Add file node view
-      uploadedFiles.forEach((uploadedFile) => {
-        editor
-          ?.chain()
-          .focus()
-          // @ts-expect-error - custom command from FileExtension
-          .insertFile({
-            url: getFileUrl(uploadedFile.path),
-            name: uploadedFile.original,
-            mime: uploadedFile.mime,
-            size: uploadedFile.compress_info[''].size
-          })
-          .run()
-      })
+        // Add file node view
+        uploadedFiles.forEach((uploadedFile) => {
+          editor
+            ?.chain()
+            .focus()
+            // @ts-expect-error - custom command from FileExtension
+            .insertFile({
+              url: getFileUrl(uploadedFile.path),
+              name: uploadedFile.original,
+              mime: uploadedFile.mime,
+              size: uploadedFile.compress_info[''].size
+            })
+            .run()
+        })
 
-      // Enter new line
-      if (uploadedFiles.length > 0) {
-        editor?.commands.enter()
+        // Enter new line
+        if (uploadedFiles.length > 0) {
+          editor?.commands.enter()
+        }
+
+        // Close popover
+        setIsOpenPopover(false)
+      } catch {
+        toast.error('Failure', {
+          description: 'An error occurred, please try again'
+        })
       }
-
-      // Close popover
-      setIsOpenPopover(false)
-    } catch {
-      toast.error('Failure', {
-        description: 'An error occurred, please try again'
-      })
     }
-  }
+  })
 
   // Template
   return (
@@ -115,27 +118,29 @@ const FileButton = memo<{
       <PopoverContent className='w-xs space-y-6' onCloseAutoFocus={() => fileForm.reset()}>
         <div>Acceptable formats: doc, docx, xlsx, xml, pdf</div>
 
-        <FormProvider {...fileForm}>
-          <form>
-            <Controller
-              control={fileForm.control}
-              name='files'
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={`editor-${id}-image-button-image-form-files`}>Files</FieldLabel>
+        <form
+          id={fileForm.formId}
+          onSubmit={(e) => {
+            e.preventDefault()
+            fileForm.handleSubmit()
+          }}
+        >
+          <fileForm.Field name='files'>
+            {(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={`editor-${fileForm.formId}-files`}>Files *</FieldLabel>
+
                   <FileUpload
-                    value={field.value}
+                    value={field.state.value}
                     dropzoneOptions={fileUploaderDropzoneOptions}
                     className='xl:grid-cols-1'
-                    onValueChange={field.onChange}
+                    onValueChange={field.handleChange as FileUploadProps['onValueChange']}
                   >
-                    <FileUploadInput
-                      id={`editor-${id}-image-button-image-form-files`}
-                      aria-invalid={fieldState.invalid}
-                    />
-
+                    <FileUploadInput id={`editor-${fileForm.formId}-files`} aria-invalid={isInvalid} />
                     <FileUploadContent>
-                      {field.value.map((value, index) => (
+                      {field.state.value.map((value, index) => (
                         <FileUploadItem
                           // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                           key={index}
@@ -145,27 +150,34 @@ const FileButton = memo<{
                       ))}
                     </FileUploadContent>
                   </FileUpload>
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
-              )}
-            />
-          </form>
-        </FormProvider>
+              )
+            }}
+          </fileForm.Field>
+        </form>
 
         <div className='flex items-center justify-end gap-1'>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size='icon'
-                isLoading={isUploadFilePending}
-                variant='outline'
-                onClick={fileForm.handleSubmit(insertFileNodes)}
-              >
-                <CheckCircle />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>submitButton</TooltipContent>
-          </Tooltip>
+          <fileForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+            {([canSubmit, isSubmitting]) => (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size='icon'
+                    isLoading={isUploadFilePending || isSubmitting}
+                    variant='outline'
+                    type='submit'
+                    form={fileForm.formId}
+                    disabled={!canSubmit}
+                  >
+                    <CheckCircle />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>submitButton</TooltipContent>
+              </Tooltip>
+            )}
+          </fileForm.Subscribe>
         </div>
       </PopoverContent>
     </Popover>

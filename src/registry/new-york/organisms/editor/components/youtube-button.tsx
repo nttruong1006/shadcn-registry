@@ -1,8 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircle, TvMinimalPlay } from 'lucide-react'
 import React from 'react'
-import { Controller, FormProvider, useForm } from 'react-hook-form'
 import z from 'zod'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
@@ -44,53 +43,55 @@ const YoutubeButton = React.memo<{
 
   // Form
   const youtubeForm = useForm({
-    resolver: zodResolver(youtubeFormSchema),
-    defaultValues: defaultYoutubeFormValue
-  })
-
-  // Methods
-  const insertYoutubeNode = (fieldValues: z.output<typeof youtubeFormSchema>) => {
-    const callback: CallbackRef['current'] = (editor) => {
-      editor
-        ?.chain()
-        .focus()
-        .setYoutubeVideo({
-          src: fieldValues.url
-        })
-        .enter()
-        .run()
-    }
-
-    // Add youtube node view
-    if (isExtensionLoadedRef.current) {
-      return callback(editor)
-    }
-
-    // Load extension
-    startTransition(async () => {
-      try {
-        const { default: CustomYoutubeExtension } = await import('./custom-youtube-extension')
-
-        callbackRef.current = callback
-
-        setExtensions((prev) => [
-          ...prev,
-          CustomYoutubeExtension.configure({
-            nocookie: true,
-            width: minWidth,
-            height: 180
+    formId: `${id}-youtube-form`,
+    defaultValues: defaultYoutubeFormValue,
+    validators: {
+      onSubmit: youtubeFormSchema
+    },
+    onSubmit: ({ value }) => {
+      const { url } = youtubeFormSchema.parse(value)
+      const callback: CallbackRef['current'] = (editor) => {
+        editor
+          ?.chain()
+          .focus()
+          .setYoutubeVideo({
+            src: url
           })
-        ])
-
-        isExtensionLoadedRef.current = true
-      } catch (error) {
-        console.error('An error occurred when load the CustomYoutube extension', error)
+          .enter()
+          .run()
       }
-    })
 
-    // Close popover
-    setIsOpenPopover(false)
-  }
+      // Add youtube node view
+      if (isExtensionLoadedRef.current) {
+        return callback(editor)
+      }
+
+      // Load extension
+      startTransition(async () => {
+        try {
+          const { default: CustomYoutubeExtension } = await import('./custom-youtube-extension')
+
+          callbackRef.current = callback
+
+          setExtensions((prev) => [
+            ...prev,
+            CustomYoutubeExtension.configure({
+              nocookie: true,
+              width: minWidth,
+              height: 180
+            })
+          ])
+
+          isExtensionLoadedRef.current = true
+        } catch (error) {
+          console.error('An error occurred when load the CustomYoutube extension', error)
+        }
+      })
+
+      // Close popover
+      setIsOpenPopover(false)
+    }
+  })
 
   // Template
   return (
@@ -108,37 +109,60 @@ const YoutubeButton = React.memo<{
       </Tooltip>
 
       <PopoverContent className='w-xs space-y-4' onCloseAutoFocus={() => youtubeForm.reset()}>
-        <FormProvider {...youtubeForm}>
-          <form className='space-y-6'>
-            <Controller
-              control={youtubeForm.control}
-              name='url'
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={`editor-${id}-youtube-button-youtube-form-url`}>URL</FieldLabel>
-                  <Input
-                    {...field}
-                    id={`editor-${id}-youtube-button-youtube-form-url`}
-                    placeholder={`Enter URL`}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                </Field>
-              )}
-            />
+        <form
+          id={youtubeForm.formId}
+          className='space-y-6'
+          onSubmit={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            youtubeForm.handleSubmit()
+          }}
+        >
+          <youtubeForm.Field name='url'>
+            {(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={`editor-${id}-url`}>URL *</FieldLabel>
 
-            <div className='flex items-center justify-end gap-1'>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size='icon' variant='outline' onClick={youtubeForm.handleSubmit(insertYoutubeNode)}>
-                    <CheckCircle />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Save</TooltipContent>
-              </Tooltip>
-            </div>
-          </form>
-        </FormProvider>
+                  <Input
+                    id={`editor-${id}-url`}
+                    name={field.name}
+                    value={field.state.value}
+                    placeholder={`Enter URL`}
+                    aria-invalid={isInvalid}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              )
+            }}
+          </youtubeForm.Field>
+
+          <div className='flex items-center justify-end gap-1'>
+            <youtubeForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+              {([canSubmit, isSubmitting]) => (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='outline'
+                      type='submit'
+                      isLoading={isSubmitting}
+                      form={youtubeForm.formId}
+                      disabled={!canSubmit}
+                    >
+                      <CheckCircle />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Save</TooltipContent>
+                </Tooltip>
+              )}
+            </youtubeForm.Subscribe>
+          </div>
+        </form>
       </PopoverContent>
     </Popover>
   )

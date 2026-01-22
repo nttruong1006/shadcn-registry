@@ -1,15 +1,16 @@
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircle, Image } from 'lucide-react'
 import React from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
-import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form'
+import { toast } from 'sonner'
 import z from 'zod'
 import {
   FileUpload,
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
+  type FileUploadProps,
   getFileUrl,
   useFileUpload
 } from '@/components/molecules/file-upload'
@@ -101,50 +102,48 @@ const ImageButton = React.memo<{
 
   // Form
   const imageForm = useForm({
-    resolver: zodResolver(imageFormSchema),
-    defaultValues: defaultImageFormValue
-  })
+    formId: `${id}-file-form`,
+    defaultValues: defaultImageFormValue,
+    validators: {
+      onSubmit: imageFormSchema
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        const { mode, url, files } = imageFormSchema.parse(value)
 
-  const formMode = useWatch({
-    control: imageForm.control,
-    name: 'mode'
-  })
+        // Add image node view
+        switch (mode) {
+          case FormMode.Url: {
+            editor?.chain().focus().setImage({ src: url }).enter().run()
+            break
+          }
+          case FormMode.Files: {
+            const uploadedFiles = await Promise.all(files.map(async (file) => await uploadFile(file)))
+            uploadedFiles.forEach((uploadedFile) => {
+              if (!uploadedFile) return
 
-  // Methods
-  const changeTab = (value: string) => {
-    imageForm.setValue('mode', value as FormMode)
-  }
-
-  const insertImageNodes = async (fieldValues: z.output<typeof imageFormSchema>) => {
-    const { mode, url, files } = fieldValues
-
-    // Add image node view
-    switch (mode) {
-      case FormMode.Url: {
-        editor?.chain().focus().setImage({ src: url }).enter().run()
-        break
-      }
-      case FormMode.Files: {
-        const uploadedFiles = await Promise.all(files.map(async (file) => await uploadFile(file)))
-        uploadedFiles.forEach((uploadedFile) => {
-          if (!uploadedFile) return
-
-          editor
-            ?.chain()
-            .focus()
-            .setImage({
-              src: getFileUrl(uploadedFile.path)
+              editor
+                ?.chain()
+                .focus()
+                .setImage({
+                  src: getFileUrl(uploadedFile.path)
+                })
+                .enter()
+                .run()
             })
-            .enter()
-            .run()
+            break
+          }
+        }
+
+        // Close popover
+        setIsOpenPopover(false)
+      } catch {
+        toast.error('Failure', {
+          description: 'An error occurred, please try again'
         })
-        break
       }
     }
-
-    // Close popover
-    setIsOpenPopover(false)
-  }
+  })
 
   // Template
   return (
@@ -164,89 +163,115 @@ const ImageButton = React.memo<{
       <PopoverContent className='w-xs space-y-6' onCloseAutoFocus={() => imageForm.reset()}>
         <div>Acceptable formats: jpeg, jpg, png, webp, svg</div>
 
-        <FormProvider {...imageForm}>
-          <form>
-            <Tabs value={formMode} onValueChange={changeTab}>
-              {/* Tabs list */}
-              <TabsList loop className='w-full [&_button]:flex-1'>
-                <TabsTrigger value={FormMode.Url}>URL</TabsTrigger>
-                <TabsTrigger value={FormMode.Files}>File</TabsTrigger>
-              </TabsList>
+        <form
+          id={imageForm.formId}
+          onSubmit={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            imageForm.handleSubmit()
+          }}
+        >
+          <imageForm.Subscribe selector={(state) => state.values.mode}>
+            {(formMode) => (
+              <Tabs
+                value={formMode}
+                onValueChange={(value) => {
+                  imageForm.setFieldValue('mode', value as FormMode)
+                  imageForm.validate('submit')
+                }}
+              >
+                {/* Tabs list */}
+                <TabsList loop className='w-full [&_button]:flex-1'>
+                  <TabsTrigger value={FormMode.Url}>URL</TabsTrigger>
+                  <TabsTrigger value={FormMode.Files}>File</TabsTrigger>
+                </TabsList>
 
-              {/* Tabs content */}
-              {/* Url tab */}
-              <TabsContent value={FormMode.Url}>
-                <Controller
-                  control={imageForm.control}
-                  name='url'
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={`editor-${id}-image-button-image-form-url`}>URL</FieldLabel>
-                      <Input
-                        {...field}
-                        id={`editor-${id}-image-button-image-form-url`}
-                        placeholder={`Enter URL`}
-                        aria-invalid={fieldState.invalid}
-                      />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                    </Field>
-                  )}
-                />
-              </TabsContent>
+                {/* Tabs content */}
+                {/* Url tab */}
+                <TabsContent value={FormMode.Url}>
+                  <imageForm.Field name='url'>
+                    {(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={`editor-${id}-url`}>URL *</FieldLabel>
 
-              {/* Files tab */}
-              <TabsContent value={FormMode.Files}>
-                <Controller
-                  control={imageForm.control}
-                  name='files'
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={`editor-${id}-image-button-image-form-files`}>Image files</FieldLabel>
-                      <FileUpload
-                        value={field.value}
-                        dropzoneOptions={fileUploaderDropzoneOptions}
-                        className='xl:grid-cols-1'
-                        onValueChange={field.onChange}
-                      >
-                        <FileUploadInput
-                          id={`editor-${id}-image-button-image-form-files`}
-                          aria-invalid={fieldState.invalid}
-                        />
+                          <Input
+                            id={`editor-${id}-url`}
+                            name={field.name}
+                            value={field.state.value}
+                            placeholder={`Enter URL`}
+                            aria-invalid={isInvalid}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                          />
 
-                        <FileUploadContent>
-                          {field.value.map((value, index) => (
-                            <FileUploadItem
-                              // biome-ignore lint/suspicious/noArrayIndexKey: ignore
-                              key={index}
-                              index={index}
-                              value={value}
-                            />
-                          ))}
-                        </FileUploadContent>
-                      </FileUpload>
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                    </Field>
-                  )}
-                />
-              </TabsContent>
-            </Tabs>
-          </form>
-        </FormProvider>
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      )
+                    }}
+                  </imageForm.Field>
+                </TabsContent>
+
+                {/* Files tab */}
+                <TabsContent value={FormMode.Files}>
+                  <imageForm.Field name='files'>
+                    {(field) => {
+                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={`editor-${imageForm.formId}-files`}>Files *</FieldLabel>
+
+                          <FileUpload
+                            value={field.state.value}
+                            dropzoneOptions={fileUploaderDropzoneOptions}
+                            className='xl:grid-cols-1'
+                            onValueChange={field.handleChange as FileUploadProps['onValueChange']}
+                          >
+                            <FileUploadInput id={`editor-${imageForm.formId}-files`} aria-invalid={isInvalid} />
+                            <FileUploadContent>
+                              {field.state.value.map((value, index) => (
+                                <FileUploadItem
+                                  // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+                                  key={index}
+                                  index={index}
+                                  value={value}
+                                />
+                              ))}
+                            </FileUploadContent>
+                          </FileUpload>
+
+                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                        </Field>
+                      )
+                    }}
+                  </imageForm.Field>
+                </TabsContent>
+              </Tabs>
+            )}
+          </imageForm.Subscribe>
+        </form>
 
         <div className='flex items-center justify-end gap-1'>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size='icon'
-                variant='outline'
-                isLoading={isUploadFilePending}
-                onClick={imageForm.handleSubmit(insertImageNodes)}
-              >
-                <CheckCircle />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Save</TooltipContent>
-          </Tooltip>
+          <imageForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+            {([canSubmit, isSubmitting]) => (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size='icon'
+                    variant='outline'
+                    isLoading={isUploadFilePending || isSubmitting}
+                    type='submit'
+                    form={imageForm.formId}
+                    disabled={!canSubmit}
+                  >
+                    <CheckCircle />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Save</TooltipContent>
+              </Tooltip>
+            )}
+          </imageForm.Subscribe>
         </div>
       </PopoverContent>
     </Popover>
