@@ -2,6 +2,7 @@ import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { CheckCircle, Copy, ExternalLink, Link, Trash, Unlink } from 'lucide-react'
 import React from 'react'
+import { toast } from 'sonner'
 import z from 'zod'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -109,9 +110,12 @@ const LinkButton = React.memo<{
     setIsOpenPopover(false)
   }
 
-  const copyLink = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const copyLink = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    navigator.clipboard.writeText(linkForm.getFieldValue('url'))
+    await navigator.clipboard.writeText(linkForm.getFieldValue('url'))
+    toast.success('Success', {
+      description: 'Link copied to clipboard'
+    })
   }
 
   const deleteLink = () => {
