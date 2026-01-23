@@ -3,34 +3,83 @@ title: Smart Tanstack Form V2
 description: Entire form component with dynamic fields render on top of the configuration.
 ---
 
-import CodePreview from '@/components/molecules/code-preview/index.astro'
-import InstallationCard from '@/components/molecules/installation-card/index.astro'
-import ShadcnLinkButton from '@/components/molecules/shadcn-link-button/index.astro'
+import CodePreview from "@/components/molecules/code-preview/index.astro";
+import InstallationCard from "@/components/molecules/installation-card/index.astro";
+import ShadcnLinkButton from "@/components/molecules/shadcn-link-button/index.astro";
 
-<CodePreview path='organisms/smart-tanstack-form-v2/demo' />
+<CodePreview path="organisms/smart-tanstack-form-v2/demo" />
 
 ## Installation
 
-<InstallationCard registryName='smart-tanstack-form-v2' />
+<InstallationCard registryName="smart-tanstack-form-v2" />
 
 ## Usage
+
 ```tsx
-import { getDefaultFormValue, getFormSchema, SmartForm, type SmartFormData } from '@/components/organisms/smart-tanstack-form'
+import {
+  getInputFieldSchema,
+  getPasswordFieldSchema,
+  useAppForm,
+} from "@/components/organisms/smart-form";
 ```
 
 ```tsx
-const FORM_DATA: SmartFormData = {}
+const formSchema = z.object({
+  email: getInputFieldSchema({
+    required: "Please enter the email",
+    email: "Please enter a valid email",
+  }),
+  password: getPasswordFieldSchema({
+    required: "Please enter the password",
+  }),
+});
 
-const FORM_SCHEMA = getFormSchema(FORM_DATA)
+const defaultFormValue: z.input<typeof formSchema> = {
+  email: "",
+  password: "",
+};
+```
 
-const DEFAULT_FORM_VALUE = getDefaultFormValue(FORM_DATA)
-
+```tsx
 // Hooks
-const form = useForm({
-  resolver: zodResolver(FORM_SCHEMA),
-  defaultValues: DEFAULT_FORM_VALUE
-  })
+const form = useAppForm({
+  formId: 'smart-form-demo',
+  defaultValues: defaultFormValue,
+  validators: {
+    onSubmit: formSchema
+  },
+  onSubmit: ({ value }) => {
+    const safeValue = formSchema.parse(value)
+    console.log(safeValue)
+  },
+})
 
-// Template
-<SmartForm form={form} formData={FORM_DATA} />
+<form
+ id={form.formId}
+ className='space-y-6'
+ onSubmit={(e) => {
+  e.preventDefault()
+  form.handleSubmit()
+ }}
+>
+  <form.AppForm>
+    <FieldSet>
+      <div className='space-y-6'>
+        <form.AppField name='email'>{(field) => <field.Input label='Email' isRequired />}</form.AppField>
+
+        <form.AppField name='password'>
+          {(field) => <field.Password label='Password' isRequired />}
+        </form.AppField>
+
+        <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+          {([canSubmit, isSubmitting]) => (
+            <Button type='submit' disabled={!canSubmit} isLoading={isSubmitting}>
+              Submit
+            </Button>
+          )}
+        </form.Subscribe>
+      </div>
+    </FieldSet>
+  </form.AppForm>
+</form>
 ```
