@@ -47,7 +47,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
           }
 
           // Email
-          if (validation?.email) {
+          if (validation.email) {
             fieldSchema = fieldSchema.refine((value) => {
               try {
                 if (!validation.required && !value) {

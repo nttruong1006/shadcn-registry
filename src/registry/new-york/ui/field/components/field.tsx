@@ -74,11 +74,9 @@ const fieldVariants = cva('group/field flex w-full gap-3 data-[invalid=true]:tex
   }
 })
 
-export const Field = ({
-  className,
-  orientation = 'vertical',
-  ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>) => {
+export type FieldProps = React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>
+
+export const Field = ({ className, orientation = 'vertical', ...props }: FieldProps) => {
   // Template
   return (
     <div
@@ -181,14 +179,11 @@ export const FieldSeparator = ({
 }
 
 // Field error
-export const FieldError = ({
-  className,
-  children,
-  errors,
-  ...props
-}: React.ComponentProps<'div'> & {
+export type FieldErrorProps = React.ComponentProps<'div'> & {
   errors?: Array<{ message?: string } | undefined>
-}) => {
+}
+
+export const FieldError = ({ className, children, errors, ...props }: FieldErrorProps) => {
   // Memos
   const content = useMemo(() => {
     if (children) {
