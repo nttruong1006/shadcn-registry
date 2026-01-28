@@ -93,17 +93,43 @@ export const apiOperationPerOperation: Partial<Record<SmartFilterOperation, Smar
 } as const
 
 // Filter
-export interface Filter {
+const smartFilterTypesWithOptions = ['selectWithOptions', 'multiSelectWithOptions'] as const
+type SmartFilterTypesWithOptions = (typeof smartFilterTypesWithOptions)[number]
+
+const smartFilterTypesWithQuery = [
+  'selectWithQuery',
+  'selectWithInfiniteQuery',
+  'multiSelectWithQuery',
+  'multiSelectWithInfiniteQuery'
+] as const
+type SmartFilterTypesWithQuery = (typeof smartFilterTypesWithQuery)[number]
+
+type OtherSmartFilterTypes = Exclude<SmartFilterType, SmartFilterTypesWithOptions | SmartFilterTypesWithQuery>
+
+interface BaseFilter {
   label: string
   name: string
-  type: SmartFilterType
-  options?: Array<{
+  dateFormat?: 'date' | 'month' | 'year'
+}
+
+interface FilterWithOptions extends BaseFilter {
+  type: SmartFilterTypesWithOptions
+  options: Array<{
     value: string
     label: string
   }>
-  apiPath?: string
-  dateFormat?: 'date' | 'month' | 'year'
 }
+
+interface FilterWithQuery extends BaseFilter {
+  type: SmartFilterTypesWithQuery
+  apiPath: string
+}
+
+interface OtherFilter extends BaseFilter {
+  type: OtherSmartFilterTypes
+}
+
+export type Filter = FilterWithOptions | FilterWithQuery | OtherFilter
 
 // Transform form value to api filters param
 const periodHandlerPerDateFormat: Record<
