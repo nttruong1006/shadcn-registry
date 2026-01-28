@@ -24,7 +24,7 @@ const AdvancedFilterValueSelectWithOptionsField = ({
             <Field data-invalid={isInvalid}>
               <MultiSelect
                 onValueChange={field.handleChange}
-                options={selectedFilter.options ?? []}
+                options={'options' in selectedFilter ? selectedFilter.options : []}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
                 value={field.state.value as string[]}
               />
@@ -47,7 +47,7 @@ const AdvancedFilterValueSelectWithOptionsField = ({
               onValueChange={(value) => {
                 field.handleChange(value ?? '')
               }}
-              options={selectedFilter.options ?? []}
+              options={'options' in selectedFilter ? selectedFilter.options : []}
               placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value as string}
             />

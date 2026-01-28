@@ -15,11 +15,11 @@ const AdvancedFilterValueSelectWithInfiniteQueryField = ({
   // Hooks
   const advancedFilterForm = useAdvancedFilterForm()
   const { options, optionsInfiniteQuery, searchKeyword, setSearchKeyword } = useOptionsInfiniteQuery({
-    apiPath: selectedFilter.apiPath
+    apiPath: 'apiPath' in selectedFilter ? selectedFilter.apiPath : undefined
   })
 
   // Template
-  if (!selectedFilter.apiPath) {
+  if (!('apiPath' in selectedFilter)) {
     return null
   }
 

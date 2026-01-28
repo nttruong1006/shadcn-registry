@@ -13,10 +13,12 @@ const AdvancedFilterValueSelectWithQueryField = ({
 }: AdvancedFilterValueFieldComponentProps) => {
   // Hooks
   const advancedFilterForm = useAdvancedFilterForm()
-  const { options, optionsQuery } = useOptionsQuery({ apiPath: selectedFilter.apiPath })
+  const { options, optionsQuery } = useOptionsQuery({
+    apiPath: 'apiPath' in selectedFilter ? selectedFilter.apiPath : undefined
+  })
 
   // Template
-  if (!selectedFilter.apiPath) {
+  if (!('apiPath' in selectedFilter)) {
     return null
   }
 
