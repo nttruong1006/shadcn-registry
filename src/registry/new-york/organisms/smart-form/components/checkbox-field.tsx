@@ -1,16 +1,16 @@
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const CheckboxField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field }) => (
         <Checkbox
-          id={fieldData.code}
           checked={field.value}
           disabled={disabledFields?.[fieldData.code]}
+          id={fieldData.code}
           onCheckedChange={field.onChange}
         />
       )}

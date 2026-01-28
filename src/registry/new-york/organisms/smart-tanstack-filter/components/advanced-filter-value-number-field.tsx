@@ -1,8 +1,9 @@
-import { Minus } from 'lucide-react'
-import { NumberInput } from '@/components/molecules/number-input'
-import { Field, FieldError } from '@/components/ui/field'
+import { MinusIcon } from 'lucide-react'
+import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation, useAdvancedFilterForm } from './lib'
+import { SmartFilterOperation } from './lib/base'
+import { useAdvancedFilterForm } from './lib/form'
 
 // Component
 const AdvancedFilterValueNumberField = ({
@@ -25,11 +26,9 @@ const AdvancedFilterValueNumberField = ({
             return (
               <Field data-invalid={isInvalid}>
                 <NumberInput
+                  aria-invalid={isInvalid}
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
-                  aria-invalid={isInvalid}
-                  placeholder={`Enter from ${selectedFilter.label.toLowerCase()}`}
                   onFieldChange={field.handleChange}
                   onValueChange={(event) => {
                     field.handleChange(event.value)
@@ -37,6 +36,8 @@ const AdvancedFilterValueNumberField = ({
                       advancedFilterForm.setFieldValue(`filters[${index}].value.additional.to`, event.value)
                     }
                   }}
+                  placeholder={`Enter from ${selectedFilter.label.toLowerCase()}`}
+                  value={field.state.value}
                 />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
@@ -44,7 +45,7 @@ const AdvancedFilterValueNumberField = ({
           }}
         </advancedFilterForm.AppField>
 
-        <Minus className='size-4 text-muted-foreground' />
+        <MinusIcon className='size-4 text-muted-foreground' />
 
         <advancedFilterForm.AppField name={`filters[${index}].value.additional.to`}>
           {(field) => {
@@ -52,14 +53,14 @@ const AdvancedFilterValueNumberField = ({
             return (
               <Field data-invalid={isInvalid}>
                 <NumberInput
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
                   aria-invalid={isInvalid}
-                  placeholder={`Enter to ${selectedFilter.label.toLowerCase()}`}
+                  id={field.name}
                   min={formFilterValueAdditional.from}
+                  name={field.name}
                   onFieldChange={field.handleChange}
                   onValueChange={(event) => field.handleChange(event.value)}
+                  placeholder={`Enter to ${selectedFilter.label.toLowerCase()}`}
+                  value={field.state.value}
                 />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
@@ -78,13 +79,13 @@ const AdvancedFilterValueNumberField = ({
         return (
           <Field data-invalid={isInvalid}>
             <NumberInput
+              aria-invalid={isInvalid}
               id={field.name}
               name={field.name}
-              value={field.state.value as string}
-              aria-invalid={isInvalid}
-              placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
               onFieldChange={field.handleChange}
               onValueChange={(event) => field.handleChange(event.value)}
+              placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
+              value={field.state.value as string}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>

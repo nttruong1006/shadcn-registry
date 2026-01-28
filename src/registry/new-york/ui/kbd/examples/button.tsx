@@ -1,15 +1,15 @@
-import { Button } from '@/components/ui/button'
-import { Kbd } from '@/components/ui/kbd'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Kbd } from '@/registry/new-york/ui/kbd/components/kbd'
 
 // Component
 export const KbdButton = () => {
   // Template
   return (
     <div className='flex flex-wrap items-center gap-4'>
-      <Button variant='outline' size='sm' className='pr-2'>
+      <Button className='pr-2' size='sm' variant='outline'>
         Accept <Kbd>⏎</Kbd>
       </Button>
-      <Button variant='outline' size='sm' className='pr-2'>
+      <Button className='pr-2' size='sm' variant='outline'>
         Cancel <Kbd>Esc</Kbd>
       </Button>
     </div>

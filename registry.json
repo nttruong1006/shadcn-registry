@@ -15,10 +15,7 @@
           "target": "src/components/ui/accordion.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-accordion",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-accordion", "lucide-react"]
     },
     {
       "name": "alert-dialog",
@@ -32,10 +29,7 @@
           "target": "src/components/ui/alert-dialog.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-alert-dialog",
-        "lucide-react"
-      ],
+      "dependencies": ["@radix-ui/react-alert-dialog", "lucide-react"],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/button.json",
         "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
@@ -53,9 +47,7 @@
           "target": "src/components/ui/avatar.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-avatar"
-      ]
+      "dependencies": ["@radix-ui/react-avatar"]
     },
     {
       "name": "badge",
@@ -69,10 +61,7 @@
           "target": "src/components/ui/badge.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
     },
     {
       "name": "breadcrumb",
@@ -86,10 +75,7 @@
           "target": "src/components/ui/breadcrumb.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-slot", "lucide-react"]
     },
     {
       "name": "button",
@@ -145,11 +131,7 @@
           "target": "src/components/ui/calendar.tsx"
         }
       ],
-      "dependencies": [
-        "date-fns",
-        "lucide-react",
-        "react-day-picker"
-      ],
+      "dependencies": ["date-fns", "lucide-react", "react-day-picker"],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/button.json",
         "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
@@ -180,10 +162,7 @@
           "target": "src/components/ui/carousel.tsx"
         }
       ],
-      "dependencies": [
-        "embla-carousel-react",
-        "lucide-react"
-      ],
+      "dependencies": ["embla-carousel-react", "lucide-react"],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/button.json",
         "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
@@ -201,10 +180,7 @@
           "target": "src/components/ui/checkbox.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-checkbox",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-checkbox", "lucide-react"]
     },
     {
       "name": "combobox",
@@ -248,11 +224,7 @@
           "target": "src/components/ui/command.tsx"
         }
       ],
-      "dependencies": [
-        "cmdk",
-        "lucide-react",
-        "@radix-ui/react-dialog"
-      ],
+      "dependencies": ["cmdk", "lucide-react", "@radix-ui/react-dialog"],
       "registryDependencies": [
         "https://ntt-shadcn-registry.vercel.app/r/dialog.json"
       ]
@@ -269,10 +241,7 @@
           "target": "src/components/ui/context-menu.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-context-menu",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-context-menu", "lucide-react"]
     },
     {
       "name": "date-picker",
@@ -313,10 +282,7 @@
           "target": "src/components/ui/dialog.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-dialog",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"]
     },
     {
       "name": "drawer",
@@ -330,9 +296,7 @@
           "target": "src/components/ui/drawer.tsx"
         }
       ],
-      "dependencies": [
-        "vaul"
-      ]
+      "dependencies": ["vaul"]
     },
     {
       "name": "dropdown-menu",
@@ -346,10 +310,7 @@
           "target": "src/components/ui/dropdown-menu.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-dropdown-menu",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"]
     },
     {
       "name": "empty",
@@ -363,9 +324,7 @@
           "target": "src/components/ui/empty.tsx"
         }
       ],
-      "dependencies": [
-        "class-variance-authority"
-      ]
+      "dependencies": ["class-variance-authority"]
     },
     {
       "name": "field",
@@ -401,9 +360,7 @@
           "target": "src/components/ui/hover-card.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-hover-card"
-      ]
+      "dependencies": ["@radix-ui/react-hover-card"]
     },
     {
       "name": "input",
@@ -454,10 +411,7 @@
           "target": "src/components/ui/input-otp.tsx"
         }
       ],
-      "dependencies": [
-        "input-otp",
-        "lucide-react"
-      ]
+      "dependencies": ["input-otp", "lucide-react"]
     },
     {
       "name": "item",
@@ -505,9 +459,7 @@
           "target": "src/components/ui/label.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-label"
-      ]
+      "dependencies": ["@radix-ui/react-label"]
     },
     {
       "name": "menubar",
@@ -521,10 +473,7 @@
           "target": "src/components/ui/menubar.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-menubar",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-menubar", "lucide-react"]
     },
     {
       "name": "navigation-menu",
@@ -561,9 +510,7 @@
           "target": "src/components/ui/popover.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-popover"
-      ]
+      "dependencies": ["@radix-ui/react-popover"]
     },
     {
       "name": "progress",
@@ -577,9 +524,7 @@
           "target": "src/components/ui/progress.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-progress"
-      ]
+      "dependencies": ["@radix-ui/react-progress"]
     },
     {
       "name": "radio-group",
@@ -593,10 +538,7 @@
           "target": "src/components/ui/radio-group.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-radio-group",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-radio-group", "lucide-react"]
     },
     {
       "name": "resizable",
@@ -610,10 +552,7 @@
           "target": "src/components/ui/resizable.tsx"
         }
       ],
-      "dependencies": [
-        "lucide-react",
-        "react-resizable-panels"
-      ]
+      "dependencies": ["lucide-react", "react-resizable-panels"]
     },
     {
       "name": "scroll-area",
@@ -627,9 +566,7 @@
           "target": "src/components/ui/scroll-area.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-scroll-area"
-      ]
+      "dependencies": ["@radix-ui/react-scroll-area"]
     },
     {
       "name": "select",
@@ -643,10 +580,7 @@
           "target": "src/components/ui/select.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-select",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-select", "lucide-react"]
     },
     {
       "name": "separator",
@@ -660,9 +594,7 @@
           "target": "src/components/ui/separator.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-separator"
-      ]
+      "dependencies": ["@radix-ui/react-separator"]
     },
     {
       "name": "sheet",
@@ -676,10 +608,7 @@
           "target": "src/components/ui/sheet.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-dialog",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"]
     },
     {
       "name": "sidebar",
@@ -741,9 +670,7 @@
           "target": "src/components/ui/slider.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slider"
-      ]
+      "dependencies": ["@radix-ui/react-slider"]
     },
     {
       "name": "sonner",
@@ -757,10 +684,7 @@
           "target": "src/components/ui/sonner.tsx"
         }
       ],
-      "dependencies": [
-        "lucide-react",
-        "sonner"
-      ]
+      "dependencies": ["lucide-react", "sonner"]
     },
     {
       "name": "spinner",
@@ -774,9 +698,7 @@
           "target": "src/components/ui/spinner.tsx"
         }
       ],
-      "dependencies": [
-        "lucide-react"
-      ]
+      "dependencies": ["lucide-react"]
     },
     {
       "name": "switch",
@@ -790,9 +712,7 @@
           "target": "src/components/ui/switch.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-switch"
-      ]
+      "dependencies": ["@radix-ui/react-switch"]
     },
     {
       "name": "table",
@@ -819,10 +739,7 @@
           "target": "src/components/ui/tabs.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-tabs",
-        "motion"
-      ]
+      "dependencies": ["@radix-ui/react-tabs", "motion"]
     },
     {
       "name": "textarea",
@@ -849,10 +766,7 @@
           "target": "src/components/ui/toggle.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-toggle",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"]
     },
     {
       "name": "toggle-group",
@@ -887,9 +801,7 @@
           "target": "src/components/ui/tooltip.tsx"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-tooltip"
-      ]
+      "dependencies": ["@radix-ui/react-tooltip"]
     },
     {
       "name": "animated-testimonial",
@@ -916,9 +828,7 @@
           "target": "src/components/molecules/animated-text/index.tsx"
         }
       ],
-      "dependencies": [
-        "motion"
-      ]
+      "dependencies": ["motion"]
     },
     {
       "name": "autocomplete",
@@ -994,11 +904,6 @@
           "target": "src/components/molecules/file-upload/file-upload.tsx"
         },
         {
-          "path": "src/registry/new-york/molecules/file-upload/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/molecules/file-upload/index.tsx"
-        },
-        {
           "path": "src/registry/new-york/molecules/file-upload/components/lib.ts",
           "type": "registry:file",
           "target": "src/components/molecules/file-upload/lib.ts"
@@ -1029,9 +934,7 @@
           "target": "src/components/molecules/gradient-path-background/index.tsx"
         }
       ],
-      "dependencies": [
-        "motion"
-      ]
+      "dependencies": ["motion"]
     },
     {
       "name": "highlighted-text",
@@ -1045,9 +948,7 @@
           "target": "src/components/molecules/highlighted-text/index.tsx"
         }
       ],
-      "dependencies": [
-        "motion"
-      ]
+      "dependencies": ["motion"]
     },
     {
       "name": "loading-overlay",
@@ -1258,11 +1159,6 @@
       "description": "A button to toggle the theme.",
       "files": [
         {
-          "path": "src/registry/new-york/molecules/theme-toggle-button/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/molecules/theme-toggle-button/index.tsx"
-        },
-        {
           "path": "src/registry/new-york/molecules/theme-toggle-button/components/theme-toggle-button.tsx",
           "type": "registry:ui",
           "target": "src/components/molecules/theme-toggle-button/theme-toggle-button.tsx"
@@ -1296,9 +1192,7 @@
           "target": "src/components/molecules/tilt-card/index.tsx"
         }
       ],
-      "dependencies": [
-        "motion"
-      ]
+      "dependencies": ["motion"]
     },
     {
       "name": "year-picker",
@@ -1403,11 +1297,6 @@
           "path": "src/@types/tanstack-table.d.ts",
           "type": "registry:file",
           "target": "src/@types/tanstack-table.d.ts"
-        },
-        {
-          "path": "src/registry/new-york/organisms/data-table/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/data-table/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/data-table/components/lib.ts",
@@ -1517,11 +1406,6 @@
           "path": "src/registry/new-york/organisms/editor/components/image-button.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/editor/image-button.tsx"
-        },
-        {
-          "path": "src/registry/new-york/organisms/editor/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/editor/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/editor/components/internal-editor-content.tsx",
@@ -1697,11 +1581,6 @@
           "target": "src/components/organisms/smart-filter/basic-search.tsx"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-filter/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-filter/index.tsx"
-        },
-        {
           "path": "src/registry/new-york/organisms/smart-filter/components/lib.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-filter/lib.ts"
@@ -1772,11 +1651,6 @@
           "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/form.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-filter/lib/form.ts"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/index.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-filter/lib/index.ts"
         },
         {
           "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/lib/query.ts",
@@ -1852,11 +1726,6 @@
           "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/basic-search.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-filter/basic-search.tsx"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-filter/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-tanstack-filter/components/smart-filter.tsx",
@@ -1942,11 +1811,6 @@
           "target": "src/components/organisms/smart-form/lib/dependency.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/index.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/lib/index.ts"
-        },
-        {
           "path": "src/registry/new-york/organisms/smart-form/components/lib/query.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/query.ts"
@@ -2020,11 +1884,6 @@
           "path": "src/registry/new-york/organisms/smart-form/components/file-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/file-field.tsx"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-form/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-form/components/input-field.tsx",
@@ -2182,11 +2041,6 @@
           "target": "src/components/organisms/smart-form/lib/dependency.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/index.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/lib/index.ts"
-        },
-        {
           "path": "src/registry/new-york/organisms/smart-tanstack-form/components/lib/query.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/query.ts"
@@ -2260,11 +2114,6 @@
           "path": "src/registry/new-york/organisms/smart-tanstack-form/components/file-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/file-field.tsx"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-tanstack-form/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-tanstack-form/components/input-field.tsx",
@@ -2416,11 +2265,6 @@
           "target": "src/components/organisms/smart-form/lib/base.ts"
         },
         {
-          "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/lib/index.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/lib/index.ts"
-        },
-        {
           "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/lib/query.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/query.ts"
@@ -2489,11 +2333,6 @@
           "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/file-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/file-field.tsx"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/index.tsx",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/index.tsx"
         },
         {
           "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/input-field.tsx",

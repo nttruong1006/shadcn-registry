@@ -1,5 +1,5 @@
 import React from 'react'
-import { PhoneNumberInput } from '@/components/molecules/phone-number-input'
+import { PhoneNumberInput } from '@/registry/new-york/molecules/phone-number-input/components/phone-number-input'
 
 // Component
 export const PhoneNUmberInput = () => {
@@ -7,5 +7,5 @@ export const PhoneNUmberInput = () => {
   const [value, setValue] = React.useState('')
 
   // Template
-  return <PhoneNumberInput value={value} placeholder='Enter phone number' onValueChange={setValue} />
+  return <PhoneNumberInput onValueChange={setValue} placeholder='Enter phone number' value={value} />
 }

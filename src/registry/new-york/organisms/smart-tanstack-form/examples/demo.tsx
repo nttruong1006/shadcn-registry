@@ -1,11 +1,8 @@
-import {
-  getDefaultFormValue,
-  getFormSchema,
-  SmartForm,
-  type SmartFormData,
-  useAppForm
-} from '@/components/organisms/smart-tanstack-form'
-import { Button } from '@/components/ui/button'
+import { type SmartFormData, useAppForm } from '@/registry/new-york/organisms/smart-tanstack-form/components/lib/base'
+import { getFormSchema } from '@/registry/new-york/organisms/smart-tanstack-form/components/lib/schema'
+import { getDefaultFormValue } from '@/registry/new-york/organisms/smart-tanstack-form/components/lib/value'
+import { SmartForm } from '@/registry/new-york/organisms/smart-tanstack-form/components/smart-form'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogContent,
@@ -14,7 +11,7 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
+} from '@/registry/new-york/ui/dialog/components/dialog'
 
 const formData: SmartFormData = {
   code: 'user',

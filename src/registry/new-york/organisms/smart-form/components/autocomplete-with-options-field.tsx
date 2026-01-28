@@ -1,22 +1,22 @@
-import { Autocomplete } from '@/components/molecules/autocomplete'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const AutocompleteWithOptionsField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <Autocomplete
           {...field}
-          options={fieldData.config?.options ?? []}
-          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
           inputProps={{
             id: fieldData.code,
             disabled: disabledFields?.[fieldData.code],
             'aria-invalid': fieldState.invalid
           }}
           onValueChange={field.onChange}
+          options={fieldData.config?.options ?? []}
+          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
         />
       )}
     </FieldContainer>

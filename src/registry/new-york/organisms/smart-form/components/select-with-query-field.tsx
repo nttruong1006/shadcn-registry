@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form'
-import { Combobox } from '@/components/ui/combobox'
+import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
 import FieldContainer, { type FieldProps } from './field-container'
-import { buildDependentGraph, getAllDependents, useOptionsQuery } from './lib'
+import { buildDependentGraph, getAllDependents } from './lib/dependency'
+import { useOptionsQuery } from './lib/query'
 
 // Component
 const SelectWithQueryField = ({ formData, dependentGraphRef, fieldData, disabledFields }: FieldProps) => {
@@ -11,12 +12,10 @@ const SelectWithQueryField = ({ formData, dependentGraphRef, fieldData, disabled
 
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field }) => (
         <Combobox
           {...field}
-          options={options}
-          placeholder={`Select ${fieldData.label.toLowerCase()}`}
           buttonTriggerProps={{
             id: fieldData.code,
             disabled: disabledFields?.[fieldData.code],
@@ -31,12 +30,14 @@ const SelectWithQueryField = ({ formData, dependentGraphRef, fieldData, disabled
             }
 
             const dependents = getAllDependents(dependentGraphRef.current, fieldData.code)
-            dependents.forEach((dependent) => {
+            for (const dependent of dependents) {
               setValue(dependent, null, {
                 shouldValidate: formState.submitCount > 0
               })
-            })
+            }
           }}
+          options={options}
+          placeholder={`Select ${fieldData.label.toLowerCase()}`}
         />
       )}
     </FieldContainer>

@@ -1,13 +1,19 @@
 import { type Content, useCurrentEditor, useEditorState } from '@tiptap/react'
-import { Eye } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { EyeIcon } from 'lucide-react'
+import { memo } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/registry/new-york/ui/dialog/components/dialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { EditorContent } from './editor-content'
 
 // Component
-const PreviewButton = React.memo<{ value: Content }>(({ value }) => {
+const PreviewButton = memo<{ value: Content }>(({ value }) => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -25,8 +31,8 @@ const PreviewButton = React.memo<{ value: Content }>(({ value }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger asChild>
-            <Button size='icon' variant='ghost' disabled={editorState?.isEmpty}>
-              <Eye />
+            <Button disabled={editorState?.isEmpty} size='icon' variant='ghost'>
+              <EyeIcon />
             </Button>
           </DialogTrigger>
         </TooltipTrigger>

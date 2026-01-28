@@ -1,5 +1,6 @@
 import React from 'react'
-import { observeTheme, ThemeToggleButton } from '@/components/molecules/theme-toggle-button'
+import { observeTheme } from '@/registry/new-york/molecules/theme-toggle-button/components/lib'
+import { ThemeToggleButton } from '@/registry/new-york/molecules/theme-toggle-button/components/theme-toggle-button'
 
 const ThemeToggleButtonDemo = () => {
   // Effects

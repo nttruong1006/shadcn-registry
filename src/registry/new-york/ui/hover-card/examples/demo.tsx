@@ -1,6 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york/ui/avatar/components/avatar'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/registry/new-york/ui/hover-card/components/hover-card'
 
 // Component
 export const HoverCardDemo = () => {

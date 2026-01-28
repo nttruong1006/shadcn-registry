@@ -1,5 +1,11 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { Card, CardContent } from '@/registry/new-york/ui/card/components/card'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/registry/new-york/ui/carousel/components/carousel'
 
 // Component
 export const CarouselDemo = () => {

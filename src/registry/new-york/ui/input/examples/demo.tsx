@@ -1,4 +1,4 @@
-import { Input } from '@/components/ui/input'
+import { Input } from '@/registry/new-york/ui/input/components/input'
 
 // Component
 export const InputDemo = () => {

@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
-import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '@/registry/new-york/ui/item/components/item'
 
 // Component
 export const ItemVariant = () => {
@@ -12,7 +12,7 @@ export const ItemVariant = () => {
           <ItemDescription>Standard styling with subtle background and borders.</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button variant='outline' size='sm'>
+          <Button size='sm' variant='outline'>
             Open
           </Button>
         </ItemActions>
@@ -23,7 +23,7 @@ export const ItemVariant = () => {
           <ItemDescription>Outlined style with clear borders and transparent background.</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button variant='outline' size='sm'>
+          <Button size='sm' variant='outline'>
             Open
           </Button>
         </ItemActions>
@@ -34,7 +34,7 @@ export const ItemVariant = () => {
           <ItemDescription>Subdued appearance with muted colors for secondary content.</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button variant='outline' size='sm'>
+          <Button size='sm' variant='outline'>
             Open
           </Button>
         </ItemActions>

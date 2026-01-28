@@ -1,12 +1,12 @@
 import type { LucideProps } from 'lucide-react'
-import React from 'react'
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { Kbd } from '@/components/ui/kbd'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { type ForwardRefExoticComponent, memo, type RefAttributes } from 'react'
+import { Button, type ButtonProps } from '@/registry/new-york/ui/button/components/button'
+import { Kbd } from '@/registry/new-york/ui/kbd/components/kbd'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 
 // Component
-const TooltipButton = React.memo(
+const TooltipButton = memo(
   ({
     Icon,
     label,
@@ -15,7 +15,7 @@ const TooltipButton = React.memo(
     className,
     ...props
   }: {
-    Icon: React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>
+    Icon: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>
     label: string
     isActive?: boolean
     kbd?: string
@@ -25,14 +25,14 @@ const TooltipButton = React.memo(
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            size='icon'
-            variant='ghost'
             className={cn(
               {
                 'bg-accent text-accent-foreground': isActive
               },
               className
             )}
+            size='icon'
+            variant='ghost'
             {...props}
           >
             <Icon />

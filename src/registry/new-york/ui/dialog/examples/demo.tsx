@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogClose,
@@ -9,9 +9,9 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from '@/registry/new-york/ui/dialog/components/dialog'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Label } from '@/registry/new-york/ui/label/components/label'
 
 // Component
 export const DialogDemo = () => {
@@ -33,11 +33,11 @@ export const DialogDemo = () => {
             <div className='grid gap-4'>
               <div className='grid gap-3'>
                 <Label htmlFor='name-1'>Name</Label>
-                <Input id='name-1' name='name' defaultValue='Pedro Duarte' />
+                <Input defaultValue='Pedro Duarte' id='name-1' name='name' />
               </div>
               <div className='grid gap-3'>
                 <Label htmlFor='username-1'>Username</Label>
-                <Input id='username-1' name='username' defaultValue='@peduarte' />
+                <Input defaultValue='@peduarte' id='username-1' name='username' />
               </div>
             </div>
           </DialogScrollableContent>

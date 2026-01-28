@@ -1,25 +1,25 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import React from 'react'
+import type { FocusEvent, ReactNode } from 'react'
 import { NumericFormat, type NumericFormatProps } from 'react-number-format'
-import { Button } from '@/components/ui/button'
-import { ButtonGroup } from '@/components/ui/button-group'
-import { Input, type InputProps } from '@/components/ui/input'
-import { InputGroup } from '@/components/ui/input-group'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { ButtonGroup } from '@/registry/new-york/ui/button-group/components/button-group'
+import { Input, type InputProps } from '@/registry/new-york/ui/input/components/input'
+import { InputGroup } from '@/registry/new-york/ui/input-group/components/input-group'
 import { cn } from '@/utils/ui'
 
 // Number input
 export type NumberInputProps = NumericFormatProps<InputProps> & {
   isDisplayStepper?: boolean
-  prefixNode?: React.ReactNode
-  suffixNode?: React.ReactNode
+  prefixNode?: ReactNode
+  suffixNode?: ReactNode
   // biome-ignore lint/suspicious/noExplicitAny: ignore
   onFieldChange?: (...event: any[]) => void
 }
 
 export const NumberInput = ({
   value,
-  min = -Infinity,
-  max = Infinity,
+  min = Number.NEGATIVE_INFINITY,
+  max = Number.POSITIVE_INFINITY,
   step = 1,
   decimalScale = 3,
   allowNegative = true,
@@ -51,11 +51,13 @@ export const NumberInput = ({
     onFieldChange?.(+value - +step)
   }
 
-  const blur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+  const blur = (e: FocusEvent<HTMLInputElement, Element>) => {
     props.onBlur?.(e)
 
     // Using == for checking both null or undefined
-    if (value == null) return
+    if (value == null) {
+      return
+    }
     if (value < min) {
       return onFieldChange?.(min)
     }
@@ -74,47 +76,47 @@ export const NumberInput = ({
     >
       <InputGroup>
         <NumericFormat
-          value={value}
-          thousandSeparator={thousandSeparator}
-          decimalSeparator={decimalSeparator}
-          valueIsNumericString={valueIsNumericString}
-          decimalScale={decimalScale}
-          customInput={Input}
           allowNegative={allowNegative}
-          step={step}
-          min={min}
-          max={max}
           className={cn(isDisplayStepper && 'rounded-r-none border-0')}
+          customInput={Input}
+          decimalScale={decimalScale}
+          decimalSeparator={decimalSeparator}
           disabled={disabled}
+          max={max}
+          min={min}
+          step={step}
+          thousandSeparator={thousandSeparator}
+          value={value}
+          valueIsNumericString={valueIsNumericString}
           {...props}
           onBlur={blur}
         />
       </InputGroup>
 
       {isDisplayStepper && (
-        <React.Fragment>
+        <>
           <Button
             aria-invalid={props['aria-invalid']}
             aria-label='Decrease value'
-            variant='outline'
-            size='icon'
-            onClick={decrement}
             disabled={disabled || (value != null && +value <= +min)}
+            onClick={decrement}
+            size='icon'
+            variant='outline'
           >
             <ChevronDown />
           </Button>
 
           <Button
+            aria-invalid={props['aria-invalid']}
             aria-label='Increase value'
+            disabled={disabled || (value != null && +value >= +max)}
+            onClick={increment}
             size='icon'
             variant='outline'
-            aria-invalid={props['aria-invalid']}
-            onClick={increment}
-            disabled={disabled || (value != null && +value >= +max)}
           >
             <ChevronUp />
           </Button>
-        </React.Fragment>
+        </>
       )}
     </ButtonGroup>
   )

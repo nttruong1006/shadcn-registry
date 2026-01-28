@@ -47,7 +47,8 @@
 
   --color-code: var(--code);
 
-  --animate-canopy-horizontal: canopy-x var(--transition-duration) linear infinite;
+  --animate-canopy-horizontal: canopy-x var(--transition-duration) linear
+    infinite;
   --animate-canopy-vertical: canopy-y var(--transition-duration) linear infinite;
 
   @keyframes canopy-x {
@@ -169,7 +170,8 @@
     @apply hidden;
   }
 
-  .sl-heading-wrapper > :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+  .sl-heading-wrapper
+    > :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
     @apply border-none;
   }
 

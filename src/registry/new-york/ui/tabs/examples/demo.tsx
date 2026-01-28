@@ -1,8 +1,15 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/registry/new-york/ui/card/components/card'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Label } from '@/registry/new-york/ui/label/components/label'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york/ui/tabs/components/tabs'
 
 // Component
 export function TabsDemo() {
@@ -23,11 +30,11 @@ export function TabsDemo() {
             <CardContent className='grid gap-6'>
               <div className='grid gap-3'>
                 <Label htmlFor='tabs-demo-name'>Name</Label>
-                <Input id='tabs-demo-name' defaultValue='Pedro Duarte' />
+                <Input defaultValue='Pedro Duarte' id='tabs-demo-name' />
               </div>
               <div className='grid gap-3'>
                 <Label htmlFor='tabs-demo-username'>Username</Label>
-                <Input id='tabs-demo-username' defaultValue='@peduarte' />
+                <Input defaultValue='@peduarte' id='tabs-demo-username' />
               </div>
             </CardContent>
             <CardFooter>

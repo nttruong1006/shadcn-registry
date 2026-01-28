@@ -29,16 +29,15 @@ export const defaultFieldValues: Record<SmartFormFieldType, string | number | bo
 // Get default form value
 export const getDefaultFormValue = <T extends FormValue>(formData: SmartFormData, slots?: T): T => {
   const defaultValue: Record<string, unknown> = {}
-  formData.templates.forEach((template) => {
-    template.fields.forEach((field) => {
+  for (const template of formData.templates) {
+    for (const field of template.fields) {
       // LABEL fields
       if (field.type === 'label') {
-        return
+        break
       }
-
       // Other fields
       defaultValue[field.code] = slots?.[field.code] ?? defaultFieldValues[field.type]
-    })
-  })
+    }
+  }
   return defaultValue as T
 }

@@ -1,13 +1,13 @@
-import { Editor } from '@/components/organisms/editor'
+import { Editor } from '@/registry/new-york/organisms/editor/components/editor'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const EditorField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field }) => (
-        <Editor value={field.value} editable={!disabledFields?.[fieldData.code]} onValueChange={field.onChange} />
+        <Editor editable={!disabledFields?.[fieldData.code]} onValueChange={field.onChange} value={field.value} />
       )}
     </FieldContainer>
   )

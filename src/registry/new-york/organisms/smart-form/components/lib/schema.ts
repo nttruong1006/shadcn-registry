@@ -1,12 +1,12 @@
 import { toDate } from 'date-fns'
 import type { FieldValues } from 'react-hook-form'
 import { isValidPhoneNumber } from 'react-phone-number-input'
-import z, { type ZodArray, type ZodNullable, type ZodNumber, type ZodPipe, type ZodString, type ZodType } from 'zod'
-import type { UploadedFile } from '@/components/molecules/file-upload'
+import z from 'zod'
+import type { UploadedFile } from '@/registry/new-york/molecules/file-upload/components/lib'
 import type { SmartFormData } from './base'
 
 // Schema options
-export type SchemaOptions<T = FieldValues> = {
+export interface SchemaOptions<T = FieldValues> {
   hiddenFields?: Record<string, boolean | undefined>
   slots?: Record<string, z.ZodTypeAny>
   refinement?: (arg: T, ctx: z.core.$RefinementCtx<T>) => void | Promise<void>
@@ -14,7 +14,7 @@ export type SchemaOptions<T = FieldValues> = {
 
 // Get form schema
 export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOptions) => {
-  const shape: Record<string, ZodType> = {}
+  const shape: Record<string, z.ZodTypeAny> = {}
 
   const passwordConfirmationFields: Array<{
     code: string
@@ -23,12 +23,14 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
     >
   }> = []
 
-  formData.templates.forEach((template) => {
-    template.fields.forEach((field) => {
+  for (const template of formData.templates) {
+    for (const field of template.fields) {
       const { code, type, config: { validation, isPasswordConfirmation, referenceFields } = {} } = field
 
       // Hidden fields
-      if (schemaOptions?.hiddenFields?.[code]) return
+      if (schemaOptions?.hiddenFields?.[code]) {
+        continue
+      }
 
       // Visible fields
       switch (type) {
@@ -40,7 +42,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
         case 'autocomplete-with-query':
         case 'autocomplete-with-infinite-query':
         case 'editor': {
-          let fieldSchema: ZodString | ZodPipe<ZodType> = z.string().trim()
+          let fieldSchema: z.ZodString | z.ZodPipe<z.ZodType> = z.string().trim()
 
           if (!validation) {
             shape[code] = fieldSchema
@@ -51,7 +53,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
           if (validation?.email) {
             fieldSchema = fieldSchema.refine((value) => {
               try {
-                if (!validation.required && !value) {
+                if (!(validation.required || value)) {
                   return true
                 }
                 return Boolean(z.email().parse(value))
@@ -102,7 +104,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
 
         // password (string)
         case 'password': {
-          let fieldSchema: ZodString | ZodPipe<ZodType> = z.string().trim()
+          let fieldSchema: z.ZodString | z.ZodPipe<z.ZodType> = z.string().trim()
 
           if (isPasswordConfirmation) {
             if (referenceFields && referenceFields.length > 0) {
@@ -154,7 +156,10 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
         case 'select-with-query':
         case 'select-with-infinite-query':
         case 'radio': {
-          let fieldSchema: ZodNullable<ZodString> | ZodPipe<ZodNullable<ZodString>> = z.string().trim().nullable()
+          let fieldSchema: z.ZodNullable<z.ZodString> | z.ZodPipe<z.ZodNullable<z.ZodString>> = z
+            .string()
+            .trim()
+            .nullable()
 
           if (!validation) {
             shape[code] = fieldSchema
@@ -172,7 +177,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
 
         // number (string | number)
         case 'number': {
-          let fieldSchema: ZodNumber = z.number()
+          let fieldSchema: z.ZodNumber = z.number()
 
           if (!validation) {
             shape[code] = z.preprocess((value) => (Number.isNaN(Number(value)) ? 0 : Number(value)), fieldSchema)
@@ -202,7 +207,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
         case 'multi-select-with-options':
         case 'multi-select-with-query':
         case 'multi-select-with-infinite-query': {
-          let fieldSchema: ZodArray<ZodString> = z.array(z.string())
+          let fieldSchema: z.ZodArray<z.ZodString> = z.array(z.string())
 
           if (!validation) {
             shape[code] = fieldSchema
@@ -222,7 +227,15 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
         case 'date': {
           if (!validation) {
             shape[code] = z.codec(z.union([z.iso.datetime(), z.date()]).nullable(), z.iso.datetime().nullable(), {
-              decode: (value) => (value ? (typeof value === 'string' ? value : value.toISOString()) : null),
+              decode: (value) => {
+                if (!value) {
+                  return null
+                }
+                if (typeof value === 'string') {
+                  return value
+                }
+                return value.toISOString()
+              },
               encode: (value) => (value ? toDate(value) : null)
             })
             break
@@ -234,7 +247,15 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
               z.union([z.iso.datetime(), z.date()]).nullable(),
               z.iso.datetime().nullable().refine(Boolean, validation.required.message),
               {
-                decode: (value) => (value ? (typeof value === 'string' ? value : value.toISOString()) : null),
+                decode: (value) => {
+                  if (!value) {
+                    return null
+                  }
+                  if (typeof value === 'string') {
+                    return value
+                  }
+                  return value.toISOString()
+                },
                 encode: (value) => (value ? toDate(value) : null)
               }
             )
@@ -251,7 +272,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
 
         // file (File | UploadedFile | null)
         case 'file': {
-          let fieldSchema: ZodType<File | UploadedFile | null> | ZodPipe<ZodType<File | UploadedFile | null>> =
+          let fieldSchema: z.ZodType<File | UploadedFile | null> | z.ZodPipe<z.ZodType<File | UploadedFile | null>> =
             z.custom<File | UploadedFile | null>()
 
           if (!validation) {
@@ -270,8 +291,9 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
 
         // multi-file (Array<File | UploadedFile>)
         case 'multi-file': {
-          let fieldSchema: ZodArray<ZodType<File | UploadedFile>> | ZodPipe<ZodArray<ZodType<File | UploadedFile>>> =
-            z.array(z.custom<File | UploadedFile>())
+          let fieldSchema:
+            | z.ZodArray<z.ZodType<File | UploadedFile>>
+            | z.ZodPipe<z.ZodArray<z.ZodType<File | UploadedFile>>> = z.array(z.custom<File | UploadedFile>())
 
           if (!validation) {
             shape[code] = fieldSchema
@@ -295,15 +317,20 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
           }
           break
         }
+
+        // Default
+        default: {
+          break
+        }
       }
-    })
-  })
+    }
+  }
 
   let schema = z.object(shape)
 
   if (passwordConfirmationFields.length > 0) {
     schema = schema.superRefine((arg, ctx) => {
-      passwordConfirmationFields.forEach((passwordConfirmationField) => {
+      for (const passwordConfirmationField of passwordConfirmationFields) {
         const { code, referenceFields } = passwordConfirmationField
         const referenceField = referenceFields[0]
         if (arg[code] !== arg[referenceField.code]) {
@@ -313,7 +340,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
             path: [code]
           })
         }
-      })
+      }
     })
   }
 

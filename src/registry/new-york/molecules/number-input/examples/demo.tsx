@@ -1,5 +1,5 @@
 import React from 'react'
-import { NumberInput, type NumberInputProps } from '@/components/molecules/number-input'
+import { NumberInput, type NumberInputProps } from '@/registry/new-york/molecules/number-input/components/number-input'
 
 // Component
 export const NumberInputDemo = () => {
@@ -9,11 +9,11 @@ export const NumberInputDemo = () => {
   // Template
   return (
     <NumberInput
-      value={value}
-      placeholder='Enter number'
       className='w-xs'
       onFieldChange={setValue}
       onValueChange={({ value }) => setValue(value)}
+      placeholder='Enter number'
+      value={value}
     />
   )
 }

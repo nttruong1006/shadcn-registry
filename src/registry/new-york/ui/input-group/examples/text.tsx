@@ -4,7 +4,7 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea
-} from '@/components/ui/input-group'
+} from '@/registry/new-york/ui/input-group/components/input-group'
 
 // Component
 export const InputGroupTextExample = () => {
@@ -24,7 +24,7 @@ export const InputGroupTextExample = () => {
         <InputGroupAddon>
           <InputGroupText>https://</InputGroupText>
         </InputGroupAddon>
-        <InputGroupInput placeholder='example.com' className='!pl-0.5' />
+        <InputGroupInput className='pl-0.5!' placeholder='example.com' />
         <InputGroupAddon align='inline-end'>
           <InputGroupText>.com</InputGroupText>
         </InputGroupAddon>

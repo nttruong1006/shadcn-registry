@@ -1,6 +1,7 @@
-import { Editor, type EditorProps } from '@/components/organisms/editor'
+import { Editor, type EditorProps } from '@/registry/new-york/organisms/editor/components/editor'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type EditorFieldOutputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { EditorFieldOutputValue } from './lib/schema'
 
 // Component
 const EditorField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
@@ -10,11 +11,11 @@ const EditorField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldPro
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <Editor
-        value={field.state.value}
         editable={!isDisabled}
         onValueChange={field.handleChange as EditorProps['onValueChange']}
+        value={field.state.value}
       />
     </FieldContainer>
   )

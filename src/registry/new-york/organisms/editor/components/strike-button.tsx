@@ -1,10 +1,10 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { Strikethrough } from 'lucide-react'
-import React from 'react'
+import { StrikethroughIcon } from 'lucide-react'
+import { memo } from 'react'
 import TooltipButton from './tooltip-button'
 
 // Component
-const StrikeButton = React.memo(() => {
+const StrikeButton = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -19,10 +19,10 @@ const StrikeButton = React.memo(() => {
   // Template
   return (
     <TooltipButton
-      Icon={Strikethrough}
-      label='Strike'
+      Icon={StrikethroughIcon}
       isActive={editorState?.isActive}
       kbd='Ctrl Shift S'
+      label='Strike'
       onClick={() => editor?.chain().focus().toggleStrike().run()}
     />
   )

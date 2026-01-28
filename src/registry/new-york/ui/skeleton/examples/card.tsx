@@ -1,4 +1,4 @@
-import { Skeleton } from '@/components/ui/skeleton'
+import { Skeleton } from '@/registry/new-york/ui/skeleton/components/skeleton'
 
 // Component
 export const SkeletonCard = () => {

@@ -1,42 +1,42 @@
-import * as SheetPrimitive from '@radix-ui/react-dialog'
+import { Close, Content, Description, Overlay, Portal, Root, Title, Trigger } from '@radix-ui/react-dialog'
 import { XIcon } from 'lucide-react'
-import type * as React from 'react'
+import type { ComponentProps } from 'react'
 import { cn } from '@/utils/ui'
 
 // Sheet
-export const Sheet = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) => {
+export const Sheet = ({ ...props }: ComponentProps<typeof Root>) => {
   // Template
-  return <SheetPrimitive.Root data-slot='sheet' {...props} />
+  return <Root data-slot='sheet' {...props} />
 }
 
 // Sheet trigger
-export const SheetTrigger = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) => {
+export const SheetTrigger = ({ ...props }: ComponentProps<typeof Trigger>) => {
   // Template
-  return <SheetPrimitive.Trigger data-slot='sheet-trigger' {...props} />
+  return <Trigger data-slot='sheet-trigger' {...props} />
 }
 
 // Sheet close
-export const SheetClose = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Close>) => {
+export const SheetClose = ({ ...props }: ComponentProps<typeof Close>) => {
   // Template
-  return <SheetPrimitive.Close data-slot='sheet-close' {...props} />
+  return <Close data-slot='sheet-close' {...props} />
 }
 
 // Sheet portal
-export const SheetPortal = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Portal>) => {
+export const SheetPortal = ({ ...props }: ComponentProps<typeof Portal>) => {
   // Template
-  return <SheetPrimitive.Portal data-slot='sheet-portal' {...props} />
+  return <Portal data-slot='sheet-portal' {...props} />
 }
 
 // Sheet overlay
-export const SheetOverlay = ({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Overlay>) => {
+export const SheetOverlay = ({ className, ...props }: ComponentProps<typeof Overlay>) => {
   // Template
   return (
-    <SheetPrimitive.Overlay
-      data-slot='sheet-overlay'
+    <Overlay
       className={cn(
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=open]:animate-in',
         className
       )}
+      data-slot='sheet-overlay'
       {...props}
     />
   )
@@ -48,15 +48,14 @@ export const SheetContent = ({
   children,
   side = 'right',
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Content> & {
+}: ComponentProps<typeof Content> & {
   side?: 'top' | 'right' | 'bottom' | 'left'
 }) => {
   // Template
   return (
     <SheetPortal>
       <SheetOverlay />
-      <SheetPrimitive.Content
-        data-slot='sheet-content'
+      <Content
         className={cn(
           'fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:duration-300 data-[state=open]:duration-500',
           side === 'right' &&
@@ -69,50 +68,41 @@ export const SheetContent = ({
             'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-auto border-t',
           className
         )}
+        data-slot='sheet-content'
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className='absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary'>
+        <Close className='absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary'>
           <XIcon className='size-4' />
           <span className='sr-only'>Close</span>
-        </SheetPrimitive.Close>
-      </SheetPrimitive.Content>
+        </Close>
+      </Content>
     </SheetPortal>
   )
 }
 
 // Sheet header
-export const SheetHeader = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const SheetHeader = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
-  return <div data-slot='sheet-header' className={cn('flex flex-col gap-1.5 p-4', className)} {...props} />
+  return <div className={cn('flex flex-col gap-1.5 p-4', className)} data-slot='sheet-header' {...props} />
 }
 
 // Sheet footer
-export const SheetFooter = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const SheetFooter = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
-  return <div data-slot='sheet-footer' className={cn('mt-auto flex flex-col gap-2 p-4', className)} {...props} />
+  return <div className={cn('mt-auto flex flex-col gap-2 p-4', className)} data-slot='sheet-footer' {...props} />
 }
 
 // Sheet title
-export const SheetTitle = ({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) => {
+export const SheetTitle = ({ className, ...props }: ComponentProps<typeof Title>) => {
   // Template
-  return (
-    <SheetPrimitive.Title
-      data-slot='sheet-title'
-      className={cn('font-semibold text-foreground', className)}
-      {...props}
-    />
-  )
+  return <Title className={cn('font-semibold text-foreground', className)} data-slot='sheet-title' {...props} />
 }
 
 // Sheet description
-export const SheetDescription = ({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Description>) => {
+export const SheetDescription = ({ className, ...props }: ComponentProps<typeof Description>) => {
   // Template
   return (
-    <SheetPrimitive.Description
-      data-slot='sheet-description'
-      className={cn('text-muted-foreground text-sm', className)}
-      {...props}
-    />
+    <Description className={cn('text-muted-foreground text-sm', className)} data-slot='sheet-description' {...props} />
   )
 }

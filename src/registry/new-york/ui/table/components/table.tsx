@@ -1,14 +1,14 @@
-import type * as React from 'react'
+import type { ComponentProps } from 'react'
 import { cn } from '@/utils/ui'
 
 // Table
-export const Table = ({ className, ...props }: React.ComponentProps<'table'>) => {
+export const Table = ({ className, ...props }: ComponentProps<'table'>) => {
   // Template
   return (
-    <div data-slot='table-container' className='size-full max-h-full grow overflow-auto'>
+    <div className='size-full max-h-full grow overflow-auto' data-slot='table-container'>
       <table
-        data-slot='table'
         className={cn('w-full table-fixed caption-bottom border-separate border-spacing-0 text-sm', className)}
+        data-slot='table'
         {...props}
       />
     </div>
@@ -16,80 +16,80 @@ export const Table = ({ className, ...props }: React.ComponentProps<'table'>) =>
 }
 
 // Table header
-export const TableHeader = ({ className, ...props }: React.ComponentProps<'thead'>) => {
+export const TableHeader = ({ className, ...props }: ComponentProps<'thead'>) => {
   // Template
-  return <thead data-slot='table-header' className={cn('[&_tr]:border-b', className)} {...props} />
+  return <thead className={cn('[&_tr]:border-b', className)} data-slot='table-header' {...props} />
 }
 
 // Table body
-export const TableBody = ({ className, ...props }: React.ComponentProps<'tbody'>) => {
+export const TableBody = ({ className, ...props }: ComponentProps<'tbody'>) => {
   // Template
   return (
     <tbody
-      data-slot='table-body'
       className={cn('[&_tr:last-child]:border-0 [&_tr]:hover:bg-muted/50', className)}
+      data-slot='table-body'
       {...props}
     />
   )
 }
 
 // Table footer
-export const TableFooter = ({ className, ...props }: React.ComponentProps<'tfoot'>) => {
+export const TableFooter = ({ className, ...props }: ComponentProps<'tfoot'>) => {
   return (
     <tfoot
-      data-slot='table-footer'
       className={cn('border-t bg-muted/50 font-medium [&>tr]:last:border-b-0', className)}
+      data-slot='table-footer'
       {...props}
     />
   )
 }
 
 // Table row
-export const TableRow = ({ className, ...props }: React.ComponentProps<'tr'>) => {
+export const TableRow = ({ className, ...props }: ComponentProps<'tr'>) => {
   // Template
   return (
     <tr
-      data-slot='table-row'
       className={cn('border-b transition-colors data-[state=selected]:bg-muted', className)}
+      data-slot='table-row'
       {...props}
     />
   )
 }
 
 // Table head
-export const TableHead = ({ className, ...props }: React.ComponentProps<'th'>) => {
+export const TableHead = ({ className, ...props }: ComponentProps<'th'>) => {
   // Template
   return (
     <th
-      data-slot='table-head'
       className={cn(
         'whitespace-nowrap px-4 py-3 text-left align-middle font-semibold text-foreground [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5',
         className
       )}
+      data-slot='table-head'
       {...props}
     />
   )
 }
 
 // Table cell
-export const TableCell = ({ className, ...props }: React.ComponentProps<'td'>) => {
+export const TableCell = ({ className, ...props }: ComponentProps<'td'>) => {
   // Template
   return (
     <td
-      data-slot='table-cell'
       className={cn(
         'whitespace-nowrap px-4 py-3 align-middle [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5',
         className
       )}
+      data-slot='table-cell'
       {...props}
     />
   )
 }
 
 // Table caption
-export const TableCaption = ({ className, ...props }: React.ComponentProps<'caption'>) => {
+export const TableCaption = ({ className, ...props }: ComponentProps<'caption'>) => {
   // Template
   return (
-    <caption data-slot='table-caption' className={cn('mt-4 text-muted-foreground text-sm', className)} {...props} />
+    <caption className={cn('mt-4 text-muted-foreground text-sm', className)} data-slot='table-caption' {...props} />
   )
 }

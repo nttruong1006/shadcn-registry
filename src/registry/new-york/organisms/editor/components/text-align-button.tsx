@@ -1,21 +1,21 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { AlignLeft, ChevronDown } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
+import { memo, useRef, useTransition } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 import type { CallbackRef, SetExtensions } from './editor'
 import { alignments } from './lib'
 
 // Component
-const TextAlignButton = React.memo<{
+const TextAlignButton = memo<{
   setExtensions: SetExtensions
   callbackRef: CallbackRef
 }>(({ callbackRef, setExtensions }) => {
@@ -34,10 +34,10 @@ const TextAlignButton = React.memo<{
       }
     }
   })
-  const [isPending, startTransition] = React.useTransition()
+  const [isPending, startTransition] = useTransition()
 
   // Refs
-  const isExtensionLoadedRef = React.useRef(false)
+  const isExtensionLoadedRef = useRef(false)
 
   // Template
   return (
@@ -45,7 +45,7 @@ const TextAlignButton = React.memo<{
       <Tooltip>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='gap-1' isLoading={isPending}>
+            <Button className='gap-1' isLoading={isPending} variant='ghost'>
               <AlignLeft />
               <ChevronDown />
             </Button>
@@ -58,10 +58,10 @@ const TextAlignButton = React.memo<{
       <DropdownMenuContent>
         {alignments.map((alignment) => (
           <DropdownMenuItem
-            key={alignment.value}
             className={cn({
               'bg-accent text-accent-foreground': editorState?.isActive[alignment.value]
             })}
+            key={alignment.value}
             onClick={() => {
               const callback: CallbackRef['current'] = (editor) => {
                 editor?.chain().focus().setTextAlign(alignment.value).run()

@@ -1,6 +1,6 @@
-import { NumberInput } from '@/components/molecules/number-input'
+import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const NumberField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -16,11 +16,11 @@ const NumberField = ({ fieldData, disabledFields }: FieldProps) => {
         name={field.name}
         value={field.state.value}
         {...fieldData.config?.numberInputProps}
-        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-        disabled={disabledFields?.[fieldData.code]}
         aria-invalid={isInvalid}
+        disabled={disabledFields?.[fieldData.code]}
         onFieldChange={field.handleChange}
         onValueChange={(event) => field.handleChange(event.value)}
+        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
       />
     </FieldContainer>
   )

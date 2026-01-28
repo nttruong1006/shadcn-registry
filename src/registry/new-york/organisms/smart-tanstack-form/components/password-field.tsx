@@ -1,6 +1,9 @@
-import { PasswordInput, type PasswordInputProps } from '@/components/molecules/password-input'
+import {
+  PasswordInput,
+  type PasswordInputProps
+} from '@/registry/new-york/molecules/password-input/components/password-input'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const PasswordField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -12,14 +15,14 @@ const PasswordField = ({ fieldData, disabledFields }: FieldProps) => {
   return (
     <FieldContainer fieldData={fieldData}>
       <PasswordInput
+        aria-invalid={isInvalid}
+        disabled={disabledFields?.[fieldData.code]}
         id={field.name}
         name={field.name}
-        value={field.state.value}
-        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-        disabled={disabledFields?.[fieldData.code]}
-        aria-invalid={isInvalid}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
+        value={field.state.value}
       />
     </FieldContainer>
   )

@@ -1,7 +1,7 @@
 import { ListFilter, Search } from 'lucide-react'
 import React from 'react'
 import { FormProvider, type SubmitHandler, type UseFormReturn, useFieldArray } from 'react-hook-form'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york/ui/toggle-group/components/toggle-group'
 import AdvancedFilter from './advanced-filter'
 import BasicSearch from './basic-search'
 import {
@@ -73,16 +73,20 @@ export const SmartFilter = ({
   const changeMode = (value: string) => {
     setMode(value as Mode)
     switch (value) {
-      case Mode.BasicSearch:
+      case Mode.BasicSearch: {
         formFilters.remove()
         break
-
-      case Mode.AdvancedFilter:
+      }
+      case Mode.AdvancedFilter: {
         form.resetField('search')
         if (filters.length > 0) {
           addFilter(filters[0])
         }
         break
+      }
+      default: {
+        break
+      }
     }
   }
 
@@ -101,16 +105,17 @@ export const SmartFilter = ({
         <form className='w-full' onSubmit={(e) => e.preventDefault()}>
           {filters.length === 0 ? (
             <BasicSearch setFilters={setFilters} />
+            // biome-ignore lint/style/noNestedTernary: ignore
           ) : isHideSearchMode ? (
-            <AdvancedFilter formFilters={formFilters} addFilter={addFilter} setFilters={setFilters} />
+            <AdvancedFilter addFilter={addFilter} formFilters={formFilters} setFilters={setFilters} />
           ) : (
             <div className='flex items-center gap-2'>
               <ToggleGroup
-                type='single'
-                variant='outline'
-                value={mode}
                 className='data-[variant=outline]:shadow-none'
                 onValueChange={changeMode}
+                type='single'
+                value={mode}
+                variant='outline'
               >
                 <ToggleGroupItem value={Mode.BasicSearch}>
                   <Search />
@@ -124,7 +129,7 @@ export const SmartFilter = ({
               {mode === Mode.BasicSearch ? (
                 <BasicSearch setFilters={setFilters} />
               ) : (
-                <AdvancedFilter formFilters={formFilters} addFilter={addFilter} setFilters={setFilters} />
+                <AdvancedFilter addFilter={addFilter} formFilters={formFilters} setFilters={setFilters} />
               )}
             </div>
           )}

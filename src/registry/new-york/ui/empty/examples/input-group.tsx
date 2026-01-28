@@ -1,7 +1,13 @@
 import { SearchIcon } from 'lucide-react'
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { Kbd } from '@/components/ui/kbd'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle
+} from '@/registry/new-york/ui/empty/components/empty'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
+import { Kbd } from '@/registry/new-york/ui/kbd/components/kbd'
 
 // Component
 export const EmptyInputGroup = () => {

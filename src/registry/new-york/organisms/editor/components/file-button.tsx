@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
-import { CheckCircle, Paperclip } from 'lucide-react'
+import { CheckCircleIcon, PaperclipIcon } from 'lucide-react'
 import { memo, useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
 import { toast } from 'sonner'
@@ -10,15 +10,13 @@ import {
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
-  type FileUploadProps,
-  getFileUrl,
-  type UploadedFile,
-  useFileUpload
-} from '@/components/molecules/file-upload'
-import { Button } from '@/components/ui/button'
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+  type FileUploadProps
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
+import { getFileUrl, type UploadedFile, useFileUpload } from '@/registry/new-york/molecules/file-upload/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // File form schema
 export const fileFormSchema = z.object({
@@ -71,7 +69,7 @@ const FileButton = memo<{
         ) as UploadedFile[]
 
         // Add file node view
-        uploadedFiles.forEach((uploadedFile) => {
+        for (const uploadedFile of uploadedFiles) {
           editor
             ?.chain()
             .focus()
@@ -83,7 +81,7 @@ const FileButton = memo<{
               size: uploadedFile.compress_info[''].size
             })
             .run()
-        })
+        }
 
         // Enter new line
         if (uploadedFiles.length > 0) {
@@ -102,12 +100,12 @@ const FileButton = memo<{
 
   // Template
   return (
-    <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
+    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
       <Tooltip>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
             <Button size='icon' variant='ghost'>
-              <Paperclip />
+              <PaperclipIcon />
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
@@ -133,18 +131,18 @@ const FileButton = memo<{
                   <FieldLabel htmlFor={`editor-${fileForm.formId}-files`}>Files *</FieldLabel>
 
                   <FileUpload
-                    value={field.state.value}
-                    dropzoneOptions={fileUploaderDropzoneOptions}
                     className='xl:grid-cols-1'
+                    dropzoneOptions={fileUploaderDropzoneOptions}
                     onValueChange={field.handleChange as FileUploadProps['onValueChange']}
+                    value={field.state.value}
                   >
-                    <FileUploadInput id={`editor-${fileForm.formId}-files`} aria-invalid={isInvalid} />
+                    <FileUploadInput aria-invalid={isInvalid} id={`editor-${fileForm.formId}-files`} />
                     <FileUploadContent>
                       {field.state.value.map((value, index) => (
                         <FileUploadItem
+                          index={index}
                           // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                           key={index}
-                          index={index}
                           value={value}
                         />
                       ))}
@@ -164,14 +162,14 @@ const FileButton = memo<{
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    size='icon'
-                    isLoading={isUploadFilePending || isSubmitting}
-                    variant='outline'
-                    type='submit'
-                    form={fileForm.formId}
                     disabled={!canSubmit}
+                    form={fileForm.formId}
+                    isLoading={isUploadFilePending || isSubmitting}
+                    size='icon'
+                    type='submit'
+                    variant='outline'
                   >
-                    <CheckCircle />
+                    <CheckCircleIcon />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>submitButton</TooltipContent>

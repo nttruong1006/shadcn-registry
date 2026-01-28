@@ -1,15 +1,18 @@
-import React from 'react'
-import { YearRangePicker, type YearRangePickerProps } from '@/components/molecules/year-picker'
+import { useState } from 'react'
+import {
+  YearRangePicker,
+  type YearRangePickerProps
+} from '@/registry/new-york/molecules/year-picker/components/year-picker'
 
 // Component
 export const YearPickerRange = () => {
   // States
-  const [value, setValue] = React.useState<YearRangePickerProps['value']>(null)
+  const [value, setValue] = useState<YearRangePickerProps['value']>(null)
 
   // Template
   return (
     <div className='w-full max-w-xs'>
-      <YearRangePicker value={value} placeholder='Select year' onValueChange={setValue} />
+      <YearRangePicker onValueChange={setValue} placeholder='Select year' value={value} />
     </div>
   )
 }

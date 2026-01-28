@@ -1,7 +1,7 @@
-import { MultiSelect } from '@/components/molecules/multi-select'
-import { Field, FieldError } from '@/components/ui/field'
+import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { useAdvancedFilterForm } from './lib'
+import { useAdvancedFilterForm } from './lib/form'
 
 // Component
 const AdvancedFilterValueMultiSelectWithOptionsField = ({
@@ -19,10 +19,10 @@ const AdvancedFilterValueMultiSelectWithOptionsField = ({
         return (
           <Field data-invalid={isInvalid}>
             <MultiSelect
-              value={field.state.value as string[]}
+              onValueChange={field.handleChange}
               options={selectedFilter.options ?? []}
               placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
-              onValueChange={field.handleChange}
+              value={field.state.value as string[]}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>

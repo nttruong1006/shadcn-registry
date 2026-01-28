@@ -1,4 +1,4 @@
-import { HighlightedText } from '@/components/molecules/highlighted-text'
+import { HighlightedText } from '@/registry/new-york/molecules/highlighted-text/components/highlighted-text'
 
 // Component
 const HighlightedTextDemo = () => {

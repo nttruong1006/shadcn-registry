@@ -1,12 +1,19 @@
 import { Bell, RefreshCcwIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle
+} from '@/registry/new-york/ui/empty/components/empty'
 
 // Component
 export const EmptyBackground = () => {
   // Template
   return (
-    <Empty className='h-full bg-gradient-to-b from-30% from-muted/50 to-background'>
+    <Empty className='h-full bg-linear-to-b from-30% from-muted/50 to-background'>
       <EmptyHeader>
         <EmptyMedia variant='icon'>
           <Bell />
@@ -15,7 +22,7 @@ export const EmptyBackground = () => {
         <EmptyDescription>You&apos;re all caught up. New notifications will appear here.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button variant='outline' size='sm'>
+        <Button size='sm' variant='outline'>
           <RefreshCcwIcon />
           Refresh
         </Button>

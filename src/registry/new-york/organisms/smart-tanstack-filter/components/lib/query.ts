@@ -8,7 +8,7 @@ import {
   useQuery
 } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React from 'react'
+import { type UIEvent, useMemo, useState } from 'react'
 import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
@@ -29,7 +29,7 @@ export const useOptionsQuery = ({ apiPath }: { apiPath: string | undefined }) =>
   })
 
   // Memos
-  const options = React.useMemo<Option[]>(() => {
+  const options = useMemo<Option[]>(() => {
     return (
       optionsQuery.data?.responseData?.rows.map((option) => ({
         value: option.value,
@@ -63,10 +63,7 @@ export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (q
 }
 
 // Fetch next page
-export const fetchNextPage = (args: {
-  event: React.UIEvent<HTMLDivElement, UIEvent>
-  infiniteQuery: UseInfiniteQueryResult
-}) => {
+export const fetchNextPage = (args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) => {
   // Args
   const { event, infiniteQuery } = args
 
@@ -82,7 +79,7 @@ export const fetchNextPage = (args: {
 
 export const useOptionsInfiniteQuery = ({ apiPath }: { apiPath: string | undefined }) => {
   // States
-  const [searchKeyword, setSearchKeyword] = React.useState('')
+  const [searchKeyword, setSearchKeyword] = useState('')
 
   // Debounced
   const debouncedSearchKeyword = useDebounce(searchKeyword.trim(), 400)
@@ -109,7 +106,7 @@ export const useOptionsInfiniteQuery = ({ apiPath }: { apiPath: string | undefin
   })
 
   // Memos
-  const options = React.useMemo<Option[]>(() => {
+  const options = useMemo<Option[]>(() => {
     return optionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
   }, [optionsInfiniteQuery.data])
 

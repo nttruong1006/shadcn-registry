@@ -1,18 +1,18 @@
-import { Input } from '@/components/ui/input'
+import { Input } from '@/registry/new-york/ui/input/components/input'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const InputField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <Input
           {...field}
+          aria-invalid={fieldState.invalid}
+          disabled={disabledFields?.[fieldData.code]}
           id={fieldData.code}
           placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-          disabled={disabledFields?.[fieldData.code]}
-          aria-invalid={fieldState.invalid}
         />
       )}
     </FieldContainer>

@@ -1,7 +1,12 @@
 import { EllipsisVertical } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Fragment } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
 
 // Component
 export const DataTableActionCell = ({
@@ -26,7 +31,7 @@ export const DataTableActionCell = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size='icon' variant='ghost' isLoading={isLoading}>
+        <Button isLoading={isLoading} size='icon' variant='ghost'>
           <EllipsisVertical className='size-4' />
         </Button>
       </DropdownMenuTrigger>
@@ -34,12 +39,12 @@ export const DataTableActionCell = ({
       <DropdownMenuContent>
         {menus.map((menu) => {
           if (menu.slot) {
-            return <React.Fragment key={menu.id}>{menu.slot}</React.Fragment>
+            return <Fragment key={menu.id}>{menu.slot}</Fragment>
           }
 
           if (menu.link) {
             return (
-              <DropdownMenuItem key={menu.id} asChild>
+              <DropdownMenuItem asChild key={menu.id}>
                 <a href={menu.link}>
                   {menu.icon}
                   {menu.label}

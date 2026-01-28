@@ -1,9 +1,9 @@
 import { motion } from 'motion/react'
-import type React from 'react'
+import type { PropsWithChildren } from 'react'
 import { cn } from '@/utils/ui'
 
 // Gradient path background
-interface GradientPathBackgroundProps extends React.PropsWithChildren {
+interface GradientPathBackgroundProps extends PropsWithChildren {
   className?: string
   svgOptions?: {
     opacityOnAnimate?: number
@@ -50,13 +50,13 @@ const PathSVG = ({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
   // Template
   return (
     <motion.svg
-      viewBox='0 0 1000 700'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      className='absolute inset-0 size-full'
-      initial={{ opacity: 0 }}
       animate={{ opacity: opacityOnAnimate }}
+      className='absolute inset-0 size-full'
+      fill='none'
+      initial={{ opacity: 0 }}
       transition={{ duration: 1 }}
+      viewBox='0 0 1000 700'
+      xmlns='http://www.w3.org/2000/svg'
     >
       <title>Path background</title>
 
@@ -72,14 +72,14 @@ const PathSVG = ({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
           <stop offset='100%' stopColor='#7c3aed' />
         </linearGradient>
         <filter id='circuitGlowLight'>
-          <feGaussianBlur stdDeviation='1.5' result='coloredBlur' />
+          <feGaussianBlur result='coloredBlur' stdDeviation='1.5' />
           <feMerge>
             <feMergeNode in='coloredBlur' />
             <feMergeNode in='SourceGraphic' />
           </feMerge>
         </filter>
         <filter id='circuitGlowDark'>
-          <feGaussianBlur stdDeviation='2' result='coloredBlur' />
+          <feGaussianBlur result='coloredBlur' stdDeviation='2' />
           <feMerge>
             <feMergeNode in='coloredBlur' />
             <feMergeNode in='SourceGraphic' />
@@ -89,23 +89,23 @@ const PathSVG = ({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
 
       {circuits.map((path, index) => (
         <motion.path
-          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
-          key={`circuit-${index}`}
-          d={path}
-          stroke='url(#circuitGradientLight)'
-          strokeWidth='3'
-          fill='none'
-          filter='url(#circuitGlowLight)'
-          strokeLinecap='round'
-          className='dark:filter-[url(#circuitGlowDark)] dark:stroke-[url(#circuitGradientDark)]'
-          initial={{ pathLength: 0, opacity: 0 }}
           animate={{
             pathLength: [0, 1, 0.8, 1],
             opacity: [0, 1, 0.4, 1]
           }}
+          className='dark:filter-[url(#circuitGlowDark)] dark:stroke-[url(#circuitGradientDark)]'
+          d={path}
+          fill='none'
+          filter='url(#circuitGlowLight)'
+          initial={{ pathLength: 0, opacity: 0 }}
+          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+          key={`circuit-${index}`}
+          stroke='url(#circuitGradientLight)'
+          strokeLinecap='round'
+          strokeWidth='3'
           transition={{
             duration: duration || 6,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             delay: index * 0.5,
             ease: 'easeInOut'
           }}
@@ -116,35 +116,35 @@ const PathSVG = ({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
         // biome-ignore lint/suspicious/noArrayIndexKey: ignore
         <motion.g key={`node-${index}`}>
           <motion.circle
+            animate={{ scale: [0, 1.3, 1, 1.1, 1] }}
+            className='dark:filter-[url(#circuitGlowDark)] dark:fill-[url(#circuitGradientDark)]'
             cx={node.x}
             cy={node.y}
-            r='6'
             fill='url(#circuitGradientLight)'
             filter='url(#circuitGlowLight)'
-            className='dark:filter-[url(#circuitGlowDark)] dark:fill-[url(#circuitGradientDark)]'
             initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.3, 1, 1.1, 1] }}
+            r='6'
             transition={{
               duration: 2,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               delay: index * 0.3,
               ease: 'easeInOut'
             }}
           />
           <motion.circle
+            animate={{ scale: [0, 1.5, 1.2, 1.5] }}
+            className='dark:stroke-[url(#circuitGradientDark)]'
             cx={node.x}
             cy={node.y}
-            r='12'
             fill='none'
+            initial={{ scale: 0 }}
+            opacity='0.5'
+            r='12'
             stroke='url(#circuitGradientLight)'
             strokeWidth='1'
-            opacity='0.5'
-            className='dark:stroke-[url(#circuitGradientDark)]'
-            initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.5, 1.2, 1.5] }}
             transition={{
               duration: 3,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               delay: index * 0.3,
               ease: 'easeInOut'
             }}

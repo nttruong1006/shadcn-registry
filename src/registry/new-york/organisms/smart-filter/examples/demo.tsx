@@ -1,10 +1,6 @@
-import React from 'react'
-import {
-  SmartFilter,
-  type SmartFilterProps,
-  SmartFilterType,
-  useSmartFilterForm
-} from '@/components/organisms/smart-filter'
+import { useMemo } from 'react'
+import { SmartFilterType, useSmartFilterForm } from '@/registry/new-york/organisms/smart-filter/components/lib'
+import { SmartFilter, type SmartFilterProps } from '@/registry/new-york/organisms/smart-filter/components/smart-filter'
 
 // Component
 export const SmartFilterDemo = () => {
@@ -17,7 +13,7 @@ export const SmartFilterDemo = () => {
   }
 
   // Memos
-  const filters = React.useMemo<SmartFilterProps['filters']>(() => {
+  const filters = useMemo<SmartFilterProps['filters']>(() => {
     return [
       {
         name: 'fullName',
@@ -60,7 +56,7 @@ export const SmartFilterDemo = () => {
   // Template
   return (
     <div className='w-sm'>
-      <SmartFilter form={form} filters={filters} setFilters={setFilters} />
+      <SmartFilter filters={filters} form={form} setFilters={setFilters} />
     </div>
   )
 }

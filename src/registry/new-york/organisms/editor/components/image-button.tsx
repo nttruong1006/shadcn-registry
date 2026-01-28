@@ -1,7 +1,7 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
-import { CheckCircle, Image } from 'lucide-react'
-import React from 'react'
+import { CheckCircleIcon, ImageIcon } from 'lucide-react'
+import { memo, useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
 import { toast } from 'sonner'
 import z from 'zod'
@@ -10,16 +10,15 @@ import {
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
-  type FileUploadProps,
-  getFileUrl,
-  useFileUpload
-} from '@/components/molecules/file-upload'
-import { Button } from '@/components/ui/button'
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+  type FileUploadProps
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
+import { getFileUrl, useFileUpload } from '@/registry/new-york/molecules/file-upload/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york/ui/tabs/components/tabs'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // Form mode
 export enum FormMode {
@@ -66,6 +65,10 @@ export const imageFormSchema = z
             message: 'Please select the image file'
           })
         }
+        break
+      }
+      default: {
+        break
       }
     }
   })
@@ -90,7 +93,7 @@ export const fileUploaderDropzoneOptions: DropzoneOptions = {
 }
 
 // Component
-const ImageButton = React.memo<{
+const ImageButton = memo<{
   id: string
 }>(({ id }) => {
   // Hooks
@@ -98,7 +101,7 @@ const ImageButton = React.memo<{
   const { isUploadFilePending, uploadFile } = useFileUpload()
 
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Form
   const imageForm = useForm({
@@ -119,9 +122,10 @@ const ImageButton = React.memo<{
           }
           case FormMode.Files: {
             const uploadedFiles = await Promise.all(files.map(async (file) => await uploadFile(file)))
-            uploadedFiles.forEach((uploadedFile) => {
-              if (!uploadedFile) return
-
+            for (const uploadedFile of uploadedFiles) {
+              if (!uploadedFile) {
+                return
+              }
               editor
                 ?.chain()
                 .focus()
@@ -130,7 +134,10 @@ const ImageButton = React.memo<{
                 })
                 .enter()
                 .run()
-            })
+            }
+            break
+          }
+          default: {
             break
           }
         }
@@ -147,12 +154,12 @@ const ImageButton = React.memo<{
 
   // Template
   return (
-    <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
+    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
       <Tooltip>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
             <Button size='icon' variant='ghost'>
-              <Image />
+              <ImageIcon />
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
@@ -174,14 +181,14 @@ const ImageButton = React.memo<{
           <imageForm.Subscribe selector={(state) => state.values.mode}>
             {(formMode) => (
               <Tabs
-                value={formMode}
                 onValueChange={(value) => {
                   imageForm.setFieldValue('mode', value as FormMode)
                   imageForm.validate('submit')
                 }}
+                value={formMode}
               >
                 {/* Tabs list */}
-                <TabsList loop className='w-full [&_button]:flex-1'>
+                <TabsList className='w-full [&_button]:flex-1' loop>
                   <TabsTrigger value={FormMode.Url}>URL</TabsTrigger>
                   <TabsTrigger value={FormMode.Files}>File</TabsTrigger>
                 </TabsList>
@@ -197,13 +204,13 @@ const ImageButton = React.memo<{
                           <FieldLabel htmlFor={`editor-${id}-url`}>URL *</FieldLabel>
 
                           <Input
+                            aria-invalid={isInvalid}
                             id={`editor-${id}-url`}
                             name={field.name}
-                            value={field.state.value}
-                            placeholder={`Enter URL`}
-                            aria-invalid={isInvalid}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder={'Enter URL'}
+                            value={field.state.value}
                           />
 
                           {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -223,18 +230,18 @@ const ImageButton = React.memo<{
                           <FieldLabel htmlFor={`editor-${imageForm.formId}-files`}>Files *</FieldLabel>
 
                           <FileUpload
-                            value={field.state.value}
-                            dropzoneOptions={fileUploaderDropzoneOptions}
                             className='xl:grid-cols-1'
+                            dropzoneOptions={fileUploaderDropzoneOptions}
                             onValueChange={field.handleChange as FileUploadProps['onValueChange']}
+                            value={field.state.value}
                           >
-                            <FileUploadInput id={`editor-${imageForm.formId}-files`} aria-invalid={isInvalid} />
+                            <FileUploadInput aria-invalid={isInvalid} id={`editor-${imageForm.formId}-files`} />
                             <FileUploadContent>
                               {field.state.value.map((value, index) => (
                                 <FileUploadItem
+                                  index={index}
                                   // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                                   key={index}
-                                  index={index}
                                   value={value}
                                 />
                               ))}
@@ -258,14 +265,14 @@ const ImageButton = React.memo<{
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    size='icon'
-                    variant='outline'
-                    isLoading={isUploadFilePending || isSubmitting}
-                    type='submit'
-                    form={imageForm.formId}
                     disabled={!canSubmit}
+                    form={imageForm.formId}
+                    isLoading={isUploadFilePending || isSubmitting}
+                    size='icon'
+                    type='submit'
+                    variant='outline'
                   >
-                    <CheckCircle />
+                    <CheckCircleIcon />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Save</TooltipContent>

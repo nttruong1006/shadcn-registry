@@ -1,8 +1,28 @@
-import { Moon, Sun } from 'lucide-react'
-import React from 'react'
-import { Button, type ButtonProps } from '@/components/ui/button'
+import { MoonIcon, SunIcon } from 'lucide-react'
+import { useState } from 'react'
+import { Button, type ButtonProps } from '@/registry/new-york/ui/button/components/button'
 import { cn } from '@/utils/ui'
-import { defaultThemeLocalStorageKey, getDefaultTheme, type Theme } from './lib'
+import {
+  defaultThemeLocalStorageKey,
+  getCircleBlurCx,
+  getCircleBlurCy,
+  getCircleCx,
+  getCircleCy,
+  getDefaultTheme,
+  type Theme
+} from './lib'
+
+// Theme icon
+const ThemeIcon = ({ theme }: { theme: Theme | undefined }) => {
+  // Template
+  if (theme === 'light') {
+    return <MoonIcon />
+  }
+  if (theme === 'dark') {
+    return <SunIcon />
+  }
+  return null
+}
 
 // Theme toggle button
 type AnimationVariant = 'circle' | 'circle-blur' | 'gif' | 'polygon'
@@ -27,7 +47,7 @@ export const ThemeToggleButton = ({
   ...props
 }: ThemeToggleButtonProps) => {
   // States
-  const [theme, setTheme] = React.useState<Theme>()
+  const [theme, setTheme] = useState<Theme>()
 
   // Methods
   const toggleTheme = () => {
@@ -58,8 +78,8 @@ export const ThemeToggleButton = ({
     }
 
     if (variant === 'circle') {
-      const cx = startPosition === 'center' ? '50' : startPosition.includes('left') ? '0' : '100'
-      const cy = startPosition === 'center' ? '50' : startPosition.includes('top') ? '0' : '100'
+      const cx = getCircleCx(startPosition)
+      const cy = getCircleCy(startPosition)
       css = `
         @supports (view-transition-name: root) {
           ::view-transition-old(root) { 
@@ -80,8 +100,8 @@ export const ThemeToggleButton = ({
         }
       `
     } else if (variant === 'circle-blur') {
-      const cx = startPosition === 'center' ? '50' : startPosition.includes('left') ? '0' : '100'
-      const cy = startPosition === 'center' ? '50' : startPosition.includes('top') ? '0' : '100'
+      const cx = getCircleBlurCx(startPosition)
+      const cy = getCircleBlurCy(startPosition)
       css = `
         @supports (view-transition-name: root) {
           ::view-transition-old(root) { 
@@ -184,18 +204,18 @@ export const ThemeToggleButton = ({
 
   return (
     <Button
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+      className={cn('relative overflow-hidden transition-all', className)}
+      isLoading={!theme}
+      onClick={toggleTheme}
       ref={() => {
         setTheme(getDefaultTheme())
       }}
-      variant='ghost'
       size={showLabel ? 'default' : 'icon'}
-      onClick={toggleTheme}
-      className={cn('relative overflow-hidden transition-all', className)}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-      isLoading={!theme}
+      variant='ghost'
       {...props}
     >
-      {theme ? theme === 'light' ? <Moon /> : <Sun /> : null}
+      <ThemeIcon theme={theme} />
       {showLabel && <span>{theme === 'light' ? 'Light' : 'Dark'}</span>}
     </Button>
   )

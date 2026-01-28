@@ -1,6 +1,6 @@
-import { Input, type InputProps } from '@/components/ui/input'
+import { Input, type InputProps } from '@/registry/new-york/ui/input/components/input'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const InputField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -12,14 +12,14 @@ const InputField = ({ fieldData, disabledFields }: FieldProps) => {
   return (
     <FieldContainer fieldData={fieldData}>
       <Input
+        aria-invalid={isInvalid}
+        disabled={disabledFields?.[fieldData.code]}
         id={field.name}
         name={field.name}
-        value={field.state.value}
-        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-        disabled={disabledFields?.[fieldData.code]}
-        aria-invalid={isInvalid}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
+        value={field.state.value}
       />
     </FieldContainer>
   )

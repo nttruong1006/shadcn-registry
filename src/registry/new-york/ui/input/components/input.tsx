@@ -1,20 +1,20 @@
-import type * as React from 'react'
+import type { ComponentProps } from 'react'
 import { cn } from '@/utils/ui'
 
 // Input
-export type InputProps = React.ComponentProps<'input'>
+export type InputProps = ComponentProps<'input'>
 export const Input = ({ className, type, ...props }: InputProps) => {
   // Template
   return (
     <input
-      type={type}
-      data-slot='input'
       autoComplete='off'
       className={cn(
         'h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 md:text-sm dark:aria-invalid:ring-destructive/40',
         'text-ellipsis focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
         className
       )}
+      data-slot='input'
+      type={type}
       {...props}
     />
   )

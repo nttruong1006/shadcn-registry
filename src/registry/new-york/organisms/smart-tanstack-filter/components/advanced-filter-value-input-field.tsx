@@ -1,7 +1,7 @@
-import { Field, FieldError } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { Input } from '@/registry/new-york/ui/input/components/input.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { useAdvancedFilterForm } from './lib'
+import { useAdvancedFilterForm } from './lib/form'
 
 // Component
 const AdvancedFilterValueInputField = ({ index, selectedFilter }: AdvancedFilterValueFieldComponentProps) => {
@@ -16,13 +16,13 @@ const AdvancedFilterValueInputField = ({ index, selectedFilter }: AdvancedFilter
         return (
           <Field data-invalid={isInvalid}>
             <Input
+              aria-invalid={isInvalid}
               id={field.name}
               name={field.name}
-              value={field.state.value}
-              placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
-              aria-invalid={isInvalid}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
+              placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
+              value={field.state.value}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>

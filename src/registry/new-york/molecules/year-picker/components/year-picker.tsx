@@ -1,10 +1,10 @@
 import { add, format, isAfter, isBefore, max, min, set, sub } from 'date-fns'
 import { ChevronDown, X } from 'lucide-react'
 import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
-import { Label } from '@/components/ui/label'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
+import { Label } from '@/registry/new-york/ui/label/components/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
 import { cn } from '@/utils/ui'
 
 export const generateOptions = (startYear: number, endYear: number): ComboboxProps['options'] => {
@@ -33,7 +33,7 @@ export const YearPicker = ({ minDate, maxDate, ...props }: YearPickerProps) => {
   // Memos
   const options = React.useMemo<ComboboxProps['options']>(() => {
     // Has not both min date and max date
-    if (!minDate && !maxDate) {
+    if (!(minDate || maxDate)) {
       return defaultOptions
     }
 
@@ -90,7 +90,7 @@ export const YearRangePicker = ({
   // Memos
   const options = React.useMemo<ComboboxProps['options']>(() => {
     // Has not both min date and max date
-    if (!minDate && !maxDate) {
+    if (!(minDate || maxDate)) {
       return defaultOptions
     }
 
@@ -123,7 +123,7 @@ export const YearRangePicker = ({
   }, [minDate, maxDate])
 
   const isEmpty = React.useMemo(() => {
-    return !value?.start || !value?.end
+    return !(value?.start && value?.end)
   }, [value])
 
   // Template
@@ -132,9 +132,9 @@ export const YearRangePicker = ({
       <PopoverTrigger {...popoverTriggerProps} asChild={popoverTriggerProps?.asChild ?? true}>
         {popoverTriggerProps?.children ?? (
           <Button
-            variant='outline'
-            role='combobox'
             data-empty={isEmpty}
+            role='combobox'
+            variant='outline'
             {...buttonTriggerProps}
             className={cn(
               'w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto',
@@ -142,7 +142,7 @@ export const YearRangePicker = ({
             )}
           >
             {buttonTriggerProps?.children ?? (
-              <React.Fragment>
+              <>
                 <span className='line-clamp-1 block text-ellipsis'>
                   {value?.start && value?.end
                     ? `${format(value.start, 'yyyy')} - ${format(value.end, 'yyyy')}`
@@ -160,7 +160,7 @@ export const YearRangePicker = ({
                 ) : (
                   <ChevronDown className='ml-auto size-4 shrink-0 text-muted-foreground' />
                 )}
-              </React.Fragment>
+              </>
             )}
           </Button>
         )}
@@ -175,12 +175,11 @@ export const YearRangePicker = ({
           <div className='space-y-2'>
             <Label>Start year</Label>
             <Combobox
-              value={value?.start?.getFullYear().toString()}
-              placeholder='Select year'
               isCanRemoveValue={false}
-              options={options}
               onValueChange={(yearValue) => {
-                if (!yearValue) return
+                if (!yearValue) {
+                  return
+                }
 
                 const date = set(today, {
                   date: 1,
@@ -209,6 +208,9 @@ export const YearRangePicker = ({
                   end: value?.end
                 })
               }}
+              options={options}
+              placeholder='Select year'
+              value={value?.start?.getFullYear().toString()}
             />
           </div>
 
@@ -216,12 +218,11 @@ export const YearRangePicker = ({
           <div className='space-y-2'>
             <Label>End year</Label>
             <Combobox
-              value={value?.end?.getFullYear().toString()}
-              placeholder='Select year'
               isCanRemoveValue={false}
-              options={options}
               onValueChange={(yearValue) => {
-                if (!yearValue) return
+                if (!yearValue) {
+                  return
+                }
 
                 const date = set(today, {
                   date: 1,
@@ -250,6 +251,9 @@ export const YearRangePicker = ({
                   end: changeDate
                 })
               }}
+              options={options}
+              placeholder='Select year'
+              value={value?.end?.getFullYear().toString()}
             />
           </div>
         </div>

@@ -1,21 +1,21 @@
-import { NumberInput } from '@/components/molecules/number-input'
+import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const NumberField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <NumberInput
           {...field}
           {...fieldData.config?.numberInputProps}
-          id={fieldData.code}
-          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-          disabled={disabledFields?.[fieldData.code]}
           aria-invalid={fieldState.invalid}
+          disabled={disabledFields?.[fieldData.code]}
+          id={fieldData.code}
           onFieldChange={field.onChange}
           onValueChange={(event) => field.onChange(event.value)}
+          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
         />
       )}
     </FieldContainer>

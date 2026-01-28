@@ -1,18 +1,18 @@
 import type { Content } from '@tiptap/react'
-import React from 'react'
-import { Editor } from '@/components/organisms/editor'
-import { Toaster } from '@/components/ui/sonner'
+import { useState } from 'react'
+import { Editor } from '@/registry/new-york/organisms/editor/components/editor'
+import { Toaster } from '@/registry/new-york/ui/sonner/components/sonner'
 
 // Component
 export const EditorDemo = () => {
   // States
-  const [value, setValue] = React.useState<Content>('')
+  const [value, setValue] = useState<Content>('')
 
   // Template
   return (
-    <React.Fragment>
+    <>
       <Toaster />
-      <Editor value={value} onValueChange={setValue} />
-    </React.Fragment>
+      <Editor onValueChange={setValue} value={value} />
+    </>
   )
 }

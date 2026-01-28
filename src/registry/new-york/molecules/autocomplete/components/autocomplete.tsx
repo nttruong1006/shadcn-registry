@@ -1,6 +1,6 @@
 import { Command as CommandPrimitive } from 'cmdk'
 import { Check, ChevronDown } from 'lucide-react'
-import * as React from 'react'
+import { type KeyboardEvent, type ReactNode, useCallback, useState } from 'react'
 import {
   Command,
   CommandGroup,
@@ -8,11 +8,16 @@ import {
   CommandList,
   type CommandListProps,
   type CommandProps
-} from '@/components/ui/command'
-import type { InputProps } from '@/components/ui/input'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/registry/new-york/ui/command/components/command'
+import type { InputProps } from '@/registry/new-york/ui/input/components/input'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
+import {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+  PopoverTrigger
+} from '@/registry/new-york/ui/popover/components/popover'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import type { Option } from '@/types/base'
 import { cn } from '@/utils/ui'
 
@@ -26,7 +31,7 @@ export interface AutocompleteProps {
   commandProps?: CommandProps
   inputProps?: InputProps
   commandListProps?: CommandListProps
-  commandGroupSlot?: React.ReactNode
+  commandGroupSlot?: ReactNode
   onValueChange: (value: string) => void
 }
 
@@ -43,20 +48,20 @@ export const Autocomplete = ({
   onValueChange
 }: AutocompleteProps) => {
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Methods
-  const downKey = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+  const downKey = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
       close()
     }
   }, [])
 
-  const openAuto = React.useCallback((e: Event) => {
+  const openAuto = useCallback((e: Event) => {
     e.preventDefault()
   }, [])
 
-  const interactOutside = React.useCallback((e: Event) => {
+  const interactOutside = useCallback((e: Event) => {
     if (e.target instanceof Element && e.target.hasAttribute('cmdk-input')) {
       e.preventDefault()
     }
@@ -65,17 +70,17 @@ export const Autocomplete = ({
   // Template
   return (
     <div>
-      <Popover open={isOpenPopover} modal onOpenChange={setIsOpenPopover}>
+      <Popover modal onOpenChange={setIsOpenPopover} open={isOpenPopover}>
         <Command {...commandProps} className={cn('overflow-visible', commandProps?.className)}>
           <PopoverAnchor>
             <div>
               <PopoverTrigger asChild onClick={() => setIsOpenPopover(true)}>
-                <CommandPrimitive.Input asChild value={value} onKeyDown={downKey} onValueChange={onValueChange}>
+                <CommandPrimitive.Input asChild onKeyDown={downKey} onValueChange={onValueChange} value={value}>
                   <InputGroup>
                     <InputGroupInput
-                      value={value}
-                      placeholder={placeholder}
                       onChange={({ target: { value } }) => onValueChange(value)}
+                      placeholder={placeholder}
+                      value={value}
                       {...inputProps}
                     />
                     <InputGroupAddon align='inline-end'>{isLoading ? <Spinner /> : <ChevronDown />}</InputGroupAddon>
@@ -93,8 +98,8 @@ export const Autocomplete = ({
                 hidden: options.length === 0
               }
             )}
-            onOpenAutoFocus={openAuto}
             onInteractOutside={interactOutside}
+            onOpenAutoFocus={openAuto}
           >
             {isOpenPopover ? (
               <CommandList {...commandListProps}>
@@ -105,10 +110,10 @@ export const Autocomplete = ({
 
                     return (
                       <CommandItem
-                        key={option.value}
-                        value={option.label}
                         className='group/selected'
+                        key={option.value}
                         onSelect={() => onValueChange(optionValue)}
+                        value={option.label}
                       >
                         {option.label}
                         <Check className={cn('ml-auto size-4', isSelected ? 'visible' : 'invisible')} />

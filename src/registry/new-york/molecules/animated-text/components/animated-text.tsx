@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/utils/ui'
 
 // Animated text
@@ -27,7 +27,7 @@ export const AnimatedText = ({
   linkClassNames = []
 }: AnimatedTextProps) => {
   // States
-  const [visibleCount, setVisibleCount] = React.useState(0)
+  const [visibleCount, setVisibleCount] = useState(0)
   const splitWords = text.split(' ')
 
   // Methods
@@ -58,21 +58,21 @@ export const AnimatedText = ({
           if (isVisible) {
             const wordElement = (
               <motion.span
-                // biome-ignore lint/suspicious/noArrayIndexKey: ignore
-                key={`${word}-${index}`}
-                initial={{
-                  opacity: 0,
-                  filter: blurEffect ? 'blur(10px)' : 'none'
-                }}
                 animate={{
                   opacity: 1,
                   filter: blurEffect ? 'blur(0px)' : 'none'
                 }}
+                className={cn(isHighlight && `font-semibold text-primary ${highlightClassName}`)}
+                initial={{
+                  opacity: 0,
+                  filter: blurEffect ? 'blur(10px)' : 'none'
+                }}
+                // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+                key={`${word}-${index}`}
                 transition={{
                   duration: speed * 0.3,
                   ease: 'easeOut'
                 }}
-                className={cn(isHighlight && `font-semibold text-primary ${highlightClassName}`)}
               >
                 {' '}
                 {word}
@@ -82,22 +82,14 @@ export const AnimatedText = ({
             if (isLink && linkUrls[linkIndex]) {
               return (
                 <a
+                  className={cn('underline', linkClassNames[linkIndex])}
+                  href={linkUrls[linkIndex]}
                   // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                   key={`link-${index}`}
-                  href={linkUrls[linkIndex]}
-                  className={cn('underline', linkClassNames[linkIndex])}
                 >
                   {' '}
                   {wordElement}
                 </a>
-                // <Button
-                //   key={`link-${index}`}
-                //   variant='link'
-                //   className={cn('h-fit p-0 text-base md:text-lg xl:text-xl', linkClassNames[linkIndex])}
-                // >
-                //   {' '}
-
-                // </Button>
               )
             }
             return wordElement
@@ -106,18 +98,18 @@ export const AnimatedText = ({
           if (isUpcoming) {
             return (
               <motion.span
+                animate={{ opacity: 0.4, scale: 1 }}
+                className='rounded-full bg-black dark:bg-gray-600'
+                exit={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                 key={`placeholder-${index}`}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.4, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                className='rounded-full bg-black dark:bg-gray-600'
                 style={{
                   width: `${Math.max(word.length * 0.7, 2.5)}em`,
                   height: '0.9em',
                   display: 'inline-block'
                 }}
+                transition={{ duration: 0.2 }}
               />
             )
           }
@@ -129,7 +121,7 @@ export const AnimatedText = ({
   }
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     setVisibleCount(0)
     const intervalId = setInterval(
       () => {

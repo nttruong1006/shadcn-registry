@@ -8,7 +8,7 @@ const DataTableAdditionalInfo = <TData extends RowData>({
   isError
 }: Pick<DataTableProps<TData>, 'table' | 'isError' | 'isLoading'>) => {
   const rowLength = table.getRowModel().rows.length
-  const isEmpty = !rowLength && !isLoading
+  const isEmpty = !(rowLength || isLoading)
 
   // Template
   if (isError) {

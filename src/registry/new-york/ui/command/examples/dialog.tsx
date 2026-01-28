@@ -1,5 +1,5 @@
-import { Calculator, Calendar, CreditCard, Settings, Smile, User } from 'lucide-react'
-import * as React from 'react'
+import { CalculatorIcon, CalendarIcon, CreditCardIcon, SettingsIcon, SmileIcon, UserIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import {
   CommandDialog,
   CommandEmpty,
@@ -9,15 +9,15 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut
-} from '@/components/ui/command'
+} from '@/registry/new-york/ui/command/components/command'
 
 // Component
 export const CommandDialogDemo = () => {
   // States
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
@@ -31,51 +31,51 @@ export const CommandDialogDemo = () => {
 
   // Template
   return (
-    <React.Fragment>
+    <>
       <p className='text-muted-foreground text-sm'>
         Press{' '}
         <kbd className='pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100'>
           <span className='text-xs'>⌘</span>J
         </kbd>
       </p>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog onOpenChange={setOpen} open={open}>
         <CommandInput placeholder='Type a command or search...' />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading='Suggestions'>
             <CommandItem>
-              <Calendar />
+              <CalendarIcon />
               <span>Calendar</span>
             </CommandItem>
             <CommandItem>
-              <Smile />
+              <SmileIcon />
               <span>Search Emoji</span>
             </CommandItem>
             <CommandItem>
-              <Calculator />
+              <CalculatorIcon />
               <span>Calculator</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading='Settings'>
             <CommandItem>
-              <User />
+              <UserIcon />
               <span>Profile</span>
               <CommandShortcut>⌘P</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <CreditCard />
+              <CreditCardIcon />
               <span>Billing</span>
               <CommandShortcut>⌘B</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Settings />
+              <SettingsIcon />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>
-    </React.Fragment>
+    </>
   )
 }

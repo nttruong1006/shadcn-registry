@@ -1,10 +1,10 @@
 import { memo } from 'react'
-import { Separator } from '@/components/ui/separator'
+import { Separator } from '@/registry/new-york/ui/separator/components/separator'
 
 // Component
 const ToolbarSeparator = memo(() => {
   // Template
-  return <Separator orientation='vertical' className='mx-2 h-9!' />
+  return <Separator className='mx-2 h-9!' orientation='vertical' />
 })
 
 ToolbarSeparator.displayName = 'ToolbarSeparator'

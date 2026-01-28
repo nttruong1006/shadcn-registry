@@ -1,12 +1,19 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": false
   },
   "files": {
-    "includes": ["src/**/*.astro", "src/**/*.mdx", "src/**/*.ts", "src/**/*.tsx", "src/**/*.css", "src/**/*.json"]
+    "includes": [
+      "src/**/*.astro",
+      "src/**/*.mdx",
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.css",
+      "src/**/*.json"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -26,6 +33,13 @@
             "functions": ["clsx", "cva", "tw", "tw.*"]
           }
         }
+      },
+      "style": {
+        "useConsistentArrayType": "off",
+        "noEnum": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off"
       }
     }
   },
@@ -67,5 +81,6 @@
         }
       }
     }
-  ]
+  ],
+  "extends": ["ultracite/biome/core", "ultracite/biome/astro"]
 }

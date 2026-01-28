@@ -1,4 +1,9 @@
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot
+} from '@/registry/new-york/ui/input-otp/components/input-otp'
 
 // Component
 export const InputOTPDemo = () => {

@@ -1,6 +1,13 @@
-import { Cloud } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty'
+import { CloudIcon } from 'lucide-react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle
+} from '@/registry/new-york/ui/empty/components/empty'
 
 // Component
 export const EmptyOutline = () => {
@@ -9,13 +16,13 @@ export const EmptyOutline = () => {
     <Empty className='border border-dashed'>
       <EmptyHeader>
         <EmptyMedia variant='icon'>
-          <Cloud />
+          <CloudIcon />
         </EmptyMedia>
         <EmptyTitle>Cloud Storage Empty</EmptyTitle>
         <EmptyDescription>Upload files to your cloud storage to access them anywhere.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button variant='outline' size='sm'>
+        <Button size='sm' variant='outline'>
           Upload Files
         </Button>
       </EmptyContent>

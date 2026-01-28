@@ -1,10 +1,10 @@
-import { CircleCheckBig, ListFilter, Plus, RefreshCw, TrashIcon } from 'lucide-react'
-import React from 'react'
+import { CircleCheckBigIcon, ListFilterIcon, PlusIcon, RefreshCwIcon, TrashIcon } from 'lucide-react'
+import { useState } from 'react'
 import { Controller, type UseFieldArrayReturn, useFormContext, useWatch } from 'react-hook-form'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Field, FieldError } from '@/components/ui/field'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Badge } from '@/registry/new-york/ui/badge/components/badge'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
 import AdvancedFilterNameField from './advanced-filter-name-field'
 import AdvancedFilterOperationField from './advanced-filter-operation-field'
 import AdvancedFilterValueField from './advanced-filter-value-field'
@@ -29,8 +29,8 @@ const AdvancedFilter = ({
   })
 
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
-  const [totalFilterApplied, setTotalFilterApplied] = React.useState(form.formState.defaultValues?.filters?.length ?? 0)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
+  const [totalFilterApplied, setTotalFilterApplied] = useState(form.formState.defaultValues?.filters?.length ?? 0)
 
   // Methods
   const executeLogicOnOpenPopover = () => {
@@ -64,13 +64,13 @@ const AdvancedFilter = ({
 
   // Template
   return (
-    <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
+    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
       <PopoverTrigger asChild>
         <Button variant='outline'>
           <span>Filters</span>
-          <ListFilter />
+          <ListFilterIcon />
           {totalFilterApplied > 0 && (
-            <Badge variant='secondary' className='flex size-5 items-center justify-center rounded-sm p-0 leading-none'>
+            <Badge className='flex size-5 items-center justify-center rounded-sm p-0 leading-none' variant='secondary'>
               {totalFilterApplied}
             </Badge>
           )}
@@ -86,15 +86,15 @@ const AdvancedFilter = ({
         <div className='-mx-1 my-2 max-h-72 overflow-y-auto px-1'>
           {/* Filters */}
           {formFilters.fields.map((field, index) => (
-            <div key={field.id} className='flex gap-x-4'>
+            <div className='flex gap-x-4' key={field.id}>
               <div className='flex grow flex-col gap-4 py-2 xl:w-auto xl:flex-row'>
                 {/* Name */}
                 <Controller
-                  name={`filters.${index}.name`}
                   control={form.control}
+                  name={`filters.${index}.name`}
                   render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid} className='w-full shrink-0 xl:w-52'>
-                      <AdvancedFilterNameField index={index} field={field} formFiltersWatcher={formFiltersWatcher} />
+                    <Field className='w-full shrink-0 xl:w-52' data-invalid={fieldState.invalid}>
+                      <AdvancedFilterNameField field={field} formFiltersWatcher={formFiltersWatcher} index={index} />
                       {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                     </Field>
                   )}
@@ -102,11 +102,11 @@ const AdvancedFilter = ({
 
                 {/* Operation */}
                 <Controller
-                  name={`filters.${index}.operation`}
                   control={form.control}
+                  name={`filters.${index}.operation`}
                   render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid} className='w-full shrink-0 xl:w-52'>
-                      <AdvancedFilterOperationField index={index} field={field} />
+                    <Field className='w-full shrink-0 xl:w-52' data-invalid={fieldState.invalid}>
+                      <AdvancedFilterOperationField field={field} index={index} />
                       {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                     </Field>
                   )}
@@ -119,10 +119,10 @@ const AdvancedFilter = ({
               {/* Remove button */}
               {formFilters.fields.length > 1 && (
                 <Button
-                  variant='outline'
-                  size='icon'
                   className='mt-2 shrink-0'
                   onClick={() => formFilters.remove(index)}
+                  size='icon'
+                  variant='outline'
                 >
                   <TrashIcon className='h-4 w-4' />
                 </Button>
@@ -134,19 +134,19 @@ const AdvancedFilter = ({
         {/* Actions */}
         <div className='flex items-center justify-end gap-4'>
           {formFilters.fields.length < filters.length && (
-            <Button variant='outline' onClick={clickAddingButton}>
-              <Plus />
+            <Button onClick={clickAddingButton} variant='outline'>
+              <PlusIcon />
               <span>Add</span>
             </Button>
           )}
 
-          <Button variant='secondary' onClick={resetFilter}>
-            <RefreshCw />
+          <Button onClick={resetFilter} variant='secondary'>
+            <RefreshCwIcon />
             <span>Reset</span>
           </Button>
 
-          <Button type='submit' onClick={form.handleSubmit(applyFilter)}>
-            <CircleCheckBig />
+          <Button onClick={form.handleSubmit(applyFilter)} type='submit'>
+            <CircleCheckBigIcon />
             <span>Apply</span>
           </Button>
         </div>

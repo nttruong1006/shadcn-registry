@@ -1,4 +1,4 @@
-import { GradientPathBackground } from '@/components/molecules/gradient-path-background'
+import { GradientPathBackground } from '@/registry/new-york/molecules/gradient-path-background/components/gradient-path-background'
 
 // Component
 const GradientPathBackgroundDemo = () => {

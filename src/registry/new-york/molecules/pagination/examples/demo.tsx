@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pagination } from '@/components/molecules/pagination'
+import { Pagination } from '@/registry/new-york/molecules/pagination/components/pagination'
 
 // Component
 export const PaginationDemo = () => {
@@ -7,5 +7,5 @@ export const PaginationDemo = () => {
   const [page, setPage] = React.useState(1)
 
   // Template
-  return <Pagination page={page} pageCount={10} onChangePage={setPage} />
+  return <Pagination onChangePage={setPage} page={page} pageCount={10} />
 }

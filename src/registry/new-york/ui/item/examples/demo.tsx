@@ -1,6 +1,13 @@
 import { BadgeCheckIcon, ChevronRightIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle
+} from '@/registry/new-york/ui/item/components/item'
 
 // Component
 export const ItemDemo = () => {
@@ -13,12 +20,12 @@ export const ItemDemo = () => {
           <ItemDescription>A simple item with title and description.</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button variant='outline' size='sm'>
+          <Button size='sm' variant='outline'>
             Action
           </Button>
         </ItemActions>
       </Item>
-      <Item variant='outline' size='sm' asChild>
+      <Item asChild size='sm' variant='outline'>
         {/** biome-ignore lint/a11y/useValidAnchor: ignore */}
         <a href='#'>
           <ItemMedia>

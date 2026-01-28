@@ -4,9 +4,9 @@ import {
   FileUploadInput,
   FileUploadItem,
   type FileUploadValue
-} from '@/components/molecules/file-upload'
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const FileField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -18,14 +18,14 @@ const FileField = ({ fieldData, disabledFields }: FieldProps) => {
   return (
     <FieldContainer fieldData={fieldData}>
       <FileUpload
-        value={field.state.value ? [field.state.value] : []}
         dropzoneOptions={fieldData.config?.dropzoneOptions}
         isDisabled={disabledFields?.[fieldData.code]}
         onValueChange={(files) => field.handleChange(files[0] ?? null)}
+        value={field.state.value ? [field.state.value] : []}
       >
-        <FileUploadInput id={fieldData.code} aria-invalid={isInvalid} />
+        <FileUploadInput aria-invalid={isInvalid} id={fieldData.code} />
         <FileUploadContent>
-          {field.state.value && <FileUploadItem value={field.state.value} index={0} />}
+          {field.state.value && <FileUploadItem index={0} value={field.state.value} />}
         </FileUploadContent>
       </FileUpload>
     </FieldContainer>

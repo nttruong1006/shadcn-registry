@@ -8,7 +8,6 @@ export const Toaster = ({ richColors = true, closeButton = true, ...props }: Toa
     <Sonner
       className='toaster group'
       closeButton={closeButton}
-      richColors={richColors}
       icons={{
         success: <CircleCheckIcon className='size-4' />,
         info: <InfoIcon className='size-4' />,
@@ -16,12 +15,7 @@ export const Toaster = ({ richColors = true, closeButton = true, ...props }: Toa
         error: <OctagonXIcon className='size-4' />,
         loading: <Loader2Icon className='size-4 animate-spin' />
       }}
-      toastOptions={{
-        duration: 3000,
-        classNames: {
-          closeButton: '!cursor-default'
-        }
-      }}
+      richColors={richColors}
       style={
         {
           '--normal-bg': 'var(--popover)',
@@ -33,6 +27,12 @@ export const Toaster = ({ richColors = true, closeButton = true, ...props }: Toa
           '--toast-close-button-transform': 'translate(35%, -35%)'
         } as React.CSSProperties
       }
+      toastOptions={{
+        duration: 3000,
+        classNames: {
+          closeButton: '!cursor-default'
+        }
+      }}
       {...props}
     />
   )

@@ -1,11 +1,11 @@
 import { toDate } from 'date-fns'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import z, { type ZodArray, type ZodNullable, type ZodNumber, type ZodPipe, type ZodString, type ZodType } from 'zod'
-import type { UploadedFile } from '@/components/molecules/file-upload'
+import type { UploadedFile } from '@/registry/new-york/molecules/file-upload/components/lib'
 import type { FormValue, SmartFormData } from './base'
 
 // Schema options
-export type SchemaOptions<T = FormValue> = {
+export interface SchemaOptions<T = FormValue> {
   hiddenFields?: Record<string, boolean | undefined>
   slots?: Record<string, z.ZodTypeAny>
   refinement?: (arg: T, ctx: z.core.$RefinementCtx<T>) => void | Promise<void>
@@ -22,12 +22,14 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
     >
   }> = []
 
-  formData.templates.forEach((template) => {
-    template.fields.forEach((field) => {
+  for (const template of formData.templates) {
+    for (const field of template.fields) {
       const { code, type, config: { validation, isPasswordConfirmation, referenceFields } = {} } = field
 
       // Hidden fields
-      if (schemaOptions?.hiddenFields?.[code]) return
+      if (schemaOptions?.hiddenFields?.[code]) {
+        break
+      }
 
       // Visible fields
       switch (type) {
@@ -50,7 +52,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
           if (validation.email) {
             fieldSchema = fieldSchema.refine((value) => {
               try {
-                if (!validation.required && !value) {
+                if (!(validation.required || value)) {
                   return true
                 }
                 return Boolean(z.email().parse(value))
@@ -221,7 +223,15 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
         case 'date': {
           if (!validation) {
             shape[code] = z.codec(z.union([z.iso.datetime(), z.date()]).nullable(), z.iso.datetime().nullable(), {
-              decode: (value) => (value ? (typeof value === 'string' ? value : value.toISOString()) : null),
+              decode: (value) => {
+                if (!value) {
+                  return null
+                }
+                if (typeof value === 'string') {
+                  return value
+                }
+                return value.toISOString()
+              },
               encode: (value) => (value ? toDate(value) : null)
             })
             break
@@ -233,7 +243,15 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
               z.union([z.iso.datetime(), z.date()]).nullable(),
               z.iso.datetime().nullable().refine(Boolean, validation.required.message),
               {
-                decode: (value) => (value ? (typeof value === 'string' ? value : value.toISOString()) : null),
+                decode: (value) => {
+                  if (!value) {
+                    return null
+                  }
+                  if (typeof value === 'string') {
+                    return value
+                  }
+                  return value.toISOString()
+                },
                 encode: (value) => (value ? toDate(value) : null)
               }
             )
@@ -294,15 +312,20 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
           }
           break
         }
+
+        // Default
+        default: {
+          break
+        }
       }
-    })
-  })
+    }
+  }
 
   let schema = z.object(shape)
 
   if (passwordConfirmationFields.length > 0) {
     schema = schema.superRefine((arg, ctx) => {
-      passwordConfirmationFields.forEach((passwordConfirmationField) => {
+      for (const passwordConfirmationField of passwordConfirmationFields) {
         const { code, referenceFields } = passwordConfirmationField
         const referenceField = referenceFields[0]
         if (arg[code] !== arg[referenceField.code]) {
@@ -312,7 +335,7 @@ export const getFormSchema = (formData: SmartFormData, schemaOptions?: SchemaOpt
             path: [code]
           })
         }
-      })
+      }
     })
   }
 

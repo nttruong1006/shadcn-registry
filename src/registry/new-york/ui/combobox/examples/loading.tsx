@@ -1,5 +1,5 @@
-import React from 'react'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
+import { useState } from 'react'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
 import type { Option } from '@/types/base'
 
 // Constants
@@ -29,17 +29,17 @@ const options: Option[] = [
 // Component
 export function ComboboxLoading() {
   // States
-  const [value, setValue] = React.useState<ComboboxProps['value']>(null)
+  const [value, setValue] = useState<ComboboxProps['value']>(null)
 
   // Template
   return (
     <div className='w-full max-w-xs'>
       <Combobox
-        value={value}
-        options={options}
-        placeholder='Select framework'
         buttonTriggerProps={{ isLoading: true }}
         onValueChange={setValue}
+        options={options}
+        placeholder='Select framework'
+        value={value}
       />
     </div>
   )

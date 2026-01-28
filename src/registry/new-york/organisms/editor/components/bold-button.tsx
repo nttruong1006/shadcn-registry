@@ -1,10 +1,10 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { Bold } from 'lucide-react'
-import React from 'react'
+import { BoldIcon } from 'lucide-react'
+import { memo } from 'react'
 import TooltipButton from './tooltip-button'
 
 // Component
-const BoldButton = React.memo(() => {
+const BoldButton = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -19,10 +19,10 @@ const BoldButton = React.memo(() => {
   // Template
   return (
     <TooltipButton
-      Icon={Bold}
-      label='Bold'
+      Icon={BoldIcon}
       isActive={editorState?.isActive}
       kbd='Ctrl B'
+      label='Bold'
       onClick={() => editor?.chain().focus().toggleBold().run()}
     />
   )

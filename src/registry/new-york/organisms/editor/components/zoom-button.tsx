@@ -1,16 +1,16 @@
-import { Maximize2, Minimize2 } from 'lucide-react'
-import React from 'react'
+import { Maximize2Icon, Minimize2Icon } from 'lucide-react'
+import { memo, useState } from 'react'
 import TooltipButton from './tooltip-button'
 
 const zoomInClassName =
   'bg-background fixed inset-0 z-50 p-6 [&_.tiptap]:max-h-[unset] [&_.tiptap]:min-h-[unset] [&_.tiptap]:h-full [&_.editor-content]:grow [&>div]:h-full [&>div]:flex [&>div]:flex-col [&_.editor-content]:overflow-auto'
 
 // Component
-const ZoomButton = React.memo<{
+const ZoomButton = memo<{
   id: string
 }>(({ id }) => {
   // States
-  const [isZoomed, setIsZoomed] = React.useState(false)
+  const [isZoomed, setIsZoomed] = useState(false)
 
   // Methods
   const toggleZoom = () => {
@@ -23,7 +23,7 @@ const ZoomButton = React.memo<{
   // Template
   return (
     <TooltipButton
-      Icon={isZoomed ? Minimize2 : Maximize2}
+      Icon={isZoomed ? Minimize2Icon : Maximize2Icon}
       label={isZoomed ? 'Zoom out' : 'Zoom in'}
       onClick={toggleZoom}
     />

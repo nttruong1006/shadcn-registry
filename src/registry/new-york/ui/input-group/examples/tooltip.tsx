@@ -1,6 +1,11 @@
-import { HelpCircle, InfoIcon } from 'lucide-react'
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { HelpCircleIcon, InfoIcon } from 'lucide-react'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput
+} from '@/registry/new-york/ui/input-group/components/input-group'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // Component
 export const InputGroupTooltip = () => {
@@ -12,7 +17,7 @@ export const InputGroupTooltip = () => {
         <InputGroupAddon align='inline-end'>
           <Tooltip>
             <TooltipTrigger asChild>
-              <InputGroupButton variant='ghost' aria-label='Info' size='icon-xs'>
+              <InputGroupButton aria-label='Info' size='icon-xs' variant='ghost'>
                 <InfoIcon />
               </InputGroupButton>
             </TooltipTrigger>
@@ -27,8 +32,8 @@ export const InputGroupTooltip = () => {
         <InputGroupAddon align='inline-end'>
           <Tooltip>
             <TooltipTrigger asChild>
-              <InputGroupButton variant='ghost' aria-label='Help' size='icon-xs'>
-                <HelpCircle />
+              <InputGroupButton aria-label='Help' size='icon-xs' variant='ghost'>
+                <HelpCircleIcon />
               </InputGroupButton>
             </TooltipTrigger>
             <TooltipContent>
@@ -42,8 +47,8 @@ export const InputGroupTooltip = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <InputGroupAddon>
-              <InputGroupButton variant='ghost' aria-label='Help' size='icon-xs'>
-                <HelpCircle />
+              <InputGroupButton aria-label='Help' size='icon-xs' variant='ghost'>
+                <HelpCircleIcon />
               </InputGroupButton>
             </InputGroupAddon>
           </TooltipTrigger>

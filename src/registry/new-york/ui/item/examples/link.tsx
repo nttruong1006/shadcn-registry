@@ -1,5 +1,5 @@
 import { ChevronRightIcon, ExternalLinkIcon } from 'lucide-react'
-import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item'
+import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '@/registry/new-york/ui/item/components/item'
 
 // Component
 export const ItemLink = () => {
@@ -18,9 +18,9 @@ export const ItemLink = () => {
           </ItemActions>
         </a>
       </Item>
-      <Item variant='outline' asChild>
+      <Item asChild variant='outline'>
         {/** biome-ignore lint/a11y/useValidAnchor: ignore */}
-        <a href='#' target='_blank' rel='noopener noreferrer'>
+        <a href='#' rel='noopener noreferrer' target='_blank'>
           <ItemContent>
             <ItemTitle>External resource</ItemTitle>
             <ItemDescription>Opens in a new tab with security attributes.</ItemDescription>

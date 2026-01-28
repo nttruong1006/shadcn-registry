@@ -1,7 +1,12 @@
 import type { RowData } from '@tanstack/react-table'
-import { ListChecks } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { ListChecksIcon } from 'lucide-react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 
@@ -37,8 +42,8 @@ const DataTableRowSelection = <TData extends RowData>({ table }: Pick<DataTableP
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='outline' size='icon-sm' onClick={toggleSelectAllRows}>
-                <ListChecks />
+              <Button onClick={toggleSelectAllRows} size='icon-sm' variant='outline'>
+                <ListChecksIcon />
               </Button>
             </TooltipTrigger>
 

@@ -1,7 +1,7 @@
 import { Link2Icon } from 'lucide-react'
-import { ButtonGroup, ButtonGroupText } from '@/components/ui/button-group'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { Label } from '@/components/ui/label'
+import { ButtonGroup, ButtonGroupText } from '@/registry/new-york/ui/button-group/components/button-group'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
+import { Label } from '@/registry/new-york/ui/label/components/label'
 
 // Component
 export const InputGroupButtonGroup = () => {

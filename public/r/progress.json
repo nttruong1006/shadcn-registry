@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "src/registry/new-york/ui/progress/components/progress.tsx",
-      "content": "import * as ProgressPrimitive from '@radix-ui/react-progress'\nimport type * as React from 'react'\nimport { cn } from '@/utils/ui'\n\n// Progress\nexport const Progress = ({ className, value, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root>) => {\n  // Template\n  return (\n    <ProgressPrimitive.Root\n      data-slot='progress'\n      className={cn('relative h-2 w-full overflow-hidden rounded-full bg-primary/20', className)}\n      {...props}\n    >\n      <ProgressPrimitive.Indicator\n        data-slot='progress-indicator'\n        className='h-full w-full flex-1 bg-primary transition-all'\n        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}\n      />\n    </ProgressPrimitive.Root>\n  )\n}\n",
+      "content": "import { Indicator, Root } from '@radix-ui/react-progress'\nimport type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\n// Progress\nexport const Progress = ({ className, value, ...props }: ComponentProps<typeof Root>) => {\n  // Template\n  return (\n    <Root\n      className={cn('relative h-2 w-full overflow-hidden rounded-full bg-primary/20', className)}\n      data-slot='progress'\n      {...props}\n    >\n      <Indicator\n        className='h-full w-full flex-1 bg-primary transition-all'\n        data-slot='progress-indicator'\n        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}\n      />\n    </Root>\n  )\n}\n",
       "type": "registry:ui",
       "target": "src/components/ui/progress.tsx"
     }

@@ -1,10 +1,10 @@
 import { format, toDate } from 'date-fns'
-import { Calendar as CalendarIcon, X } from 'lucide-react'
-import * as React from 'react'
+import { CalendarIcon, XIcon } from 'lucide-react'
+import { useMemo, useState } from 'react'
 import type { DateRange } from 'react-day-picker'
-import { Button } from '@/components/ui/button'
-import { Calendar, type CalendarProps } from '@/components/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Calendar, type CalendarProps } from '@/registry/new-york/ui/calendar/components/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
 
 // Date picker
 export interface DatePickerProps {
@@ -29,31 +29,31 @@ export const DatePicker = ({
   onValueChange
 }: DatePickerProps) => {
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Memos
   // Selected date
-  const selectedDate = React.useMemo(() => {
+  const selectedDate = useMemo(() => {
     return value ? toDate(value) : undefined
   }, [value])
 
   // Template
   return (
     <div className={className}>
-      <Popover open={isOpenPopover} modal onOpenChange={setIsOpenPopover}>
+      <Popover modal onOpenChange={setIsOpenPopover} open={isOpenPopover}>
         <PopoverTrigger asChild>
           <Button
+            aria-expanded={isOpenPopover}
+            className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto'
+            data-empty={!value}
+            disabled={isDisabled}
             id={id}
             variant='outline'
-            data-empty={!value}
-            aria-expanded={isOpenPopover}
-            disabled={isDisabled}
-            className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto'
           >
             <span className='line-clamp-1 text-ellipsis'>{value ? format(value, 'dd/MM/yyyy') : placeholder}</span>
 
             {isCanRemoveValue && value ? (
-              <X
+              <XIcon
                 className='ml-auto size-4 shrink-0 text-muted-foreground transition-transform hover:scale-125'
                 onClick={(e) => {
                   e.stopPropagation()
@@ -68,14 +68,14 @@ export const DatePicker = ({
 
         <PopoverContent className='w-auto overflow-hidden p-0'>
           <Calendar
-            mode='single'
-            selected={selectedDate}
             captionLayout='dropdown'
-            required
+            mode='single'
             onSelect={(date) => {
               onValueChange(date)
               setIsOpenPopover(false)
             }}
+            required
+            selected={selectedDate}
             {...calendarProps}
           />
         </PopoverContent>
@@ -105,19 +105,19 @@ export const DateRangePicker = ({
   onValueChange
 }: DateRangePickerProps) => {
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Template
   return (
     <div className={className}>
-      <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
+      <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
         <PopoverTrigger asChild>
           <Button
-            variant='outline'
-            data-empty={!value?.from || !value?.to}
             aria-expanded={isOpenPopover}
-            disabled={isDisabled}
             className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto'
+            data-empty={!(value?.from && value?.to)}
+            disabled={isDisabled}
+            variant='outline'
           >
             <span className='line-clamp-1 text-ellipsis'>
               {value?.from && value?.to
@@ -126,7 +126,7 @@ export const DateRangePicker = ({
             </span>
 
             {isCanRemoveValue && value?.from && value?.to ? (
-              <X
+              <XIcon
                 className='ml-auto size-4 shrink-0 text-muted-foreground transition-transform hover:scale-125'
                 onClick={(e) => {
                   e.stopPropagation()
@@ -141,11 +141,11 @@ export const DateRangePicker = ({
 
         <PopoverContent className='w-auto overflow-hidden p-0'>
           <Calendar
-            mode='range'
-            selected={value}
             captionLayout='dropdown'
-            required
+            mode='range'
             onSelect={onValueChange}
+            required
+            selected={value}
             {...calendarProps}
           />
         </PopoverContent>

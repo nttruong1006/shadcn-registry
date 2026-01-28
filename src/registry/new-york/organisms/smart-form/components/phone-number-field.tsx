@@ -1,19 +1,19 @@
-import { PhoneNumberInput } from '@/components/molecules/phone-number-input'
+import { PhoneNumberInput } from '@/registry/new-york/molecules/phone-number-input/components/phone-number-input'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const PhoneNumberField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <PhoneNumberInput
           {...field}
-          id={fieldData.code}
-          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-          disabled={disabledFields?.[fieldData.code]}
           aria-invalid={fieldState.invalid}
+          disabled={disabledFields?.[fieldData.code]}
+          id={fieldData.code}
           onValueChange={field.onChange}
+          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
         />
       )}
     </FieldContainer>

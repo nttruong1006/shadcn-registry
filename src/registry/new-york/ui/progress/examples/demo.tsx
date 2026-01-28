@@ -1,17 +1,17 @@
-import * as React from 'react'
-import { Progress } from '@/components/ui/progress'
+import { useEffect, useState } from 'react'
+import { Progress } from '@/registry/new-york/ui/progress/components/progress'
 
 // Component
 export const ProgressDemo = () => {
   // States
-  const [progress, setProgress] = React.useState(13)
+  const [progress, setProgress] = useState(13)
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500)
     return () => clearTimeout(timer)
   }, [])
 
   // Template
-  return <Progress value={progress} className='w-[60%]' />
+  return <Progress className='w-[60%]' value={progress} />
 }

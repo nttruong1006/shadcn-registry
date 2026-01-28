@@ -1,15 +1,15 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { CheckCircle, Copy, ExternalLink, Link, Trash, Unlink } from 'lucide-react'
-import React from 'react'
+import { CheckCircleIcon, CopyIcon, ExternalLinkIcon, LinkIcon, TrashIcon, UnlinkIcon } from 'lucide-react'
+import { type MouseEvent, memo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import z from 'zod'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
+import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 
 // Link form schema
@@ -37,7 +37,7 @@ const defaultLinkFormValue: z.input<typeof linkFormSchema> = {
 } as const
 
 // Component
-const LinkButton = React.memo<{
+const LinkButton = memo<{
   id: string
 }>(({ id }) => {
   // Hooks
@@ -50,10 +50,10 @@ const LinkButton = React.memo<{
   })
 
   // Refs
-  const isUpdateModeRef = React.useRef(false)
+  const isUpdateModeRef = useRef(false)
 
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Form
   const linkForm = useForm({
@@ -110,7 +110,7 @@ const LinkButton = React.memo<{
     setIsOpenPopover(false)
   }
 
-  const copyLink = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const copyLink = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     await navigator.clipboard.writeText(linkForm.getFieldValue('url'))
     toast.success('Success', {
@@ -124,18 +124,18 @@ const LinkButton = React.memo<{
 
   // Template
   return (
-    <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
+    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
       <Tooltip>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
             <Button
-              size='icon'
-              variant='ghost'
               className={cn({
                 'bg-accent text-accent-foreground': editorState?.isActive
               })}
+              size='icon'
+              variant='ghost'
             >
-              <Link />
+              <LinkIcon />
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
@@ -145,6 +145,7 @@ const LinkButton = React.memo<{
 
       <PopoverContent
         className='space-y-4'
+        onCloseAutoFocus={() => linkForm.reset()}
         onOpenAutoFocus={() => {
           const isLinkActive = editor?.isActive('link')
           const { href, target } = editor?.getAttributes('link') ?? {}
@@ -160,11 +161,10 @@ const LinkButton = React.memo<{
             setIsOpenPopover(true)
           }
         }}
-        onCloseAutoFocus={() => linkForm.reset()}
       >
         <form
-          id={linkForm.formId}
           className='w-xs space-y-6'
+          id={linkForm.formId}
           onSubmit={(e) => {
             e.preventDefault()
             linkForm.handleSubmit()
@@ -178,13 +178,13 @@ const LinkButton = React.memo<{
                   <FieldLabel htmlFor={`editor-${linkForm.formId}-url`}>URL *</FieldLabel>
 
                   <Input
+                    aria-invalid={isInvalid}
                     id={`editor-${linkForm.formId}-url`}
                     name={field.name}
-                    value={field.state.value}
-                    placeholder='Enter URL'
-                    aria-invalid={isInvalid}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder='Enter URL'
+                    value={field.state.value}
                   />
 
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -201,13 +201,13 @@ const LinkButton = React.memo<{
                   <FieldLabel htmlFor={`editor-${linkForm.formId}-display-text`}>Display text</FieldLabel>
 
                   <Input
+                    aria-invalid={isInvalid}
                     id={`editor-${linkForm.formId}-display-text`}
                     name={field.name}
-                    value={field.state.value}
-                    placeholder='Enter display text'
-                    aria-invalid={isInvalid}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder='Enter display text'
+                    value={field.state.value}
                   />
 
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -222,9 +222,9 @@ const LinkButton = React.memo<{
               return (
                 <Field data-invalid={isInvalid} orientation='horizontal'>
                   <Checkbox
+                    checked={field.state.value}
                     id={`editor-${linkForm.formId}-is-open-in-new-tab`}
                     name={field.name}
-                    checked={field.state.value}
                     onCheckedChange={(checked) => field.handleChange(checked === true)}
                   />
 
@@ -242,8 +242,8 @@ const LinkButton = React.memo<{
                 {(linkFormUrl) => (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size='icon' variant='outline' disabled={!linkFormUrl} onClick={openLinkInNewTab}>
-                        <ExternalLink />
+                      <Button disabled={!linkFormUrl} onClick={openLinkInNewTab} size='icon' variant='outline'>
+                        <ExternalLinkIcon />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Open link in new tab</TooltipContent>
@@ -254,8 +254,8 @@ const LinkButton = React.memo<{
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button size='icon' variant='outline' disabled={!editor?.isActive('link')} onClick={unsetLink}>
-                  <Unlink />
+                <Button disabled={!editor?.isActive('link')} onClick={unsetLink} size='icon' variant='outline'>
+                  <UnlinkIcon />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Unset</TooltipContent>
@@ -266,8 +266,8 @@ const LinkButton = React.memo<{
                 {(linkFormUrl) => (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size='icon' variant='outline' disabled={!linkFormUrl} onClick={copyLink}>
-                        <Copy />
+                      <Button disabled={!linkFormUrl} onClick={copyLink} size='icon' variant='outline'>
+                        <CopyIcon />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Copy</TooltipContent>
@@ -281,8 +281,8 @@ const LinkButton = React.memo<{
                 {(linkFormUrl) => (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size='icon' variant='outline' disabled={!linkFormUrl} onClick={deleteLink}>
-                        <Trash />
+                      <Button disabled={!linkFormUrl} onClick={deleteLink} size='icon' variant='outline'>
+                        <TrashIcon />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Delete</TooltipContent>
@@ -296,14 +296,14 @@ const LinkButton = React.memo<{
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      size='icon'
-                      variant='outline'
-                      type='submit'
-                      isLoading={isSubmitting}
-                      form={linkForm.formId}
                       disabled={!canSubmit}
+                      form={linkForm.formId}
+                      isLoading={isSubmitting}
+                      size='icon'
+                      type='submit'
+                      variant='outline'
                     >
-                      <CheckCircle />
+                      <CheckCircleIcon />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>Save</TooltipContent>

@@ -40,7 +40,9 @@ export const useOptionsQuery = ({
 
   // Effects
   React.useEffect(() => {
-    if (!dependencyFieldsValue) return
+    if (!dependencyFieldsValue) {
+      return
+    }
 
     const newQueryPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
       const value = dependencyFieldsValue[fieldName]
@@ -153,7 +155,9 @@ export const useOptionsInfiniteQuery = ({
 
   // Effects
   React.useEffect(() => {
-    if (!dependencyFieldsValue) return
+    if (!dependencyFieldsValue) {
+      return
+    }
 
     const newQueryPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
       const value = dependencyFieldsValue[fieldName]

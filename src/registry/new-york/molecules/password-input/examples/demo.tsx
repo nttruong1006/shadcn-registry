@@ -1,4 +1,4 @@
-import { PasswordInput } from '@/components/molecules/password-input'
+import { PasswordInput } from '@/registry/new-york/molecules/password-input/components/password-input'
 
 // Component
 export const PasswordInputDemo = () => {

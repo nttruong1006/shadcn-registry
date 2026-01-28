@@ -1,7 +1,9 @@
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
-import { FilePenLine, Search, Trash } from 'lucide-react'
-import { DataTable, DataTableActionCell, useDataTable } from '@/components/organisms/data-table'
-import { Button } from '@/components/ui/button'
+import { FilePenLineIcon, SearchIcon, TrashIcon } from 'lucide-react'
+import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
+import { DataTableActionCell } from '@/registry/new-york/organisms/data-table/components/data-table-action-cell'
+import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogContent,
@@ -10,7 +12,7 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
+} from '@/registry/new-york/ui/dialog/components/dialog'
 
 interface Row {
   id: string
@@ -44,17 +46,17 @@ const COLUMNS: ColumnDef<Row>[] = [
         menus={[
           {
             id: 'search',
-            icon: <Search />,
+            icon: <SearchIcon />,
             label: 'View'
           },
           {
             id: 'update',
-            icon: <FilePenLine />,
+            icon: <FilePenLineIcon />,
             label: 'Update'
           },
           {
             id: 'delete',
-            icon: <Trash />,
+            icon: <TrashIcon />,
             label: 'Delete'
           }
         ]}

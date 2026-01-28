@@ -1,6 +1,13 @@
 import { ShieldAlertIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle
+} from '@/registry/new-york/ui/item/components/item'
 
 // Component
 export const ItemIcon = () => {

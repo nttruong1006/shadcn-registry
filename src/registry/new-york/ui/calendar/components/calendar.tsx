@@ -1,7 +1,7 @@
 import { add, endOfYear, startOfYear } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import * as React from 'react'
+import { useEffect, useRef } from 'react'
 import {
   type ChevronProps,
   type DayButtonProps,
@@ -10,7 +10,7 @@ import {
   type RootProps,
   type WeekNumberProps
 } from 'react-day-picker'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/registry/new-york/ui/button/components/button'
 import { cn } from '@/utils/ui'
 
 // Constants
@@ -39,10 +39,10 @@ export const CalendarChevron = ({ className, orientation, ...props }: ChevronPro
 // Calendar day button
 export const CalendarDayButton = ({ className, day, modifiers, ...props }: DayButtonProps) => {
   // Refs
-  const ref = React.useRef<HTMLButtonElement>(null)
+  const ref = useRef<HTMLButtonElement>(null)
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     if (modifiers.focused) {
       ref.current?.focus()
     }
@@ -51,21 +51,21 @@ export const CalendarDayButton = ({ className, day, modifiers, ...props }: DayBu
   // Template
   return (
     <Button
-      ref={ref}
-      variant='ghost'
-      size='icon'
-      data-day={day.date.toLocaleDateString()}
-      data-selected-single={
-        modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle
-      }
-      data-range-start={modifiers.range_start}
-      data-range-end={modifiers.range_end}
-      data-range-middle={modifiers.range_middle}
       className={cn(
         'flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-start=true]:rounded-l-md data-[range-end=true]:bg-primary data-[range-middle=true]:bg-accent data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-accent-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground [&>span]:text-xs [&>span]:opacity-70',
         defaultClassNames.day,
         className
       )}
+      data-day={day.date.toLocaleDateString()}
+      data-range-end={modifiers.range_end}
+      data-range-middle={modifiers.range_middle}
+      data-range-start={modifiers.range_start}
+      data-selected-single={
+        modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle
+      }
+      ref={ref}
+      size='icon'
+      variant='ghost'
       {...props}
     />
   )
@@ -104,18 +104,13 @@ export const Calendar = ({
   // Template
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
+      captionLayout={captionLayout}
       className={cn(
         'group/calendar bg-background in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent p-3 [--cell-size:--spacing(8)]',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
       )}
-      captionLayout={captionLayout}
-      formatters={{
-        formatMonthDropdown: (date, options) => date.toLocaleString(options?.options.locale?.code, { month: 'short' }),
-        ...formatters
-      }}
       classNames={{
         root: cn('w-fit', defaultClassNames.root),
         months: cn('flex gap-4 flex-col md:flex-row relative', defaultClassNames.months),
@@ -186,9 +181,14 @@ export const Calendar = ({
         WeekNumber: CalendarWeekNumber,
         ...components
       }}
-      locale={locale}
-      startMonth={startMonth}
       endMonth={endMonth}
+      formatters={{
+        formatMonthDropdown: (date, options) => date.toLocaleString(options?.options.locale?.code, { month: 'short' }),
+        ...formatters
+      }}
+      locale={locale}
+      showOutsideDays={showOutsideDays}
+      startMonth={startMonth}
       {...props}
     />
   )

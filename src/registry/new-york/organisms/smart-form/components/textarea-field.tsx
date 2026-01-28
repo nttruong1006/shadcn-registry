@@ -1,18 +1,18 @@
-import { Textarea } from '@/components/ui/textarea'
+import { Textarea } from '@/registry/new-york/ui/textarea/components/textarea'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const TextareaField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <Textarea
           {...field}
+          aria-invalid={fieldState.invalid}
+          disabled={disabledFields?.[fieldData.code]}
           id={fieldData.code}
           placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-          disabled={disabledFields?.[fieldData.code]}
-          aria-invalid={fieldState.invalid}
         />
       )}
     </FieldContainer>

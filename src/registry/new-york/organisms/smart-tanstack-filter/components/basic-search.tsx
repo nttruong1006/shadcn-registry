@@ -1,14 +1,14 @@
 import { useStore } from '@tanstack/react-form'
 import { useDebounce } from '@uidotdev/usehooks'
 import { Search } from 'lucide-react'
-import React from 'react'
-import { Field } from '@/components/ui/field'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { basicSearchFormSchema, defaultBasicSearchFormValue, useAppForm } from './lib'
+import { memo, useEffect } from 'react'
+import { Field } from '@/registry/new-york/ui/field/components/field'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
+import { basicSearchFormSchema, defaultBasicSearchFormValue, useAppForm } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
 // Component
-const BasicSearch = React.memo(() => {
+const BasicSearch = memo(() => {
   // Hooks
   const { id, setFilters } = useSmartFilterContext()
 
@@ -24,7 +24,7 @@ const BasicSearch = React.memo(() => {
   const debouncedFormKeyword = useDebounce<string>(formKeyword.trim(), 400)
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     setFilters(debouncedFormKeyword)
   }, [debouncedFormKeyword, setFilters])
 
@@ -38,13 +38,13 @@ const BasicSearch = React.memo(() => {
             <Field data-invalid={isInvalid}>
               <InputGroup>
                 <InputGroupInput
+                  aria-invalid={isInvalid}
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
-                  aria-invalid={isInvalid}
-                  placeholder='Search'
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder='Search'
+                  value={field.state.value}
                 />
                 <InputGroupAddon>
                   <Search />

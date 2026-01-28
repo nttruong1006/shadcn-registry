@@ -1,8 +1,8 @@
 import { ChevronDown, XIcon } from 'lucide-react'
-import React from 'react'
-import { Badge, type BadgeProps } from '@/components/ui/badge'
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { type MouseEvent, type ReactNode, useCallback, useRef, useState } from 'react'
+import { Badge, type BadgeProps } from '@/registry/new-york/ui/badge/components/badge'
+import { Button, type ButtonProps } from '@/registry/new-york/ui/button/components/button'
+import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
 import {
   Command,
   CommandEmpty,
@@ -14,7 +14,7 @@ import {
   CommandList,
   type CommandListProps,
   type CommandProps
-} from '@/components/ui/command'
+} from '@/registry/new-york/ui/command/components/command'
 import {
   Popover,
   PopoverContent,
@@ -22,9 +22,9 @@ import {
   type PopoverProps,
   PopoverTrigger,
   type PopoverTriggerProps
-} from '@/components/ui/popover'
-import { Separator } from '@/components/ui/separator'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/registry/new-york/ui/popover/components/popover'
+import { Separator } from '@/registry/new-york/ui/separator/components/separator'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import type { Option } from '@/types/base'
 import { cn } from '@/utils/ui'
 
@@ -40,15 +40,15 @@ export interface MultiSelectProps {
   popoverContentProps?: PopoverContentProps
   buttonTriggerProps?: ButtonProps
   selectedOptionBadgeProps?: Omit<BadgeProps, 'children'> & {
-    children: (option: Option) => React.ReactNode
+    children: (option: Option) => ReactNode
   }
   commandProps?: CommandProps
   commandInputProps?: CommandInputProps
   commandListProps?: CommandListProps
   commandItemProps?: Omit<CommandItemProps, 'children'> & {
-    children: (option: Option) => React.ReactNode
+    children: (option: Option) => ReactNode
   }
-  commandGroupSlot?: React.ReactNode
+  commandGroupSlot?: ReactNode
   onValueChange: (value: MultiSelectProps['value']) => void
 }
 
@@ -56,7 +56,7 @@ export const MultiSelect = ({
   value,
   options,
   placeholder,
-  max = Infinity,
+  max = Number.POSITIVE_INFINITY,
   isServerSideSearching,
   popoverProps,
   popoverTriggerProps,
@@ -71,31 +71,35 @@ export const MultiSelect = ({
   onValueChange
 }: MultiSelectProps) => {
   // Refs
-  const valueContainerRef = React.useRef<HTMLDivElement>(null)
-  const overflowBadgeRef = React.useRef<HTMLSpanElement>(null)
+  const valueContainerRef = useRef<HTMLDivElement>(null)
+  const overflowBadgeRef = useRef<HTMLSpanElement>(null)
 
   // States
-  const [overflowItemCount, setOverflowItemCount] = React.useState(0)
+  const [overflowItemCount, setOverflowItemCount] = useState(0)
 
   // Methods
-  const resize = React.useCallback((node: HTMLDivElement) => {
+  const resize = useCallback((node: HTMLDivElement) => {
     valueContainerRef.current = node
 
     const checkOverflow = () => {
       const containerElement = valueContainerRef.current
-      if (!containerElement) return
+      if (!containerElement) {
+        return
+      }
 
       const items = Array.from(
         containerElement.querySelectorAll<HTMLSpanElement>('span[data-slot="badge"][data-option="true"]')
       )
 
-      items.forEach((item) => {
+      for (const item of items) {
         item.style.removeProperty('display')
-      })
+      }
 
       let overflowCount = 0
       for (let i = items.length - 1; i >= 0; i--) {
-        if (containerElement.scrollWidth <= containerElement.clientWidth) break
+        if (containerElement.scrollWidth <= containerElement.clientWidth) {
+          break
+        }
 
         overflowCount++
         items[i].style.display = 'none'
@@ -125,18 +129,18 @@ export const MultiSelect = ({
     onValueChange(newSelectedValues)
   }
 
-  const deleteOption = (e: React.MouseEvent<HTMLSpanElement>, option: Option['value']) => {
+  const deleteOption = (e: MouseEvent<HTMLSpanElement>, option: Option['value']) => {
     e.stopPropagation()
     toggleOption(option)
   }
 
-  const deleteExtraOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
+  const deleteExtraOptions = (e: MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation()
     const newSelectedValues = value.slice(0, value.length - overflowItemCount)
     onValueChange(newSelectedValues)
   }
 
-  const deleteAllOptions = (e: React.MouseEvent<SVGSVGElement>) => {
+  const deleteAllOptions = (e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation()
     onValueChange([])
   }
@@ -147,23 +151,23 @@ export const MultiSelect = ({
       <PopoverTrigger {...popoverTriggerProps} asChild={popoverTriggerProps?.asChild ?? true}>
         <Button
           {...buttonTriggerProps}
-          variant='outline'
-          data-empty={value.length === 0}
           className={cn(
             'w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto',
             buttonTriggerProps?.className
           )}
+          data-empty={value.length === 0}
+          variant='outline'
         >
           {value.length > 0 ? (
-            <React.Fragment>
-              <div ref={resize} className='flex grow items-center gap-2 overflow-hidden'>
+            <>
+              <div className='flex grow items-center gap-2 overflow-hidden' ref={resize}>
                 {value.map((value) => {
                   const option = options.find((option) => option.value === value)
                   return option ? (
                     <Badge
+                      data-option='true'
                       key={value}
                       variant='secondary'
-                      data-option='true'
                       {...selectedOptionBadgeProps}
                       className={cn(
                         '[&>svg]:transition-transform hover:[&>svg]:scale-125',
@@ -187,10 +191,10 @@ export const MultiSelect = ({
                     '[&>svg]:transition-transform hover:[&>svg]:scale-125',
                     selectedOptionBadgeProps?.className
                   )}
+                  onClick={deleteExtraOptions}
                   style={{
                     display: overflowItemCount > 0 ? 'flex' : 'none'
                   }}
-                  onClick={deleteExtraOptions}
                 >
                   {`+ ${overflowItemCount}`}
                   <XIcon />
@@ -202,8 +206,8 @@ export const MultiSelect = ({
                 onClick={deleteAllOptions}
               />
 
-              <Separator orientation='vertical' className='flex h-full min-h-6' />
-            </React.Fragment>
+              <Separator className='flex h-full min-h-6' orientation='vertical' />
+            </>
           ) : (
             <div className='line-clamp-1 text-ellipsis'>{placeholder}</div>
           )}
@@ -244,8 +248,8 @@ export const MultiSelect = ({
                     <CommandItem
                       disabled={isDisabled}
                       key={option.value}
-                      value={option.label}
                       onSelect={() => toggleOption(option.value)}
+                      value={option.label}
                     >
                       <Checkbox checked={isSelected} />
                       {commandItemProps?.children ? commandItemProps.children(option) : option.label}

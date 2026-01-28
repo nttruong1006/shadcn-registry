@@ -1,6 +1,6 @@
-import React from 'react'
+import { useMemo } from 'react'
 import { type ControllerRenderProps, useFormContext } from 'react-hook-form'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
 import {
   defaultValuePerOperation,
   operationsPerType,
@@ -25,10 +25,14 @@ const AdvancedFilterNameField = ({
 
   // Methods
   const changeValue: ComboboxProps['onValueChange'] = (value) => {
-    if (!value) return
+    if (!value) {
+      return
+    }
 
     const selectedFilter = filters.find((filter) => filter.name === value)
-    if (!selectedFilter) return
+    if (!selectedFilter) {
+      return
+    }
 
     const operation = operationsPerType[selectedFilter.type][0]
     form.setValue(`filters.${index}.type`, selectedFilter.type)
@@ -39,7 +43,7 @@ const AdvancedFilterNameField = ({
   }
 
   // Memos
-  const options = React.useMemo<ComboboxProps['options']>(() => {
+  const options = useMemo<ComboboxProps['options']>(() => {
     const selectedFilters = formFiltersWatcher.map((field) => field.name)
     return filters
       .filter((filter) => filter.name === field.value || !selectedFilters.includes(filter.name))
@@ -50,7 +54,7 @@ const AdvancedFilterNameField = ({
   }, [filters, formFiltersWatcher, field.value])
 
   // Template
-  return <Combobox value={field.value} options={options} isCanRemoveValue={false} onValueChange={changeValue} />
+  return <Combobox isCanRemoveValue={false} onValueChange={changeValue} options={options} value={field.value} />
 }
 
 export default AdvancedFilterNameField

@@ -1,7 +1,7 @@
 import type { Table as ReactTable, Row, RowData } from '@tanstack/react-table'
-import type React from 'react'
-import { LoadingOverlay } from '@/components/molecules/loading-overlay'
-import { Table } from '@/components/ui/table'
+import type { ReactNode } from 'react'
+import { LoadingOverlay } from '@/registry/new-york/molecules/loading-overlay/components/loading-overlay'
+import { Table } from '@/registry/new-york/ui/table/components/table'
 import { cn } from '@/utils/ui'
 import DataTableAdditionalInfo from './data-table-additional-info'
 import DataTableBody from './data-table-body'
@@ -26,8 +26,8 @@ export interface DataTableProps<TData extends RowData> {
     tableFooter?: string
     tablePagination?: string
   }
-  onRenderSubComponent?: (row: Row<TData>) => React.ReactNode
-  onRenderAdditionalRow?: (table: ReactTable<TData>) => React.ReactNode
+  onRenderSubComponent?: (row: Row<TData>) => ReactNode
+  onRenderAdditionalRow?: (table: ReactTable<TData>) => ReactNode
 }
 
 export const DataTable = <TData extends RowData>({
@@ -44,36 +44,36 @@ export const DataTable = <TData extends RowData>({
   return (
     // Template
     <div
-      id={id}
       className={cn(
         'flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-md border',
         className?.container
       )}
+      id={id}
     >
       <Table className={className?.table}>
         {/* Table header */}
-        <DataTableHeader table={table} className={className?.tableHeader} />
+        <DataTableHeader className={className?.tableHeader} table={table} />
 
         {/* Table body */}
         <DataTableBody
-          table={table}
           className={className?.tableBody}
-          onRenderSubComponent={onRenderSubComponent}
           onRenderAdditionalRow={onRenderAdditionalRow}
+          onRenderSubComponent={onRenderSubComponent}
+          table={table}
         />
 
         {/* Table footer */}
-        {isDisplayFooter && <DataTableFooter table={table} className={className?.tableFooter} />}
+        {isDisplayFooter && <DataTableFooter className={className?.tableFooter} table={table} />}
       </Table>
 
       {/* Additional info */}
-      <DataTableAdditionalInfo table={table} isError={isError} isLoading={isLoading} />
+      <DataTableAdditionalInfo isError={isError} isLoading={isLoading} table={table} />
 
       {/* Row selection */}
       <DataTableRowSelection table={table} />
 
       {/* Pagination */}
-      {isDisplayPagination && <DataTablePagination table={table} className={className?.tablePagination} />}
+      {isDisplayPagination && <DataTablePagination className={className?.tablePagination} table={table} />}
 
       {/* Loading overlay */}
       <LoadingOverlay isLoading={isLoading} />

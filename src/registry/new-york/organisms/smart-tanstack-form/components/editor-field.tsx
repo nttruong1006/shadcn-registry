@@ -1,7 +1,7 @@
 import type { Content } from '@tiptap/react'
-import { Editor } from '@/components/organisms/editor'
+import { Editor } from '@/registry/new-york/organisms/editor/components/editor'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const EditorField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -12,9 +12,9 @@ const EditorField = ({ fieldData, disabledFields }: FieldProps) => {
   return (
     <FieldContainer fieldData={fieldData}>
       <Editor
-        value={field.state.value}
         editable={!disabledFields?.[fieldData.code]}
         onValueChange={field.handleChange}
+        value={field.state.value}
       />
     </FieldContainer>
   )

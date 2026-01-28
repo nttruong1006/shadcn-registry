@@ -1,7 +1,8 @@
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
-import { Spinner } from '@/components/ui/spinner'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import FieldContainer, { type FieldProps } from './field-container'
-import { fetchNextPage, useFieldContext, useOptionsInfiniteQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
 // Component
 const SelectWithInfiniteQueryField = ({ fieldData, ...props }: FieldProps) => {
@@ -25,17 +26,12 @@ const SelectWithInfiniteQueryFieldContainer = ({ fieldData, disabledFields }: Fi
   // Template
   return (
     <Combobox
-      value={field.state.value}
-      options={options}
-      placeholder={`Select ${fieldData.label.toLowerCase()}`}
       buttonTriggerProps={{
         id: fieldData.code,
         disabled: disabledFields?.[fieldData.code],
         isLoading: optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
       }}
-      commandProps={{
-        shouldFilter: false
-      }}
+      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
       commandInputProps={{
         value: searchKeyword,
         onValueChange: setSearchKeyword
@@ -47,8 +43,13 @@ const SelectWithInfiniteQueryFieldContainer = ({ fieldData, disabledFields }: Fi
             infiniteQuery: optionsInfiniteQuery
           })
       }}
-      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+      commandProps={{
+        shouldFilter: false
+      }}
       onValueChange={field.handleChange}
+      options={options}
+      placeholder={`Select ${fieldData.label.toLowerCase()}`}
+      value={field.state.value}
     />
   )
 }

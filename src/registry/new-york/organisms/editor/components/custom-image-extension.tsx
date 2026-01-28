@@ -6,20 +6,25 @@ import {
   ReactNodeViewRenderer,
   useCurrentEditor
 } from '@tiptap/react'
-import { AlignLeft, ChevronDown, Trash } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Separator } from '@/components/ui/separator'
-import { Skeleton } from '@/components/ui/skeleton'
+import { AlignLeftIcon, ChevronDownIcon, TrashIcon } from 'lucide-react'
+import { type CSSProperties, type ImgHTMLAttributes, type PointerEvent, useRef, useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Separator } from '@/registry/new-york/ui/separator/components/separator'
+import { Skeleton } from '@/registry/new-york/ui/skeleton/components/skeleton'
 import { cn } from '@/utils/ui'
 import { type Alignment, alignments, containerClassNamePerAlignment, minWidth } from './lib'
 
 // Image attributes
-type ImageAttributes = Pick<React.ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'height' | 'src' | 'title' | 'width'> & {
+type ImageAttributes = Pick<ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'height' | 'src' | 'title' | 'width'> & {
   alignment: Alignment
-  containerStyle: React.CSSProperties
+  containerStyle: CSSProperties
 }
 
 // Resizing position
@@ -38,11 +43,11 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
   const { editor } = useCurrentEditor()
 
   // Refs
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // States
-  const [isLoaded, setIsLoaded] = React.useState(false)
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Methods
   const loadImage = () => {
@@ -70,7 +75,7 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
     editor?.commands.focus()
   }
 
-  const downPointer = (pointerDownEvent: React.PointerEvent<HTMLDivElement>, position: ResizingPosition) => {
+  const downPointer = (pointerDownEvent: PointerEvent<HTMLDivElement>, position: ResizingPosition) => {
     pointerDownEvent.preventDefault()
     pointerDownEvent.stopPropagation()
 
@@ -120,12 +125,14 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
   // Template
   return (
     <NodeViewWrapper data-drag-handle>
-      <div ref={containerRef} className={cn('flex', containerClassNamePerAlignment[alignment])}>
+      <div className={cn('flex', containerClassNamePerAlignment[alignment])} ref={containerRef}>
         <div className='group relative transition-all' style={containerStyle}>
           {!isLoaded && <Skeleton className='absolute inset-0 rounded-md' />}
 
-          <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
-            <PopoverTrigger>
+          <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
+            <PopoverTrigger className='w-full'>
+              {/** biome-ignore lint/correctness/useImageSize:ignore */}
+              {/** biome-ignore lint/a11y/noNoninteractiveElementInteractions: ignore */}
               <img
                 {...imageAttributes}
                 alt='Alt'
@@ -146,18 +153,18 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant='outline'>
-                      <AlignLeft />
-                      <ChevronDown />
+                      <AlignLeftIcon />
+                      <ChevronDownIcon />
                     </Button>
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent>
                     {alignments.map((alignmentOption) => (
                       <DropdownMenuItem
-                        key={alignmentOption.value}
                         className={cn({
                           'bg-accent': alignment === alignmentOption.value
                         })}
+                        key={alignmentOption.value}
                         onClick={() => changeAlignment(alignmentOption.value)}
                       >
                         <alignmentOption.icon />
@@ -167,11 +174,11 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <Separator orientation='vertical' className='h-10' />
+                <Separator className='h-10' orientation='vertical' />
 
                 {/* Trash */}
-                <Button variant='outline' size='icon' onClick={deleteImage}>
-                  <Trash />
+                <Button onClick={deleteImage} size='icon' variant='outline'>
+                  <TrashIcon />
                 </Button>
               </div>
             </PopoverContent>

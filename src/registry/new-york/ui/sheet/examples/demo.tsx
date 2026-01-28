@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Label } from '@/registry/new-york/ui/label/components/label'
 import {
   Sheet,
   SheetClose,
@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger
-} from '@/components/ui/sheet'
+} from '@/registry/new-york/ui/sheet/components/sheet'
 
 // Component
 export const SheetDemo = () => {
@@ -28,11 +28,11 @@ export const SheetDemo = () => {
         <div className='grid flex-1 auto-rows-min gap-6 px-4'>
           <div className='grid gap-3'>
             <Label htmlFor='sheet-demo-name'>Name</Label>
-            <Input id='sheet-demo-name' defaultValue='Pedro Duarte' />
+            <Input defaultValue='Pedro Duarte' id='sheet-demo-name' />
           </div>
           <div className='grid gap-3'>
             <Label htmlFor='sheet-demo-username'>Username</Label>
-            <Input id='sheet-demo-username' defaultValue='@peduarte' />
+            <Input defaultValue='@peduarte' id='sheet-demo-username' />
           </div>
         </div>
         <SheetFooter>

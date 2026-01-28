@@ -1,4 +1,4 @@
-import { LoadingOverlay } from '@/components/molecules/loading-overlay'
+import { LoadingOverlay } from '@/registry/new-york/molecules/loading-overlay/components/loading-overlay'
 
 // Component
 export const LoadingOverlayDemo = () => {

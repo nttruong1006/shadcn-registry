@@ -1,5 +1,5 @@
 import type { RowData, Table } from '@tanstack/react-table'
-import { Checkbox, type CheckboxProps } from '@/components/ui/checkbox'
+import { Checkbox, type CheckboxProps } from '@/registry/new-york/ui/checkbox/components/checkbox'
 
 // Component
 export const DataTableCheckboxHeader = <TData extends RowData>({

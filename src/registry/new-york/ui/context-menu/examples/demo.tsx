@@ -12,7 +12,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger
-} from '@/components/ui/context-menu'
+} from '@/registry/new-york/ui/context-menu/components/context-menu'
 
 // Component
 export const ContextMenuDemo = () => {
@@ -27,7 +27,7 @@ export const ContextMenuDemo = () => {
           Back
           <ContextMenuShortcut>⌘[</ContextMenuShortcut>
         </ContextMenuItem>
-        <ContextMenuItem inset disabled>
+        <ContextMenuItem disabled inset>
           Forward
           <ContextMenuShortcut>⌘]</ContextMenuShortcut>
         </ContextMenuItem>

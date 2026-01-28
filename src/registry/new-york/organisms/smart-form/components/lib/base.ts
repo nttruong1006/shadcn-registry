@@ -1,8 +1,8 @@
-import type React from 'react'
+import type { ReactNode } from 'react'
 import type { Accept } from 'react-dropzone'
 import type { FieldValues, UseFormReturn } from 'react-hook-form'
-import type { NumberInputProps } from '@/components/molecules/number-input'
-import type { DatePickerProps } from '@/components/ui/date-picker'
+import type { NumberInputProps } from '@/registry/new-york/molecules/number-input/components/number-input'
+import type { DatePickerProps } from '@/registry/new-york/ui/date-picker/components/date-picker'
 import type { Option } from '@/types/base'
 
 // Smart form data
@@ -109,12 +109,12 @@ export interface SmartFormProps {
   formData: SmartFormData
   isUpdateMode?: boolean
   isPending?: boolean
-  slots?: Record<string, React.ReactNode | undefined>
+  slots?: Record<string, ReactNode | undefined>
   hiddenFields?: Record<string, boolean | undefined>
   disabledFields?: Record<string, boolean | undefined>
   submitButtonText?: string
   actionButtonsClassName?: string
-  updateConfirmationDialogSlot?: React.ReactNode
+  updateConfirmationDialogSlot?: ReactNode
   cancel?: () => void
   validate?: (fieldValues: FieldValues) => boolean | Promise<boolean>
   submit?: (fieldValues: FieldValues) => void | Promise<void>

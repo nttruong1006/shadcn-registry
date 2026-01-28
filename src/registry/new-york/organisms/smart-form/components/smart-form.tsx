@@ -1,6 +1,6 @@
-import React from 'react'
+import { type FC, useRef, useState } from 'react'
 import { type FieldValues, FormProvider } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogClose,
@@ -9,9 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from '@/components/ui/dialog'
-import { FieldDescription, FieldLegend, FieldSet } from '@/components/ui/field'
-import { Spinner } from '@/components/ui/spinner'
+} from '@/registry/new-york/ui/dialog/components/dialog'
+import { FieldDescription, FieldLegend, FieldSet } from '@/registry/new-york/ui/field/components/field'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import { cn } from '@/utils/ui'
 import AutocompleteWithInfiniteQueryField from './autocomplete-with-infinite-query-field'
 import AutocompleteWithOptionsField from './autocomplete-with-options-field'
@@ -22,7 +22,8 @@ import EditorField from './editor-field'
 import type { FieldProps } from './field-container'
 import FileField from './file-field'
 import InputField from './input-field'
-import type { DependentGraph, SmartFormFieldType, SmartFormProps } from './lib'
+import type { SmartFormFieldType, SmartFormProps } from './lib/base'
+import type { DependentGraph } from './lib/dependency'
 import MultiFileField from './multi-file-field'
 import MultiSelectWithInfiniteQueryField from './multi-select-with-infinite-query-field'
 import MultiSelectWithOptionsField from './multi-select-with-options-field'
@@ -35,7 +36,7 @@ import SelectWithOptionsField from './select-with-options-field'
 import SelectWithQueryField from './select-with-query-field'
 import TextareaField from './textarea-field'
 
-const fieldComponents: Record<SmartFormFieldType, React.FC<FieldProps>> = {
+const fieldComponents: Record<SmartFormFieldType, FC<FieldProps>> = {
   input: InputField,
   textarea: TextareaField,
   number: NumberField,
@@ -77,16 +78,18 @@ export const SmartForm = ({
   submit
 }: SmartFormProps) => {
   // Refs
-  const formValueRef = React.useRef<FieldValues>(() => form.getValues())
-  const dependentGraphRef = React.useRef<DependentGraph>(null)
+  const formValueRef = useRef<FieldValues>(() => form.getValues())
+  const dependentGraphRef = useRef<DependentGraph>(null)
 
   // States
-  const [isOpenConfirmationDialog, setIsOpenConfirmationDialog] = React.useState(false)
+  const [isOpenConfirmationDialog, setIsOpenConfirmationDialog] = useState(false)
 
   // Methods
   const startValidation = async (formValue: FieldValues) => {
     const isValidationPassed = (await validate?.(formValue)) ?? true
-    if (!isValidationPassed) return
+    if (!isValidationPassed) {
+      return
+    }
     formValueRef.current = formValue
     return isUpdateMode ? setIsOpenConfirmationDialog(true) : submit?.(formValue)
   }
@@ -124,7 +127,7 @@ export const SmartForm = ({
                 // Label
                 if (fieldData.type === 'label') {
                   return (
-                    <div key={fieldData.code} className={cn('col-span-full', fieldData.className)}>
+                    <div className={cn('col-span-full', fieldData.className)} key={fieldData.code}>
                       <span className='font-bold text-base text-muted-foreground'>{fieldData.label}</span>
                     </div>
                   )
@@ -133,7 +136,7 @@ export const SmartForm = ({
                 // Slot
                 if (fieldData.type === 'slot') {
                   return (
-                    <div key={fieldData.code} className={cn('col-span-full', fieldData.className)}>
+                    <div className={cn('col-span-full', fieldData.className)} key={fieldData.code}>
                       {slots?.[fieldData.code]}
                     </div>
                   )
@@ -143,11 +146,11 @@ export const SmartForm = ({
                 const FieldComponent = fieldComponents[fieldData.type]
                 return (
                   <FieldComponent
-                    key={fieldData.code}
-                    formData={formData}
                     dependentGraphRef={dependentGraphRef}
-                    fieldData={fieldData}
                     disabledFields={disabledFields}
+                    fieldData={fieldData}
+                    formData={formData}
+                    key={fieldData.code}
                   />
                 )
               })}
@@ -158,7 +161,7 @@ export const SmartForm = ({
         {/* Action buttons */}
         {slots?.Actions === undefined ? (
           <div className={cn('flex flex-col justify-stretch gap-4 xl:flex-row xl:justify-end', actionButtonsClassName)}>
-            <Button variant='outline' onClick={cancel}>
+            <Button onClick={cancel} variant='outline'>
               Cancel
             </Button>
 
@@ -173,7 +176,7 @@ export const SmartForm = ({
 
       {/* Update confirmation dialog */}
       {isUpdateMode && (
-        <Dialog open={isOpenConfirmationDialog} onOpenChange={setIsOpenConfirmationDialog}>
+        <Dialog onOpenChange={setIsOpenConfirmationDialog} open={isOpenConfirmationDialog}>
           <DialogContent className='max-w-2xl'>
             <DialogHeader>
               <DialogTitle>Update information</DialogTitle>

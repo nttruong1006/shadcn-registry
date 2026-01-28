@@ -143,8 +143,9 @@ export const getEditorValue = (editor: Editor, format: 'html' | 'json' | 'text')
 }
 
 // Is valid youtube url
+export const youtubeUrlRegex =
+  /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu\.be|youtube-nocookie\.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
+
 export const isValidYoutubeUrl = (url: string) => {
-  return url.match(
-    /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu\.be|youtube-nocookie\.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
-  )
+  return url.match(youtubeUrlRegex)
 }

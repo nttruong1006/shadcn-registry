@@ -1,5 +1,5 @@
-import { GitBranch } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { GitBranchIcon } from 'lucide-react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 
 // Component
 export const ButtonLoading = () => {
@@ -9,12 +9,12 @@ export const ButtonLoading = () => {
       <Button isLoading>Button</Button>
 
       <Button isLoading>
-        <GitBranch />
+        <GitBranchIcon />
         <span>Button</span>
       </Button>
 
       <Button isLoading size='icon'>
-        <GitBranch />
+        <GitBranchIcon />
       </Button>
     </div>
   )

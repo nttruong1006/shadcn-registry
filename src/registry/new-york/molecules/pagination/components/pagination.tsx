@@ -1,7 +1,12 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { useMemo } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 
 // Pagination
@@ -59,7 +64,7 @@ export const Pagination = ({
 
   // Memos
   // Displayed pages
-  const displayedPages = React.useMemo(() => {
+  const displayedPages = useMemo(() => {
     const result: number[] = []
 
     if (pageCount <= 3 + neighborPageCount * 2) {
@@ -87,11 +92,11 @@ export const Pagination = ({
       }
 
       if (page - 1 >= neighborPageCount * 2 && page !== 1 + 2) {
-        result.unshift(-Infinity)
+        result.unshift(Number.NEGATIVE_INFINITY)
       }
 
       if (pageCount - page >= neighborPageCount * 2 && page !== pageCount - 2) {
-        result.push(Infinity)
+        result.push(Number.POSITIVE_INFINITY)
       }
 
       if (left !== 1) {
@@ -111,23 +116,23 @@ export const Pagination = ({
     <div className='flex select-none items-center gap-1'>
       {/* Previous */}
       <Button
-        variant='ghost'
-        size='icon'
         className='hidden xl:inline-flex'
         disabled={!(isHasPreviousPage || page > 1)}
         onClick={handleGoToPreviousPage}
+        size='icon'
+        variant='ghost'
       >
         <ChevronLeft />
       </Button>
 
       {displayedPages.map((displayedPage) => {
         // Previous jumping
-        if (displayedPage === -Infinity) {
+        if (displayedPage === Number.NEGATIVE_INFINITY) {
           return (
-            <TooltipProvider key={displayedPage} delayDuration={400}>
+            <TooltipProvider delayDuration={400} key={displayedPage}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size='icon' className='group' variant='ghost' onClick={handleJumpPreviousPages}>
+                  <Button className='group' onClick={handleJumpPreviousPages} size='icon' variant='ghost'>
                     <MoreHorizontal className='block group-hover:hidden' />
                     <ChevronsLeft className='hidden group-hover:block' />
                   </Button>
@@ -140,12 +145,12 @@ export const Pagination = ({
         }
 
         // Next jumping
-        if (displayedPage === Infinity) {
+        if (displayedPage === Number.POSITIVE_INFINITY) {
           return (
-            <TooltipProvider key={displayedPage} delayDuration={400}>
+            <TooltipProvider delayDuration={400} key={displayedPage}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size='icon' className='group' variant='ghost' onClick={handleJumpNextPages}>
+                  <Button className='group' onClick={handleJumpNextPages} size='icon' variant='ghost'>
                     <MoreHorizontal className='block group-hover:hidden' />
                     <ChevronsRight className='hidden group-hover:block' />
                   </Button>
@@ -163,9 +168,9 @@ export const Pagination = ({
         return (
           <Button
             key={displayedPage}
-            variant={isActive ? 'default' : 'ghost'}
-            size={displayedPage > 9999 ? 'default' : 'icon'}
             onClick={() => onChangePage(displayedPage)}
+            size={displayedPage > 9999 ? 'default' : 'icon'}
+            variant={isActive ? 'default' : 'ghost'}
           >
             <span className={cn('z-10 tabular-nums', isActive && 'text-primary-foreground')}>{displayedPage}</span>
           </Button>
@@ -174,11 +179,11 @@ export const Pagination = ({
 
       {/* Next */}
       <Button
-        variant='ghost'
-        size='icon'
         className='hidden xl:inline-flex'
         disabled={!(isHasNextPage || page < pageCount)}
         onClick={handleGoToNextPage}
+        size='icon'
+        variant='ghost'
       >
         <ChevronRight />
       </Button>

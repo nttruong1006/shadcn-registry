@@ -1,7 +1,7 @@
 import { flexRender, type RowData } from '@tanstack/react-table'
-import { ChevronLeft, ChevronRight, PinOff } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { ChevronLeftIcon, ChevronRightIcon, PinOffIcon } from 'lucide-react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { TableHead, TableHeader, TableRow } from '@/registry/new-york/ui/table/components/table'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
@@ -27,17 +27,20 @@ const DataTableHeader = <TData extends RowData>({
             let rowSpan = 1
             if (header.isPlaceholder) {
               const leafs = header.getLeafHeaders()
-              rowSpan = leafs[leafs.length - 1].depth - header.depth
+              const lastLeftDepth = leafs.at(-1)?.depth
+              if (lastLeftDepth) {
+                rowSpan = lastLeftDepth - header.depth
+              }
             }
 
             return (
               <TableHead
-                key={header.id}
-                colSpan={header.colSpan}
-                rowSpan={rowSpan}
                 className={cn('space-y-1 border-b border-l', header.column.columnDef.meta?.className, {
                   'first:border-l-0': headerIndex === 0
                 })}
+                colSpan={header.colSpan}
+                key={header.id}
+                rowSpan={rowSpan}
                 style={{
                   ...getCommonPinningStyles(header.column)
                 }}
@@ -50,37 +53,37 @@ const DataTableHeader = <TData extends RowData>({
                   <div className='flex gap-2'>
                     {pinningPosition !== 'left' && (
                       <Button
-                        variant='outline'
-                        size='icon-sm'
                         onClick={() => {
                           header.column.pin('left')
                         }}
+                        size='icon-sm'
+                        variant='outline'
                       >
-                        <ChevronLeft />
+                        <ChevronLeftIcon />
                       </Button>
                     )}
 
                     {pinningPosition && (
                       <Button
-                        variant='outline'
-                        size='icon-sm'
                         onClick={() => {
                           header.column.pin(false)
                         }}
+                        size='icon-sm'
+                        variant='outline'
                       >
-                        <PinOff />
+                        <PinOffIcon />
                       </Button>
                     )}
 
                     {pinningPosition !== 'right' && (
                       <Button
-                        variant='outline'
-                        size='icon-sm'
                         onClick={() => {
                           header.column.pin('right')
                         }}
+                        size='icon-sm'
+                        variant='outline'
                       >
-                        <ChevronRight />
+                        <ChevronRightIcon />
                       </Button>
                     )}
                   </div>

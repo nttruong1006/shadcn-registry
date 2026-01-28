@@ -1,7 +1,9 @@
-import { MultiSelect } from '@/components/molecules/multi-select'
-import { Spinner } from '@/components/ui/spinner'
+import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { fetchNextPage, type MultiSelectFieldOutputValue, useFieldContext, useOptionsInfiniteQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
+import type { MultiSelectFieldOutputValue } from './lib/schema'
 
 // Component
 const MultiSelectWithInfiniteQueryField = ({
@@ -22,19 +24,14 @@ const MultiSelectWithInfiniteQueryField = ({
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <MultiSelect
-        value={field.state.value}
-        options={options}
-        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
         buttonTriggerProps={{
           id: field.name,
           disabled: isDisabled,
           isLoading: optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
         }}
-        commandProps={{
-          shouldFilter: false
-        }}
+        commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
         commandInputProps={{
           value: searchKeyword,
           onValueChange: setSearchKeyword
@@ -46,8 +43,13 @@ const MultiSelectWithInfiniteQueryField = ({
               infiniteQuery: optionsInfiniteQuery
             })
         }}
-        commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+        commandProps={{
+          shouldFilter: false
+        }}
         onValueChange={field.handleChange}
+        options={options}
+        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

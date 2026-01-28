@@ -15,17 +15,29 @@ export const useDataTable = <TData extends RowData>({
 }
 
 // Get common pinning styles
+const getBoxShadow = ({
+  isLastLeftPinnedColumn,
+  isFirstRightPinnedColumn
+}: {
+  isLastLeftPinnedColumn: boolean
+  isFirstRightPinnedColumn: boolean
+}) => {
+  if (isLastLeftPinnedColumn) {
+    return '-2px 0 2px -2px gray inset'
+  }
+  if (isFirstRightPinnedColumn) {
+    return '2px 0 2px -2px gray inset'
+  }
+  return undefined
+}
+
 export const getCommonPinningStyles = <TData extends RowData>(column: Column<TData>): React.CSSProperties => {
   const pinningPosition = column.getIsPinned()
   const isLastLeftPinnedColumn = pinningPosition === 'left' && column.getIsLastColumn('left')
   const isFirstRightPinnedColumn = pinningPosition === 'right' && column.getIsFirstColumn('right')
 
   return {
-    boxShadow: isLastLeftPinnedColumn
-      ? '-2px 0 2px -2px gray inset'
-      : isFirstRightPinnedColumn
-        ? '2px 0 2px -2px gray inset'
-        : undefined,
+    boxShadow: getBoxShadow({ isLastLeftPinnedColumn, isFirstRightPinnedColumn }),
     left: pinningPosition === 'left' ? `${column.getStart('left')}px` : undefined,
     right: pinningPosition === 'right' ? `${column.getAfter('right')}px` : undefined,
     position: pinningPosition ? 'sticky' : 'relative',
@@ -35,6 +47,6 @@ export const getCommonPinningStyles = <TData extends RowData>(column: Column<TDa
 }
 
 // Get number order
-export const getNumberOrder = (rowIndex: number, page: number = 1, pageSize: number = 10): number => {
+export const getNumberOrder = (rowIndex: number, page = 1, pageSize = 10): number => {
   return rowIndex + 1 + (page - 1) * pageSize
 }

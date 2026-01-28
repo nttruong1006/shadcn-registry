@@ -5,9 +5,10 @@ import {
   FileUploadInput,
   FileUploadItem,
   type FileUploadValue
-} from '@/components/molecules/file-upload'
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type MultiFileFieldOutputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { MultiFileFieldOutputValue } from './lib/schema'
 
 const baseDropzoneOptions: DropzoneOptions = {
   maxFiles: 10
@@ -28,21 +29,21 @@ const MultiFileField = ({
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <FileUpload
-        value={field.state.value}
-        isDisabled={isDisabled}
         dropzoneOptions={baseDropzoneOptions}
+        isDisabled={isDisabled}
         onValueChange={field.handleChange}
+        value={field.state.value}
       >
-        <FileUploadInput id={field.name} aria-invalid={isInvalid} />
+        <FileUploadInput aria-invalid={isInvalid} id={field.name} />
 
         <FileUploadContent>
           {(field.state.value as FileUploadValue).map((value, index) => (
             <FileUploadItem
+              index={index}
               // biome-ignore lint/suspicious/noArrayIndexKey: ignore
               key={index}
-              index={index}
               value={value}
             />
           ))}

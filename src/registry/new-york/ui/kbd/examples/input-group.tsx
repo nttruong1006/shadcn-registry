@@ -1,6 +1,6 @@
 import { SearchIcon } from 'lucide-react'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { Kbd } from '@/components/ui/kbd'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
+import { Kbd } from '@/registry/new-york/ui/kbd/components/kbd'
 
 // Component
 export const KbdInputGroup = () => {

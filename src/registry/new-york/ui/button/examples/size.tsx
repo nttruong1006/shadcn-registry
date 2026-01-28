@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 
 // Component
 export const ButtonSize = () => {
@@ -10,21 +10,21 @@ export const ButtonSize = () => {
         <Button size='sm' variant='outline'>
           Small
         </Button>
-        <Button size='icon-sm' aria-label='Submit' variant='outline'>
+        <Button aria-label='Submit' size='icon-sm' variant='outline'>
           <ArrowUpRightIcon />
         </Button>
       </div>
       <div className='flex items-start gap-2'>
         <Button variant='outline'>Default</Button>
-        <Button size='icon' aria-label='Submit' variant='outline'>
+        <Button aria-label='Submit' size='icon' variant='outline'>
           <ArrowUpRightIcon />
         </Button>
       </div>
       <div className='flex items-start gap-2'>
-        <Button variant='outline' size='lg'>
+        <Button size='lg' variant='outline'>
           Large
         </Button>
-        <Button size='icon-lg' aria-label='Submit' variant='outline'>
+        <Button aria-label='Submit' size='icon-lg' variant='outline'>
           <ArrowUpRightIcon />
         </Button>
       </div>

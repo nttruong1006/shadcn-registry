@@ -5,7 +5,7 @@ import {
   InputGroupButton,
   InputGroupText,
   InputGroupTextarea
-} from '@/components/ui/input-group'
+} from '@/registry/new-york/ui/input-group/components/input-group'
 
 // Component
 export const InputGroupTextareaExample = () => {
@@ -14,13 +14,13 @@ export const InputGroupTextareaExample = () => {
     <div className='grid w-full max-w-md gap-4'>
       <InputGroup>
         <InputGroupTextarea
+          className='min-h-[200px]'
           id='textarea-code-32'
           placeholder="console.log('Hello, world!');"
-          className='min-h-[200px]'
         />
         <InputGroupAddon align='block-end' className='border-t'>
           <InputGroupText>Line 1, Column 1</InputGroupText>
-          <InputGroupButton size='sm' className='ml-auto' variant='default'>
+          <InputGroupButton className='ml-auto' size='sm' variant='default'>
             Run <CornerDownLeft />
           </InputGroupButton>
         </InputGroupAddon>
@@ -32,7 +32,7 @@ export const InputGroupTextareaExample = () => {
           <InputGroupButton className='ml-auto' size='icon-xs'>
             <RefreshCcw />
           </InputGroupButton>
-          <InputGroupButton variant='ghost' size='icon-xs'>
+          <InputGroupButton size='icon-xs' variant='ghost'>
             <Copy />
           </InputGroupButton>
         </InputGroupAddon>

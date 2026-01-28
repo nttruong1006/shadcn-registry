@@ -4,29 +4,29 @@ import {
   FileUploadInput,
   FileUploadItem,
   type FileUploadValue
-} from '@/components/molecules/file-upload'
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const MultiFileField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <FileUpload
-          value={field.value}
           dropzoneOptions={fieldData.config?.dropzoneOptions}
           isDisabled={disabledFields?.[fieldData.code]}
           onValueChange={field.onChange}
+          value={field.value}
         >
-          <FileUploadInput id={fieldData.code} aria-invalid={fieldState.invalid} />
+          <FileUploadInput aria-invalid={fieldState.invalid} id={fieldData.code} />
 
           <FileUploadContent>
             {(field.value as FileUploadValue).map((value, index) => (
               <FileUploadItem
+                index={index}
                 // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                 key={index}
-                index={index}
                 value={value}
               />
             ))}

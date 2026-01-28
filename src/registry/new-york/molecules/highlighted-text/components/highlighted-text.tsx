@@ -1,9 +1,9 @@
 import { motion } from 'motion/react'
-import React from 'react'
+import { type HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { cn } from '@/utils/ui'
 
 // Highlighted text
-interface HighlightedTextProps extends React.HTMLAttributes<HTMLDivElement> {
+interface HighlightedTextProps extends HTMLAttributes<HTMLDivElement> {
   highlightColorClassName?: string
   markerColorClassName?: string
   opacity?: number
@@ -34,23 +34,29 @@ export const HighlightedText = ({
   ...props
 }: HighlightedTextProps) => {
   // Refs
-  const textRef = React.useRef<HTMLDivElement>(null)
-  const observerRef = React.useRef<IntersectionObserver | null>(null)
+  const textRef = useRef<HTMLDivElement>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   // States
-  const [isVisible, setIsVisible] = React.useState(!triggerOnView)
+  const [isVisible, setIsVisible] = useState(!triggerOnView)
 
   const isShouldAnimate = animate && isVisible
 
   // Effects
-  React.useEffect(() => {
-    if (!triggerOnView || !textRef.current) return
+  useEffect(() => {
+    if (!(triggerOnView && textRef.current)) {
+      return
+    }
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-          if (!repeat && observerRef.current) observerRef.current.disconnect()
-        } else if (repeat) setIsVisible(false)
+          if (!repeat && observerRef.current) {
+            observerRef.current.disconnect()
+          }
+        } else if (repeat) {
+          setIsVisible(false)
+        }
       },
       { threshold: 0.1, rootMargin: '-50px' }
     )
@@ -64,14 +70,14 @@ export const HighlightedText = ({
       <div className={cn('relative px-1.5 py-0.5', className)}>
         {/* Content */}
         <motion.div
+          animate={isShouldAnimate ? { opacity } : { opacity: 0 }}
           className={cn('rounded p-4', highlightColorClassName)}
+          initial={{ opacity: 0 }}
           style={{
             opacity,
             boxDecorationBreak: 'clone',
             WebkitBoxDecorationBreak: 'clone'
           }}
-          initial={{ opacity: 0 }}
-          animate={isShouldAnimate ? { opacity } : { opacity: 0 }}
           transition={{
             duration: animationDuration,
             delay: animationDelay,
@@ -83,10 +89,10 @@ export const HighlightedText = ({
 
         {/* Left marker */}
         <motion.span
-          className='absolute'
-          style={{ top: `-${MARKER_OFFSET_X}px`, left: `-${MARKER_OFFSET_Y}px` }}
-          initial={{ opacity: 0, y: -5 }}
           animate={isShouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: -5 }}
+          className='absolute'
+          initial={{ opacity: 0, y: -5 }}
+          style={{ top: `-${MARKER_OFFSET_X}px`, left: `-${MARKER_OFFSET_Y}px` }}
           transition={{
             duration: 0.3,
             delay: animationDelay + animationDuration * 0.8,
@@ -109,10 +115,10 @@ export const HighlightedText = ({
 
         {/* Right marker */}
         <motion.span
-          className='absolute'
-          style={{ bottom: `-${MARKER_OFFSET_X}px`, right: `-${MARKER_OFFSET_Y}px` }}
-          initial={{ opacity: 0, y: 5 }}
           animate={isShouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
+          className='absolute'
+          initial={{ opacity: 0, y: 5 }}
+          style={{ bottom: `-${MARKER_OFFSET_X}px`, right: `-${MARKER_OFFSET_Y}px` }}
           transition={{
             duration: 0.3,
             delay: animationDelay + animationDuration,

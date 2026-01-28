@@ -1,4 +1,5 @@
 import z from 'zod'
+import { useAppForm } from '@/registry/new-york/organisms/smart-tanstack-form-v2/components/lib/base'
 import {
   getAutocompleteFieldSchema,
   getCheckboxFieldSchema,
@@ -11,10 +12,9 @@ import {
   getPasswordFieldSchema,
   getPhoneNumberFieldSchema,
   getSelectFieldSchema,
-  getTextareaFieldSchema,
-  useAppForm
-} from '@/components/organisms/smart-tanstack-form-v2'
-import { Button } from '@/components/ui/button'
+  getTextareaFieldSchema
+} from '@/registry/new-york/organisms/smart-tanstack-form-v2/components/lib/schema'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogContent,
@@ -23,8 +23,8 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { FieldDescription, FieldLegend, FieldSet } from '@/components/ui/field'
+} from '@/registry/new-york/ui/dialog/components/dialog'
+import { FieldDescription, FieldLegend, FieldSet } from '@/registry/new-york/ui/field/components/field'
 
 const formSchema = z
   .object({
@@ -135,8 +135,8 @@ export const SmartFormDemo = () => {
 
         <DialogScrollableContent>
           <form
-            id={form.formId}
             className='space-y-6'
+            id={form.formId}
             onSubmit={(e) => {
               e.preventDefault()
               form.handleSubmit()
@@ -170,17 +170,17 @@ export const SmartFormDemo = () => {
                 </form.AppField> */}
 
                   <form.AppField name='fullName'>
-                    {(field) => <field.Input label='Full name' isRequired />}
+                    {(field) => <field.Input isRequired label='Full name' />}
                   </form.AppField>
-                  <form.AppField name='age'>{(field) => <field.Number label='Age' isRequired />}</form.AppField>
+                  <form.AppField name='age'>{(field) => <field.Number isRequired label='Age' />}</form.AppField>
                   <form.AppField name='birthdate'>
-                    {(field) => <field.Date label='Birthdate' isRequired />}
+                    {(field) => <field.Date isRequired label='Birthdate' />}
                   </form.AppField>
                   <form.AppField name='gender'>
                     {(field) => (
                       <field.SelectWithOptions
-                        label='Gender'
                         isRequired
+                        label='Gender'
                         options={[
                           { value: 'male', label: 'Male' },
                           { value: 'female', label: 'Female' }
@@ -189,11 +189,11 @@ export const SmartFormDemo = () => {
                     )}
                   </form.AppField>
                   <form.AppField name='phoneNumber'>
-                    {(field) => <field.PhoneNumber label='Phone number' isRequired />}
+                    {(field) => <field.PhoneNumber isRequired label='Phone number' />}
                   </form.AppField>
-                  <form.AppField name='email'>{(field) => <field.Input label='Email' isRequired />}</form.AppField>
+                  <form.AppField name='email'>{(field) => <field.Input isRequired label='Email' />}</form.AppField>
                   <form.AppField name='description'>
-                    {(field) => <field.Textarea label='Description' isRequired className='col-span-full' />}
+                    {(field) => <field.Textarea className='col-span-full' isRequired label='Description' />}
                   </form.AppField>
                 </div>
               </FieldSet>
@@ -208,8 +208,8 @@ export const SmartFormDemo = () => {
                   <form.AppField name='department'>
                     {(field) => (
                       <field.SelectWithOptions
-                        label='Department'
                         isRequired
+                        label='Department'
                         options={[
                           { value: 'development', label: 'Development' },
                           { value: 'design', label: 'Design' },
@@ -221,8 +221,8 @@ export const SmartFormDemo = () => {
                   <form.AppField name='technologies'>
                     {(field) => (
                       <field.MultiSelectWithOptions
-                        label='Technologies'
                         isRequired
+                        label='Technologies'
                         options={[
                           { value: 'react', label: 'React' },
                           { value: 'nextjs', label: 'Next.js' },
@@ -235,8 +235,8 @@ export const SmartFormDemo = () => {
                   <form.AppField name='graduatedUniversity'>
                     {(field) => (
                       <field.AutocompleteWithOptions
-                        label='Graduated university'
                         isRequired
+                        label='Graduated university'
                         options={[
                           {
                             value: 'TDTU',
@@ -255,7 +255,7 @@ export const SmartFormDemo = () => {
                     )}
                   </form.AppField>
                   <form.AppField name='resumes'>
-                    {(field) => <field.MultiFile label='Resumes' isRequired className='col-span-full' />}
+                    {(field) => <field.MultiFile className='col-span-full' isRequired label='Resumes' />}
                   </form.AppField>
                   <form.AppField name='isDeepKnowledge'>
                     {(field) => <field.Checkbox label='Is deep knowledge' />}
@@ -271,16 +271,16 @@ export const SmartFormDemo = () => {
                 {/* Form template fields */}
                 <div className='grid grid-cols-3 gap-x-4 gap-y-6'>
                   <form.AppField name='username'>
-                    {(field) => <field.Input label='Username' isRequired />}
+                    {(field) => <field.Input isRequired label='Username' />}
                   </form.AppField>
                   <form.AppField name='password'>
-                    {(field) => <field.Password label='Password' isRequired />}
+                    {(field) => <field.Password isRequired label='Password' />}
                   </form.AppField>
                   <form.AppField name='passwordConfirmation'>
-                    {(field) => <field.Password label='Password confirmation' isRequired />}
+                    {(field) => <field.Password isRequired label='Password confirmation' />}
                   </form.AppField>
                   <form.AppField name='hobby'>
-                    {(field) => <field.Editor label='Hobby' isRequired className='col-span-full' />}
+                    {(field) => <field.Editor className='col-span-full' isRequired label='Hobby' />}
                   </form.AppField>
                 </div>
               </FieldSet>
@@ -288,17 +288,17 @@ export const SmartFormDemo = () => {
               {/* Action buttons */}
               <div className='flex flex-col justify-stretch gap-4 xl:flex-row xl:justify-end'>
                 <Button
-                  variant='outline'
                   onClick={() => {
                     form.reset()
                   }}
+                  variant='outline'
                 >
                   Cancel
                 </Button>
 
                 <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
                   {([canSubmit, isSubmitting]) => (
-                    <Button type='submit' form={form.formId} disabled={!canSubmit} isLoading={isSubmitting}>
+                    <Button disabled={!canSubmit} form={form.formId} isLoading={isSubmitting} type='submit'>
                       Submit
                     </Button>
                   )}

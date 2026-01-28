@@ -1,6 +1,7 @@
-import { Autocomplete } from '@/components/molecules/autocomplete'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext, useOptionsQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { useOptionsQuery } from './lib/query'
 
 // Component
 const AutocompleteWithQueryField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -14,9 +15,6 @@ const AutocompleteWithQueryField = ({ fieldData, disabledFields }: FieldProps) =
   return (
     <FieldContainer fieldData={fieldData}>
       <Autocomplete
-        value={field.state.value}
-        options={options}
-        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
         inputProps={{
           id: fieldData.code,
           disabled: disabledFields?.[fieldData.code],
@@ -24,6 +22,9 @@ const AutocompleteWithQueryField = ({ fieldData, disabledFields }: FieldProps) =
         }}
         isLoading={optionsQuery.isFetching}
         onValueChange={field.handleChange}
+        options={options}
+        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
+        value={field.state.value}
       />
     </FieldContainer>
   )

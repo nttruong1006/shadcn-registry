@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Label } from '@/registry/new-york/ui/label/components/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
 
 // Component
 export const PopoverDemo = () => {
@@ -19,19 +19,19 @@ export const PopoverDemo = () => {
           <div className='grid gap-2'>
             <div className='grid grid-cols-3 items-center gap-4'>
               <Label htmlFor='width'>Width</Label>
-              <Input id='width' defaultValue='100%' className='col-span-2 h-8' />
+              <Input className='col-span-2 h-8' defaultValue='100%' id='width' />
             </div>
             <div className='grid grid-cols-3 items-center gap-4'>
               <Label htmlFor='maxWidth'>Max. width</Label>
-              <Input id='maxWidth' defaultValue='300px' className='col-span-2 h-8' />
+              <Input className='col-span-2 h-8' defaultValue='300px' id='maxWidth' />
             </div>
             <div className='grid grid-cols-3 items-center gap-4'>
               <Label htmlFor='height'>Height</Label>
-              <Input id='height' defaultValue='25px' className='col-span-2 h-8' />
+              <Input className='col-span-2 h-8' defaultValue='25px' id='height' />
             </div>
             <div className='grid grid-cols-3 items-center gap-4'>
               <Label htmlFor='maxHeight'>Max. height</Label>
-              <Input id='maxHeight' defaultValue='none' className='col-span-2 h-8' />
+              <Input className='col-span-2 h-8' defaultValue='none' id='maxHeight' />
             </div>
           </div>
         </div>

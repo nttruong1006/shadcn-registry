@@ -1,6 +1,7 @@
-import { MultiSelect, type MultiSelectProps } from '@/components/molecules/multi-select'
+import { MultiSelect, type MultiSelectProps } from '@/registry/new-york/molecules/multi-select/components/multi-select'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type MultiSelectFieldOutputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { MultiSelectFieldOutputValue } from './lib/schema'
 
 // Component
 const MultiSelectWithOptionsField = ({
@@ -17,16 +18,16 @@ const MultiSelectWithOptionsField = ({
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <MultiSelect
-        value={field.state.value}
-        options={options}
-        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
         buttonTriggerProps={{
           id: field.name,
           disabled: isDisabled
         }}
         onValueChange={field.handleChange}
+        options={options}
+        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

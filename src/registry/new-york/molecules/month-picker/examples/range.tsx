@@ -1,5 +1,8 @@
 import React from 'react'
-import { MonthRangePicker, type MonthRangePickerProps } from '@/components/molecules/month-picker'
+import {
+  MonthRangePicker,
+  type MonthRangePickerProps
+} from '@/registry/new-york/molecules/month-picker/components/month-picker'
 
 // Component
 export const MonthPickerRange = () => {
@@ -9,7 +12,7 @@ export const MonthPickerRange = () => {
   // Template
   return (
     <div className='w-full max-w-xs'>
-      <MonthRangePicker value={value} placeholder='Select month' onValueChange={setValue} />
+      <MonthRangePicker onValueChange={setValue} placeholder='Select month' value={value} />
     </div>
   )
 }

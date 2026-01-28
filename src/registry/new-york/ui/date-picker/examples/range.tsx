@@ -1,11 +1,11 @@
-import React from 'react'
-import { DateRangePicker, type DateRangePickerProps } from '@/components/ui/date-picker'
+import { useState } from 'react'
+import { DateRangePicker, type DateRangePickerProps } from '@/registry/new-york/ui/date-picker/components/date-picker'
 
 // Component
 export const DatePickerRange = () => {
   // States
-  const [value, setValue] = React.useState<DateRangePickerProps['value']>({ from: undefined, to: undefined })
+  const [value, setValue] = useState<DateRangePickerProps['value']>({ from: undefined, to: undefined })
 
   // Template
-  return <DateRangePicker value={value} className='w-xs' placeholder='Select date range' onValueChange={setValue} />
+  return <DateRangePicker className='w-xs' onValueChange={setValue} placeholder='Select date range' value={value} />
 }

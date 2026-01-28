@@ -1,13 +1,13 @@
 import { toDate } from 'date-fns'
-import { Minus } from 'lucide-react'
-import React from 'react'
+import { MinusIcon } from 'lucide-react'
+import { useMemo } from 'react'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
-import { MultiSelect } from '@/components/molecules/multi-select'
-import { NumberInput } from '@/components/molecules/number-input'
-import { Combobox } from '@/components/ui/combobox'
-import { DatePicker, DateRangePicker } from '@/components/ui/date-picker'
-import { Field, FieldError } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
+import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
+import { DatePicker, DateRangePicker } from '@/registry/new-york/ui/date-picker/components/date-picker'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field'
+import { Input } from '@/registry/new-york/ui/input/components/input'
 import { type SmartFilterFormInput, type SmartFilterFormOutput, SmartFilterOperation, SmartFilterType } from './lib'
 import { useSmartFilterContext } from './smart-filter'
 
@@ -23,7 +23,7 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
 
   // Memos
   // Selected filter
-  const selectedFilter = React.useMemo(() => {
+  const selectedFilter = useMemo(() => {
     return filters.find((filter) => filter.name === formFilterName)
   }, [filters, formFilterName])
 
@@ -42,13 +42,11 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
         return (
           <div className='flex items-center gap-4'>
             <Controller
-              name={`filters.${index}.value.additional.from`}
               control={form.control}
+              name={`filters.${index}.value.additional.from`}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <NumberInput
-                    value={field.value}
-                    placeholder={`Enter from ${selectedFilter.label.toLowerCase()}`}
                     onFieldChange={field.onChange}
                     onValueChange={(event) => {
                       field.onChange(event.value)
@@ -56,25 +54,27 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
                         form.setValue(`filters.${index}.value.additional.to`, event.value)
                       }
                     }}
+                    placeholder={`Enter from ${selectedFilter.label.toLowerCase()}`}
+                    value={field.value}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
 
-            <Minus className='size-4 text-muted-foreground' />
+            <MinusIcon className='size-4 text-muted-foreground' />
 
             <Controller
-              name={`filters.${index}.value.additional.to`}
               control={form.control}
+              name={`filters.${index}.value.additional.to`}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <NumberInput
-                    value={field.value}
-                    placeholder={`Enter to ${selectedFilter.label.toLowerCase()}`}
                     min={valueAdditionalWatcher.from}
                     onFieldChange={field.onChange}
                     onValueChange={(event) => field.onChange(event.value)}
+                    placeholder={`Enter to ${selectedFilter.label.toLowerCase()}`}
+                    value={field.value}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
@@ -87,15 +87,15 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
       // Others else
       return (
         <Controller
-          name={`filters.${index}.value.default`}
           control={form.control}
+          name={`filters.${index}.value.default`}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <NumberInput
-                value={field.value as string}
-                placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
                 onFieldChange={field.onChange}
                 onValueChange={(event) => field.onChange(event.value)}
+                placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
+                value={field.value as string}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -109,21 +109,21 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
       if (formFilterOperation === SmartFilterOperation.IsBetween) {
         return (
           <Controller
-            name={`filters.${index}.value.additional`}
             control={form.control}
+            name={`filters.${index}.value.additional`}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <DateRangePicker
-                  value={{
-                    from: field.value.from ? new Date(field.value.from) : undefined,
-                    to: field.value.to ? new Date(field.value.to) : undefined
-                  }}
-                  placeholder={`Select ${selectedFilter.label.toLowerCase()} range`}
                   onValueChange={(value) => {
                     field.onChange({
                       from: value?.from?.toISOString() ?? '',
                       to: value?.to?.toISOString() ?? ''
                     })
+                  }}
+                  placeholder={`Select ${selectedFilter.label.toLowerCase()} range`}
+                  value={{
+                    from: field.value.from ? new Date(field.value.from) : undefined,
+                    to: field.value.to ? new Date(field.value.to) : undefined
                   }}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -135,16 +135,16 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
 
       return (
         <Controller
-          name={`filters.${index}.value.default`}
           control={form.control}
+          name={`filters.${index}.value.default`}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <DatePicker
-                value={field.value ? toDate(field.value as string) : null}
-                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
                 onValueChange={(value) => {
                   field.onChange(value?.toISOString() ?? '')
                 }}
+                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+                value={field.value ? toDate(field.value as string) : null}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -158,18 +158,18 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
       if (formFilterOperation === SmartFilterOperation.HasAnyOf) {
         return (
           <Controller
-            name={`filters.${index}.value.default`}
             control={form.control}
+            name={`filters.${index}.value.default`}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <MultiSelect
-                  value={field.value as string[]}
-                  options={selectedFilter.options ?? []}
                   buttonTriggerProps={{
                     isLoading: !selectedFilter.options
                   }}
-                  placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
                   onValueChange={field.onChange}
+                  options={selectedFilter.options ?? []}
+                  placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+                  value={field.value as string[]}
                 />
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -180,20 +180,20 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
 
       return (
         <Controller
-          name={`filters.${index}.value.default`}
           control={form.control}
+          name={`filters.${index}.value.default`}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <Combobox
-                value={field.value as string}
-                options={selectedFilter.options ?? []}
                 buttonTriggerProps={{
                   isLoading: !selectedFilter.options
                 }}
-                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
                 onValueChange={(value) => {
                   field.onChange(value ?? '')
                 }}
+                options={selectedFilter.options ?? []}
+                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+                value={field.value as string}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -211,18 +211,18 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
     case SmartFilterType.MultiSelect: {
       return (
         <Controller
-          name={`filters.${index}.value.default`}
           control={form.control}
+          name={`filters.${index}.value.default`}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <MultiSelect
-                value={field.value as string[]}
-                options={selectedFilter.options ?? []}
                 buttonTriggerProps={{
                   isLoading: !selectedFilter.options
                 }}
-                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
                 onValueChange={field.onChange}
+                options={selectedFilter.options ?? []}
+                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+                value={field.value as string[]}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -235,8 +235,8 @@ const AdvancedFilterValueField = ({ index }: { index: number }) => {
     default: {
       return (
         <Controller
-          name={`filters.${index}.value.default`}
           control={form.control}
+          name={`filters.${index}.value.default`}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <Input

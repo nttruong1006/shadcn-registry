@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
-import * as React from 'react'
-import { Spinner } from '@/components/ui/spinner'
+import type { ComponentProps } from 'react'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import { cn } from '@/utils/ui'
 
 // Button
@@ -35,7 +35,7 @@ export const buttonVariants = cva(
   }
 )
 
-export type ButtonProps = React.ComponentProps<'button'> &
+export type ButtonProps = ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     isLoading?: boolean
@@ -59,19 +59,19 @@ export const Button = ({
   // Template
   return (
     <Component
-      data-slot='button'
-      type={type}
-      disabled={isDisabled}
       className={cn(buttonVariants({ variant, size, className }))}
+      data-slot='button'
+      disabled={isDisabled}
+      type={type}
       {...props}
     >
       {asChild ? (
         children
       ) : (
-        <React.Fragment>
+        <>
           {isLoading && <Spinner />}
           {!(isLoading && isIconSize) && children}
-        </React.Fragment>
+        </>
       )}
     </Component>
   )

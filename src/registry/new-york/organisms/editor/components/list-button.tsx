@@ -1,19 +1,19 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { ChevronDown, List, ListOrdered, ListTodo } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
+import { ChevronDownIcon, ListIcon, ListOrderedIcon, ListTodoIcon } from 'lucide-react'
+import { memo } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 
 // Component
-const ListButton = React.memo(() => {
+const ListButton = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -33,9 +33,9 @@ const ListButton = React.memo(() => {
       <Tooltip>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='gap-1'>
-              <List />
-              <ChevronDown />
+            <Button className='gap-1' variant='ghost'>
+              <ListIcon />
+              <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
@@ -51,7 +51,7 @@ const ListButton = React.memo(() => {
           })}
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
         >
-          <List />
+          <ListIcon />
           <span>Bullet list</span>
           <DropdownMenuShortcut>Ctrl Shift 8</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -63,7 +63,7 @@ const ListButton = React.memo(() => {
           })}
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
         >
-          <ListOrdered />
+          <ListOrderedIcon />
           <span>Ordered list</span>
           <DropdownMenuShortcut>Ctrl Shift 7</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -75,7 +75,7 @@ const ListButton = React.memo(() => {
           })}
           onClick={() => editor?.chain().focus().toggleTaskList().run()}
         >
-          <ListTodo />
+          <ListTodoIcon />
           <span>Task list</span>
           <DropdownMenuShortcut>Ctrl Shift 9</DropdownMenuShortcut>
         </DropdownMenuItem>

@@ -1,6 +1,10 @@
 import { ArrowUpIcon, Check, CircleAlert, Plus, Search } from 'lucide-react'
-
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
 import {
   InputGroup,
   InputGroupAddon,
@@ -8,9 +12,9 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea
-} from '@/components/ui/input-group'
-import { Separator } from '@/components/ui/separator'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+} from '@/registry/new-york/ui/input-group/components/input-group'
+import { Separator } from '@/registry/new-york/ui/separator/components/separator'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // Component
 export const InputGroupDemo = () => {
@@ -25,7 +29,7 @@ export const InputGroupDemo = () => {
         <InputGroupAddon align='inline-end'>12 results</InputGroupAddon>
       </InputGroup>
       <InputGroup>
-        <InputGroupInput placeholder='example.com' className='!pl-1' />
+        <InputGroupInput className='pl-1!' placeholder='example.com' />
         <InputGroupAddon>
           <InputGroupText>https://</InputGroupText>
         </InputGroupAddon>
@@ -43,22 +47,22 @@ export const InputGroupDemo = () => {
       <InputGroup>
         <InputGroupTextarea placeholder='Ask, Search or Chat...' />
         <InputGroupAddon align='block-end'>
-          <InputGroupButton variant='outline' className='rounded-full' size='icon-xs'>
+          <InputGroupButton className='rounded-full' size='icon-xs' variant='outline'>
             <Plus />
           </InputGroupButton>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <InputGroupButton variant='ghost'>Auto</InputGroupButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent side='top' align='start' className='[--radius:0.95rem]'>
+            <DropdownMenuContent align='start' className='[--radius:0.95rem]' side='top'>
               <DropdownMenuItem>Auto</DropdownMenuItem>
               <DropdownMenuItem>Agent</DropdownMenuItem>
               <DropdownMenuItem>Manual</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <InputGroupText className='ml-auto'>52% used</InputGroupText>
-          <Separator orientation='vertical' className='!h-4' />
-          <InputGroupButton variant='default' className='rounded-full' size='icon-xs' disabled>
+          <Separator className='h-4!' orientation='vertical' />
+          <InputGroupButton className='rounded-full' disabled size='icon-xs' variant='default'>
             <ArrowUpIcon />
             <span className='sr-only'>Send</span>
           </InputGroupButton>

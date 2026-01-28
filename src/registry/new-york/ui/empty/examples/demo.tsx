@@ -1,6 +1,13 @@
-import { ArrowUpRightIcon, FolderCode } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty'
+import { ArrowUpRightIcon, FolderCodeIcon } from 'lucide-react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle
+} from '@/registry/new-york/ui/empty/components/empty'
 
 // Component
 export const EmptyDemo = () => {
@@ -9,7 +16,7 @@ export const EmptyDemo = () => {
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant='icon'>
-          <FolderCode />
+          <FolderCodeIcon />
         </EmptyMedia>
         <EmptyTitle>No Projects Yet</EmptyTitle>
         <EmptyDescription>
@@ -22,7 +29,7 @@ export const EmptyDemo = () => {
           <Button variant='outline'>Import Project</Button>
         </div>
 
-        <Button asChild variant='link' className='text-muted-foreground' size='sm'>
+        <Button asChild className='text-muted-foreground' size='sm' variant='link'>
           {/** biome-ignore lint/a11y/useValidAnchor: ignore */}
           <a href='#'>
             <span>Learn More</span>

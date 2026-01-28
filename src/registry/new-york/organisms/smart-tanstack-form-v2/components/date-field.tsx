@@ -1,6 +1,7 @@
-import { DatePicker, type DatePickerProps } from '@/components/ui/date-picker'
+import { DatePicker, type DatePickerProps } from '@/registry/new-york/ui/date-picker/components/date-picker'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type DateFieldOutputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { DateFieldOutputValue } from './lib/schema'
 
 // Component
 const DateField = ({
@@ -17,13 +18,13 @@ const DateField = ({
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <DatePicker
         id={field.name}
-        value={field.state.value}
-        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
         isDisabled={isDisabled}
         onValueChange={field.handleChange as DatePickerProps['onValueChange']}
+        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
         {...datePickerProps}
       />
     </FieldContainer>

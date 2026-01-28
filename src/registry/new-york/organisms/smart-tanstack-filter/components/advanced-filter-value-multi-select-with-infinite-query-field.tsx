@@ -1,8 +1,9 @@
-import { MultiSelect } from '@/components/molecules/multi-select'
-import { Field, FieldError } from '@/components/ui/field'
-import { Spinner } from '@/components/ui/spinner'
+import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { fetchNextPage, useAdvancedFilterForm, useOptionsInfiniteQuery } from './lib'
+import { useAdvancedFilterForm } from './lib/form'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
 // Component
 const AdvancedFilterValueMultiSelectWithQueryField = ({
@@ -27,15 +28,10 @@ const AdvancedFilterValueMultiSelectWithQueryField = ({
         return (
           <Field data-invalid={isInvalid}>
             <MultiSelect
-              value={field.state.value as string[]}
-              options={options}
-              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               buttonTriggerProps={{
                 isLoading: optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
               }}
-              commandProps={{
-                shouldFilter: false
-              }}
+              commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
               commandInputProps={{
                 value: searchKeyword,
                 onValueChange: setSearchKeyword
@@ -47,8 +43,13 @@ const AdvancedFilterValueMultiSelectWithQueryField = ({
                     infiniteQuery: optionsInfiniteQuery
                   })
               }}
-              commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+              commandProps={{
+                shouldFilter: false
+              }}
               onValueChange={field.handleChange}
+              options={options}
+              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+              value={field.state.value as string[]}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>

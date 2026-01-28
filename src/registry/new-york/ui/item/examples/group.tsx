@@ -1,7 +1,7 @@
 import { PlusIcon } from 'lucide-react'
-import * as React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { Fragment } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york/ui/avatar/components/avatar'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Item,
   ItemActions,
@@ -11,7 +11,7 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle
-} from '@/components/ui/item'
+} from '@/registry/new-york/ui/item/components/item'
 
 const PEOPLE = [
   {
@@ -38,11 +38,11 @@ export const ItemGroupExample = () => {
     <div className='flex w-full max-w-md flex-col gap-6'>
       <ItemGroup>
         {PEOPLE.map((person, index) => (
-          <React.Fragment key={person.username}>
+          <Fragment key={person.username}>
             <Item>
               <ItemMedia>
                 <Avatar>
-                  <AvatarImage src={person.avatar} className='grayscale' />
+                  <AvatarImage className='grayscale' src={person.avatar} />
                   <AvatarFallback>{person.username.charAt(0)}</AvatarFallback>
                 </Avatar>
               </ItemMedia>
@@ -51,13 +51,13 @@ export const ItemGroupExample = () => {
                 <ItemDescription>{person.email}</ItemDescription>
               </ItemContent>
               <ItemActions>
-                <Button variant='ghost' size='icon' className='rounded-full'>
+                <Button className='rounded-full' size='icon' variant='ghost'>
                   <PlusIcon />
                 </Button>
               </ItemActions>
             </Item>
             {index !== PEOPLE.length - 1 && <ItemSeparator />}
-          </React.Fragment>
+          </Fragment>
         ))}
       </ItemGroup>
     </div>

@@ -1,9 +1,15 @@
 import { format, isAfter, isBefore, max, min, set } from 'date-fns'
 import { Calendar, X } from 'lucide-react'
 import React from 'react'
-import { YearPicker } from '@/components/molecules/year-picker'
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { YearPicker } from '@/registry/new-york/molecules/year-picker/components/year-picker'
+import { Button, type ButtonProps } from '@/registry/new-york/ui/button/components/button'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/registry/new-york/ui/carousel/components/carousel'
 import {
   Popover,
   PopoverContent,
@@ -11,7 +17,7 @@ import {
   type PopoverProps,
   PopoverTrigger,
   type PopoverTriggerProps
-} from '@/components/ui/popover'
+} from '@/registry/new-york/ui/popover/components/popover'
 import type { Option } from '@/types/base'
 import { cn } from '@/utils/ui'
 
@@ -23,7 +29,7 @@ export const options: Option[] = Array.from({ length: 12 }).map((_, index) => ({
 export const today = new Date()
 
 // Month picker
-export type MonthPickerProps = {
+export interface MonthPickerProps {
   value: Date | null | undefined
   isCanRemoveValue?: boolean
   placeholder?: string
@@ -70,9 +76,9 @@ export const MonthPicker = ({
       <PopoverTrigger {...popoverTriggerProps} asChild={popoverTriggerProps?.asChild ?? true}>
         {popoverTriggerProps?.children ?? (
           <Button
-            variant='outline'
-            role='combobox'
             data-empty={isEmpty}
+            role='combobox'
+            variant='outline'
             {...buttonTriggerProps}
             className={cn(
               'w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto',
@@ -80,7 +86,7 @@ export const MonthPicker = ({
             )}
           >
             {buttonTriggerProps?.children ?? (
-              <React.Fragment>
+              <>
                 <span className='line-clamp-1 block text-ellipsis'>
                   {value ? format(value, 'MM/yyyy') : placeholder}
                 </span>
@@ -96,7 +102,7 @@ export const MonthPicker = ({
                 ) : (
                   <Calendar className='ml-auto size-4 shrink-0 text-muted-foreground' />
                 )}
-              </React.Fragment>
+              </>
             )}
           </Button>
         )}
@@ -108,11 +114,11 @@ export const MonthPicker = ({
       >
         <div className='space-y-4 p-4'>
           <YearPicker
-            value={value?.getFullYear().toString()}
-            placeholder='Select year'
             isCanRemoveValue={false}
             onValueChange={(yearValue) => {
-              if (!yearValue) return
+              if (!yearValue) {
+                return
+              }
               changeValue(
                 set(today, {
                   date: 1,
@@ -121,13 +127,14 @@ export const MonthPicker = ({
                 })
               )
             }}
+            placeholder='Select year'
+            value={value?.getFullYear().toString()}
           />
 
           <div className='grid grid-cols-4 gap-y-2'>
             {options.map((option) => (
               <Button
                 key={option.value}
-                variant={value && value?.getMonth().toString() === option.value ? 'default' : 'ghost'}
                 onClick={() => {
                   changeValue(
                     set(today, {
@@ -137,6 +144,7 @@ export const MonthPicker = ({
                     })
                   )
                 }}
+                variant={value && value?.getMonth().toString() === option.value ? 'default' : 'ghost'}
               >
                 {option.label}
               </Button>
@@ -218,7 +226,7 @@ export const MonthRangePicker = ({
 
   // Memos
   const isEmpty = React.useMemo(() => {
-    return !value?.start || !value?.end
+    return !(value?.start && value?.end)
   }, [value])
 
   // Template
@@ -227,9 +235,9 @@ export const MonthRangePicker = ({
       <PopoverTrigger {...popoverTriggerProps} asChild={popoverTriggerProps?.asChild ?? true}>
         {popoverTriggerProps?.children ?? (
           <Button
-            variant='outline'
-            role='combobox'
             data-empty={isEmpty}
+            role='combobox'
+            variant='outline'
             {...buttonTriggerProps}
             className={cn(
               'w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto',
@@ -237,7 +245,7 @@ export const MonthRangePicker = ({
             )}
           >
             {buttonTriggerProps?.children ?? (
-              <React.Fragment>
+              <>
                 <span className='line-clamp-1 text-ellipsis'>
                   {value?.start && value?.end
                     ? `${format(value.start, 'MM/yyyy')} - ${format(value.end, 'MM/yyyy')}`
@@ -255,7 +263,7 @@ export const MonthRangePicker = ({
                 ) : (
                   <Calendar className='ml-auto size-4 shrink-0 text-muted-foreground' />
                 )}
-              </React.Fragment>
+              </>
             )}
           </Button>
         )}
@@ -273,11 +281,11 @@ export const MonthRangePicker = ({
                 <div className='text-center font-medium text-xl'>Start</div>
 
                 <YearPicker
-                  value={value?.start?.getFullYear().toString()}
-                  placeholder='Select year'
                   isCanRemoveValue={false}
                   onValueChange={(yearValue) => {
-                    if (!yearValue) return
+                    if (!yearValue) {
+                      return
+                    }
                     const date = set(today, {
                       date: 1,
                       month: value?.start ? value.start.getMonth() : 0,
@@ -285,15 +293,14 @@ export const MonthRangePicker = ({
                     })
                     changeStartValue(value?.end ? min([date, value.end]) : date)
                   }}
+                  placeholder='Select year'
+                  value={value?.start?.getFullYear().toString()}
                 />
 
                 <div className='grid grid-cols-4 gap-y-2'>
                   {options.map((option) => (
                     <Button
                       key={option.value}
-                      variant={
-                        value?.start && value.start?.getMonth().toString() === option.value ? 'default' : 'ghost'
-                      }
                       onClick={() => {
                         const date = set(today, {
                           date: 1,
@@ -302,6 +309,9 @@ export const MonthRangePicker = ({
                         })
                         changeStartValue(value?.end ? min([date, value.end]) : date)
                       }}
+                      variant={
+                        value?.start && value.start?.getMonth().toString() === option.value ? 'default' : 'ghost'
+                      }
                     >
                       {option.label}
                     </Button>
@@ -316,11 +326,11 @@ export const MonthRangePicker = ({
                 <div className='text-center font-medium text-xl'>End</div>
 
                 <YearPicker
-                  value={value?.end?.getFullYear().toString()}
-                  placeholder='Select year'
                   isCanRemoveValue={false}
                   onValueChange={(yearValue) => {
-                    if (!yearValue) return
+                    if (!yearValue) {
+                      return
+                    }
                     const date = set(today, {
                       date: 1,
                       month: value?.end ? value.end.getMonth() : 0,
@@ -328,13 +338,14 @@ export const MonthRangePicker = ({
                     })
                     changeEndValue(value?.start ? max([value.start, date]) : date)
                   }}
+                  placeholder='Select year'
+                  value={value?.end?.getFullYear().toString()}
                 />
 
                 <div className='grid grid-cols-4 gap-y-2'>
                   {options.map((option) => (
                     <Button
                       key={option.value}
-                      variant={value?.end && value.end?.getMonth().toString() === option.value ? 'default' : 'ghost'}
                       onClick={() => {
                         const date = set(today, {
                           date: 1,
@@ -343,6 +354,7 @@ export const MonthRangePicker = ({
                         })
                         changeEndValue(value?.start ? max([value.start, date]) : date)
                       }}
+                      variant={value?.end && value.end?.getMonth().toString() === option.value ? 'default' : 'ghost'}
                     >
                       {option.label}
                     </Button>

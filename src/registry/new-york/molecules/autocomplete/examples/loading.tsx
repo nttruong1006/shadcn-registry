@@ -1,6 +1,9 @@
-import React from 'react'
-import { Autocomplete, type AutocompleteProps } from '@/components/molecules/autocomplete'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
+import {
+  Autocomplete,
+  type AutocompleteProps
+} from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import type { Option } from '@/types/base'
 
 const allOptions: Option[] = [
@@ -29,13 +32,13 @@ const allOptions: Option[] = [
 // Component
 export const AutocompleteDemo = () => {
   // States
-  const [value, setValue] = React.useState<AutocompleteProps['value']>('')
-  const [options, setOptions] = React.useState<AutocompleteProps['options']>([])
-  const [key, setKey] = React.useState(Date.now)
+  const [value, setValue] = useState<AutocompleteProps['value']>('')
+  const [options, setOptions] = useState<AutocompleteProps['options']>([])
+  const [key, setKey] = useState(Date.now)
 
   // Effects
   // biome-ignore lint/correctness/useExhaustiveDependencies: to trigger effect when click toggle loading button
-  React.useEffect(() => {
+  useEffect(() => {
     setOptions([])
     const timer = setTimeout(() => {
       setOptions(allOptions)
@@ -48,13 +51,13 @@ export const AutocompleteDemo = () => {
     <div className='w-full max-w-xs space-y-2'>
       <Button onClick={() => setKey(Date.now)}>Toggle Loading</Button>
       <Autocomplete
-        value={value}
         inputProps={{
           placeholder: 'Select framework'
         }}
+        isLoading={options.length === 0}
         onValueChange={setValue}
         options={options}
-        isLoading={options.length === 0}
+        value={value}
       />
     </div>
   )

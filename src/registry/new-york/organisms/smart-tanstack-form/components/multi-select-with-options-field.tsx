@@ -1,6 +1,6 @@
-import { MultiSelect, type MultiSelectProps } from '@/components/molecules/multi-select'
+import { MultiSelect, type MultiSelectProps } from '@/registry/new-york/molecules/multi-select/components/multi-select'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const MultiSelectWithOptionsField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -11,14 +11,14 @@ const MultiSelectWithOptionsField = ({ fieldData, disabledFields }: FieldProps) 
   return (
     <FieldContainer fieldData={fieldData}>
       <MultiSelect
-        value={field.state.value}
-        options={fieldData.config?.options ?? []}
-        placeholder={`Select ${fieldData.label.toLowerCase()}`}
         buttonTriggerProps={{
           id: fieldData.code,
           disabled: disabledFields?.[fieldData.code]
         }}
         onValueChange={field.handleChange}
+        options={fieldData.config?.options ?? []}
+        placeholder={`Select ${fieldData.label.toLowerCase()}`}
+        value={field.state.value}
       />
     </FieldContainer>
   )

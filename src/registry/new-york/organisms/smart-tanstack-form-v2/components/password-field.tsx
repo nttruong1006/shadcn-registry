@@ -1,6 +1,7 @@
-import { PasswordInput } from '@/components/molecules/password-input'
+import { PasswordInput } from '@/registry/new-york/molecules/password-input/components/password-input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type PasswordFieldInputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { PasswordFieldInputValue } from './lib/schema'
 
 // Component
 const PasswordField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
@@ -10,16 +11,16 @@ const PasswordField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldP
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <PasswordInput
+        aria-invalid={isInvalid}
+        disabled={isDisabled}
         id={field.name}
         name={field.name}
-        value={field.state.value}
-        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
-        disabled={isDisabled}
-        aria-invalid={isInvalid}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

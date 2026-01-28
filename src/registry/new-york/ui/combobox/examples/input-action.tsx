@@ -1,7 +1,7 @@
-import { Plus } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
+import { PlusIcon } from 'lucide-react'
+import { useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
 import {
   Dialog,
   DialogClose,
@@ -11,9 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+} from '@/registry/new-york/ui/dialog/components/dialog'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Label } from '@/registry/new-york/ui/label/components/label'
 import type { Option } from '@/types/base'
 
 // Constants
@@ -43,21 +43,18 @@ const options: Option[] = [
 // Component
 export function ComboboxInputAction() {
   // States
-  const [value, setValue] = React.useState<ComboboxProps['value']>(null)
+  const [value, setValue] = useState<ComboboxProps['value']>(null)
 
   // Template
   return (
     <div className='w-full max-w-xs'>
       <Combobox
-        value={value}
-        options={options}
-        placeholder='Select framework'
         commandInputProps={{
           children: (
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant='ghost' size='icon-sm' className='-mr-2'>
-                  <Plus />
+                <Button className='-mr-2' size='icon-sm' variant='ghost'>
+                  <PlusIcon />
                 </Button>
               </DialogTrigger>
 
@@ -93,6 +90,9 @@ export function ComboboxInputAction() {
           )
         }}
         onValueChange={setValue}
+        options={options}
+        placeholder='Select framework'
+        value={value}
       />
     </div>
   )

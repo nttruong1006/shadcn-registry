@@ -1,5 +1,5 @@
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
+import { Label } from '@/registry/new-york/ui/label/components/label'
+import { Switch } from '@/registry/new-york/ui/switch/components/switch'
 
 // Component
 export function SwitchDemo() {

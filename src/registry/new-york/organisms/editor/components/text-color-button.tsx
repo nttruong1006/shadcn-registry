@@ -1,12 +1,12 @@
 import { useCurrentEditor } from '@tiptap/react'
 import type { ColorInstance } from 'color'
-import { Baseline, Check, ChevronDown, CircleSlash } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { BaselineIcon, CheckIcon, ChevronDownIcon, CircleSlashIcon } from 'lucide-react'
+import { lazy, memo, Suspense, useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
-const ColorPickerButton = React.lazy(() => import('./color-picker-button'))
+const ColorPickerButton = lazy(() => import('./color-picker-button'))
 
 // Colors
 const colors: string[] = [
@@ -33,12 +33,12 @@ const colors: string[] = [
 ]
 
 // Component
-const TextColorButton = React.memo(() => {
+const TextColorButton = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
 
   // States
-  const [selectedColor, setSelectedColor] = React.useState<string | null>(null)
+  const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
   // Methods
   const setColor = (color: string) => {
@@ -62,9 +62,9 @@ const TextColorButton = React.memo(() => {
       <Tooltip>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
-            <Button variant='ghost' className='gap-1'>
-              <Baseline />
-              <ChevronDown />
+            <Button className='gap-1' variant='ghost'>
+              <BaselineIcon />
+              <ChevronDownIcon />
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
@@ -77,26 +77,26 @@ const TextColorButton = React.memo(() => {
           {colors.map((color) => (
             <Button
               key={color}
+              onClick={() => setColor(color)}
               size='icon'
               style={{
                 backgroundColor: color
               }}
-              onClick={() => setColor(color)}
             >
-              {selectedColor === color && <Check className='text-background' />}
+              {selectedColor === color && <CheckIcon className='text-background' />}
             </Button>
           ))}
         </div>
 
         <div className='flex justify-end gap-2'>
-          <React.Suspense fallback={<Button size='icon' variant='outline' className='animate-pulse bg-muted' />}>
+          <Suspense fallback={<Button className='animate-pulse bg-muted' size='icon' variant='outline' />}>
             <ColorPickerButton onValueChange={changeColorFromPicker} />
-          </React.Suspense>
+          </Suspense>
 
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant='outline' size='icon' onClick={clearColor}>
-                <CircleSlash />
+              <Button onClick={clearColor} size='icon' variant='outline'>
+                <CircleSlashIcon />
               </Button>
             </TooltipTrigger>
 

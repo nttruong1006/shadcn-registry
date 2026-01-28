@@ -1,27 +1,27 @@
 import { useCurrentEditor } from '@tiptap/react'
-import { Table } from 'lucide-react'
-import React from 'react'
+import { TableIcon } from 'lucide-react'
+import { memo, useRef, useTransition } from 'react'
 import type { CallbackRef, SetExtensions } from './editor'
 import TooltipButton from './tooltip-button'
 
 // Component
-const TableButton = React.memo<{
+const TableButton = memo<{
   callbackRef: CallbackRef
   setExtensions: SetExtensions
 }>(({ callbackRef, setExtensions }) => {
   // Hooks
   const { editor } = useCurrentEditor()
-  const [isPending, startTransition] = React.useTransition()
+  const [isPending, startTransition] = useTransition()
 
   // Refs
-  const isExtensionLoadedRef = React.useRef(false)
+  const isExtensionLoadedRef = useRef(false)
 
   // Template
   return (
     <TooltipButton
-      Icon={Table}
-      label='Table'
+      Icon={TableIcon}
       isLoading={isPending}
+      label='Table'
       onClick={() => {
         const callback: CallbackRef['current'] = (editor) => {
           editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()

@@ -1,9 +1,9 @@
 import { ChevronDown, Globe } from 'lucide-react'
-import React from 'react'
+import type React from 'react'
 import RPNInput, { type Country, type FlagProps, getCountryCallingCode, type Props } from 'react-phone-number-input'
 import flags from 'react-phone-number-input/flags'
-import { Combobox } from '@/components/ui/combobox'
-import { Input, type InputProps } from '@/components/ui/input'
+import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
+import { Input, type InputProps } from '@/registry/new-york/ui/input/components/input'
 import type { Option } from '@/types/base'
 import { cn } from '@/utils/ui'
 
@@ -34,31 +34,31 @@ const CountrySelectionComponent = ({
   // Template
   return (
     <Combobox
-      value={value}
-      options={options}
-      isCanRemoveValue={false}
       buttonTriggerProps={{
         disabled,
         className: 'rounded-e-none w-fit border-r-0',
         children: (
-          <React.Fragment>
+          <>
             {value ? <FlagComponent country={value} countryName={value} /> : <Globe />}
             <ChevronDown className='ml-auto size-4 shrink-0 text-muted-foreground' />
-          </React.Fragment>
+          </>
         )
       }}
       commandItemProps={{
         children: (option) => {
           return option.value ? (
-            <React.Fragment>
+            <>
               <FlagComponent country={option.value as Country} countryName={option.label as string} />
               <span className='flex-1 text-sm'>{option.label as string}</span>
               <span className='text-muted-foreground text-sm'>{`+${getCountryCallingCode(option.value as Country)}`}</span>
-            </React.Fragment>
+            </>
           ) : null
         }
       }}
+      isCanRemoveValue={false}
       onValueChange={(value) => onChange(value as Country | undefined)}
+      options={options}
+      value={value}
       {...props}
     />
   )
@@ -78,11 +78,11 @@ export const PhoneNumberInput = ({ className, onValueChange, ...props }: PhoneNu
   // Template
   return (
     <RPNInput
-      international
       className={cn('flex', className)}
-      flagComponent={FlagComponent}
       countrySelectComponent={CountrySelectionComponent}
+      flagComponent={FlagComponent}
       inputComponent={InputComponent}
+      international
       smartCaret={false}
       {...props}
       onChange={(value) => {

@@ -1,7 +1,7 @@
 import { toDate } from 'date-fns'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import z from 'zod'
-import type { UploadedFile } from '@/components/molecules/file-upload'
+import type { UploadedFile } from '@/registry/new-york/molecules/file-upload/components/lib'
 
 /*
  * Get input field schema
@@ -36,7 +36,7 @@ export const getInputFieldSchema = (args?: GetInputFieldSchemaArgs) => {
   if (email) {
     fieldSchema = fieldSchema.refine((value) => {
       try {
-        if (!required && !value) {
+        if (!(required || value)) {
           return true
         }
         return Boolean(z.email().parse(value))
@@ -186,7 +186,7 @@ export const getPhoneNumberFieldSchema = (args?: GetPhoneNumberFieldSchemaArgs) 
 
   fieldSchema = fieldSchema.refine((value) => {
     try {
-      if (!required && !value) {
+      if (!(required || value)) {
         return true
       }
       return isValidPhoneNumber(value)
@@ -337,7 +337,15 @@ export const getDateFieldSchema = (args?: GetDateFieldSchemaArgs) => {
   const { required } = args ?? {}
 
   let fieldSchema = z.codec(z.union([z.iso.datetime(), z.date()]).nullable(), z.iso.datetime().nullable(), {
-    decode: (value) => (value ? (typeof value === 'string' ? value : value.toISOString()) : null),
+    decode: (value) => {
+      if (!value) {
+        return null
+      }
+      if (typeof value === 'string') {
+        return value
+      }
+      return value.toISOString()
+    },
     encode: (value) => (value ? toDate(value) : null)
   })
 

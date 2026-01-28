@@ -1,9 +1,10 @@
-import { ListFilter, Search } from 'lucide-react'
-import React from 'react'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { ListFilterIcon, SearchIcon } from 'lucide-react'
+import { Activity, createContext, useContext, useState } from 'react'
+import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york/ui/toggle-group/components/toggle-group.tsx'
 import AdvancedFilter from './advanced-filter'
 import BasicSearch from './basic-search'
-import type { AdvancedFilterFormValueOutput, BasicSearchFormValueOutput, Filter } from './lib'
+import type { Filter } from './lib/base'
+import type { AdvancedFilterFormValueOutput, BasicSearchFormValueOutput } from './lib/form'
 
 // Smart filter
 export enum Mode {
@@ -16,17 +17,17 @@ export type SmartFilterContextValue = Pick<SmartFilterProps, 'setFilters'> & {
   filters: NonNullable<SmartFilterProps['filters']>
 }
 
-const SmartFilterContext = React.createContext<SmartFilterContextValue | null>(null)
+const SmartFilterContext = createContext<SmartFilterContextValue | null>(null)
 
 export const useSmartFilterContext = () => {
-  const context = React.useContext(SmartFilterContext)
+  const context = useContext(SmartFilterContext)
   if (!context) {
     throw new Error('useFiltersContext should be used within the SmartFilter')
   }
   return context
 }
 
-export type SmartFilterProps = {
+export interface SmartFilterProps {
   id?: string
   filters?: Filter[]
   isHideSearchMode?: boolean
@@ -53,7 +54,7 @@ export const SmartFilterContent = ({
   isHideSearchMode = false
 }: Pick<SmartFilterProps, 'filters' | 'isHideSearchMode'>) => {
   // States
-  const [mode, setMode] = React.useState(Mode.BasicSearch)
+  const [mode, setMode] = useState(Mode.BasicSearch)
 
   // Template
   if (filters.length === 0) {
@@ -67,31 +68,32 @@ export const SmartFilterContent = ({
   return (
     <div className='flex items-center gap-2'>
       <ToggleGroup
-        type='single'
-        variant='outline'
-        value={mode}
         className='data-[variant=outline]:shadow-none'
         onValueChange={(value) => {
-          if (!value) return
-          setMode(value as Mode)
+          if (value) {
+            setMode(value as Mode)
+          }
         }}
+        type='single'
+        value={mode}
+        variant='outline'
       >
         <ToggleGroupItem value={Mode.BasicSearch}>
-          <Search />
+          <SearchIcon />
         </ToggleGroupItem>
 
         <ToggleGroupItem value={Mode.AdvancedFilter}>
-          <ListFilter />
+          <ListFilterIcon />
         </ToggleGroupItem>
       </ToggleGroup>
 
-      <React.Activity mode={mode === Mode.BasicSearch ? 'visible' : 'hidden'}>
+      <Activity mode={mode === Mode.BasicSearch ? 'visible' : 'hidden'}>
         <BasicSearch />
-      </React.Activity>
+      </Activity>
 
-      <React.Activity mode={mode === Mode.AdvancedFilter ? 'visible' : 'hidden'}>
+      <Activity mode={mode === Mode.AdvancedFilter ? 'visible' : 'hidden'}>
         <AdvancedFilter />
-      </React.Activity>
+      </Activity>
     </div>
   )
 }

@@ -48,32 +48,32 @@ export const advancedFilterFormSchema = z.object({
 
         if (operation === SmartFilterOperation.IsBetween) {
           if (value.additional.from === '') {
-            ;['value.additional', 'value.additional.from'].forEach((path) => {
+            const inavlidFields = ['value.additional', 'value.additional.from']
+            for (const inavlidField of inavlidFields) {
               ctx.addIssue({
-                path: [path],
+                path: [inavlidField],
                 message: 'Please enter/select the information',
                 code: 'custom'
               })
-            })
+            }
           }
 
           if (value.additional.to === '') {
-            ;['value.additional', 'value.additional.to'].forEach((path) => {
+            const inavlidFields = ['value.additional', 'value.additional.to']
+            for (const inavlidField of inavlidFields) {
               ctx.addIssue({
-                path: [path],
+                path: [inavlidField],
                 message: 'Please enter/select the information',
                 code: 'custom'
               })
-            })
+            }
           }
-        } else {
-          if (value.default === '') {
-            ctx.addIssue({
-              path: ['value.default'],
-              message: 'Please enter/select the information',
-              code: 'custom'
-            })
-          }
+        } else if (value.default === '') {
+          ctx.addIssue({
+            path: ['value.default'],
+            message: 'Please enter/select the information',
+            code: 'custom'
+          })
         }
       })
   )

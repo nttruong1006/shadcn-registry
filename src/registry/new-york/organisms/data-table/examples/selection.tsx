@@ -1,11 +1,9 @@
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
-import {
-  DataTable,
-  DataTableCheckboxCell,
-  DataTableCheckboxHeader,
-  useDataTable
-} from '@/components/organisms/data-table'
-import { Button } from '@/components/ui/button'
+import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
+import { DataTableCheckboxCell } from '@/registry/new-york/organisms/data-table/components/data-table-checkbox-cell'
+import { DataTableCheckboxHeader } from '@/registry/new-york/organisms/data-table/components/data-table-checkbox-header'
+import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogContent,
@@ -14,7 +12,7 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
+} from '@/registry/new-york/ui/dialog/components/dialog'
 
 interface Row {
   id: string
@@ -28,7 +26,7 @@ const COLUMNS: ColumnDef<Row>[] = [
     id: 'selection',
     size: 80,
     header: ({ table }) => <DataTableCheckboxHeader table={table} />,
-    cell: ({ table, row }) => <DataTableCheckboxCell table={table} row={row} />
+    cell: ({ table, row }) => <DataTableCheckboxCell row={row} table={table} />
   },
   {
     id: 'firstName',

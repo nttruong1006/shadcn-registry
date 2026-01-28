@@ -1,22 +1,21 @@
 import { formOptions } from '@tanstack/react-form'
-import { CircleCheckBig, ListFilter, Plus, RefreshCw, TrashIcon } from 'lucide-react'
-import React from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Field, FieldError } from '@/components/ui/field'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Spinner } from '@/components/ui/spinner'
+import { CircleCheckBigIcon, ListFilterIcon, PlusIcon, RefreshCwIcon, TrashIcon } from 'lucide-react'
+import { memo, Suspense, useState } from 'react'
+import { Badge } from '@/registry/new-york/ui/badge/components/badge'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner.tsx'
 import AdvancedFilterNameField from './advanced-filter-name-field'
 import AdvancedFilterOperationField from './advanced-filter-operation-field'
 import AdvancedFilterValueField from './advanced-filter-value-field'
+import { type Filter, operationsPerType } from './lib/base'
 import {
   advancedFilterFormSchema,
   defaultAdvancedFilterFormValue,
   defaultValuePerOperation,
-  type Filter,
-  operationsPerType,
   useAppForm
-} from './lib'
+} from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
 export const generateAdvancedFilterFormId = (id: string) => {
@@ -29,7 +28,7 @@ export const advancedFilterFormOptions = formOptions({
 })
 
 // Component
-const AdvancedFilter = React.memo(() => {
+const AdvancedFilter = memo(() => {
   // Hooks
   const { id, filters, setFilters } = useSmartFilterContext()
   const formId = generateAdvancedFilterFormId(id)
@@ -47,8 +46,8 @@ const AdvancedFilter = React.memo(() => {
   })
 
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
-  const [totalFilterApplied, setTotalFilterApplied] = React.useState(0)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
+  const [totalFilterApplied, setTotalFilterApplied] = useState(0)
 
   // Methods
   const addFilter = (filter: Filter) => {
@@ -95,15 +94,15 @@ const AdvancedFilter = React.memo(() => {
           advancedFilterForm.handleSubmit()
         }}
       >
-        <Popover open={isOpenPopover} modal onOpenChange={setIsOpenPopover}>
+        <Popover modal onOpenChange={setIsOpenPopover} open={isOpenPopover}>
           <PopoverTrigger asChild>
             <Button variant='outline'>
               <span>Filters</span>
-              <ListFilter />
+              <ListFilterIcon />
               {totalFilterApplied > 0 && (
                 <Badge
-                  variant='secondary'
                   className='flex size-5 items-center justify-center rounded-sm p-0 leading-none'
+                  variant='secondary'
                 >
                   {totalFilterApplied}
                 </Badge>
@@ -116,25 +115,28 @@ const AdvancedFilter = React.memo(() => {
             className='w-(--radix-popper-available-width) xl:w-auto'
             onOpenAutoFocus={executeLogicOnOpenPopover}
           >
-            <advancedFilterForm.AppField name='filters' mode='array'>
+            <advancedFilterForm.AppField mode='array' name='filters'>
               {(field) => {
                 return (
-                  <React.Fragment>
+                  <>
                     <h3 className='typography-h3'>Filters</h3>
                     <div className='-mx-1 my-2 max-h-72 overflow-y-auto px-1'>
                       {/* Filters */}
                       {field.state.value.map((field, index) => (
-                        <div key={field.name} className='flex gap-x-4'>
+                        <div className='flex gap-x-4' key={field.name}>
                           <div className='flex grow flex-col gap-4 py-2 xl:w-auto xl:flex-row'>
                             {/* Name */}
                             <advancedFilterForm.AppField
-                              name={`filters[${index}].name`}
                               listeners={{
                                 onChange: ({ value }) => {
-                                  if (!value) return
+                                  if (!value) {
+                                    return
+                                  }
 
                                   const selectedFilter = filters.find((filter) => filter.name === value)
-                                  if (!selectedFilter) return
+                                  if (!selectedFilter) {
+                                    return
+                                  }
 
                                   const operation = operationsPerType[selectedFilter.type][0]
                                   advancedFilterForm.setFieldValue(`filters[${index}].type`, selectedFilter.type)
@@ -145,11 +147,12 @@ const AdvancedFilter = React.memo(() => {
                                   )
                                 }
                               }}
+                              name={`filters[${index}].name`}
                             >
                               {(subField) => {
                                 const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
                                 return (
-                                  <Field data-invalid={isInvalid} className='w-full shrink-0 xl:w-52'>
+                                  <Field className='w-full shrink-0 xl:w-52' data-invalid={isInvalid}>
                                     <advancedFilterForm.Subscribe selector={(state) => state.values.filters}>
                                       {(formFilters) => <AdvancedFilterNameField formFilters={formFilters} />}
                                     </advancedFilterForm.Subscribe>
@@ -162,13 +165,16 @@ const AdvancedFilter = React.memo(() => {
 
                             {/* Operation */}
                             <advancedFilterForm.AppField
-                              name={`filters[${index}].operation`}
                               listeners={{
                                 onChange: ({ value }) => {
-                                  if (!value) return
+                                  if (!value) {
+                                    return
+                                  }
 
                                   const selectedFilter = filters.find((filter) => filter.name === value)
-                                  if (!selectedFilter) return
+                                  if (!selectedFilter) {
+                                    return
+                                  }
 
                                   advancedFilterForm.setFieldValue(
                                     `filters[${index}].value`,
@@ -176,11 +182,12 @@ const AdvancedFilter = React.memo(() => {
                                   )
                                 }
                               }}
+                              name={`filters[${index}].operation`}
                             >
                               {(subField) => {
                                 const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
                                 return (
-                                  <Field data-invalid={isInvalid} className='w-full shrink-0 xl:w-52'>
+                                  <Field className='w-full shrink-0 xl:w-52' data-invalid={isInvalid}>
                                     <advancedFilterForm.Subscribe
                                       selector={(state) => state.values.filters[index].name}
                                     >
@@ -195,7 +202,7 @@ const AdvancedFilter = React.memo(() => {
                             </advancedFilterForm.AppField>
 
                             {/* Value */}
-                            <React.Suspense
+                            <Suspense
                               fallback={
                                 <div className='flex items-center'>
                                   <Spinner />
@@ -206,7 +213,7 @@ const AdvancedFilter = React.memo(() => {
                                 {(subField) => {
                                   const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
                                   return (
-                                    <Field data-invalid={isInvalid} className='w-full shrink-0 xl:w-52'>
+                                    <Field className='w-full shrink-0 xl:w-52' data-invalid={isInvalid}>
                                       <advancedFilterForm.Subscribe
                                         selector={(state) => ({
                                           formFilterName: state.values.filters[index].name,
@@ -216,10 +223,10 @@ const AdvancedFilter = React.memo(() => {
                                       >
                                         {({ formFilterName, formFilterOperation, formFilterValueAdditional }) => (
                                           <AdvancedFilterValueField
-                                            index={index}
                                             formFilterName={formFilterName}
                                             formFilterOperation={formFilterOperation}
                                             formFilterValueAdditional={formFilterValueAdditional}
+                                            index={index}
                                           />
                                         )}
                                       </advancedFilterForm.Subscribe>
@@ -228,7 +235,7 @@ const AdvancedFilter = React.memo(() => {
                                   )
                                 }}
                               </advancedFilterForm.AppField>
-                            </React.Suspense>
+                            </Suspense>
                           </div>
 
                           {/* Remove button */}
@@ -236,10 +243,10 @@ const AdvancedFilter = React.memo(() => {
                             {(formFiltersLength) =>
                               formFiltersLength > 1 ? (
                                 <Button
-                                  variant='outline'
-                                  size='icon'
                                   className='mt-2 shrink-0'
                                   onClick={() => advancedFilterForm.removeFieldValue('filters', index)}
+                                  size='icon'
+                                  variant='outline'
                                 >
                                   <TrashIcon className='h-4 w-4' />
                                 </Button>
@@ -255,25 +262,25 @@ const AdvancedFilter = React.memo(() => {
                       <advancedFilterForm.Subscribe selector={(state) => state.values.filters.length}>
                         {(formFiltersLength) =>
                           formFiltersLength < filters.length ? (
-                            <Button variant='outline' onClick={clickAddingButton}>
-                              <Plus />
+                            <Button onClick={clickAddingButton} variant='outline'>
+                              <PlusIcon />
                               <span>Add</span>
                             </Button>
                           ) : null
                         }
                       </advancedFilterForm.Subscribe>
 
-                      <Button variant='secondary' onClick={resetFilter}>
-                        <RefreshCw />
+                      <Button onClick={resetFilter} variant='secondary'>
+                        <RefreshCwIcon />
                         <span>Reset</span>
                       </Button>
 
                       <Button form={formId} type='submit'>
-                        <CircleCheckBig />
+                        <CircleCheckBigIcon />
                         <span>Apply</span>
                       </Button>
                     </div>
-                  </React.Fragment>
+                  </>
                 )
               }}
             </advancedFilterForm.AppField>

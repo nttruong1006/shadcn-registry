@@ -6,7 +6,7 @@ import {
   ColorPickerHue,
   ColorPickerOutput,
   ColorPickerSelection
-} from '@/components/molecules/color-picker'
+} from '@/registry/new-york/molecules/color-picker/components/color-picker'
 
 // Component
 export const ColorPickerDemo = () => {

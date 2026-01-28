@@ -1,7 +1,8 @@
 import { Controller, type ControllerProps, type FieldPath, type FieldValues, useFormContext } from 'react-hook-form'
-import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field'
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
 import { cn } from '@/utils/ui'
-import type { DependentGraph, SmartFormData, SmartFormFieldData, SmartFormProps } from './lib'
+import type { SmartFormData, SmartFormFieldData, SmartFormProps } from './lib/base'
+import type { DependentGraph } from './lib/dependency'
 
 export type FieldContainerProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -43,7 +44,6 @@ const FieldContainer = <
       render={({ field, fieldState, formState }) => {
         return (
           <Field
-            data-invalid={fieldState.invalid}
             className={cn(
               'group/field col-span-full',
               {
@@ -51,6 +51,7 @@ const FieldContainer = <
               },
               fieldData.className
             )}
+            data-invalid={fieldState.invalid}
             orientation={fieldData.type === 'checkbox' ? 'horizontal' : 'vertical'}
           >
             <FieldLabel htmlFor={fieldData.code}>

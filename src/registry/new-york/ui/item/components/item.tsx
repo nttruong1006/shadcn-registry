@@ -1,19 +1,19 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
-import type * as React from 'react'
-import { Separator } from '@/components/ui/separator'
+import type { ComponentProps } from 'react'
+import { Separator } from '@/registry/new-york/ui/separator/components/separator'
 import { cn } from '@/utils/ui'
 
 // Item group
-export const ItemGroup = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const ItemGroup = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
-  return <div data-slot='item-group' className={cn('group/item-group flex flex-col', className)} {...props} />
+  return <div className={cn('group/item-group flex flex-col', className)} data-slot='item-group' {...props} />
 }
 
 // Item separator
-export const ItemSeparator = ({ className, ...props }: React.ComponentProps<typeof Separator>) => {
+export const ItemSeparator = ({ className, ...props }: ComponentProps<typeof Separator>) => {
   // Template
-  return <Separator data-slot='item-separator' orientation='horizontal' className={cn('my-0', className)} {...props} />
+  return <Separator className={cn('my-0', className)} data-slot='item-separator' orientation='horizontal' {...props} />
 }
 
 // Item
@@ -44,16 +44,16 @@ export const Item = ({
   size = 'default',
   asChild = false,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof itemVariants> & { asChild?: boolean }) => {
+}: ComponentProps<'div'> & VariantProps<typeof itemVariants> & { asChild?: boolean }) => {
   const Component = asChild ? Slot : 'div'
 
   // Template
   return (
     <Component
+      className={cn(itemVariants({ variant, size, className }))}
+      data-size={size}
       data-slot='item'
       data-variant={variant}
-      data-size={size}
-      className={cn(itemVariants({ variant, size, className }))}
       {...props}
     />
   )
@@ -80,83 +80,83 @@ export const ItemMedia = ({
   className,
   variant = 'default',
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof itemMediaVariants>) => {
+}: ComponentProps<'div'> & VariantProps<typeof itemMediaVariants>) => {
   // Template
   return (
     <div
+      className={cn(itemMediaVariants({ variant, className }))}
       data-slot='item-media'
       data-variant={variant}
-      className={cn(itemMediaVariants({ variant, className }))}
       {...props}
     />
   )
 }
 
 // Item content
-export const ItemContent = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const ItemContent = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
   return (
     <div
-      data-slot='item-content'
       className={cn('flex flex-1 flex-col gap-1 [&+[data-slot=item-content]]:flex-none', className)}
+      data-slot='item-content'
       {...props}
     />
   )
 }
 
 // Item title
-export const ItemTitle = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const ItemTitle = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
   return (
     <div
-      data-slot='item-title'
       className={cn('flex w-fit items-center gap-2 font-medium text-sm leading-snug', className)}
+      data-slot='item-title'
       {...props}
     />
   )
 }
 
 // Item description
-export const ItemDescription = ({ className, ...props }: React.ComponentProps<'p'>) => {
+export const ItemDescription = ({ className, ...props }: ComponentProps<'p'>) => {
   // Template
   return (
     <p
-      data-slot='item-description'
       className={cn(
         'line-clamp-2 text-balance font-normal text-muted-foreground text-sm leading-normal',
         '[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4',
         className
       )}
+      data-slot='item-description'
       {...props}
     />
   )
 }
 
 // Item actions
-export const ItemActions = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const ItemActions = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
-  return <div data-slot='item-actions' className={cn('flex items-center gap-2', className)} {...props} />
+  return <div className={cn('flex items-center gap-2', className)} data-slot='item-actions' {...props} />
 }
 
 // Item header
-export const ItemHeader = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const ItemHeader = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
   return (
     <div
-      data-slot='item-header'
       className={cn('flex basis-full items-center justify-between gap-2', className)}
+      data-slot='item-header'
       {...props}
     />
   )
 }
 
 // Item footer
-export const ItemFooter = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const ItemFooter = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
   return (
     <div
-      data-slot='item-footer'
       className={cn('flex basis-full items-center justify-between gap-2', className)}
+      data-slot='item-footer'
       {...props}
     />
   )

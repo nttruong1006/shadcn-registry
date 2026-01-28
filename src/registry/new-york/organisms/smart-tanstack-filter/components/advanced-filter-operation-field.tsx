@@ -1,12 +1,7 @@
-import React from 'react'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
-import {
-  type AdvancedFilterFormValueInput,
-  operationsPerType,
-  type SmartFilterOperation,
-  SmartFilterType,
-  useFieldContext
-} from './lib'
+import { useMemo } from 'react'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox.tsx'
+import { operationsPerType, type SmartFilterOperation, SmartFilterType } from './lib/base'
+import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
 const operationLabels: Record<string, Record<string, string | undefined> | undefined> = {
@@ -39,7 +34,7 @@ const AdvancedFilterOperationField = ({ formFilterName }: { formFilterName: stri
   const field = useFieldContext<AdvancedFilterFormValueInput['filters'][number]['operation']>()
 
   // Memos
-  const options = React.useMemo<ComboboxProps['options']>(() => {
+  const options = useMemo<ComboboxProps['options']>(() => {
     const type = filters.find((filter) => filter.name === formFilterName)?.type
     return type
       ? operationsPerType[type].map((operation) => ({
@@ -52,10 +47,10 @@ const AdvancedFilterOperationField = ({ formFilterName }: { formFilterName: stri
   // Template
   return (
     <Combobox
-      value={field.state.value}
-      options={options}
       isCanRemoveValue={false}
       onValueChange={(value) => field.handleChange(value as SmartFilterOperation)}
+      options={options}
+      value={field.state.value}
     />
   )
 }

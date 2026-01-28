@@ -1,8 +1,13 @@
 import { useCopyToClipboard } from '@uidotdev/usehooks'
 import { Check, CircleAlert, Copy, Star } from 'lucide-react'
-import * as React from 'react'
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { useState } from 'react'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput
+} from '@/registry/new-york/ui/input-group/components/input-group'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
 
 // Component
 export function InputGroupButtonExample() {
@@ -10,7 +15,7 @@ export function InputGroupButtonExample() {
   const [copiedText, copyToClipboard] = useCopyToClipboard()
 
   // States
-  const [isFavorite, setIsFavorite] = React.useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
 
   const isCopied = Boolean(copiedText)
 
@@ -22,11 +27,11 @@ export function InputGroupButtonExample() {
         <InputGroupAddon align='inline-end'>
           <InputGroupButton
             aria-label={isCopied ? 'Copied' : 'Copy'}
-            title={isCopied ? 'Copied' : 'Copy'}
-            size='icon-xs'
             onClick={() => {
               copyToClipboard('https://x.com/shadcn')
             }}
+            size='icon-xs'
+            title={isCopied ? 'Copied' : 'Copy'}
           >
             {isCopied ? <Check /> : <Copy />}
           </InputGroupButton>
@@ -36,7 +41,7 @@ export function InputGroupButtonExample() {
         <Popover>
           <PopoverTrigger asChild>
             <InputGroupAddon>
-              <InputGroupButton variant='secondary' size='icon-xs'>
+              <InputGroupButton size='icon-xs' variant='secondary'>
                 <CircleAlert />
               </InputGroupButton>
             </InputGroupAddon>
@@ -51,8 +56,8 @@ export function InputGroupButtonExample() {
         <InputGroupAddon align='inline-end'>
           <InputGroupButton onClick={() => setIsFavorite(!isFavorite)} size='icon-xs'>
             <Star
-              data-favorite={isFavorite}
               className='data-[favorite=true]:fill-blue-600 data-[favorite=true]:stroke-blue-600'
+              data-favorite={isFavorite}
             />
           </InputGroupButton>
         </InputGroupAddon>

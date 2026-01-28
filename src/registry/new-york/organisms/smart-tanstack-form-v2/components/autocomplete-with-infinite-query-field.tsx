@@ -1,7 +1,9 @@
-import { Autocomplete } from '@/components/molecules/autocomplete'
-import { Spinner } from '@/components/ui/spinner'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type AutocompleteFieldOutputValue, fetchNextPage, useFieldContext, useOptionsInfiniteQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
+import type { AutocompleteFieldOutputValue } from './lib/schema'
 
 // Component
 const AutocompleteWithInfiniteQueryField = ({
@@ -24,20 +26,9 @@ const AutocompleteWithInfiniteQueryField = ({
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <Autocomplete
-        value={field.state.value}
-        options={options}
-        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
-        inputProps={{
-          id: field.name,
-          disabled: isDisabled,
-          'aria-invalid': isInvalid
-        }}
-        isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
-        commandProps={{
-          shouldFilter: false
-        }}
+        commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
         commandListProps={{
           onScroll: (event) =>
             fetchNextPage({
@@ -45,8 +36,19 @@ const AutocompleteWithInfiniteQueryField = ({
               infiniteQuery: optionsInfiniteQuery
             })
         }}
-        commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+        commandProps={{
+          shouldFilter: false
+        }}
+        inputProps={{
+          id: field.name,
+          disabled: isDisabled,
+          'aria-invalid': isInvalid
+        }}
+        isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
         onValueChange={field.handleChange}
+        options={options}
+        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

@@ -1,6 +1,7 @@
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
-import { DataTable, useDataTable } from '@/components/organisms/data-table'
-import { Button } from '@/components/ui/button'
+import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
+import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogContent,
@@ -9,7 +10,7 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
+} from '@/registry/new-york/ui/dialog/components/dialog'
 
 interface Row {
   id: string

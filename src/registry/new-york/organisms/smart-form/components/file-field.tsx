@@ -1,21 +1,26 @@
-import { FileUpload, FileUploadContent, FileUploadInput, FileUploadItem } from '@/components/molecules/file-upload'
+import {
+  FileUpload,
+  FileUploadContent,
+  FileUploadInput,
+  FileUploadItem
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const FileField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <FileUpload
-          value={field.value ? [field.value] : []}
           dropzoneOptions={fieldData.config?.dropzoneOptions}
           isDisabled={disabledFields?.[fieldData.code]}
           onValueChange={(files) => field.onChange(files[0] ?? null)}
+          value={field.value ? [field.value] : []}
         >
-          <FileUploadInput id={fieldData.code} aria-invalid={fieldState.invalid} />
+          <FileUploadInput aria-invalid={fieldState.invalid} id={fieldData.code} />
 
-          <FileUploadContent>{field.value && <FileUploadItem value={field.value} index={0} />}</FileUploadContent>
+          <FileUploadContent>{field.value && <FileUploadItem index={0} value={field.value} />}</FileUploadContent>
         </FileUpload>
       )}
     </FieldContainer>

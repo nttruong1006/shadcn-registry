@@ -1,6 +1,16 @@
-import { ChevronDownIcon, MoreHorizontal } from 'lucide-react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
+import { ChevronDownIcon, MoreHorizontalIcon } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput
+} from '@/registry/new-york/ui/input-group/components/input-group'
 
 // Component
 export const InputGroupDropdown = () => {
@@ -12,8 +22,8 @@ export const InputGroupDropdown = () => {
         <InputGroupAddon align='inline-end'>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <InputGroupButton variant='ghost' aria-label='More' size='icon-xs'>
-                <MoreHorizontal />
+              <InputGroupButton aria-label='More' size='icon-xs' variant='ghost'>
+                <MoreHorizontalIcon />
               </InputGroupButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
@@ -29,7 +39,7 @@ export const InputGroupDropdown = () => {
         <InputGroupAddon align='inline-end'>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <InputGroupButton variant='ghost' className='!pr-1.5 text-xs'>
+              <InputGroupButton className='pr-1.5! text-xs' variant='ghost'>
                 Search In... <ChevronDownIcon className='size-3' />
               </InputGroupButton>
             </DropdownMenuTrigger>

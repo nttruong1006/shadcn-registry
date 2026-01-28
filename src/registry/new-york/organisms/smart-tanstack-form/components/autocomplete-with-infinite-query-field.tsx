@@ -1,7 +1,8 @@
-import { Autocomplete } from '@/components/molecules/autocomplete'
-import { Spinner } from '@/components/ui/spinner'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import FieldContainer, { type FieldProps } from './field-container'
-import { fetchNextPage, useFieldContext, useOptionsInfiniteQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
 // Component
 const AutocompleteWithInfiniteQueryField = ({ fieldData, ...props }: FieldProps) => {
@@ -28,18 +29,7 @@ const AutocompleteWithInfiniteQueryFieldContainer = ({ fieldData, disabledFields
   // Template
   return (
     <Autocomplete
-      value={field.state.value}
-      options={options}
-      placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-      inputProps={{
-        id: fieldData.code,
-        disabled: disabledFields?.[fieldData.code],
-        'aria-invalid': isInvalid
-      }}
-      isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
-      commandProps={{
-        shouldFilter: false
-      }}
+      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
       commandListProps={{
         onScroll: (event) =>
           fetchNextPage({
@@ -47,8 +37,19 @@ const AutocompleteWithInfiniteQueryFieldContainer = ({ fieldData, disabledFields
             infiniteQuery: optionsInfiniteQuery
           })
       }}
-      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+      commandProps={{
+        shouldFilter: false
+      }}
+      inputProps={{
+        id: fieldData.code,
+        disabled: disabledFields?.[fieldData.code],
+        'aria-invalid': isInvalid
+      }}
+      isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
       onValueChange={field.handleChange}
+      options={options}
+      placeholder={`Enter ${fieldData.label.toLowerCase()}`}
+      value={field.state.value}
     />
   )
 }

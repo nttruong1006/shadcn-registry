@@ -8,7 +8,7 @@ import {
   useQuery
 } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React from 'react'
+import { type UIEvent, useEffect, useMemo, useState } from 'react'
 import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
@@ -21,8 +21,8 @@ export const useOptionsQuery = ({ fieldData }: { fieldData: SmartFormFieldData }
   const { dependencyFieldCodes, dependencyFieldsValue } = useDependencyFields({ fieldData })
 
   // States
-  const [apiPath, setApiPath] = React.useState(fieldData.config?.apiPath)
-  const [isEnabled, setIsEnabled] = React.useState(!fieldData.config?.apiPath?.includes('/{'))
+  const [apiPath, setApiPath] = useState(fieldData.config?.apiPath)
+  const [isEnabled, setIsEnabled] = useState(!fieldData.config?.apiPath?.includes('/{'))
 
   // Queries
   const optionsQuery = useQuery<{
@@ -38,7 +38,7 @@ export const useOptionsQuery = ({ fieldData }: { fieldData: SmartFormFieldData }
   })
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fieldData.config?.apiPath) {
       return
     }
@@ -56,7 +56,7 @@ export const useOptionsQuery = ({ fieldData }: { fieldData: SmartFormFieldData }
   }, [dependencyFieldCodes, dependencyFieldsValue, fieldData])
 
   // Memos
-  const options = React.useMemo<Option[]>(() => {
+  const options = useMemo<Option[]>(() => {
     if (!isEnabled) {
       return []
     }
@@ -92,10 +92,7 @@ export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (q
 }
 
 // Fetch next page
-export const fetchNextPage = (args: {
-  event: React.UIEvent<HTMLDivElement, UIEvent>
-  infiniteQuery: UseInfiniteQueryResult
-}) => {
+export const fetchNextPage = (args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) => {
   // Args
   const { event, infiniteQuery } = args
 
@@ -123,9 +120,9 @@ export const useOptionsInfiniteQuery = ({
   const { dependencyFieldCodes, dependencyFieldsValue } = useDependencyFields({ fieldData })
 
   // States
-  const [apiPath, setApiPath] = React.useState(fieldData.config?.apiPath)
-  const [isEnabled, setIsEnabled] = React.useState(!fieldData.config?.apiPath?.includes('/{'))
-  const [searchKeyword, setSearchKeyword] = React.useState('')
+  const [apiPath, setApiPath] = useState(fieldData.config?.apiPath)
+  const [isEnabled, setIsEnabled] = useState(!fieldData.config?.apiPath?.includes('/{'))
+  const [searchKeyword, setSearchKeyword] = useState('')
 
   // Debounced
   const debouncedSearchKeyword = useDebounce(isLabelAsValue ? selectedValue?.trim() : searchKeyword.trim(), 400)
@@ -154,7 +151,7 @@ export const useOptionsInfiniteQuery = ({
   })
 
   // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     if (!fieldData.config?.apiPath) {
       return
     }
@@ -172,7 +169,7 @@ export const useOptionsInfiniteQuery = ({
   }, [dependencyFieldCodes, dependencyFieldsValue, fieldData])
 
   // Memos
-  const options = React.useMemo<Option[]>(() => {
+  const options = useMemo<Option[]>(() => {
     if (!isEnabled) {
       return []
     }

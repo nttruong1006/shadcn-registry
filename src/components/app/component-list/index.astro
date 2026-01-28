@@ -1,0 +1,91 @@
+---
+import { z } from 'astro:content'
+
+// Schema
+const componentFileSchema = z.object({
+  frontmatter: z.object({
+    title: z.string().min(1)
+  }),
+  url: z.string().optional()
+})
+
+// Extract components
+interface Component {
+  name: string
+  title: string
+}
+
+const uiComponents: Component[] = []
+const moleculeComponents: Component[] = []
+const organismComponents: Component[] = []
+
+const files = import.meta.glob('../../../content/docs/components/**/*.mdx', {
+  eager: true
+})
+
+const filePaths = Object.keys(files)
+
+for (const filePath of filePaths) {
+  console.log(filePath)
+  const { success, data } = componentFileSchema.safeParse(files[filePath])
+  if (!success) {
+    break
+  }
+
+  const name = filePath.split('/').pop()?.split('.').shift()
+  if (!name) {
+    break
+  }
+
+  const component: Component = {
+    name,
+    title: data.frontmatter.title
+  }
+
+  if (filePath.includes('ui')) {
+    uiComponents.push(component)
+  } else if (filePath.includes('molecule')) {
+    moleculeComponents.push(component)
+  } else {
+    organismComponents.push(component)
+  }
+}
+---
+
+<!-- Template -->
+<div class="space-y-20 not-content">
+  <div class="space-y-6">
+    <h3 class="text-2xl font-bold">UI (Shadcn components)</h3>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-10">
+      {uiComponents.map((component) => (
+          <a href={`/components/ui/${component.name}`} class='no-underline hover:underline font-medium'>
+            {component.title}
+          </a>
+        ))}
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <h3 class="text-2xl font-bold">Molecules (Components that has built on top of Shadcn components)</h3>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-10">
+      {moleculeComponents.map((component) => (
+          <a href={`/components/molecules/${component.name}`} class='no-underline hover:underline font-medium'>
+            {component.title}
+          </a>
+        ))}
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <h3 class="text-2xl font-bold">
+      Organisms (Components that has built on top of Shadcn components and Molecule components)
+    </h3>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-10">
+      {organismComponents.map((component) => (
+          <a href={`/components/organisms/${component.name}`} class='no-underline hover:underline font-medium'>
+            {component.title}
+          </a>
+        ))}
+    </div>
+  </div>
+</div>

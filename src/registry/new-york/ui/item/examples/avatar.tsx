@@ -1,7 +1,14 @@
-import { Plus } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item'
+import { PlusIcon } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york/ui/avatar/components/avatar'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle
+} from '@/registry/new-york/ui/item/components/item'
 
 // Component
 export const ItemAvatar = () => {
@@ -20,24 +27,24 @@ export const ItemAvatar = () => {
           <ItemDescription>Last seen 5 months ago</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button size='icon-sm' variant='outline' className='rounded-full' aria-label='Invite'>
-            <Plus />
+          <Button aria-label='Invite' className='rounded-full' size='icon-sm' variant='outline'>
+            <PlusIcon />
           </Button>
         </ItemActions>
       </Item>
       <Item variant='outline'>
         <ItemMedia>
-          <div className='-space-x-2 flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale'>
+          <div className='flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale'>
             <Avatar className='hidden sm:flex'>
-              <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
+              <AvatarImage alt='@shadcn' src='https://github.com/shadcn.png' />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <Avatar className='hidden sm:flex'>
-              <AvatarImage src='https://github.com/maxleiter.png' alt='@maxleiter' />
+              <AvatarImage alt='@maxleiter' src='https://github.com/maxleiter.png' />
               <AvatarFallback>LR</AvatarFallback>
             </Avatar>
             <Avatar>
-              <AvatarImage src='https://github.com/evilrabbit.png' alt='@evilrabbit' />
+              <AvatarImage alt='@evilrabbit' src='https://github.com/evilrabbit.png' />
               <AvatarFallback>ER</AvatarFallback>
             </Avatar>
           </div>

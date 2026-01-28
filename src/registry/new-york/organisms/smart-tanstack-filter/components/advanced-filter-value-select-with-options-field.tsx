@@ -1,8 +1,9 @@
-import { MultiSelect } from '@/components/molecules/multi-select'
-import { Combobox } from '@/components/ui/combobox'
-import { Field, FieldError } from '@/components/ui/field'
+import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation, useAdvancedFilterForm } from './lib'
+import { SmartFilterOperation } from './lib/base'
+import { useAdvancedFilterForm } from './lib/form'
 
 // Component
 const AdvancedFilterValueSelectWithOptionsField = ({
@@ -23,10 +24,10 @@ const AdvancedFilterValueSelectWithOptionsField = ({
           return (
             <Field data-invalid={isInvalid}>
               <MultiSelect
-                value={field.state.value as string[]}
+                onValueChange={field.handleChange}
                 options={selectedFilter.options ?? []}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
-                onValueChange={field.handleChange}
+                value={field.state.value as string[]}
               />
               {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
@@ -44,12 +45,12 @@ const AdvancedFilterValueSelectWithOptionsField = ({
         return (
           <Field data-invalid={isInvalid}>
             <Combobox
-              value={field.state.value as string}
-              options={selectedFilter.options ?? []}
-              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               onValueChange={(value) => {
                 field.handleChange(value ?? '')
               }}
+              options={selectedFilter.options ?? []}
+              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+              value={field.state.value as string}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>

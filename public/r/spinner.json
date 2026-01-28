@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "src/registry/new-york/ui/spinner/components/spinner.tsx",
-      "content": "import { Loader2Icon } from 'lucide-react'\nimport { cn } from '@/utils/ui'\n\n// Spinner\nexport const Spinner = ({ className, ...props }: React.ComponentProps<'svg'>) => {\n  // Template\n  return <Loader2Icon role='status' aria-label='Loading' className={cn('size-4 animate-spin', className)} {...props} />\n}\n",
+      "content": "import { Loader2Icon } from 'lucide-react'\nimport { cn } from '@/utils/ui'\n\n// Spinner\nexport const Spinner = ({ className, ...props }: React.ComponentProps<'svg'>) => {\n  // Template\n  return <Loader2Icon aria-label='Loading' className={cn('size-4 animate-spin', className)} role='status' {...props} />\n}\n",
       "type": "registry:ui",
       "target": "src/components/ui/spinner.tsx"
     }

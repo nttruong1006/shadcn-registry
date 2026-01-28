@@ -1,6 +1,6 @@
 import { flexRender, type RowData } from '@tanstack/react-table'
 import React from 'react'
-import { TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { TableBody, TableCell, TableRow } from '@/registry/new-york/ui/table/components/table'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
@@ -28,8 +28,8 @@ const DataTableBody = <TData extends RowData>({
         return (
           <React.Fragment key={row.id}>
             <TableRow
-              data-state={row.getIsSelected() && 'selected'}
               className={cn('[&:not(:last-child)_td]:border-b', isExpanded && 'border-b-0', rowClassName)}
+              data-state={row.getIsSelected() && 'selected'}
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} style={{ ...getCommonPinningStyles(cell.column) }}>

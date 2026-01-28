@@ -1,4 +1,4 @@
-import { Palette } from 'lucide-react'
+import { PaletteIcon } from 'lucide-react'
 import {
   ColorPicker,
   ColorPickerAlpha,
@@ -8,10 +8,10 @@ import {
   ColorPickerOutput,
   type ColorPickerProps,
   ColorPickerSelection
-} from '@/components/molecules/color-picker'
-import { Button } from '@/components/ui/button'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+} from '@/registry/new-york/molecules/color-picker/components/color-picker'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // Component
 const ColorPickerButton = (props: ColorPickerProps) => {
@@ -21,8 +21,8 @@ const ColorPickerButton = (props: ColorPickerProps) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
-            <Button variant='outline' size='icon'>
-              <Palette />
+            <Button size='icon' variant='outline'>
+              <PaletteIcon />
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>

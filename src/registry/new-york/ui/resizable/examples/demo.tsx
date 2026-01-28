@@ -1,10 +1,14 @@
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup
+} from '@/registry/new-york/ui/resizable/components/resizable'
 
 // Component
 export const ResizableDemo = () => {
   // Template
   return (
-    <ResizablePanelGroup direction='horizontal' className='max-w-md rounded-lg border md:min-w-[450px]'>
+    <ResizablePanelGroup className='max-w-md rounded-lg border md:min-w-[450px]' direction='horizontal'>
       <ResizablePanel defaultSize={50}>
         <div className='flex h-[200px] items-center justify-center p-6'>
           <span className='font-semibold'>One</span>

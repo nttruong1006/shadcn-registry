@@ -1,6 +1,6 @@
-import { MultiSelect } from '@/components/molecules/multi-select'
+import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useOptionsQuery } from './lib'
+import { useOptionsQuery } from './lib/query'
 
 // Component
 const MultiSelectWithQueryField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -9,18 +9,18 @@ const MultiSelectWithQueryField = ({ fieldData, disabledFields }: FieldProps) =>
 
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field }) => (
         <MultiSelect
           {...field}
-          options={options}
-          placeholder={`Select ${fieldData.label.toLowerCase()}`}
           buttonTriggerProps={{
             id: fieldData.code,
             disabled: disabledFields?.[fieldData.code],
             isLoading: optionsQuery.isFetching
           }}
           onValueChange={field.onChange}
+          options={options}
+          placeholder={`Select ${fieldData.label.toLowerCase()}`}
         />
       )}
     </FieldContainer>

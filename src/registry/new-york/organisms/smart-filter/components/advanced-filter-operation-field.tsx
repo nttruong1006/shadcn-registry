@@ -1,6 +1,6 @@
-import React from 'react'
+import { useMemo } from 'react'
 import { type ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
 import {
   defaultValuePerOperation,
   operationsPerType,
@@ -52,13 +52,15 @@ const AdvancedFilterOperationField = ({
 
   // Methods
   const changeValue: ComboboxProps['onValueChange'] = (value) => {
-    if (!value) return
+    if (!value) {
+      return
+    }
     form.setValue(`filters.${index}.value`, defaultValuePerOperation[value as SmartFilterOperation])
     field.onChange(value)
   }
 
   // Memos
-  const options = React.useMemo<ComboboxProps['options']>(() => {
+  const options = useMemo<ComboboxProps['options']>(() => {
     const type = filters.find((filter) => filter.name === formFilterName)?.type
     return type
       ? operationsPerType[type].map((operation) => ({
@@ -69,7 +71,7 @@ const AdvancedFilterOperationField = ({
   }, [filters, formFilterName])
 
   // Template
-  return <Combobox value={field.value} options={options} isCanRemoveValue={false} onValueChange={changeValue} />
+  return <Combobox isCanRemoveValue={false} onValueChange={changeValue} options={options} value={field.value} />
 }
 
 export default AdvancedFilterOperationField

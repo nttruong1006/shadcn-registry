@@ -51,3 +51,50 @@ export const observeTheme = (key = 'theme') => {
 
   return observer
 }
+
+// Start position
+export type StartPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+// Get circle cx
+export const getCircleCx = (startPosition: string) => {
+  if (startPosition === 'center') {
+    return '50'
+  }
+  if (startPosition.includes('left')) {
+    return '0'
+  }
+  return '100'
+}
+
+// Get circle cy
+export const getCircleCy = (startPosition: string) => {
+  if (startPosition === 'center') {
+    return '50'
+  }
+  if (startPosition.includes('top')) {
+    return '0'
+  }
+  return '100'
+}
+
+// Get circle blur cx
+export const getCircleBlurCx = (startPosition: string) => {
+  if (startPosition === 'center') {
+    return '50'
+  }
+  if (startPosition.includes('left')) {
+    return '0'
+  }
+  return '100'
+}
+
+// Get circle blur cy
+export const getCircleBlurCy = (startPosition: string) => {
+  if (startPosition === 'center') {
+    return '50'
+  }
+  if (startPosition.includes('top')) {
+    return '0'
+  }
+  return '100'
+}

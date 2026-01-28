@@ -1,6 +1,7 @@
-import { PhoneNumberInput } from '@/components/molecules/phone-number-input'
+import { PhoneNumberInput } from '@/registry/new-york/molecules/phone-number-input/components/phone-number-input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type PhoneNumberFieldInputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { PhoneNumberFieldInputValue } from './lib/schema'
 
 // Component
 const PhoneNumberField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
@@ -10,16 +11,16 @@ const PhoneNumberField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFie
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <PhoneNumberInput
+        aria-invalid={isInvalid}
+        disabled={isDisabled}
         id={field.name}
         name={field.name}
-        value={field.state.value}
-        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
-        disabled={isDisabled}
-        aria-invalid={isInvalid}
         onBlur={field.handleBlur}
         onValueChange={field.handleChange}
+        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

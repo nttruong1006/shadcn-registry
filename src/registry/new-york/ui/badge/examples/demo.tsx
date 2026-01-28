@@ -1,5 +1,5 @@
 import { BadgeCheckIcon } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/registry/new-york/ui/badge/components/badge'
 
 // Component
 export const BadgeDemo = () => {
@@ -13,7 +13,7 @@ export const BadgeDemo = () => {
         <Badge variant='outline'>Outline</Badge>
       </div>
       <div className='flex w-full flex-wrap gap-2'>
-        <Badge variant='secondary' className='bg-blue-500 text-white dark:bg-blue-600'>
+        <Badge className='bg-blue-500 text-white dark:bg-blue-600' variant='secondary'>
           <BadgeCheckIcon />
           Verified
         </Badge>

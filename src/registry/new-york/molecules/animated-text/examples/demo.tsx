@@ -1,4 +1,4 @@
-import { AnimatedText } from '@/components/molecules/animated-text'
+import { AnimatedText } from '@/registry/new-york/molecules/animated-text/components/animated-text'
 
 // Component
 const AnimatedTextDemo = () => {

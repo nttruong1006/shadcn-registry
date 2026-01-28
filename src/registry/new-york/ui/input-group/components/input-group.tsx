@@ -1,16 +1,15 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type * as React from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import type { ComponentProps } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Textarea } from '@/registry/new-york/ui/textarea/components/textarea'
 import { cn } from '@/utils/ui'
 
 // Input group
-export const InputGroup = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const InputGroup = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
   return (
     <div
-      data-slot='input-group'
       className={cn(
         'group/input-group relative flex w-full items-center rounded-md border border-input shadow-xs outline-none transition-[color,box-shadow]',
         'h-9 min-w-0 has-[>textarea]:h-auto',
@@ -29,6 +28,7 @@ export const InputGroup = ({ className, ...props }: React.ComponentProps<'div'>)
 
         className
       )}
+      data-slot='input-group'
       {...props}
     />
   )
@@ -57,15 +57,16 @@ export const InputGroupAddon = ({
   className,
   align = 'inline-start',
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) => {
+}: ComponentProps<'div'> & VariantProps<typeof inputGroupAddonVariants>) => {
   // Template
   return (
+    // biome-ignore lint/a11y/noNoninteractiveElementInteractions: ignore
+    // biome-ignore lint/a11y/useKeyWithClickEvents: ignore
     // biome-ignore lint/a11y/noStaticElementInteractions: ignore
-    // biome-ignore lint/a11y/useKeyWithClickEvents:ignore
     <div
-      data-slot='input-group-addon'
-      data-align={align}
       className={cn(inputGroupAddonVariants({ align }), className)}
+      data-align={align}
+      data-slot='input-group-addon'
       onClick={(e) => {
         if ((e.target as HTMLElement).closest('button')) {
           return
@@ -98,21 +99,21 @@ export const InputGroupButton = ({
   variant = 'ghost',
   size = 'xs',
   ...props
-}: Omit<React.ComponentProps<typeof Button>, 'size'> & VariantProps<typeof inputGroupButtonVariants>) => {
+}: Omit<ComponentProps<typeof Button>, 'size'> & VariantProps<typeof inputGroupButtonVariants>) => {
   // Template
   return (
     <Button
-      type={type}
-      data-size={size}
-      variant={variant}
       className={cn(inputGroupButtonVariants({ size }), className)}
+      data-size={size}
+      type={type}
+      variant={variant}
       {...props}
     />
   )
 }
 
 // Input group text
-export const InputGroupText = ({ className, ...props }: React.ComponentProps<'span'>) => {
+export const InputGroupText = ({ className, ...props }: ComponentProps<'span'>) => {
   // Template
   return (
     <span
@@ -126,30 +127,30 @@ export const InputGroupText = ({ className, ...props }: React.ComponentProps<'sp
 }
 
 // Input group input
-export const InputGroupInput = ({ className, ...props }: React.ComponentProps<'input'>) => {
+export const InputGroupInput = ({ className, ...props }: ComponentProps<'input'>) => {
   // Template
   return (
     <Input
-      data-slot='input-group-control'
       className={cn(
         'flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent',
         className
       )}
+      data-slot='input-group-control'
       {...props}
     />
   )
 }
 
 // Input group textarea
-export const InputGroupTextarea = ({ className, ...props }: React.ComponentProps<'textarea'>) => {
+export const InputGroupTextarea = ({ className, ...props }: ComponentProps<'textarea'>) => {
   // Template
   return (
     <Textarea
-      data-slot='input-group-control'
       className={cn(
         'flex-1 resize-none rounded-none border-0 bg-transparent py-3 shadow-none focus-visible:ring-0 dark:bg-transparent',
         className
       )}
+      data-slot='input-group-control'
       {...props}
     />
   )

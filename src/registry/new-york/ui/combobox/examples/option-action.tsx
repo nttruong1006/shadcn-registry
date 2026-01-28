@@ -1,7 +1,7 @@
-import { Trash } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Combobox, type ComboboxProps } from '@/components/ui/combobox'
+import { TrashIcon } from 'lucide-react'
+import { useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
 import {
   Dialog,
   DialogClose,
@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
+} from '@/registry/new-york/ui/dialog/components/dialog'
 import type { Option } from '@/types/base'
 
 // Constants
@@ -41,20 +41,17 @@ const options: Option[] = [
 // Component
 export function ComboboxCommandInputAction() {
   // States
-  const [value, setValue] = React.useState<ComboboxProps['value']>(null)
+  const [value, setValue] = useState<ComboboxProps['value']>(null)
 
   // Template
   return (
     <div className='w-full max-w-xs'>
       <Combobox
-        value={value}
-        options={options}
-        placeholder='Select framework'
         commandItemPrefix={(option) => (
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant='ghost' size='icon-sm' className='size-6 shrink-0'>
-                <Trash />
+              <Button className='size-6 shrink-0' size='icon-sm' variant='ghost'>
+                <TrashIcon />
               </Button>
             </DialogTrigger>
 
@@ -79,6 +76,9 @@ export function ComboboxCommandInputAction() {
           </Dialog>
         )}
         onValueChange={setValue}
+        options={options}
+        placeholder='Select framework'
+        value={value}
       />
     </div>
   )

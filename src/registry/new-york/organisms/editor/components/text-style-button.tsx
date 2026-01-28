@@ -1,16 +1,16 @@
 import type { Level } from '@tiptap/extension-heading'
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { ChevronDown, Type } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
+import { ChevronDownIcon, TypeIcon } from 'lucide-react'
+import { memo } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import { cn } from '@/utils/ui'
 
 // Text styles
@@ -47,7 +47,7 @@ const textStyles: Array<{
 ]
 
 // Component
-const TextStyleButton = React.memo(() => {
+const TextStyleButton = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -83,9 +83,9 @@ const TextStyleButton = React.memo(() => {
       <Tooltip>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='gap-1'>
-              <Type />
-              <ChevronDown />
+            <Button className='gap-1' variant='ghost'>
+              <TypeIcon />
+              <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
@@ -96,10 +96,10 @@ const TextStyleButton = React.memo(() => {
       <DropdownMenuContent>
         {textStyles.map((textStyle) => (
           <DropdownMenuItem
-            key={textStyle.level}
             className={cn({
               'bg-accent text-accent-foreground': editorState?.isActive[`${textStyle.level}`]
             })}
+            key={textStyle.level}
             onClick={() => changeTextStyle(textStyle)}
           >
             <span>{textStyle.label}</span>

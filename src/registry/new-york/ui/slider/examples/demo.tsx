@@ -1,7 +1,7 @@
-import { Slider } from '@/components/ui/slider'
+import { Slider } from '@/registry/new-york/ui/slider/components/slider'
 
 // Component
 export const SliderDemo = () => {
   // Template
-  return <Slider defaultValue={[50]} max={100} step={1} className='max-w-xs' />
+  return <Slider className='max-w-xs' defaultValue={[50]} max={100} step={1} />
 }

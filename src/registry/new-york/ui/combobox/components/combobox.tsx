@@ -1,6 +1,6 @@
-import { Check, ChevronDownIcon, X } from 'lucide-react'
-import * as React from 'react'
-import { Button, type ButtonProps } from '@/components/ui/button'
+import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Button, type ButtonProps } from '@/registry/new-york/ui/button/components/button'
 import {
   Command,
   CommandEmpty,
@@ -12,7 +12,7 @@ import {
   CommandList,
   type CommandListProps,
   type CommandProps
-} from '@/components/ui/command'
+} from '@/registry/new-york/ui/command/components/command'
 import {
   Popover,
   PopoverContent,
@@ -20,7 +20,7 @@ import {
   type PopoverProps,
   PopoverTrigger,
   type PopoverTriggerProps
-} from '@/components/ui/popover'
+} from '@/registry/new-york/ui/popover/components/popover'
 import type { Option } from '@/types/base'
 import { cn } from '@/utils/ui'
 
@@ -51,11 +51,11 @@ export const useLabel = (args: Pick<ComboboxProps, 'value' | 'options' | 'isValu
   const { value, options, isValueCanBeEmptyString } = args
 
   // States
-  const [label, setLabel] = React.useState<string>()
+  const [label, setLabel] = useState<string>()
 
   // Effects
   // Reset label
-  React.useEffect(() => {
+  useEffect(() => {
     if (value == null || (value === '' && !isValueCanBeEmptyString)) {
       return setLabel(undefined)
     }
@@ -96,22 +96,22 @@ export const Combobox = ({
   })
 
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Memos
-  const isEmpty = React.useMemo(() => {
+  const isEmpty = useMemo(() => {
     return value == null || (value === '' && !isValueCanBeEmptyString)
   }, [value, isValueCanBeEmptyString])
 
   return (
-    <Popover {...popoverProps} open={isOpenPopover} modal onOpenChange={setIsOpenPopover}>
+    <Popover {...popoverProps} modal onOpenChange={setIsOpenPopover} open={isOpenPopover}>
       <PopoverTrigger {...popoverTriggerProps} asChild={popoverTriggerProps?.asChild ?? true}>
         {popoverTriggerProps?.children ?? (
           <Button
-            variant='outline'
-            role='combobox'
-            data-empty={isEmpty}
             aria-expanded={isOpenPopover}
+            data-empty={isEmpty}
+            role='combobox'
+            variant='outline'
             {...buttonTriggerProps}
             className={cn(
               'w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto',
@@ -119,11 +119,10 @@ export const Combobox = ({
             )}
           >
             {buttonTriggerProps?.children ?? (
-              <React.Fragment>
+              <>
                 <span className='line-clamp-1 text-ellipsis'> {label ?? placeholder}</span>
-
                 {isCanRemoveValue && !isEmpty ? (
-                  <X
+                  <XIcon
                     className='ml-auto size-4 shrink-0 text-muted-foreground transition-transform hover:scale-125'
                     onClick={(e) => {
                       e.stopPropagation()
@@ -133,7 +132,7 @@ export const Combobox = ({
                 ) : (
                   <ChevronDownIcon className='ml-auto size-4 shrink-0 text-muted-foreground' />
                 )}
-              </React.Fragment>
+              </>
             )}
           </Button>
         )}
@@ -161,24 +160,26 @@ export const Combobox = ({
 
                 return (
                   <div
-                    key={option.value}
                     className={cn('flex items-center gap-1', {
                       'pl-1': Boolean(commandItemPrefix)
                     })}
+                    key={option.value}
                   >
                     {commandItemPrefix?.(option)}
 
                     <CommandItem
-                      value={option.label}
                       className='grow'
                       onSelect={() => {
                         onValueChange(option.value)
                         setIsOpenPopover(false)
                       }}
+                      value={option.label}
                       {...commandItemProps}
                     >
                       {commandItemChildren}
-                      <Check className={cn('ml-auto size-4', option.value === value ? 'opacity-100' : 'opacity-0')} />
+                      <CheckIcon
+                        className={cn('ml-auto size-4', option.value === value ? 'opacity-100' : 'opacity-0')}
+                      />
                     </CommandItem>
                   </div>
                 )

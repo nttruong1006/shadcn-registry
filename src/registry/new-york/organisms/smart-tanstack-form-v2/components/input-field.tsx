@@ -1,6 +1,7 @@
-import { Input } from '@/components/ui/input'
+import { Input } from '@/registry/new-york/ui/input/components/input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type InputFieldOutputValue, useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
+import type { InputFieldOutputValue } from './lib/schema'
 
 // Component
 const InputField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
@@ -10,16 +11,16 @@ const InputField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProp
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <Input
+        aria-invalid={isInvalid}
+        disabled={isDisabled}
         id={field.name}
         name={field.name}
-        value={field.state.value}
-        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
-        disabled={isDisabled}
-        aria-invalid={isInvalid}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

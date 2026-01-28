@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button'
-import { ButtonGroup } from '@/components/ui/button-group'
-import { Kbd, KbdGroup } from '@/components/ui/kbd'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { ButtonGroup } from '@/registry/new-york/ui/button-group/components/button-group'
+import { Kbd, KbdGroup } from '@/registry/new-york/ui/kbd/components/kbd'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // Component
 export const KbdTooltip = () => {

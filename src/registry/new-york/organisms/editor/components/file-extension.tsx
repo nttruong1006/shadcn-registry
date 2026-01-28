@@ -7,11 +7,11 @@ import {
   ReactNodeViewRenderer,
   useCurrentEditor
 } from '@tiptap/react'
-import { Paperclip, Trash } from 'lucide-react'
-import type React from 'react'
+import { PaperclipIcon, TrashIcon } from 'lucide-react'
+import type { MouseEventHandler } from 'react'
 import type { FileAttributes } from '@/@types/tiptap'
-import { getSizeText } from '@/components/molecules/file-upload'
-import { Button } from '@/components/ui/button'
+import { getSizeText } from '@/registry/new-york/molecules/file-upload/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 
 // Component
 const FileComponent = (props: ReactNodeViewProps<HTMLAnchorElement>) => {
@@ -22,7 +22,7 @@ const FileComponent = (props: ReactNodeViewProps<HTMLAnchorElement>) => {
   const { editor } = useCurrentEditor()
 
   // Methods
-  const deleteFile: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const deleteFile: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -34,20 +34,20 @@ const FileComponent = (props: ReactNodeViewProps<HTMLAnchorElement>) => {
   return (
     <NodeViewWrapper>
       <a
-        href={nodeAttrs.url}
-        target='_blank'
-        rel='noreferrer'
         className='flex w-full items-center gap-4 rounded-md border p-4 transition-colors duration-200 hover:bg-gray-200 hover:no-underline'
+        href={nodeAttrs.url}
+        rel='noreferrer'
+        target='_blank'
       >
-        <Paperclip className='size-4' />
+        <PaperclipIcon className='size-4' />
 
         <div className='grow space-y-2 overflow-hidden'>
           <div className='line-clamp-1'>{nodeAttrs.name}</div>
           <div>{getSizeText(nodeAttrs.size)}</div>
         </div>
 
-        <Button variant='ghost' size='icon' onClick={deleteFile}>
-          <Trash />
+        <Button onClick={deleteFile} size='icon' variant='ghost'>
+          <TrashIcon />
         </Button>
       </a>
     </NodeViewWrapper>

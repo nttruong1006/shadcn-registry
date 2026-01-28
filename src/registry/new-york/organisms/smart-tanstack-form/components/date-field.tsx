@@ -1,6 +1,6 @@
-import { DatePicker } from '@/components/ui/date-picker'
+import { DatePicker } from '@/registry/new-york/ui/date-picker/components/date-picker'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const DateField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -12,10 +12,10 @@ const DateField = ({ fieldData, disabledFields }: FieldProps) => {
     <FieldContainer fieldData={fieldData}>
       <DatePicker
         id={field.name}
-        value={field.state.value}
-        placeholder={`Select ${fieldData.label.toLowerCase()}`}
         isDisabled={disabledFields?.[fieldData.code]}
         onValueChange={field.handleChange}
+        placeholder={`Select ${fieldData.label.toLowerCase()}`}
+        value={field.state.value}
       />
     </FieldContainer>
   )

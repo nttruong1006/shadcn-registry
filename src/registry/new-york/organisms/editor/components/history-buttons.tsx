@@ -1,10 +1,10 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { Redo, Undo } from 'lucide-react'
-import React from 'react'
+import { RedoIcon, UndoIcon } from 'lucide-react'
+import { memo } from 'react'
 import TooltipButton from './tooltip-button'
 
 // Component
-const HistoryButtons = React.memo(() => {
+const HistoryButtons = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -21,18 +21,18 @@ const HistoryButtons = React.memo(() => {
   return (
     <div className='flex gap-1'>
       <TooltipButton
-        Icon={Undo}
-        label='Undo'
-        kbd='Ctrl Z'
         disabled={editorState?.isUndoDisabled}
+        Icon={UndoIcon}
+        kbd='Ctrl Z'
+        label='Undo'
         onClick={() => editor?.chain().focus().undo().run()}
       />
 
       <TooltipButton
-        Icon={Redo}
-        label='Redo'
-        kbd='Ctrl Y'
         disabled={editorState?.isRedoDisabled}
+        Icon={RedoIcon}
+        kbd='Ctrl Y'
+        label='Redo'
         onClick={() => editor?.chain().focus().redo().run()}
       />
     </div>

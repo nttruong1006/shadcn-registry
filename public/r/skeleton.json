@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "src/registry/new-york/ui/skeleton/components/skeleton.tsx",
-      "content": "import { cn } from '@/utils/ui'\n\n// Skeleton\nexport const Skeleton = ({ className, ...props }: React.ComponentProps<'div'>) => {\n  // Template\n  return <div data-slot='skeleton' className={cn('animate-pulse rounded-md bg-accent', className)} {...props} />\n}\n",
+      "content": "import type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\n// Skeleton\nexport const Skeleton = ({ className, ...props }: ComponentProps<'div'>) => {\n  // Template\n  return <div className={cn('animate-pulse rounded-md bg-accent', className)} data-slot='skeleton' {...props} />\n}\n",
       "type": "registry:ui",
       "target": "src/components/ui/skeleton.tsx"
     }

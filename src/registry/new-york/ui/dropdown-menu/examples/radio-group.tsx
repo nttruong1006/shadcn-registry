@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,12 +8,12 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
 
 // Component
 export const DropdownMenuRadioGroupDemo = () => {
   // States
-  const [position, setPosition] = React.useState('bottom')
+  const [position, setPosition] = useState('bottom')
 
   //   Template
   return (
@@ -24,7 +24,7 @@ export const DropdownMenuRadioGroupDemo = () => {
       <DropdownMenuContent className='w-56'>
         <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+        <DropdownMenuRadioGroup onValueChange={setPosition} value={position}>
           <DropdownMenuRadioItem value='top'>Top</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value='bottom'>Bottom</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value='right'>Right</DropdownMenuRadioItem>

@@ -5,7 +5,7 @@ import {
   FileUploadInput,
   FileUploadItem,
   type FileUploadProps
-} from '@/components/molecules/file-upload'
+} from '@/registry/new-york/molecules/file-upload/components/file-upload'
 
 // Component
 export const FileUploadDemo = () => {
@@ -15,16 +15,16 @@ export const FileUploadDemo = () => {
   // Template
   return (
     <FileUpload
-      value={value}
       dropzoneOptions={{
         maxFiles: 5
       }}
       onValueChange={setValue}
+      value={value}
     >
       <FileUploadInput />
       <FileUploadContent>
         {value.map((item, index) => (
-          <FileUploadItem key={`${index}-${item instanceof File ? item.name : item.id}`} value={item} index={index} />
+          <FileUploadItem index={index} key={`${index}-${item instanceof File ? item.name : item.id}`} value={item} />
         ))}
       </FileUploadContent>
     </FileUpload>

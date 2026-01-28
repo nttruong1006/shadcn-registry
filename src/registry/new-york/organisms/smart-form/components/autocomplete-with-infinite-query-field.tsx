@@ -1,14 +1,14 @@
-import type React from 'react'
-import { Autocomplete } from '@/components/molecules/autocomplete'
-import { Spinner } from '@/components/ui/spinner'
+import type { ComponentProps } from 'react'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import FieldContainer, { type FieldContainerProps, type FieldProps } from './field-container'
-import { fetchNextPage, useOptionsInfiniteQuery } from './lib'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
 // Component
 const AutocompleteWithInfiniteQueryField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {(props) => <AutocompleteWithInfiniteQueryFieldContainer {...props} />}
     </FieldContainer>
   )
@@ -19,7 +19,7 @@ const AutocompleteWithInfiniteQueryFieldContainer = ({
   fieldData,
   fieldState,
   disabledFields
-}: React.ComponentProps<FieldContainerProps['children']>) => {
+}: ComponentProps<FieldContainerProps['children']>) => {
   // Hooks
   const { optionsInfiniteQuery, options } = useOptionsInfiniteQuery({
     fieldData,
@@ -31,17 +31,7 @@ const AutocompleteWithInfiniteQueryFieldContainer = ({
   return (
     <Autocomplete
       {...field}
-      options={options}
-      placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-      inputProps={{
-        id: fieldData.code,
-        disabled: disabledFields?.[fieldData.code],
-        'aria-invalid': fieldState.invalid
-      }}
-      isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
-      commandProps={{
-        shouldFilter: false
-      }}
+      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
       commandListProps={{
         onScroll: (event) =>
           fetchNextPage({
@@ -49,8 +39,18 @@ const AutocompleteWithInfiniteQueryFieldContainer = ({
             infiniteQuery: optionsInfiniteQuery
           })
       }}
-      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+      commandProps={{
+        shouldFilter: false
+      }}
+      inputProps={{
+        id: fieldData.code,
+        disabled: disabledFields?.[fieldData.code],
+        'aria-invalid': fieldState.invalid
+      }}
+      isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
       onValueChange={field.onChange}
+      options={options}
+      placeholder={`Enter ${fieldData.label.toLowerCase()}`}
     />
   )
 }

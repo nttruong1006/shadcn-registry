@@ -1,7 +1,8 @@
 import { type ColumnDef, getExpandedRowModel, getPaginationRowModel } from '@tanstack/react-table'
 import { ChevronRight } from 'lucide-react'
-import { DataTable, useDataTable } from '@/components/organisms/data-table'
-import { Button } from '@/components/ui/button'
+import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
+import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
   DialogContent,
@@ -10,7 +11,7 @@ import {
   DialogScrollableContent,
   DialogTitle,
   DialogTrigger
-} from '@/components/ui/dialog'
+} from '@/registry/new-york/ui/dialog/components/dialog'
 import { cn } from '@/utils/ui'
 
 type Row = {
@@ -34,13 +35,13 @@ const COLUMNS: ColumnDef<Row>[] = [
 
         return (
           <Button
-            variant='ghost'
-            size='icon'
             className={cn('gap-1 p-0 [&>svg]:transition-transform', {
               '[&>svg]:rotate-90': row.getIsExpanded()
             })}
-            style={style}
             onClick={row.getToggleExpandedHandler()}
+            size='icon'
+            style={style}
+            variant='ghost'
           >
             <ChevronRight />
           </Button>

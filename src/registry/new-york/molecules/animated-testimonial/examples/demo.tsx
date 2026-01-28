@@ -2,19 +2,19 @@ import {
   AnimatedTestimonial,
   AnimatedTestimonialCanopy,
   AnimatedTestimonialCard
-} from '@/components/molecules/animated-testimonial'
+} from '@/registry/new-york/molecules/animated-testimonial/components/animated-testimonial'
 
 // Component
 const AnimatedTextDemo = () => {
   // Template
   return (
     <AnimatedTestimonial>
-      <AnimatedTestimonialCanopy isPauseOnHover isApplyMask maskClassName='rounded-md' className='py-4'>
+      <AnimatedTestimonialCanopy className='py-4' isApplyMask isPauseOnHover maskClassName='rounded-md'>
         {Array.from({ length: 20 }).map((_, index) => (
           <AnimatedTestimonialCard
+            className='flex size-20 items-center justify-center rounded-md bg-primary text-primary-foreground'
             // biome-ignore lint/suspicious/noArrayIndexKey: ignore
             key={index}
-            className='flex size-20 items-center justify-center rounded-md bg-primary text-primary-foreground'
           >
             {index + 1}
           </AnimatedTestimonialCard>

@@ -1,6 +1,6 @@
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Toaster } from '@/components/ui/sonner'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Toaster } from '@/registry/new-york/ui/sonner/components/sonner'
 
 // Component
 export const SonnerDemo = () => {
@@ -9,7 +9,6 @@ export const SonnerDemo = () => {
     <div>
       <Toaster />
       <Button
-        variant='outline'
         onClick={() =>
           toast('Event has been created', {
             description: 'Sunday, December 03, 2023 at 9:00 AM',
@@ -19,6 +18,7 @@ export const SonnerDemo = () => {
             }
           })
         }
+        variant='outline'
       >
         Show Toast
       </Button>

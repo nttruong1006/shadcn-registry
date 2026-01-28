@@ -9,9 +9,9 @@ import {
   TagIcon,
   Trash2Icon
 } from 'lucide-react'
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
-import { ButtonGroup } from '@/components/ui/button-group'
+import { useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { ButtonGroup } from '@/registry/new-york/ui/button-group/components/button-group'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,18 +24,18 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
 
 // Component
 export const ButtonGroupDemo = () => {
   // States
-  const [label, setLabel] = React.useState('personal')
+  const [label, setLabel] = useState('personal')
 
   // Template
   return (
     <ButtonGroup>
       <ButtonGroup className='hidden sm:flex'>
-        <Button variant='outline' size='icon' aria-label='Go Back'>
+        <Button aria-label='Go Back' size='icon' variant='outline'>
           <ArrowLeftIcon />
         </Button>
       </ButtonGroup>
@@ -47,7 +47,7 @@ export const ButtonGroupDemo = () => {
         <Button variant='outline'>Snooze</Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='outline' size='icon' aria-label='More Options'>
+            <Button aria-label='More Options' size='icon' variant='outline'>
               <MoreHorizontalIcon />
             </Button>
           </DropdownMenuTrigger>
@@ -82,7 +82,7 @@ export const ButtonGroupDemo = () => {
                   Label As...
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
-                  <DropdownMenuRadioGroup value={label} onValueChange={setLabel}>
+                  <DropdownMenuRadioGroup onValueChange={setLabel} value={label}>
                     <DropdownMenuRadioItem value='personal'>Personal</DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value='work'>Work</DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value='other'>Other</DropdownMenuRadioItem>

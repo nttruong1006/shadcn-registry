@@ -1,8 +1,8 @@
-import type React from 'react'
+import type { HTMLAttributes, PropsWithChildren } from 'react'
 import { cn } from '@/utils/ui'
 
 // Animated testimonial canopy
-export interface AnimatedTestimonialCanopyProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AnimatedTestimonialCanopyProps extends HTMLAttributes<HTMLDivElement> {
   isVertical?: boolean
   repeat?: number
   isReverse?: boolean
@@ -45,14 +45,14 @@ export const AnimatedTestimonialCanopy = ({
 
       {Array.from({ length: repeat }).map((_, index) => (
         <div
-          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
-          key={`item-${index}`}
           className={cn('flex shrink-0 gap-(--gap)', {
             'group-hover:paused': isPauseOnHover,
             'direction-[reverse]': isReverse,
             'animate-canopy-horizontal flex-row': !isVertical,
             'animate-canopy-isVertical flex-col': isVertical
           })}
+          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+          key={`item-${index}`}
         >
           {children}
         </div>
@@ -62,7 +62,7 @@ export const AnimatedTestimonialCanopy = ({
 }
 
 // Animated testimonial card
-interface AnimatedTestimonialCardProps extends React.PropsWithChildren {
+interface AnimatedTestimonialCardProps extends PropsWithChildren {
   className?: string
 }
 
@@ -72,7 +72,7 @@ export const AnimatedTestimonialCard = ({ className, children }: AnimatedTestimo
 }
 
 // Animated testimonial
-export interface AnimatedTestimonialProps extends React.PropsWithChildren {
+export interface AnimatedTestimonialProps extends PropsWithChildren {
   className?: string
 }
 

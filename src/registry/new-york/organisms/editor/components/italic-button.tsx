@@ -1,10 +1,10 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
-import { Italic } from 'lucide-react'
-import React from 'react'
+import { ItalicIcon } from 'lucide-react'
+import { memo } from 'react'
 import TooltipButton from './tooltip-button'
 
 // Component
-const ItalicButton = React.memo(() => {
+const ItalicButton = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
@@ -19,10 +19,10 @@ const ItalicButton = React.memo(() => {
   // Template
   return (
     <TooltipButton
-      Icon={Italic}
-      label='Italic'
+      Icon={ItalicIcon}
       isActive={editorState?.isActive}
       kbd='Ctrl I'
+      label='Italic'
       onClick={() => editor?.chain().focus().toggleItalic().run()}
     />
   )

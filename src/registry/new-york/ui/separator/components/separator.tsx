@@ -1,5 +1,5 @@
-import * as SeparatorPrimitive from '@radix-ui/react-separator'
-import type * as React from 'react'
+import { Root } from '@radix-ui/react-separator'
+import type { ComponentProps } from 'react'
 import { cn } from '@/utils/ui'
 
 // Separator
@@ -8,17 +8,17 @@ export const Separator = ({
   orientation = 'horizontal',
   decorative = true,
   ...props
-}: React.ComponentProps<typeof SeparatorPrimitive.Root>) => {
+}: ComponentProps<typeof Root>) => {
   // Template
   return (
-    <SeparatorPrimitive.Root
-      data-slot='separator'
-      decorative={decorative}
-      orientation={orientation}
+    <Root
       className={cn(
         'shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px',
         className
       )}
+      data-slot='separator'
+      decorative={decorative}
+      orientation={orientation}
       {...props}
     />
   )

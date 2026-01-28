@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { Calendar } from '@/components/ui/calendar'
+import { useState } from 'react'
+import { Calendar } from '@/registry/new-york/ui/calendar/components/calendar'
 
 // Component
 export const CalendarDemo = () => {
   // States
-  const [date, setDate] = React.useState<Date | undefined>(new Date())
+  const [date, setDate] = useState<Date | undefined>(new Date())
 
   // Template
-  return <Calendar mode='single' selected={date} onSelect={setDate} className='rounded-md border shadow-sm' />
+  return <Calendar className='rounded-md border shadow-sm' mode='single' onSelect={setDate} selected={date} />
 }

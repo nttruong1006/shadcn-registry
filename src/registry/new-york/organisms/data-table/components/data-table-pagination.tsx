@@ -1,9 +1,15 @@
 import type { RowData } from '@tanstack/react-table'
 import debounce from 'lodash.debounce'
 import type { NumberFormatValues } from 'react-number-format'
-import { NumberInput } from '@/components/molecules/number-input'
-import { Pagination } from '@/components/molecules/pagination'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
+import { Pagination } from '@/registry/new-york/molecules/pagination/components/pagination'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/registry/new-york/ui/select/components/select'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 
@@ -24,7 +30,9 @@ const DataTablePagination = <TData extends RowData>({
   // Methods
   // Change number input value
   const changeNumberInputValue = debounce((values: NumberFormatValues) => {
-    if (values.floatValue == null || values.floatValue < 1) return
+    if (values.floatValue == null || values.floatValue < 1) {
+      return
+    }
     if (values.floatValue > pageCount) {
       return table.setPageIndex(pageCount - 1)
     }
@@ -46,12 +54,12 @@ const DataTablePagination = <TData extends RowData>({
           <span>Move to page</span>
           <NumberInput
             className='w-14'
-            placeholder=''
-            isDisplayStepper={false}
-            min={1}
-            max={pageCount}
             defaultValue={page}
+            isDisplayStepper={false}
+            max={pageCount}
+            min={1}
             onValueChange={changeNumberInputValue}
+            placeholder=''
           />
         </div>
 
@@ -59,10 +67,10 @@ const DataTablePagination = <TData extends RowData>({
         <div className='flex items-center gap-2'>
           <span>Number of rows per page</span>
           <Select
-            value={`${pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value))
             }}
+            value={`${pageSize}`}
           >
             <SelectTrigger className='w-fit gap-1'>
               <SelectValue />
@@ -79,13 +87,13 @@ const DataTablePagination = <TData extends RowData>({
       </div>
 
       <Pagination
+        isHasNextPage={table.getCanNextPage()}
+        isHasPreviousPage={table.getCanPreviousPage()}
+        onChangePage={(page) => table.setPageIndex(page - 1)}
+        onGoToNextPage={table.nextPage}
+        onGoToPreviousPage={table.previousPage}
         page={page}
         pageCount={pageCount}
-        isHasPreviousPage={table.getCanPreviousPage()}
-        isHasNextPage={table.getCanNextPage()}
-        onGoToPreviousPage={table.previousPage}
-        onGoToNextPage={table.nextPage}
-        onChangePage={(page) => table.setPageIndex(page - 1)}
       />
     </div>
   )

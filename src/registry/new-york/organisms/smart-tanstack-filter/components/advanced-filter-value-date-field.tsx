@@ -1,8 +1,9 @@
 import { toDate } from 'date-fns'
-import { DatePicker, DateRangePicker } from '@/components/ui/date-picker'
-import { Field, FieldError } from '@/components/ui/field'
+import { DatePicker, DateRangePicker } from '@/registry/new-york/ui/date-picker/components/date-picker.tsx'
+import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation, useAdvancedFilterForm } from './lib'
+import { SmartFilterOperation } from './lib/base'
+import { useAdvancedFilterForm } from './lib/form'
 
 // Component
 const AdvancedFilterValueDateField = ({
@@ -24,16 +25,16 @@ const AdvancedFilterValueDateField = ({
           return (
             <Field data-invalid={isInvalid}>
               <DateRangePicker
-                value={{
-                  from: field.state.value.from ? new Date(field.state.value.from) : undefined,
-                  to: field.state.value.to ? new Date(field.state.value.to) : undefined
-                }}
-                placeholder={`Select ${selectedFilter.label.toLowerCase()} range`}
                 onValueChange={(value) => {
                   field.handleChange({
                     from: value?.from?.toISOString() ?? '',
                     to: value?.to?.toISOString() ?? ''
                   })
+                }}
+                placeholder={`Select ${selectedFilter.label.toLowerCase()} range`}
+                value={{
+                  from: field.state.value.from ? new Date(field.state.value.from) : undefined,
+                  to: field.state.value.to ? new Date(field.state.value.to) : undefined
                 }}
               />
               {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -52,11 +53,11 @@ const AdvancedFilterValueDateField = ({
         return (
           <Field data-invalid={isInvalid}>
             <DatePicker
-              value={field.state.value ? toDate(field.state.value as string) : null}
-              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               onValueChange={(value) => {
                 field.handleChange(value?.toISOString() ?? '')
               }}
+              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+              value={field.state.value ? toDate(field.state.value as string) : null}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>

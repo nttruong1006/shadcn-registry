@@ -145,32 +145,32 @@ export const smartFilterFormSchema = z.object({
 
         if (operation === SmartFilterOperation.IsBetween) {
           if (value.additional.from === '') {
-            ;['value.additional', 'value.additional.from'].forEach((path) => {
+            const fields = ['value.additional', 'value.additional.from']
+            for (const field of fields) {
               ctx.addIssue({
-                path: [path],
+                path: [field],
                 message: 'Please enter/select the information',
                 code: 'custom'
               })
-            })
+            }
           }
 
           if (value.additional.to === '') {
-            ;['value.additional', 'value.additional.to'].forEach((path) => {
+            const fields = ['value.additional', 'value.additional.to']
+            for (const field of fields) {
               ctx.addIssue({
-                path: [path],
+                path: [field],
                 message: 'Please enter/select the information',
                 code: 'custom'
               })
-            })
+            }
           }
-        } else {
-          if (value.default === '') {
-            ctx.addIssue({
-              path: ['value.default'],
-              message: 'Please enter/select the information',
-              code: 'custom'
-            })
-          }
+        } else if (value.default === '') {
+          ctx.addIssue({
+            path: ['value.default'],
+            message: 'Please enter/select the information',
+            code: 'custom'
+          })
         }
       })
   )

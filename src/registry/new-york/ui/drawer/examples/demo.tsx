@@ -1,6 +1,6 @@
 import { Minus, Plus } from 'lucide-react'
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Drawer,
   DrawerClose,
@@ -10,12 +10,12 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/components/ui/drawer'
+} from '@/registry/new-york/ui/drawer/components/drawer'
 
 // Component
 export const DrawerDemo = () => {
   // States
-  const [goal, setGoal] = React.useState(350)
+  const [goal, setGoal] = useState(350)
 
   // Methods
   // Click
@@ -37,11 +37,11 @@ export const DrawerDemo = () => {
           <div className='p-4 pb-0'>
             <div className='flex items-center justify-center space-x-2'>
               <Button
-                variant='outline'
-                size='icon'
                 className='h-8 w-8 shrink-0 rounded-full'
-                onClick={() => click(-10)}
                 disabled={goal <= 200}
+                onClick={() => click(-10)}
+                size='icon'
+                variant='outline'
               >
                 <Minus />
                 <span className='sr-only'>Decrease</span>
@@ -51,11 +51,11 @@ export const DrawerDemo = () => {
                 <div className='text-[0.70rem] text-muted-foreground uppercase'>Calories/day</div>
               </div>
               <Button
-                variant='outline'
-                size='icon'
                 className='h-8 w-8 shrink-0 rounded-full'
-                onClick={() => click(10)}
                 disabled={goal >= 400}
+                onClick={() => click(10)}
+                size='icon'
+                variant='outline'
               >
                 <Plus />
                 <span className='sr-only'>Increase</span>

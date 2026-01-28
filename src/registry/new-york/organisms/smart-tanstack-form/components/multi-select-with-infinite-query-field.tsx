@@ -1,7 +1,8 @@
-import { MultiSelect, type MultiSelectProps } from '@/components/molecules/multi-select'
-import { Spinner } from '@/components/ui/spinner'
+import { MultiSelect, type MultiSelectProps } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import FieldContainer, { type FieldProps } from './field-container'
-import { fetchNextPage, useFieldContext, useOptionsInfiniteQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
 // Component
 const MultiSelectWithInfiniteQueryField = ({ fieldData, ...props }: FieldProps) => {
@@ -25,17 +26,12 @@ const MultiSelectWithInfiniteQueryFieldContainer = ({ fieldData, disabledFields 
   // Template
   return (
     <MultiSelect
-      value={field.state.value}
-      options={options}
-      placeholder={`Select ${fieldData.label.toLowerCase()}`}
       buttonTriggerProps={{
         id: fieldData.code,
         disabled: disabledFields?.[fieldData.code],
         isLoading: optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
       }}
-      commandProps={{
-        shouldFilter: false
-      }}
+      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
       commandInputProps={{
         value: searchKeyword,
         onValueChange: setSearchKeyword
@@ -47,8 +43,13 @@ const MultiSelectWithInfiniteQueryFieldContainer = ({ fieldData, disabledFields 
             infiniteQuery: optionsInfiniteQuery
           })
       }}
-      commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
+      commandProps={{
+        shouldFilter: false
+      }}
       onValueChange={field.handleChange}
+      options={options}
+      placeholder={`Select ${fieldData.label.toLowerCase()}`}
+      value={field.state.value}
     />
   )
 }

@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
+import { Fragment } from 'react'
+import { ScrollArea } from '@/registry/new-york/ui/scroll-area/components/scroll-area'
+import { Separator } from '@/registry/new-york/ui/separator/components/separator'
 
 const tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`)
 
@@ -12,10 +12,10 @@ export const ScrollAreaDemo = () => {
       <div className='p-4'>
         <h4 className='mb-4 font-medium text-sm leading-none'>Tags</h4>
         {tags.map((tag) => (
-          <React.Fragment key={tag}>
+          <Fragment key={tag}>
             <div className='text-sm'>{tag}</div>
             <Separator className='my-2' />
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     </ScrollArea>

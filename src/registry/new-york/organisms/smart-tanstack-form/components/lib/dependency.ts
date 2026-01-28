@@ -1,5 +1,5 @@
 import { useStore } from '@tanstack/react-form'
-import React from 'react'
+import { useState } from 'react'
 import { type SmartFormFieldData, useFormContext } from './base'
 
 // Use dependency fields
@@ -8,7 +8,7 @@ export const useDependencyFields = ({ fieldData }: { fieldData: SmartFormFieldDa
   const form = useFormContext()
 
   // States
-  const [dependencyFieldCodes] = React.useState(() => {
+  const [dependencyFieldCodes] = useState(() => {
     return (
       fieldData.config?.referenceFields?.reduce<string[]>((acc, field) => {
         if (fieldData.config?.apiPath?.includes(`{${field.code}}`)) {
@@ -35,7 +35,9 @@ export const useDependencyFields = ({ fieldData }: { fieldData: SmartFormFieldDa
 
 // Extract dependencies
 export const extractDependencies = (apiPath?: string): string[] => {
-  if (!apiPath) return []
+  if (!apiPath) {
+    return []
+  }
 
   const regex = /\{([^}]+)\}/g
   const deps: string[] = []
@@ -54,18 +56,15 @@ export const extractDependencies = (apiPath?: string): string[] => {
 export type DependentGraph = ReturnType<typeof buildDependentGraph>
 export const buildDependentGraph = (fields: SmartFormFieldData[]) => {
   const graph = new Map<string, string[]>()
-
-  fields.forEach((field) => {
+  for (const field of fields) {
     const deps = extractDependencies(field.config?.apiPath)
-
-    deps.forEach((dep) => {
+    for (const dep of deps) {
       if (!graph.has(dep)) {
         graph.set(dep, [])
       }
       graph.get(dep)?.push(field.code)
-    })
-  })
-
+    }
+  }
   return graph
 }
 

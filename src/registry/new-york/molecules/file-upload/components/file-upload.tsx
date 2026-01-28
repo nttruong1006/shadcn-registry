@@ -1,9 +1,9 @@
-import { CloudUpload, FileIcon, XIcon } from 'lucide-react'
-import * as React from 'react'
+import { CloudUploadIcon, FileIcon, XIcon } from 'lucide-react'
+import { createContext, type HTMLAttributes, type PropsWithChildren, useCallback, useContext, useMemo } from 'react'
 import { type DropzoneOptions, type DropzoneState, type FileRejection, useDropzone } from 'react-dropzone'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Input } from '@/registry/new-york/ui/input/components/input'
 import { cn } from '@/utils/ui'
 import { getSizeText, type UploadedFile } from './lib'
 
@@ -16,17 +16,17 @@ export type FileUploadProps = {
   isReplaceOnSelect?: boolean
   isDisabled?: boolean
   onValueChange: (value: FileUploadProps['value']) => void
-} & React.HTMLAttributes<HTMLDivElement>
+} & HTMLAttributes<HTMLDivElement>
 
 export type FileUploadContextValue = Pick<FileUploadProps, 'value' | 'onValueChange'> & {
   dropzoneState: DropzoneState
   isDisabled: boolean
 }
 
-const FileUploadContext = React.createContext<FileUploadContextValue | null>(null)
+const FileUploadContext = createContext<FileUploadContextValue | null>(null)
 
 export const useFileUploadContext = () => {
-  const context = React.useContext(FileUploadContext)
+  const context = useContext(FileUploadContext)
   if (!context) {
     throw new Error('useFileUploadContext must be used within the FileUpload')
   }
@@ -58,7 +58,7 @@ export const FileUpload = ({
     multiple,
     disabled: isDisabled,
     ...restDropzoneOptions,
-    onDrop: React.useCallback(
+    onDrop: useCallback(
       (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
         const newValues = [...value]
 
@@ -66,11 +66,11 @@ export const FileUpload = ({
           newValues.splice(0, newValues.length)
         }
 
-        acceptedFiles.forEach((acceptedFile) => {
+        for (const acceptedFile of acceptedFiles) {
           if (newValues.length < maxFiles) {
             newValues.push(acceptedFile)
           }
-        })
+        }
 
         onValueChange(newValues)
 
@@ -84,7 +84,7 @@ export const FileUpload = ({
             return
           }
 
-          rejectedFiles.forEach((rejectedFile) => {
+          for (const rejectedFile of rejectedFiles) {
             if (rejectedFile.errors[0]?.code === 'file-too-large') {
               toast.warning('File size exceeds the allowed limit', {
                 description: `File ${rejectedFile.file.name} (Maximum size is ${Math.round(maxSize / 1024 / 1024).toString()}MB)`
@@ -107,7 +107,7 @@ export const FileUpload = ({
             toast.warning('Error', {
               description: 'An error occurred while uploading the file'
             })
-          })
+          }
         }
       },
       [value, isReplaceOnSelect, maxFiles, maxSize, dropzoneOptions?.accept, onValueChange]
@@ -132,7 +132,7 @@ export const FileUpload = ({
 }
 
 // File upload input
-export type FileUploadInputProps = React.HTMLAttributes<HTMLDivElement>
+export type FileUploadInputProps = HTMLAttributes<HTMLDivElement>
 
 export const FileUploadInput = ({ id, className, children, ...restProps }: FileUploadInputProps) => {
   // Hooks
@@ -152,18 +152,18 @@ export const FileUploadInput = ({ id, className, children, ...restProps }: FileU
     >
       {children ?? (
         <div className='flex w-full flex-col items-center justify-center gap-4 p-4 text-muted-foreground'>
-          <CloudUpload className='size-10' />
+          <CloudUploadIcon className='size-10' />
           <span className='text-center'>Drag and drop a file here or select a file</span>
         </div>
       )}
 
-      <Input ref={dropzoneState.inputRef} id={id} disabled={isDisabled} {...dropzoneState.getInputProps()} />
+      <Input disabled={isDisabled} id={id} ref={dropzoneState.inputRef} {...dropzoneState.getInputProps()} />
     </div>
   )
 }
 
 // File upload content
-export type FileUploadContentProps = React.PropsWithChildren & { className?: string }
+export type FileUploadContentProps = PropsWithChildren & { className?: string }
 export const FileUploadContent = ({ className, children }: FileUploadContentProps) => {
   // Template
   return (
@@ -174,7 +174,7 @@ export const FileUploadContent = ({ className, children }: FileUploadContentProp
 }
 
 // File uploader item
-export type FileUploaderItemProps = React.HTMLAttributes<HTMLDivElement> & {
+export type FileUploaderItemProps = HTMLAttributes<HTMLDivElement> & {
   value: FileUploadValue[number]
   index: number
 }
@@ -184,7 +184,7 @@ export const FileUploadItem = ({ value, index, className, children }: FileUpload
   const { value: fileUploadValue, onValueChange } = useFileUploadContext()
 
   // Memos
-  const { name, size } = React.useMemo<{ name: string; size: string }>(() => {
+  const { name, size } = useMemo<{ name: string; size: string }>(() => {
     const size = value instanceof File ? value.size : (value.compress_info?.['']?.size ?? 0)
     const name = value instanceof File ? value.name : value.original
     return {
@@ -215,13 +215,13 @@ export const FileUploadItem = ({ value, index, className, children }: FileUpload
       )}
 
       <Button
-        variant='ghost'
-        size='icon-sm'
         onClick={() => {
           const newFileUploadValue = [...fileUploadValue]
           newFileUploadValue.splice(index, 1)
           onValueChange(newFileUploadValue)
         }}
+        size='icon-sm'
+        variant='ghost'
       >
         <XIcon />
       </Button>

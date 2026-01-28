@@ -1,13 +1,13 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircle, TvMinimalPlay } from 'lucide-react'
-import React from 'react'
+import { memo, useRef, useState, useTransition } from 'react'
 import z from 'zod'
-import { Button } from '@/components/ui/button'
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 import type { CallbackRef, SetExtensions } from './editor'
 import { isValidYoutubeUrl, minWidth } from './lib'
 
@@ -26,20 +26,20 @@ const defaultYoutubeFormValue: z.input<typeof youtubeFormSchema> = {
 }
 
 // Component
-const YoutubeButton = React.memo<{
+const YoutubeButton = memo<{
   id: string
   callbackRef: CallbackRef
   setExtensions: SetExtensions
 }>(({ id, callbackRef, setExtensions }) => {
   // Hooks
   const { editor } = useCurrentEditor()
-  const [isPending, startTransition] = React.useTransition()
+  const [isPending, startTransition] = useTransition()
 
   // Refs
-  const isExtensionLoadedRef = React.useRef(false)
+  const isExtensionLoadedRef = useRef(false)
 
   // States
-  const [isOpenPopover, setIsOpenPopover] = React.useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   // Form
   const youtubeForm = useForm({
@@ -95,11 +95,11 @@ const YoutubeButton = React.memo<{
 
   // Template
   return (
-    <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
+    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
       <Tooltip>
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
-            <Button size='icon' variant='ghost' isLoading={isPending}>
+            <Button isLoading={isPending} size='icon' variant='ghost'>
               <TvMinimalPlay />
             </Button>
           </PopoverTrigger>
@@ -110,8 +110,8 @@ const YoutubeButton = React.memo<{
 
       <PopoverContent className='w-xs space-y-4' onCloseAutoFocus={() => youtubeForm.reset()}>
         <form
-          id={youtubeForm.formId}
           className='space-y-6'
+          id={youtubeForm.formId}
           onSubmit={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -126,13 +126,13 @@ const YoutubeButton = React.memo<{
                   <FieldLabel htmlFor={`editor-${id}-url`}>URL *</FieldLabel>
 
                   <Input
+                    aria-invalid={isInvalid}
                     id={`editor-${id}-url`}
                     name={field.name}
-                    value={field.state.value}
-                    placeholder={`Enter URL`}
-                    aria-invalid={isInvalid}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder={'Enter URL'}
+                    value={field.state.value}
                   />
 
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -147,12 +147,12 @@ const YoutubeButton = React.memo<{
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      size='icon'
-                      variant='outline'
-                      type='submit'
-                      isLoading={isSubmitting}
-                      form={youtubeForm.formId}
                       disabled={!canSubmit}
+                      form={youtubeForm.formId}
+                      isLoading={isSubmitting}
+                      size='icon'
+                      type='submit'
+                      variant='outline'
                     >
                       <CheckCircle />
                     </Button>

@@ -6,7 +6,7 @@ import {
   type FieldErrorProps,
   FieldLabel,
   type FieldProps
-} from '@/components/ui/field'
+} from '@/registry/new-york/ui/field/components/field'
 import { cn } from '@/utils/ui'
 
 export type SmartFormFieldContainerProps = FieldProps & {
@@ -36,7 +36,7 @@ const SmartFormFieldContainer = ({
 }: SmartFormFieldContainerProps) => {
   // Template
   return (
-    <Field data-invalid={isInvalid} className={cn('group/field', className)} {...props}>
+    <Field className={cn('group/field', className)} data-invalid={isInvalid} {...props}>
       <FieldLabel htmlFor={name}>
         {label} <span className='text-destructive'>{isRequired && '*'}</span>
       </FieldLabel>

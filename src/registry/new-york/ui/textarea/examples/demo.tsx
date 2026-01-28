@@ -1,7 +1,7 @@
-import { Textarea } from '@/components/ui/textarea'
+import { Textarea } from '@/registry/new-york/ui/textarea/components/textarea'
 
 // Component
 export const TextareaDemo = () => {
   // Template
-  return <Textarea placeholder='Type your message here.' className='max-w-xs' />
+  return <Textarea className='max-w-xs' placeholder='Type your message here.' />
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useCallback } from 'react'
 import { toast } from 'sonner'
 
 // [T] Uploaded file
@@ -35,14 +35,14 @@ export const useFileUpload = (args?: { isThrowError?: boolean }) => {
   const { isThrowError = false } = args ?? {}
 
   // Methods
-  const uploadFile = React.useCallback(
-    async (file: File): Promise<UploadedFile | null> => {
+  const uploadFile = useCallback(
+    (file: File): Promise<UploadedFile | null> => {
       try {
         console.log(file)
         // Mutate
 
         // Extract response and return value
-        return null
+        return Promise.resolve(null)
       } catch {
         if (isThrowError) {
           throw new Error('An error occurred when upload the file')
@@ -50,7 +50,7 @@ export const useFileUpload = (args?: { isThrowError?: boolean }) => {
         toast.error('Failure', {
           description: 'An error occurred when upload the file'
         })
-        return null
+        return Promise.resolve(null)
       }
     },
     [isThrowError]

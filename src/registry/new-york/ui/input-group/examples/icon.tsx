@@ -1,5 +1,5 @@
 import { CheckIcon, CreditCardIcon, InfoIcon, MailIcon, SearchIcon, StarIcon } from 'lucide-react'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
 
 // Component
 export const InputGroupIcon = () => {
@@ -13,7 +13,7 @@ export const InputGroupIcon = () => {
         </InputGroupAddon>
       </InputGroup>
       <InputGroup>
-        <InputGroupInput type='email' placeholder='Enter your email' />
+        <InputGroupInput placeholder='Enter your email' type='email' />
         <InputGroupAddon>
           <MailIcon />
         </InputGroupAddon>

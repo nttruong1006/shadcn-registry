@@ -1,10 +1,27 @@
-import * as Slider from '@radix-ui/react-slider'
+import { Range, Root, Thumb, Track } from '@radix-ui/react-slider'
 import Color, { type ColorInstance } from 'color'
 import { PipetteIcon } from 'lucide-react'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  type ComponentProps,
+  createContext,
+  type HTMLAttributes,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Input } from '@/registry/new-york/ui/input/components/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/registry/new-york/ui/select/components/select'
 import { cn } from '@/utils/ui'
 
 const formats = ['hex', 'rgb', 'hsl'] as const
@@ -24,17 +41,17 @@ interface ColorPickerContextValue {
   setFormat: (mode: Format) => void
 }
 
-const ColorPickerContext = React.createContext<ColorPickerContextValue | null>(null)
+const ColorPickerContext = createContext<ColorPickerContextValue | null>(null)
 
 export const useColorPicker = () => {
-  const context = React.useContext(ColorPickerContext)
+  const context = useContext(ColorPickerContext)
   if (!context) {
     throw new Error('useColorPicker must be used within a ColorPickerProvider')
   }
   return context
 }
 
-export type ColorPickerProps = React.HTMLAttributes<HTMLDivElement> & {
+export type ColorPickerProps = HTMLAttributes<HTMLDivElement> & {
   value?: Parameters<typeof Color>[0]
   defaultValue?: Parameters<typeof Color>[0]
   onValueChange?: (value: ColorInstance) => void
@@ -51,15 +68,15 @@ export const ColorPicker = ({
   const defaultColor = Color(defaultValue)
 
   // States
-  const [hue, setHue] = React.useState(selectedColor.hue() || defaultColor.hue() || 0)
-  const [saturation, setSaturation] = React.useState(selectedColor.saturationl() || defaultColor.saturationl() || 100)
-  const [lightness, setLightness] = React.useState(selectedColor.lightness() || defaultColor.lightness() || 50)
-  const [alpha, setAlpha] = React.useState(selectedColor.alpha() * 100 || defaultColor.alpha() * 100)
-  const [format, setFormat] = React.useState<Format>('hex')
+  const [hue, setHue] = useState(selectedColor.hue() || defaultColor.hue() || 0)
+  const [saturation, setSaturation] = useState(selectedColor.saturationl() || defaultColor.saturationl() || 100)
+  const [lightness, setLightness] = useState(selectedColor.lightness() || defaultColor.lightness() || 50)
+  const [alpha, setAlpha] = useState(selectedColor.alpha() * 100 || defaultColor.alpha() * 100)
+  const [format, setFormat] = useState<Format>('hex')
 
   // Effects
   // Update color when controlled value changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (value) {
       const color = Color.rgb(value).rgb().object()
       setHue(color.r)
@@ -70,7 +87,7 @@ export const ColorPicker = ({
   }, [value])
 
   // Notify parent of changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (onValueChange) {
       const color = Color.hsl(hue, saturation, lightness).alpha(alpha / 100)
       onValueChange(color)
@@ -99,21 +116,21 @@ export const ColorPicker = ({
 }
 
 // Color picker selection
-export type ColorPickerSelectionProps = React.HTMLAttributes<HTMLDivElement>
-export const ColorPickerSelection = React.memo(({ className, ...props }: ColorPickerSelectionProps) => {
+export type ColorPickerSelectionProps = HTMLAttributes<HTMLDivElement>
+export const ColorPickerSelection = memo(({ className, ...props }: ColorPickerSelectionProps) => {
   // Hooks
   const { hue, setSaturation, setLightness } = useColorPicker()
 
   // Refs
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // States
-  const [isDragging, setIsDragging] = React.useState(false)
-  const [positionX, setPositionX] = React.useState(0)
-  const [positionY, setPositionY] = React.useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [positionX, setPositionX] = useState(0)
+  const [positionY, setPositionY] = useState(0)
 
   // Methods
-  const movePointer = React.useCallback(
+  const movePointer = useCallback(
     (event: PointerEvent) => {
       if (!containerRef.current) {
         return
@@ -132,7 +149,7 @@ export const ColorPickerSelection = React.memo(({ className, ...props }: ColorPi
   )
 
   // Memos
-  const backgroundGradient = React.useMemo(() => {
+  const backgroundGradient = useMemo(() => {
     return `linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0)),
             linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0)),
             hsl(${hue}, 100%, 50%)`
@@ -140,7 +157,7 @@ export const ColorPickerSelection = React.memo(({ className, ...props }: ColorPi
 
   // Effects
   // Register events
-  React.useEffect(() => {
+  useEffect(() => {
     const upPointer = () => setIsDragging(false)
     if (isDragging) {
       window.addEventListener('pointermove', movePointer)
@@ -155,20 +172,20 @@ export const ColorPickerSelection = React.memo(({ className, ...props }: ColorPi
   // Template
   return (
     <div
-      ref={containerRef}
       className={cn('relative aspect-video cursor-crosshair rounded', className)}
-      style={{
-        background: backgroundGradient
-      }}
       onPointerDown={(e) => {
         e.preventDefault()
         setIsDragging(true)
         movePointer(e.nativeEvent)
       }}
+      ref={containerRef}
+      style={{
+        background: backgroundGradient
+      }}
       {...props}
     >
       <div
-        className='-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute h-4 w-4 rounded-full border-2 border-white'
+        className='pointer-events-none absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white'
         style={{
           left: `${positionX * 100}%`,
           top: `${positionY * 100}%`,
@@ -181,14 +198,14 @@ export const ColorPickerSelection = React.memo(({ className, ...props }: ColorPi
 ColorPickerSelection.displayName = 'ColorPickerSelection'
 
 // Color picker hue
-export type ColorPickerHueProps = React.ComponentProps<typeof Slider.Root>
+export type ColorPickerHueProps = ComponentProps<typeof Root>
 export const ColorPickerHue = ({ className, ...props }: ColorPickerHueProps) => {
   // Hooks
   const { hue, setHue } = useColorPicker()
 
   // Template
   return (
-    <Slider.Root
+    <Root
       className={cn('relative flex h-4 w-full touch-none', className)}
       max={360}
       onValueChange={([hue]) => setHue(hue)}
@@ -196,23 +213,23 @@ export const ColorPickerHue = ({ className, ...props }: ColorPickerHueProps) => 
       value={[hue]}
       {...props}
     >
-      <Slider.Track className='relative my-0.5 h-3 w-full grow rounded-full bg-[linear-gradient(90deg,#FF0000,#FFFF00,#00FF00,#00FFFF,#0000FF,#FF00FF,#FF0000)]'>
-        <Slider.Range className='absolute h-full' />
-      </Slider.Track>
-      <Slider.Thumb className='block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50' />
-    </Slider.Root>
+      <Track className='relative my-0.5 h-3 w-full grow rounded-full bg-[linear-gradient(90deg,#FF0000,#FFFF00,#00FF00,#00FFFF,#0000FF,#FF00FF,#FF0000)]'>
+        <Range className='absolute h-full' />
+      </Track>
+      <Thumb className='block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50' />
+    </Root>
   )
 }
 
 // Color picker alpha
-export type ColorPickerAlphaProps = React.ComponentProps<typeof Slider.Root>
+export type ColorPickerAlphaProps = ComponentProps<typeof Root>
 export const ColorPickerAlpha = ({ className, ...props }: ColorPickerAlphaProps) => {
   // Hooks
   const { alpha, setAlpha } = useColorPicker()
 
   // Template
   return (
-    <Slider.Root
+    <Root
       className={cn('relative flex h-4 w-full touch-none', className)}
       max={100}
       onValueChange={([alpha]) => setAlpha(alpha)}
@@ -220,7 +237,7 @@ export const ColorPickerAlpha = ({ className, ...props }: ColorPickerAlphaProps)
       value={[alpha]}
       {...props}
     >
-      <Slider.Track
+      <Track
         className='relative my-0.5 h-3 w-full grow rounded-full'
         style={{
           background:
@@ -228,15 +245,15 @@ export const ColorPickerAlpha = ({ className, ...props }: ColorPickerAlphaProps)
         }}
       >
         <div className='absolute inset-0 rounded-full bg-linear-to-r from-transparent to-primary/50' />
-        <Slider.Range className='absolute h-full rounded-full bg-transparent' />
-      </Slider.Track>
-      <Slider.Thumb className='block size-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50' />
-    </Slider.Root>
+        <Range className='absolute h-full rounded-full bg-transparent' />
+      </Track>
+      <Thumb className='block size-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50' />
+    </Root>
   )
 }
 
 // Color picker eye dropped
-export type ColorPickerEyeDropperProps = React.ComponentProps<typeof Button>
+export type ColorPickerEyeDropperProps = ComponentProps<typeof Button>
 export const ColorPickerEyeDropper = ({ className, ...props }: ColorPickerEyeDropperProps) => {
   // Hooks
   const { setHue, setSaturation, setLightness, setAlpha } = useColorPicker()
@@ -267,14 +284,14 @@ export const ColorPickerEyeDropper = ({ className, ...props }: ColorPickerEyeDro
 }
 
 // Color picker format
-export type ColorPickerFormatProps = React.ComponentProps<typeof SelectTrigger>
+export type ColorPickerFormatProps = ComponentProps<typeof SelectTrigger>
 export const ColorPickerFormat = ({ className, ...props }: ColorPickerFormatProps) => {
   // Hooks
   const { format, setFormat } = useColorPicker()
 
   // Template
   return (
-    <Select value={format} onValueChange={setFormat}>
+    <Select onValueChange={setFormat} value={format}>
       <SelectTrigger {...props}>
         <SelectValue placeholder='Select format' />
       </SelectTrigger>
@@ -292,9 +309,10 @@ export const ColorPickerFormat = ({ className, ...props }: ColorPickerFormatProp
 // Color picker output
 const getColorOutput = ({ color, format }: { color: ColorInstance; format: Format }) => {
   switch (format) {
-    case 'hex':
+    case 'hex': {
       return color.hex()
-    case 'rgb':
+    }
+    case 'rgb': {
       return `rgb(${color
         .rgb()
         .array()
@@ -305,7 +323,8 @@ const getColorOutput = ({ color, format }: { color: ColorInstance; format: Forma
           return `${Math.round(value)}`
         })
         .join(', ')})`
-    case 'hsl':
+    }
+    case 'hsl': {
       return `hsl(${color
         .hsl()
         .array()
@@ -316,6 +335,10 @@ const getColorOutput = ({ color, format }: { color: ColorInstance; format: Forma
           return `${Math.round(value)}%`
         })
         .join(', ')})`
+    }
+    default: {
+      return color.hex()
+    }
   }
 }
 

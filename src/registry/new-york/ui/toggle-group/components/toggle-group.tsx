@@ -1,10 +1,10 @@
-import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
+import { Item, Root } from '@radix-ui/react-toggle-group'
 import type { VariantProps } from 'class-variance-authority'
-import * as React from 'react'
-import { toggleVariants } from '@/components/ui/toggle'
+import { type ComponentProps, type CSSProperties, createContext, useContext } from 'react'
+import { toggleVariants } from '@/registry/new-york/ui/toggle/components/toggle'
 import { cn } from '@/utils/ui'
 
-const ToggleGroupContext = React.createContext<
+const ToggleGroupContext = createContext<
   VariantProps<typeof toggleVariants> & {
     spacing?: number
   }
@@ -22,26 +22,26 @@ export const ToggleGroup = ({
   spacing = 0,
   children,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
+}: ComponentProps<typeof Root> &
   VariantProps<typeof toggleVariants> & {
     spacing?: number
   }) => {
   // Template
   return (
-    <ToggleGroupPrimitive.Root
-      data-slot='toggle-group'
-      data-variant={variant}
-      data-size={size}
-      data-spacing={spacing}
-      style={{ '--gap': spacing } as React.CSSProperties}
+    <Root
       className={cn(
         'group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs',
         className
       )}
+      data-size={size}
+      data-slot='toggle-group'
+      data-spacing={spacing}
+      data-variant={variant}
+      style={{ '--gap': spacing } as CSSProperties}
       {...props}
     >
       <ToggleGroupContext.Provider value={{ variant, size, spacing }}>{children}</ToggleGroupContext.Provider>
-    </ToggleGroupPrimitive.Root>
+    </Root>
   )
 }
 
@@ -51,17 +51,13 @@ export const ToggleGroupItem = ({
   variant,
   size,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) => {
+}: ComponentProps<typeof Item> & VariantProps<typeof toggleVariants>) => {
   // Hooks
-  const context = React.useContext(ToggleGroupContext)
+  const context = useContext(ToggleGroupContext)
 
   // Template
   return (
-    <ToggleGroupPrimitive.Item
-      data-slot='toggle-group-item'
-      data-variant={context.variant || variant}
-      data-size={context.size || size}
-      data-spacing={context.spacing}
+    <Item
       className={cn(
         toggleVariants({
           variant: context.variant || variant,
@@ -71,9 +67,13 @@ export const ToggleGroupItem = ({
         'data-[spacing=0]:data-[variant=outline]:border-l-0 data-[spacing=0]:rounded-none data-[spacing=0]:shadow-none data-[spacing=0]:last:rounded-r-md data-[spacing=0]:data-[variant=outline]:first:border-l data-[spacing=0]:first:rounded-l-md',
         className
       )}
+      data-size={context.size || size}
+      data-slot='toggle-group-item'
+      data-spacing={context.spacing}
+      data-variant={context.variant || variant}
       {...props}
     >
       {children}
-    </ToggleGroupPrimitive.Item>
+    </Item>
   )
 }

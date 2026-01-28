@@ -1,7 +1,12 @@
 import { InfoIcon } from 'lucide-react'
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
-import { Label } from '@/components/ui/label'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput
+} from '@/registry/new-york/ui/input-group/components/input-group'
+import { Label } from '@/registry/new-york/ui/label/components/label'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
 
 // Component
 export const InputGroupLabel = () => {
@@ -17,12 +22,12 @@ export const InputGroupLabel = () => {
       <InputGroup>
         <InputGroupInput id='email-2' placeholder='shadcn@vercel.com' />
         <InputGroupAddon align='block-start'>
-          <Label htmlFor='email-2' className='text-foreground'>
+          <Label className='text-foreground' htmlFor='email-2'>
             Email
           </Label>
           <Tooltip>
             <TooltipTrigger asChild>
-              <InputGroupButton variant='ghost' aria-label='Help' className='ml-auto rounded-full' size='icon-xs'>
+              <InputGroupButton aria-label='Help' className='ml-auto rounded-full' size='icon-xs' variant='ghost'>
                 <InfoIcon />
               </InputGroupButton>
             </TooltipTrigger>

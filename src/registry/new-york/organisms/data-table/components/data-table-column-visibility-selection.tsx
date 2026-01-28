@@ -1,9 +1,16 @@
 import type { RowData, Table } from '@tanstack/react-table'
-import { ChevronDown } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ChevronDownIcon } from 'lucide-react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from '@/registry/new-york/ui/command/components/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
 import { cn } from '@/utils/ui'
 
 // Component
@@ -12,9 +19,9 @@ export const DataTableColumnVisibilitySelection = <TData extends RowData>({ tabl
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant='outline' className={cn('font-normal [&_svg]:pointer-events-auto')}>
+        <Button className={cn('font-normal [&_svg]:pointer-events-auto')} variant='outline'>
           <span>Columns</span>
-          <ChevronDown className='text-muted-foreground' />
+          <ChevronDownIcon className='text-muted-foreground' />
         </Button>
       </PopoverTrigger>
 
@@ -44,7 +51,7 @@ export const DataTableColumnVisibilitySelection = <TData extends RowData>({ tabl
                 const label = column.columnDef.header
 
                 return (
-                  <CommandItem key={column.id} value={label} onSelect={() => column.toggleVisibility(!isSelected)}>
+                  <CommandItem key={column.id} onSelect={() => column.toggleVisibility(!isSelected)} value={label}>
                     <Checkbox checked={isSelected} />
                     <span>{label}</span>
                   </CommandItem>

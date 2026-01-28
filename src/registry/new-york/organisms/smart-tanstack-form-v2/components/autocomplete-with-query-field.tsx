@@ -1,6 +1,8 @@
-import { Autocomplete } from '@/components/molecules/autocomplete'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { type AutocompleteFieldOutputValue, useFieldContext, useOptionsQuery } from './lib'
+import { useFieldContext } from './lib/base'
+import { useOptionsQuery } from './lib/query'
+import type { AutocompleteFieldOutputValue } from './lib/schema'
 
 // Component
 const AutocompleteWithQueryField = ({
@@ -17,11 +19,8 @@ const AutocompleteWithQueryField = ({
 
   // Template
   return (
-    <FieldContainer label={label} name={field.name} isInvalid={isInvalid} errors={field.state.meta.errors} {...props}>
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
       <Autocomplete
-        value={field.state.value}
-        options={options}
-        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
         inputProps={{
           id: field.name,
           disabled: isDisabled,
@@ -29,6 +28,9 @@ const AutocompleteWithQueryField = ({
         }}
         isLoading={optionsQuery.isFetching}
         onValueChange={field.handleChange}
+        options={options}
+        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
       />
     </FieldContainer>
   )

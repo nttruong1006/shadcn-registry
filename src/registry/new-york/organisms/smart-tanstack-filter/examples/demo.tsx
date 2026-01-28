@@ -1,11 +1,13 @@
-import React from 'react'
+import { useCallback } from 'react'
 import {
   type Filter,
-  SmartFilter,
-  type SmartFilterProps,
   SmartFilterType,
   transformFormValueToApiFiltersParam
-} from '@/components/organisms/smart-tanstack-filter'
+} from '@/registry/new-york/organisms/smart-tanstack-filter/components/lib/base'
+import {
+  SmartFilter,
+  type SmartFilterProps
+} from '@/registry/new-york/organisms/smart-tanstack-filter/components/smart-filter'
 
 // Component
 const filters: Filter[] = [
@@ -49,7 +51,7 @@ const filters: Filter[] = [
 
 export const SmartFilterDemo = () => {
   // Methods
-  const setFilters: SmartFilterProps['setFilters'] = React.useCallback((formValue) => {
+  const setFilters: SmartFilterProps['setFilters'] = useCallback((formValue) => {
     const filtersParam = transformFormValueToApiFiltersParam(formValue, filters)
     console.log(filtersParam)
   }, [])

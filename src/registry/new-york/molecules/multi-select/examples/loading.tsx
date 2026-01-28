@@ -1,5 +1,5 @@
 import React from 'react'
-import { MultiSelect, type MultiSelectProps } from '@/components/molecules/multi-select'
+import { MultiSelect, type MultiSelectProps } from '@/registry/new-york/molecules/multi-select/components/multi-select'
 import type { Option } from '@/types/base'
 
 const options: Option[] = [
@@ -34,13 +34,13 @@ export const ComboboxLoading = () => {
   return (
     <div className='w-full max-w-xs'>
       <MultiSelect
-        value={value}
-        options={options}
-        placeholder='Select framework'
         buttonTriggerProps={{
           isLoading: true
         }}
         onValueChange={setValue}
+        options={options}
+        placeholder='Select framework'
+        value={value}
       />
     </div>
   )

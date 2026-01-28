@@ -1,6 +1,6 @@
 import type { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu'
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -8,16 +8,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
 
 type Checked = DropdownMenuCheckboxItemProps['checked']
 
 // Component
 export const DropdownMenuCheckboxes = () => {
   // States
-  const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true)
-  const [showActivityBar, setShowActivityBar] = React.useState<Checked>(false)
-  const [showPanel, setShowPanel] = React.useState<Checked>(false)
+  const [showStatusBar, setShowStatusBar] = useState<Checked>(true)
+  const [showActivityBar, setShowActivityBar] = useState<Checked>(false)
+  const [showPanel, setShowPanel] = useState<Checked>(false)
 
   // Template
   return (
@@ -31,7 +31,7 @@ export const DropdownMenuCheckboxes = () => {
         <DropdownMenuCheckboxItem checked={showStatusBar} onCheckedChange={setShowStatusBar}>
           Status Bar
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem checked={showActivityBar} onCheckedChange={setShowActivityBar} disabled>
+        <DropdownMenuCheckboxItem checked={showActivityBar} disabled onCheckedChange={setShowActivityBar}>
           Activity Bar
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem checked={showPanel} onCheckedChange={setShowPanel}>

@@ -6,8 +6,8 @@ import {
   useEditor
 } from '@tiptap/react'
 import throttle from 'lodash.throttle'
-import React from 'react'
-import { Spinner } from '@/components/ui/spinner'
+import { type Dispatch, type RefObject, type SetStateAction, useId, useMemo, useRef, useState } from 'react'
+import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
 import BlockquoteButton from './blockquote-button'
 import BoldButton from './bold-button'
 import FileButton from './file-button'
@@ -36,19 +36,19 @@ export type EditorProps = UseEditorOptions & {
   onValueChange: (value: Content) => void
 }
 
-export type CallbackRef = React.RefObject<((editor: ReturnType<typeof useEditor> | null) => void) | null>
+export type CallbackRef = RefObject<((editor: ReturnType<typeof useEditor> | null) => void) | null>
 
-export type SetExtensions = React.Dispatch<React.SetStateAction<Extensions>>
+export type SetExtensions = Dispatch<SetStateAction<Extensions>>
 
 export const Editor = ({ value, onValueChange, ...props }: EditorProps) => {
   // Hooks
-  const id = React.useId()
+  const id = useId()
 
   // Refs
-  const callbackRef = React.useRef<CallbackRef['current']>(null)
+  const callbackRef = useRef<CallbackRef['current']>(null)
 
   // States
-  const [extensions, setExtensions] = React.useState<Extensions>(defaultExtensions)
+  const [extensions, setExtensions] = useState<Extensions>(defaultExtensions)
 
   // Hooks
   const editor = useEditor(
@@ -62,7 +62,7 @@ export const Editor = ({ value, onValueChange, ...props }: EditorProps) => {
         }
       },
       immediatelyRender: false,
-      onUpdate: React.useMemo(() => {
+      onUpdate: useMemo(() => {
         return throttle(
           ({ editor }) => {
             onValueChange(getEditorValue(editor, 'html'))
@@ -96,8 +96,8 @@ export const Editor = ({ value, onValueChange, ...props }: EditorProps) => {
   return (
     <TiptapEditorContext value={{ editor }}>
       <div
-        id={`editor-${id}`}
         className='w-full transition-all [&_.tiptap]:max-h-[500px] [&_.tiptap]:min-h-64 [&_.tiptap]:overflow-auto [&_.tiptap]:border-none [&_.tiptap]:p-6 [&_.tiptap]:outline-none'
+        id={`editor-${id}`}
       >
         <div className='text rounded-md border border-input text-foreground ring-offset-background transition-[color,box-shadow] placeholder:text-muted-foreground has-[.ProseMirror-focused]:border-ring has-[.ProseMirror-focused]:ring-[3px] has-[.ProseMirror-focused]:ring-ring/50 group-data-[invalid=true]/field:border-destructive group-data-[invalid=true]/field:ring-destructive/20 group-data-[invalid=true]/field:has-[.ProseMirror-focused]:border-destructive group-data-[invalid=true]/field:dark:ring-destructive/40'>
           <div className='flex flex-wrap items-center gap-1 border-input border-b p-4'>
@@ -120,7 +120,7 @@ export const Editor = ({ value, onValueChange, ...props }: EditorProps) => {
             <LinkButton id={id} />
             <ListButton />
             <TableButton callbackRef={callbackRef} setExtensions={setExtensions} />
-            <YoutubeButton id={id} callbackRef={callbackRef} setExtensions={setExtensions} />
+            <YoutubeButton callbackRef={callbackRef} id={id} setExtensions={setExtensions} />
             <ImageButton id={id} />
             <FileButton id={id} />
             <ToolbarSeparator />

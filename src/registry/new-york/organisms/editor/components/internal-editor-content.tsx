@@ -1,12 +1,12 @@
 import { EditorContent, useCurrentEditor } from '@tiptap/react'
-import { Plus, TableCellsMerge, TableCellsSplit, Trash } from 'lucide-react'
-import React from 'react'
+import { PlusIcon, TableCellsMergeIcon, TableCellsSplitIcon, TrashIcon } from 'lucide-react'
+import { type MouseEvent, memo, useCallback, useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator
-} from '@/components/ui/dropdown-menu'
+} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
 
 interface TableDropdownMenu {
   open: boolean
@@ -15,15 +15,15 @@ interface TableDropdownMenu {
 }
 
 // Component
-const InternalEditorContent = React.memo(() => {
+const InternalEditorContent = memo(() => {
   // Hooks
   const { editor } = useCurrentEditor()
 
   // States
-  const [tableDropdownMenu, setTableDropdownMenu] = React.useState<TableDropdownMenu>({ open: false, x: 0, y: 0 })
+  const [tableDropdownMenu, setTableDropdownMenu] = useState<TableDropdownMenu>({ open: false, x: 0, y: 0 })
 
   // Methods
-  const clickContextMenu = React.useCallback((e: React.MouseEvent) => {
+  const clickContextMenu = useCallback((e: MouseEvent) => {
     const cell = (e.target as HTMLElement).closest('td, th')
     if (cell) {
       e.preventDefault()
@@ -36,16 +36,16 @@ const InternalEditorContent = React.memo(() => {
   }, [])
 
   return (
-    <React.Fragment>
-      <EditorContent editor={editor} role='presentation' className='editor-content' onContextMenu={clickContextMenu} />
+    <>
+      <EditorContent className='editor-content' editor={editor} onContextMenu={clickContextMenu} role='presentation' />
 
       <DropdownMenu
-        open={tableDropdownMenu.open}
         onOpenChange={(open) => setTableDropdownMenu((prev) => ({ ...prev, open }))}
+        open={tableDropdownMenu.open}
       >
         <DropdownMenuContent
-          side='right'
           align='start'
+          side='right'
           style={{
             position: 'fixed',
             left: tableDropdownMenu.x,
@@ -53,55 +53,55 @@ const InternalEditorContent = React.memo(() => {
           }}
         >
           <DropdownMenuItem onClick={() => editor?.chain().focus().addColumnBefore().run()}>
-            <Plus />
+            <PlusIcon />
             <span className='whitespace-nowrap'>Add column before</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().addColumnAfter().run()}>
-            <Plus />
+            <PlusIcon />
             <span className='whitespace-nowrap'>Add column before</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().addRowBefore().run()}>
-            <Plus />
+            <PlusIcon />
             <span className='whitespace-nowrap'>Add row above</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().addRowAfter().run()}>
-            <Plus />
+            <PlusIcon />
             <span className='whitespace-nowrap'>Add row below</span>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().deleteTable().run()}>
-            <Trash />
+            <TrashIcon />
             <span className='whitespace-nowrap'>Delete table</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().deleteColumn().run()}>
-            <Trash />
+            <TrashIcon />
             <span className='whitespace-nowrap'>Delete column</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().deleteRow().run()}>
-            <Trash />
+            <TrashIcon />
             <span className='whitespace-nowrap'>Delete row</span>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => editor?.chain().focus().mergeCells().run()}>
-            <TableCellsMerge />
+            <TableCellsMergeIcon />
             <span className='whitespace-nowrap'>Merge cell</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => editor?.chain().focus().splitCell().run()}>
-            <TableCellsSplit />
+            <TableCellsSplitIcon />
             <span className='whitespace-nowrap'>Split cell</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </React.Fragment>
+    </>
   )
 })
 

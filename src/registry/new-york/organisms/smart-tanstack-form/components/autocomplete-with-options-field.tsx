@@ -1,6 +1,6 @@
-import { Autocomplete } from '@/components/molecules/autocomplete'
+import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
 import FieldContainer, { type FieldProps } from './field-container'
-import { useFieldContext } from './lib'
+import { useFieldContext } from './lib/base'
 
 // Component
 const AutocompleteWithOptionsField = ({ fieldData, disabledFields }: FieldProps) => {
@@ -12,15 +12,15 @@ const AutocompleteWithOptionsField = ({ fieldData, disabledFields }: FieldProps)
   return (
     <FieldContainer fieldData={fieldData}>
       <Autocomplete
-        value={field.state.value}
-        options={fieldData.config?.options ?? []}
-        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
         inputProps={{
           id: fieldData.code,
           disabled: disabledFields?.[fieldData.code],
           'aria-invalid': isInvalid
         }}
         onValueChange={field.handleChange}
+        options={fieldData.config?.options ?? []}
+        placeholder={`Enter ${fieldData.label.toLowerCase()}`}
+        value={field.state.value}
       />
     </FieldContainer>
   )

@@ -1,5 +1,5 @@
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 
 // Component
 export const SonnerType = () => {
@@ -8,45 +8,44 @@ export const SonnerType = () => {
     <div className=''>
       <div className='flex flex-wrap gap-2'>
         {/* Default */}
-        <Button variant='outline' onClick={() => toast('Event has been created')}>
+        <Button onClick={() => toast('Event has been created')} variant='outline'>
           Default
         </Button>
 
         {/* Description */}
         <Button
-          variant='outline'
           onClick={() =>
             toast.message('Event has been created', {
               description: 'Monday, January 3rd at 6:00pm'
             })
           }
+          variant='outline'
         >
           Description
         </Button>
 
         {/* Success */}
-        <Button variant='outline' onClick={() => toast.success('Event has been created')}>
+        <Button onClick={() => toast.success('Event has been created')} variant='outline'>
           Success
         </Button>
 
         {/* Info */}
-        <Button variant='outline' onClick={() => toast.info('Be at the area 10 minutes before the event time')}>
+        <Button onClick={() => toast.info('Be at the area 10 minutes before the event time')} variant='outline'>
           Info
         </Button>
 
         {/* Warning */}
-        <Button variant='outline' onClick={() => toast.warning('Event start time cannot be earlier than 8am')}>
+        <Button onClick={() => toast.warning('Event start time cannot be earlier than 8am')} variant='outline'>
           Warning
         </Button>
 
         {/* Error */}
-        <Button variant='outline' onClick={() => toast.error('Event has not been created')}>
+        <Button onClick={() => toast.error('Event has not been created')} variant='outline'>
           Error
         </Button>
 
         {/* Promise */}
         <Button
-          variant='outline'
           onClick={() => {
             toast.promise<{ name: string }>(
               () => new Promise((resolve) => setTimeout(() => resolve({ name: 'Event' }), 2000)),
@@ -57,6 +56,7 @@ export const SonnerType = () => {
               }
             )
           }}
+          variant='outline'
         >
           Promise
         </Button>

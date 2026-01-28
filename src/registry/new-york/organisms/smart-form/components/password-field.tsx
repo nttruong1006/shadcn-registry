@@ -1,18 +1,18 @@
-import { PasswordInput } from '@/components/molecules/password-input'
+import { PasswordInput } from '@/registry/new-york/molecules/password-input/components/password-input'
 import FieldContainer, { type FieldProps } from './field-container'
 
 // Component
 const PasswordField = ({ fieldData, disabledFields }: FieldProps) => {
   // Template
   return (
-    <FieldContainer fieldData={fieldData} disabledFields={disabledFields}>
+    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
       {({ field, fieldState }) => (
         <PasswordInput
           {...field}
+          aria-invalid={fieldState.invalid}
+          disabled={disabledFields?.[fieldData.code]}
           id={fieldData.code}
           placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-          disabled={disabledFields?.[fieldData.code]}
-          aria-invalid={fieldState.invalid}
         />
       )}
     </FieldContainer>

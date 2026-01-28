@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/a11y/useValidAnchor: ignore */
 import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from 'lucide-react'
-import type * as React from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
+import { useIsMobile } from '@/hooks/use-device'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,8 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
-} from '@/components/ui/navigation-menu'
-import { useIsMobile } from '@/hooks/use-device'
+} from '@/registry/new-york/ui/navigation-menu/components/navigation-menu'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -90,7 +90,7 @@ export function NavigationMenuDemo() {
           <NavigationMenuContent>
             <ul className='grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]'>
               {components.map((component) => (
-                <ListItem key={component.title} title={component.title} href={component.href}>
+                <ListItem href={component.href} key={component.title} title={component.title}>
                   {component.description}
                 </ListItem>
               ))}
@@ -153,19 +153,19 @@ export function NavigationMenuDemo() {
             <ul className='grid w-[200px] gap-4'>
               <li>
                 <NavigationMenuLink asChild>
-                  <a href='#' className='flex-row items-center gap-2'>
+                  <a className='flex-row items-center gap-2' href='#'>
                     <CircleHelpIcon />
                     Backlog
                   </a>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <a href='#' className='flex-row items-center gap-2'>
+                  <a className='flex-row items-center gap-2' href='#'>
                     <CircleIcon />
                     To Do
                   </a>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <a href='#' className='flex-row items-center gap-2'>
+                  <a className='flex-row items-center gap-2' href='#'>
                     <CircleCheckIcon />
                     Done
                   </a>
@@ -179,7 +179,7 @@ export function NavigationMenuDemo() {
   )
 }
 
-function ListItem({ title, children, href, ...props }: React.ComponentPropsWithoutRef<'li'> & { href: string }) {
+function ListItem({ title, children, href, ...props }: ComponentPropsWithoutRef<'li'> & { href: string }) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>

@@ -1,5 +1,6 @@
-import React from 'react'
-import { type AdvancedFilterFormValueInput, type Filter, SmartFilterType } from './lib'
+import { type JSX, type LazyExoticComponent, lazy, useMemo } from 'react'
+import { type Filter, SmartFilterType } from './lib/base'
+import type { AdvancedFilterFormValueInput } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
 export interface AdvancedFilterValueFieldProps {
@@ -13,23 +14,21 @@ export type AdvancedFilterValueFieldComponentProps = AdvancedFilterValueFieldPro
 
 const fieldComponents: Record<
   SmartFilterType,
-  React.LazyExoticComponent<(props: AdvancedFilterValueFieldComponentProps) => React.JSX.Element | null>
+  LazyExoticComponent<(props: AdvancedFilterValueFieldComponentProps) => JSX.Element | null>
 > = {
-  [SmartFilterType.Input]: React.lazy(() => import('./advanced-filter-value-input-field')),
-  [SmartFilterType.Number]: React.lazy(() => import('./advanced-filter-value-number-field')),
-  [SmartFilterType.Date]: React.lazy(() => import('./advanced-filter-value-date-field')),
-  [SmartFilterType.SelectWithOptions]: React.lazy(() => import('./advanced-filter-value-select-with-options-field')),
-  [SmartFilterType.SelectWithQuery]: React.lazy(() => import('./advanced-filter-value-select-with-query-field')),
-  [SmartFilterType.SelectWithInfiniteQuery]: React.lazy(
+  [SmartFilterType.Input]: lazy(() => import('./advanced-filter-value-input-field')),
+  [SmartFilterType.Number]: lazy(() => import('./advanced-filter-value-number-field')),
+  [SmartFilterType.Date]: lazy(() => import('./advanced-filter-value-date-field')),
+  [SmartFilterType.SelectWithOptions]: lazy(() => import('./advanced-filter-value-select-with-options-field')),
+  [SmartFilterType.SelectWithQuery]: lazy(() => import('./advanced-filter-value-select-with-query-field')),
+  [SmartFilterType.SelectWithInfiniteQuery]: lazy(
     () => import('./advanced-filter-value-select-with-infinite-query-field')
   ),
-  [SmartFilterType.MultiSelectWithOptions]: React.lazy(
+  [SmartFilterType.MultiSelectWithOptions]: lazy(
     () => import('./advanced-filter-value-multi-select-with-options-field')
   ),
-  [SmartFilterType.MultiSelectWithQuery]: React.lazy(
-    () => import('./advanced-filter-value-multi-select-with-query-field')
-  ),
-  [SmartFilterType.MultiSelectWithInfiniteQuery]: React.lazy(
+  [SmartFilterType.MultiSelectWithQuery]: lazy(() => import('./advanced-filter-value-multi-select-with-query-field')),
+  [SmartFilterType.MultiSelectWithInfiniteQuery]: lazy(
     () => import('./advanced-filter-value-multi-select-with-infinite-query-field')
   )
 }
@@ -40,7 +39,7 @@ const AdvancedFilterValueField = ({ formFilterName, ...props }: AdvancedFilterVa
   const { filters } = useSmartFilterContext()
 
   // Memos
-  const selectedFilter = React.useMemo(() => {
+  const selectedFilter = useMemo(() => {
     return filters.find((filter) => filter.name === formFilterName)
   }, [filters, formFilterName])
 
@@ -50,7 +49,7 @@ const AdvancedFilterValueField = ({ formFilterName, ...props }: AdvancedFilterVa
   }
 
   const FieldComponent = fieldComponents[selectedFilter.type]
-  return <FieldComponent selectedFilter={selectedFilter} formFilterName={formFilterName} {...props} />
+  return <FieldComponent formFilterName={formFilterName} selectedFilter={selectedFilter} {...props} />
 }
 
 export default AdvancedFilterValueField

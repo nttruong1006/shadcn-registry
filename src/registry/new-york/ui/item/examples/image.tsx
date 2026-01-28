@@ -1,4 +1,11 @@
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item'
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle
+} from '@/registry/new-york/ui/item/components/item'
 
 const MUSICS = [
   {
@@ -28,16 +35,16 @@ export const ItemImage = () => {
     <div className='flex w-full max-w-md flex-col gap-6'>
       <ItemGroup className='gap-4'>
         {MUSICS.map((song) => (
-          <Item key={song.title} variant='outline' asChild role='listitem'>
+          <Item asChild key={song.title} role='listitem' variant='outline'>
             {/** biome-ignore lint/a11y/useValidAnchor: ignore */}
             <a href='#'>
               <ItemMedia variant='image'>
                 <img
-                  src={`https://avatar.vercel.sh/${song.title}`}
                   alt={song.title}
-                  width={32}
-                  height={32}
                   className='object-cover grayscale'
+                  height={32}
+                  src={`https://avatar.vercel.sh/${song.title}`}
+                  width={32}
                 />
               </ItemMedia>
               <ItemContent>

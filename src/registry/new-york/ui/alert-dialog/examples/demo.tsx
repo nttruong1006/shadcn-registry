@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
+} from '@/registry/new-york/ui/alert-dialog/components/alert-dialog'
+import { Button } from '@/registry/new-york/ui/button/components/button'
 
 // Component
 export const AlertDialogDemo = () => {
