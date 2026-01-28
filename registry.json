@@ -2335,6 +2335,11 @@
           "target": "src/components/organisms/smart-form/file-field.tsx"
         },
         {
+          "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/form-container.tsx",
+          "type": "registry:ui",
+          "target": "src/components/organisms/smart-form/form-container.tsx"
+        },
+        {
           "path": "src/registry/new-york/organisms/smart-tanstack-form-v2/components/input-field.tsx",
           "type": "registry:ui",
           "target": "src/components/organisms/smart-form/input-field.tsx"
