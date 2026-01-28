@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox.tsx'
-import { operationsPerType, type SmartFilterOperation, SmartFilterType } from './lib/base'
+import { operationsPerType, type SmartFilterOperation } from './lib/base'
 import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
@@ -13,13 +13,13 @@ const operationLabels: Record<string, Record<string, string | undefined> | undef
     hasAnyOf: 'Has any of',
     hasAllOf: 'Has all of'
   },
-  [SmartFilterType.Number]: {
+  number: {
     isLessThan: 'Is less than',
     isLessThanOrEqualTo: 'Is less than or equal to',
     isGreaterThan: 'Is greater than',
     isGreaterThanOrEqualTo: 'Is greater than or equal to'
   },
-  [SmartFilterType.Date]: {
+  date: {
     isLessThan: 'Is before',
     isLessThanOrEqualTo: 'Is before or equal to',
     isGreaterThan: 'Is after',

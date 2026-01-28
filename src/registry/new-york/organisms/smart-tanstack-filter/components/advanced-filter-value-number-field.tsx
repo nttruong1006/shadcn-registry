@@ -2,7 +2,6 @@ import { MinusIcon } from 'lucide-react'
 import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
 import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
 
 // Component
@@ -17,7 +16,7 @@ const AdvancedFilterValueNumberField = ({
 
   // Template
   // Is between
-  if (formFilterOperation === SmartFilterOperation.IsBetween) {
+  if (formFilterOperation === 'isBetween') {
     return (
       <div className='flex items-center gap-4'>
         <advancedFilterForm.AppField name={`filters[${index}].value.additional.from`}>

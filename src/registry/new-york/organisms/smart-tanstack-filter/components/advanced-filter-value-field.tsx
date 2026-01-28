@@ -1,5 +1,5 @@
 import { type JSX, type LazyExoticComponent, lazy, useMemo } from 'react'
-import { type Filter, SmartFilterType } from './lib/base'
+import type { Filter, SmartFilterType } from './lib/base'
 import type { AdvancedFilterFormValueInput } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
@@ -16,21 +16,15 @@ const fieldComponents: Record<
   SmartFilterType,
   LazyExoticComponent<(props: AdvancedFilterValueFieldComponentProps) => JSX.Element | null>
 > = {
-  [SmartFilterType.Input]: lazy(() => import('./advanced-filter-value-input-field')),
-  [SmartFilterType.Number]: lazy(() => import('./advanced-filter-value-number-field')),
-  [SmartFilterType.Date]: lazy(() => import('./advanced-filter-value-date-field')),
-  [SmartFilterType.SelectWithOptions]: lazy(() => import('./advanced-filter-value-select-with-options-field')),
-  [SmartFilterType.SelectWithQuery]: lazy(() => import('./advanced-filter-value-select-with-query-field')),
-  [SmartFilterType.SelectWithInfiniteQuery]: lazy(
-    () => import('./advanced-filter-value-select-with-infinite-query-field')
-  ),
-  [SmartFilterType.MultiSelectWithOptions]: lazy(
-    () => import('./advanced-filter-value-multi-select-with-options-field')
-  ),
-  [SmartFilterType.MultiSelectWithQuery]: lazy(() => import('./advanced-filter-value-multi-select-with-query-field')),
-  [SmartFilterType.MultiSelectWithInfiniteQuery]: lazy(
-    () => import('./advanced-filter-value-multi-select-with-infinite-query-field')
-  )
+  input: lazy(() => import('./advanced-filter-value-input-field')),
+  number: lazy(() => import('./advanced-filter-value-number-field')),
+  date: lazy(() => import('./advanced-filter-value-date-field')),
+  selectWithOptions: lazy(() => import('./advanced-filter-value-select-with-options-field')),
+  selectWithQuery: lazy(() => import('./advanced-filter-value-select-with-query-field')),
+  selectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-select-with-infinite-query-field')),
+  multiSelectWithOptions: lazy(() => import('./advanced-filter-value-multi-select-with-options-field')),
+  multiSelectWithQuery: lazy(() => import('./advanced-filter-value-multi-select-with-query-field')),
+  multiSelectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-multi-select-with-infinite-query-field'))
 }
 
 // Component

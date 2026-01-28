@@ -3,7 +3,6 @@ import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
 import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
 import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
@@ -25,7 +24,7 @@ const AdvancedFilterValueSelectWithInfiniteQueryField = ({
   }
 
   // Has any of
-  if (formFilterOperation === SmartFilterOperation.HasAnyOf) {
+  if (formFilterOperation === 'hasAnyOf') {
     return (
       <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
         {(field) => {

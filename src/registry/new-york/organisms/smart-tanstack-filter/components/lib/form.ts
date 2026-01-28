@@ -6,7 +6,7 @@ import {
   type FormValidateOrFn
 } from '@tanstack/react-form'
 import z from 'zod'
-import { SmartFilterOperation, SmartFilterType } from './base'
+import { type SmartFilterOperation, smartFilterOperations, smartFilterTypes } from './base'
 
 // Create form hook
 const { fieldContext, formContext, useFieldContext, useFormContext } = createFormHookContexts()
@@ -33,8 +33,8 @@ export const advancedFilterFormSchema = z.object({
     z
       .object({
         name: z.string().trim(),
-        operation: z.enum(SmartFilterOperation),
-        type: z.enum(SmartFilterType),
+        operation: z.literal(smartFilterOperations),
+        type: z.literal(smartFilterTypes),
         value: z.object({
           default: z.union([z.string().trim(), z.array(z.string()).min(1, 'Please enter/select the information')]),
           additional: z.object({
@@ -46,7 +46,7 @@ export const advancedFilterFormSchema = z.object({
       .superRefine((fieldValues, ctx) => {
         const { value, operation } = fieldValues
 
-        if (operation === SmartFilterOperation.IsBetween) {
+        if (operation === 'isBetween') {
           if (value.additional.from === '') {
             const inavlidFields = ['value.additional', 'value.additional.from']
             for (const inavlidField of inavlidFields) {
@@ -125,14 +125,14 @@ export const defaultValuePerOperation: Record<
   SmartFilterOperation,
   AdvancedFilterFormValueInput['filters'][number]['value']
 > = {
-  [SmartFilterOperation.EqualsTo]: defaultStringValue,
-  [SmartFilterOperation.DoesNotEqualTo]: defaultStringValue,
-  [SmartFilterOperation.IsLessThan]: defaultStringValue,
-  [SmartFilterOperation.IsLessThanOrEqualTo]: defaultStringValue,
-  [SmartFilterOperation.IsGreaterThan]: defaultStringValue,
-  [SmartFilterOperation.IsGreaterThanOrEqualTo]: defaultStringValue,
-  [SmartFilterOperation.Contains]: defaultStringValue,
-  [SmartFilterOperation.IsBetween]: defaultStringValue,
-  [SmartFilterOperation.HasAnyOf]: defaultStringArrayValue,
-  [SmartFilterOperation.HasAllOf]: defaultStringArrayValue
+  equalsTo: defaultStringValue,
+  doesNotEqualTo: defaultStringValue,
+  isLessThan: defaultStringValue,
+  isLessThanOrEqualTo: defaultStringValue,
+  isGreaterThan: defaultStringValue,
+  isGreaterThanOrEqualTo: defaultStringValue,
+  contains: defaultStringValue,
+  isBetween: defaultStringValue,
+  hasAnyOf: defaultStringArrayValue,
+  hasAllOf: defaultStringArrayValue
 } as const

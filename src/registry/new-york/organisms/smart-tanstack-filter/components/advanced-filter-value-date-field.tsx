@@ -2,7 +2,6 @@ import { toDate } from 'date-fns'
 import { DatePicker, DateRangePicker } from '@/registry/new-york/ui/date-picker/components/date-picker.tsx'
 import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
 
 // Component
@@ -16,7 +15,7 @@ const AdvancedFilterValueDateField = ({
 
   // Template
   // Is between
-  if (formFilterOperation === SmartFilterOperation.IsBetween) {
+  if (formFilterOperation === 'isBetween') {
     return (
       <advancedFilterForm.AppField name={`filters[${index}].value.additional`}>
         {(field) => {

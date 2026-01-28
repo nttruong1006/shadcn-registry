@@ -2,7 +2,6 @@ import { MultiSelect } from '@/registry/new-york/molecules/multi-select/componen
 import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
 import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
-import { SmartFilterOperation } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
 
 // Component
@@ -16,7 +15,7 @@ const AdvancedFilterValueSelectWithOptionsField = ({
 
   // Template
   // Has any of
-  if (formFilterOperation === SmartFilterOperation.HasAnyOf) {
+  if (formFilterOperation === 'hasAnyOf') {
     return (
       <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
         {(field) => {

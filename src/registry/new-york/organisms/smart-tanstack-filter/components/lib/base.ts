@@ -1,112 +1,95 @@
 import { type DateArg, endOfDay, endOfMonth, endOfYear, startOfDay, startOfMonth, startOfYear } from 'date-fns'
 import type { AdvancedFilterFormValueOutput, BasicSearchFormValueOutput } from './form'
 
-// Smart filter logical operation
-export enum SmartFilterLogicalOperation {
-  And = ',',
-  Or = '|'
-}
-
 // Smart filter operation
-export enum SmartFilterOperation {
-  EqualsTo = 'equalsTo',
-  DoesNotEqualTo = 'doesNotEqualTo',
-  Contains = 'contains',
-  IsLessThan = 'isLessThan',
-  IsLessThanOrEqualTo = 'isLessThanOrEqualTo',
-  IsGreaterThan = 'isGreaterThan',
-  IsGreaterThanOrEqualTo = 'isGreaterThanOrEqualTo',
-  IsBetween = 'isBetween',
-  HasAnyOf = 'hasAnyOf',
-  HasAllOf = 'hasAllOf'
-}
+export const smartFilterOperations = [
+  'equalsTo',
+  'doesNotEqualTo',
+  'contains',
+  'isLessThan',
+  'isLessThanOrEqualTo',
+  'isGreaterThan',
+  'isGreaterThanOrEqualTo',
+  'isBetween',
+  'hasAnyOf',
+  'hasAllOf'
+] as const
+
+export type SmartFilterOperation = (typeof smartFilterOperations)[number]
 
 // Smart filter type
-export enum SmartFilterType {
-  Input = 'input',
-  Number = 'number',
-  Date = 'date',
-  SelectWithOptions = 'select-with-options',
-  SelectWithQuery = 'select-with-query',
-  SelectWithInfiniteQuery = 'select-with-infinite-query',
-  MultiSelectWithOptions = 'multi-select-with-options',
-  MultiSelectWithQuery = 'multi-select-with-query',
-  MultiSelectWithInfiniteQuery = 'multi-select-with-infinite-query'
-}
+export const smartFilterTypes = [
+  'input',
+  'number',
+  'date',
+  'selectWithOptions',
+  'selectWithQuery',
+  'selectWithInfiniteQuery',
+  'multiSelectWithOptions',
+  'multiSelectWithQuery',
+  'multiSelectWithInfiniteQuery'
+] as const
+
+export type SmartFilterType = (typeof smartFilterTypes)[number]
 
 // Smart filter api operation
-export enum SmartFilterApiOperation {
-  Equal = '==',
-  NotEqual = '!=',
-  LessThan = '<',
-  GreaterThan = '>',
-  LessThanOrEqual = '<=',
-  GreaterThanOrEqual = '>=',
-  Contain = '@=',
-  StartWith = '_=',
-  NotStartWith = '!_=',
-  CaseInsensitiveStringContain = '@=*',
-  CaseInsensitiveStringNotContain = '!@=*',
-  CaseInsensitiveStartWith = '_=*',
-  CaseInsensitiveNotStartWith = '!_=*',
-  CaseInsensitiveEqual = '==*',
-  CaseInsensitiveNotEqual = '!=*',
-  EqualArray = '[]'
-}
+export const smartFilterApiOperations = {
+  equal: '==',
+  notEqual: '!=',
+  lessThan: '<',
+  greaterThan: '>',
+  lessThanOrEqual: '<=',
+  greaterThanOrEqual: '>=',
+  contain: '@=',
+  startWith: '_=',
+  notStartWith: '!_=',
+  caseInsensitiveStringContain: '@=*',
+  caseInsensitiveStringNotContain: '!@=*',
+  caseInsensitiveStartWith: '_=*',
+  caseInsensitiveNotStartWith: '!_=*',
+  caseInsensitiveEqual: '==*',
+  caseInsensitiveNotEqual: '!=*',
+  equalArray: '[]'
+} as const
+
+export type SmartFilterApiOperation = (typeof smartFilterApiOperations)[keyof typeof smartFilterApiOperations]
+
+// Smart filter logical operation
+export const smartFilterLogicalOperation = {
+  and: ',',
+  or: '|'
+} as const
 
 // Operation per type
 export const operationsPerType: Record<SmartFilterType, SmartFilterOperation[]> = {
-  [SmartFilterType.Input]: [
-    SmartFilterOperation.EqualsTo,
-    SmartFilterOperation.DoesNotEqualTo,
-    SmartFilterOperation.Contains
+  input: ['equalsTo', 'doesNotEqualTo', 'contains'],
+  number: [
+    'equalsTo',
+    'doesNotEqualTo',
+    'isLessThan',
+    'isLessThanOrEqualTo',
+    'isGreaterThan',
+    'isGreaterThanOrEqualTo',
+    'isBetween'
   ],
-  [SmartFilterType.Number]: [
-    SmartFilterOperation.EqualsTo,
-    SmartFilterOperation.DoesNotEqualTo,
-    SmartFilterOperation.IsLessThan,
-    SmartFilterOperation.IsLessThanOrEqualTo,
-    SmartFilterOperation.IsGreaterThan,
-    SmartFilterOperation.IsGreaterThanOrEqualTo,
-    SmartFilterOperation.IsBetween
-  ],
-  [SmartFilterType.Date]: [
-    SmartFilterOperation.EqualsTo,
-    SmartFilterOperation.IsLessThan,
-    SmartFilterOperation.IsLessThanOrEqualTo,
-    SmartFilterOperation.IsGreaterThan,
-    SmartFilterOperation.IsGreaterThanOrEqualTo,
-    SmartFilterOperation.IsBetween
-  ],
-  [SmartFilterType.SelectWithOptions]: [
-    SmartFilterOperation.EqualsTo,
-    SmartFilterOperation.DoesNotEqualTo,
-    SmartFilterOperation.HasAnyOf
-  ],
-  [SmartFilterType.SelectWithQuery]: [
-    SmartFilterOperation.EqualsTo,
-    SmartFilterOperation.DoesNotEqualTo,
-    SmartFilterOperation.HasAnyOf
-  ],
-  [SmartFilterType.SelectWithInfiniteQuery]: [
-    SmartFilterOperation.EqualsTo,
-    SmartFilterOperation.DoesNotEqualTo,
-    SmartFilterOperation.HasAnyOf
-  ],
-  [SmartFilterType.MultiSelectWithOptions]: [SmartFilterOperation.HasAnyOf, SmartFilterOperation.HasAllOf],
-  [SmartFilterType.MultiSelectWithQuery]: [SmartFilterOperation.HasAnyOf, SmartFilterOperation.HasAllOf],
-  [SmartFilterType.MultiSelectWithInfiniteQuery]: [SmartFilterOperation.HasAnyOf, SmartFilterOperation.HasAllOf]
+  date: ['equalsTo', 'isLessThan', 'isLessThanOrEqualTo', 'isGreaterThan', 'isGreaterThanOrEqualTo', 'isBetween'],
+  selectWithOptions: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
+  selectWithQuery: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
+  selectWithInfiniteQuery: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
+  multiSelectWithOptions: ['hasAnyOf', 'hasAllOf'],
+  multiSelectWithQuery: ['hasAnyOf', 'hasAllOf'],
+  multiSelectWithInfiniteQuery: ['hasAnyOf', 'hasAllOf']
 } as const
 
 // Api operation per operation
 export const apiOperationPerOperation: Partial<Record<SmartFilterOperation, SmartFilterApiOperation>> = {
-  [SmartFilterOperation.EqualsTo]: SmartFilterApiOperation.Equal,
-  [SmartFilterOperation.DoesNotEqualTo]: SmartFilterApiOperation.NotEqual,
-  [SmartFilterOperation.IsLessThan]: SmartFilterApiOperation.LessThan,
-  [SmartFilterOperation.IsLessThanOrEqualTo]: SmartFilterApiOperation.LessThanOrEqual,
-  [SmartFilterOperation.IsGreaterThan]: SmartFilterApiOperation.GreaterThan,
-  [SmartFilterOperation.IsGreaterThanOrEqualTo]: SmartFilterApiOperation.GreaterThanOrEqual,
-  [SmartFilterOperation.Contains]: SmartFilterApiOperation.Contain
+  equalsTo: '==',
+  doesNotEqualTo: '!=',
+  isLessThan: '<',
+  isLessThanOrEqualTo: '<=',
+  isGreaterThan: '>',
+  isGreaterThanOrEqualTo: '>=',
+  contains: '@='
 } as const
 
 // Filter
@@ -155,7 +138,7 @@ export function transformFormValueToApiFiltersParam(
 
     const baseFilterKey =
       handler?.basicSearch && typeof handler.basicSearch === 'string' ? handler.basicSearch : 'value'
-    return `${baseFilterKey}${SmartFilterApiOperation.Contain}${value}`
+    return `${baseFilterKey}${apiOperationPerOperation.contains}${value}`
   }
 
   // Advanced filter
@@ -168,62 +151,62 @@ export function transformFormValueToApiFiltersParam(
     ? handler.advancedFilter(value)
     : value
         .map(({ name, operation, value }, index) => {
-          const logicalOperation = index > 0 ? SmartFilterLogicalOperation.And : ''
+          const logicalOperation = index > 0 ? smartFilterLogicalOperation.and : ''
           const { type, dateFormat = 'date' } = filtersMap[name]
 
           // Common
           // Has any of operation
-          if (Array.isArray(value.default) && operation === SmartFilterOperation.HasAnyOf) {
-            return `${logicalOperation}${name}${SmartFilterApiOperation.Equal}${value.default.join(SmartFilterLogicalOperation.Or)}`
+          if (Array.isArray(value.default) && operation === 'hasAnyOf') {
+            return `${logicalOperation}${name}${smartFilterApiOperations.equal}${value.default.join(smartFilterLogicalOperation.or)}`
           }
 
           // Has all of operation
-          if (Array.isArray(value.default) && operation === SmartFilterOperation.HasAllOf) {
+          if (Array.isArray(value.default) && operation === 'hasAllOf') {
             return value.default
-              .map((item) => `${logicalOperation}${name}${SmartFilterApiOperation.Equal}${item}`)
-              .join(SmartFilterLogicalOperation.And)
+              .map((item) => `${logicalOperation}${name}${smartFilterApiOperations.equal}${item}`)
+              .join(smartFilterLogicalOperation.and)
           }
 
           switch (type) {
-            case SmartFilterType.Number: {
+            case 'number': {
               // Is between operation
-              if (operation === SmartFilterOperation.IsBetween) {
-                return `${logicalOperation}${name}${SmartFilterApiOperation.GreaterThanOrEqual}${value.additional.from}${SmartFilterLogicalOperation.And}${name}${SmartFilterApiOperation.LessThanOrEqual}${value.additional.to}`
+              if (operation === 'isBetween') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${value.additional.from}${smartFilterLogicalOperation.and}${name}${smartFilterApiOperations.lessThanOrEqual}${value.additional.to}`
               }
               break
             }
 
-            case SmartFilterType.Date: {
+            case 'date': {
               const dateValue = value.default as string
 
               // Equals operation
-              if (operation === SmartFilterOperation.EqualsTo) {
-                return `${logicalOperation}${name}${SmartFilterApiOperation.GreaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].start(dateValue).toISOString()}${SmartFilterLogicalOperation.And}${name}${SmartFilterApiOperation.LessThanOrEqual}${periodHandlerPerDateFormat[dateFormat].end(dateValue).toISOString()}`
+              if (operation === 'equalsTo') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].start(dateValue).toISOString()}${smartFilterLogicalOperation.and}${name}${smartFilterApiOperations.lessThanOrEqual}${periodHandlerPerDateFormat[dateFormat].end(dateValue).toISOString()}`
               }
 
               // Is less than operation
-              if (operation === SmartFilterOperation.IsLessThan) {
-                return `${logicalOperation}${name}${apiOperationPerOperation[operation]}${periodHandlerPerDateFormat[dateFormat].start(dateValue).toISOString()}`
+              if (operation === 'isLessThan') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].start(dateValue).toISOString()}`
               }
 
               // Is less than or equal to operation
-              if (operation === SmartFilterOperation.IsLessThanOrEqualTo) {
-                return `${logicalOperation}${name}${apiOperationPerOperation[operation]}${periodHandlerPerDateFormat[dateFormat].end(dateValue).toISOString()}`
+              if (operation === 'isLessThanOrEqualTo') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].end(dateValue).toISOString()}`
               }
 
               // Is greater than operation
-              if (operation === SmartFilterOperation.IsGreaterThan) {
-                return `${logicalOperation}${name}${apiOperationPerOperation[operation]}${periodHandlerPerDateFormat[dateFormat].end(dateValue).toISOString()}`
+              if (operation === 'isGreaterThan') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].end(dateValue).toISOString()}`
               }
 
               // Is greater than or equal to operation
-              if (operation === SmartFilterOperation.IsGreaterThanOrEqualTo) {
-                return `${logicalOperation}${name}${apiOperationPerOperation[operation]}${periodHandlerPerDateFormat[dateFormat].start(dateValue).toISOString()}`
+              if (operation === 'isGreaterThanOrEqualTo') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].start(dateValue).toISOString()}`
               }
 
               // Is between operation
-              if (operation === SmartFilterOperation.IsBetween) {
-                return `${logicalOperation}${name}${SmartFilterApiOperation.GreaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].start(value.additional.from).toISOString()}${SmartFilterLogicalOperation.And}${name}${SmartFilterApiOperation.LessThanOrEqual}${periodHandlerPerDateFormat[dateFormat].end(value.additional.to).toISOString()}`
+              if (operation === 'isBetween') {
+                return `${logicalOperation}${name}${smartFilterApiOperations.greaterThanOrEqual}${periodHandlerPerDateFormat[dateFormat].start(value.additional.from).toISOString()}${smartFilterLogicalOperation.and}${name}${smartFilterApiOperations.lessThanOrEqual}${periodHandlerPerDateFormat[dateFormat].end(value.additional.to).toISOString()}`
               }
 
               break

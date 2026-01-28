@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import {
   type Filter,
-  SmartFilterType,
   transformFormValueToApiFiltersParam
 } from '@/registry/new-york/organisms/smart-tanstack-filter/components/lib/base'
 import {
@@ -14,22 +13,22 @@ const filters: Filter[] = [
   {
     name: 'fullName',
     label: 'Full name',
-    type: SmartFilterType.Input
+    type: 'input'
   },
   {
     name: 'age',
     label: 'Age',
-    type: SmartFilterType.Number
+    type: 'number'
   },
   {
     name: 'graduationDate',
     label: 'Graduation date',
-    type: SmartFilterType.Date
+    type: 'date'
   },
   {
     name: 'department',
     label: 'Department',
-    type: SmartFilterType.SelectWithOptions,
+    type: 'selectWithOptions',
     options: [
       { value: 'front-end', label: 'Front-end' },
       { value: 'back-end', label: 'Back-end' }
@@ -38,14 +37,8 @@ const filters: Filter[] = [
   {
     name: 'technologies',
     label: 'Technologies',
-    type: SmartFilterType.SelectWithQuery,
-    apiPath: '/version/1.0/options/role',
-    options: [
-      { value: 'react', label: 'React' },
-      { value: 'tailwind-css', label: 'TailwindCSS' },
-      { value: 'astro', label: 'Astro' },
-      { value: 'ts', label: 'TypeScript' }
-    ]
+    type: 'selectWithQuery',
+    apiPath: '/version/1.0/options/role'
   }
 ]
 
