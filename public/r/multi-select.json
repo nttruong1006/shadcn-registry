@@ -33,7 +33,7 @@
     },
     {
       "path": "src/types/base.ts",
-      "content": "export interface Option {\n  value: string\n  label: string\n}\n",
+      "content": "export interface Option<T = string> {\n  value: T\n  label: string\n}\n",
       "type": "registry:file",
       "target": "src/types/base.ts"
     }
