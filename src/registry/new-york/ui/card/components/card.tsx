@@ -31,7 +31,7 @@ export const CardHeader = ({ className, ...props }: ComponentProps<'div'>) => {
 // Card title
 export const CardTitle = ({ className, ...props }: ComponentProps<'div'>) => {
   // Template
-  return <div className={cn('font-semibold leading-none', className)} data-slot='card-title' {...props} />
+  return <div className={cn('font-semibold text-base', className)} data-slot='card-title' {...props} />
 }
 
 // Card description
