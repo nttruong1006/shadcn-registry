@@ -1,0 +1,28 @@
+---
+title: Pdf Viewer
+description: Embed PDF files without the pain.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<CodePreview path='organisms/pdf-viewer/demo' />
+
+## Installation
+
+<InstallationCard registryName='pdf-viewer' />
+
+## Usage
+```tsx
+import { PDFViewer } from '@/components/organisms/pdf-viewer'
+```
+
+```tsx
+<PDFViewer
+  className='h-[calc(100dvh-80px)]'
+  config={{
+    src: 'https://snippet.embedpdf.com/ebook.pdf'
+  }}
+/>
+```

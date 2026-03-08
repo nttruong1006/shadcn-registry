@@ -1550,6 +1550,25 @@
       ]
     },
     {
+      "name": "pdf-viewer",
+      "type": "registry:component",
+      "title": "Pdf Viewer",
+      "description": "Embed PDF files without the pain.",
+      "files": [
+        {
+          "path": "src/registry/new-york/organisms/pdf-viewer/components/lib.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/pdf-viewer/lib.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/pdf-viewer/components/pdf-viewer.tsx",
+          "type": "registry:file",
+          "target": "src/components/organisms/pdf-viewer/pdf-viewer.tsx"
+        }
+      ],
+      "dependencies": ["@embedpdf/react-pdf-viewer"]
+    },
+    {
       "name": "smart-filter",
       "type": "registry:component",
       "title": "Smart Filter",
