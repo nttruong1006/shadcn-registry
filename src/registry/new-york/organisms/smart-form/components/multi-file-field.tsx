@@ -1,3 +1,4 @@
+import type { DropzoneOptions } from 'react-dropzone'
 import {
   FileUpload,
   FileUploadContent,
@@ -5,34 +6,49 @@ import {
   FileUploadItem,
   type FileUploadValue
 } from '@/registry/new-york/molecules/file-upload/components/file-upload'
-import FieldContainer, { type FieldProps } from './field-container'
+import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import { useFieldContext } from './lib/base'
+import type { MultiFileFieldInputValue } from './lib/schema'
+
+const baseDropzoneOptions: DropzoneOptions = {
+  maxFiles: 10
+}
 
 // Component
-const MultiFileField = ({ fieldData, disabledFields }: FieldProps) => {
+const MultiFileField = ({
+  label,
+  isDisabled,
+  dropzoneOptions = baseDropzoneOptions,
+  ...props
+}: BaseSmartFormFieldFieldProps & {
+  dropzoneOptions?: DropzoneOptions
+}) => {
+  // Hooks
+  const field = useFieldContext<MultiFileFieldInputValue>()
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+
   // Template
   return (
-    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
-      {({ field, fieldState }) => (
-        <FileUpload
-          dropzoneOptions={fieldData.config?.dropzoneOptions}
-          isDisabled={disabledFields?.[fieldData.code]}
-          onValueChange={field.onChange}
-          value={field.value}
-        >
-          <FileUploadInput aria-invalid={fieldState.invalid} id={fieldData.code} />
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+      <FileUpload
+        dropzoneOptions={baseDropzoneOptions}
+        isDisabled={isDisabled}
+        onValueChange={field.handleChange}
+        value={field.state.value}
+      >
+        <FileUploadInput aria-invalid={isInvalid} id={field.name} />
 
-          <FileUploadContent>
-            {(field.value as FileUploadValue).map((value, index) => (
-              <FileUploadItem
-                index={index}
-                // biome-ignore lint/suspicious/noArrayIndexKey: ignore
-                key={index}
-                value={value}
-              />
-            ))}
-          </FileUploadContent>
-        </FileUpload>
-      )}
+        <FileUploadContent>
+          {(field.state.value as FileUploadValue).map((value, index) => (
+            <FileUploadItem
+              index={index}
+              // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+              key={index}
+              value={value}
+            />
+          ))}
+        </FileUploadContent>
+      </FileUpload>
     </FieldContainer>
   )
 }

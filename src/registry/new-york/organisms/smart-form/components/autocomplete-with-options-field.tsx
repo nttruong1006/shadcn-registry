@@ -1,24 +1,38 @@
-import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
-import FieldContainer, { type FieldProps } from './field-container'
+import {
+  Autocomplete,
+  type AutocompleteProps
+} from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
+import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import { useFieldContext } from './lib/base'
+import type { AutocompleteFieldInputValue } from './lib/schema'
 
 // Component
-const AutocompleteWithOptionsField = ({ fieldData, disabledFields }: FieldProps) => {
+const AutocompleteWithOptionsField = ({
+  label,
+  isDisabled,
+  options,
+  ...props
+}: BaseSmartFormFieldFieldProps & {
+  options: AutocompleteProps['options']
+}) => {
+  // Hooks
+  const field = useFieldContext<AutocompleteFieldInputValue>()
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+
   // Template
   return (
-    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
-      {({ field, fieldState }) => (
-        <Autocomplete
-          {...field}
-          inputProps={{
-            id: fieldData.code,
-            disabled: disabledFields?.[fieldData.code],
-            'aria-invalid': fieldState.invalid
-          }}
-          onValueChange={field.onChange}
-          options={fieldData.config?.options ?? []}
-          placeholder={`Enter ${fieldData.label.toLowerCase()}`}
-        />
-      )}
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+      <Autocomplete
+        inputProps={{
+          id: field.name,
+          disabled: isDisabled,
+          'aria-invalid': isInvalid
+        }}
+        onValueChange={field.handleChange}
+        options={options}
+        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
+      />
     </FieldContainer>
   )
 }

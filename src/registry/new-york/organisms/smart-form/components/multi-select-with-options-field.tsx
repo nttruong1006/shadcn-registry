@@ -1,23 +1,34 @@
-import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
-import FieldContainer, { type FieldProps } from './field-container'
+import { MultiSelect, type MultiSelectProps } from '@/registry/new-york/molecules/multi-select/components/multi-select'
+import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import { useFieldContext } from './lib/base'
+import type { MultiSelectFieldInputValue } from './lib/schema'
 
 // Component
-const MultiSelectWithOptionsField = ({ fieldData, disabledFields }: FieldProps) => {
+const MultiSelectWithOptionsField = ({
+  label,
+  isDisabled,
+  options,
+  ...props
+}: BaseSmartFormFieldFieldProps & {
+  options: MultiSelectProps['options']
+}) => {
+  // Hooks
+  const field = useFieldContext<MultiSelectFieldInputValue>()
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+
   // Template
   return (
-    <FieldContainer disabledFields={disabledFields} fieldData={fieldData}>
-      {({ field }) => (
-        <MultiSelect
-          {...field}
-          buttonTriggerProps={{
-            id: fieldData.code,
-            disabled: disabledFields?.[fieldData.code]
-          }}
-          onValueChange={field.onChange}
-          options={fieldData.config?.options ?? []}
-          placeholder={`Select ${fieldData.label.toLowerCase()}`}
-        />
-      )}
+    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+      <MultiSelect
+        buttonTriggerProps={{
+          id: field.name,
+          disabled: isDisabled
+        }}
+        onValueChange={field.handleChange}
+        options={options}
+        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+        value={field.state.value}
+      />
     </FieldContainer>
   )
 }
