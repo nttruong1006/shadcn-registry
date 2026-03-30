@@ -1,31 +1,26 @@
-import { ListFilter, Search } from 'lucide-react'
-import React from 'react'
-import { FormProvider, type SubmitHandler, type UseFormReturn, useFieldArray } from 'react-hook-form'
-import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york/ui/toggle-group/components/toggle-group'
+import { ListFilterIcon, SearchIcon } from 'lucide-react'
+import { Activity, createContext, useContext, useState } from 'react'
+import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york/ui/toggle-group/components/toggle-group.tsx'
 import AdvancedFilter from './advanced-filter'
 import BasicSearch from './basic-search'
-import {
-  defaultValuePerOperation,
-  type Filter,
-  operationsPerType,
-  type SmartFilterFormInput,
-  type SmartFilterFormOutput
-} from './lib'
+import type { Filter } from './lib/base'
+import type { AdvancedFilterFormValueOutput, BasicSearchFormValueOutput } from './lib/form'
 
 // Smart filter
-enum Mode {
+export enum Mode {
   BasicSearch = 'basic-search',
   AdvancedFilter = 'advanced-filter'
 }
 
-export interface SmartFilterContextValue {
+export type SmartFilterContextValue = Pick<SmartFilterProps, 'setFilters'> & {
+  id: NonNullable<SmartFilterProps['id']>
   filters: NonNullable<SmartFilterProps['filters']>
 }
 
-const SmartFilterContext = React.createContext<SmartFilterContextValue | null>(null)
+const SmartFilterContext = createContext<SmartFilterContextValue | null>(null)
 
 export const useSmartFilterContext = () => {
-  const context = React.useContext(SmartFilterContext)
+  const context = useContext(SmartFilterContext)
   if (!context) {
     throw new Error('useFiltersContext should be used within the SmartFilter')
   }
@@ -33,108 +28,72 @@ export const useSmartFilterContext = () => {
 }
 
 export interface SmartFilterProps {
-  form: UseFormReturn<SmartFilterFormInput, unknown, SmartFilterFormOutput>
+  id?: string
   filters?: Filter[]
   isHideSearchMode?: boolean
-  setFilters: SubmitHandler<SmartFilterFormOutput>
+  setFilters: (value: BasicSearchFormValueOutput['keyword'] | AdvancedFilterFormValueOutput['filters']) => void
 }
-
-const DEFAULT_FILTERS: Filter[] = []
+const defaultFilters: Filter[] = []
 
 export const SmartFilter = ({
-  form,
-  filters = DEFAULT_FILTERS,
+  id = 'smart-form',
+  filters = defaultFilters,
   isHideSearchMode = false,
   setFilters
 }: SmartFilterProps) => {
-  // Hooks
-  const formFilters = useFieldArray({
-    control: form.control,
-    name: 'filters'
-  })
-
-  // States
-  const [mode, setMode] = React.useState<Mode>(() =>
-    (form.formState.defaultValues?.filters ?? DEFAULT_FILTERS).length > 0 ? Mode.AdvancedFilter : Mode.BasicSearch
+  // Template
+  return (
+    <SmartFilterContext.Provider value={{ id, filters, setFilters }}>
+      <SmartFilterContent filters={filters} isHideSearchMode={isHideSearchMode} />
+    </SmartFilterContext.Provider>
   )
+}
 
-  // Methods
-  const addFilter = (filter: Filter) => {
-    const { name, type } = filter
-    const operation = operationsPerType[type][0]
-    formFilters.append({
-      name,
-      type,
-      operation,
-      value: defaultValuePerOperation[operation]
-    })
-  }
-
-  const changeMode = (value: string) => {
-    setMode(value as Mode)
-    switch (value) {
-      case Mode.BasicSearch: {
-        formFilters.remove()
-        break
-      }
-      case Mode.AdvancedFilter: {
-        form.resetField('search')
-        if (filters.length > 0) {
-          addFilter(filters[0])
-        }
-        break
-      }
-      default: {
-        break
-      }
-    }
-  }
+export const SmartFilterContent = ({
+  filters = defaultFilters,
+  isHideSearchMode = false
+}: Pick<SmartFilterProps, 'filters' | 'isHideSearchMode'>) => {
+  // States
+  const [mode, setMode] = useState(Mode.BasicSearch)
 
   // Template
-  if (form.formState.isLoading) {
-    return null
+  if (filters.length === 0) {
+    return <BasicSearch />
+  }
+
+  if (isHideSearchMode) {
+    return <AdvancedFilter />
   }
 
   return (
-    <SmartFilterContext.Provider
-      value={{
-        filters
-      }}
-    >
-      <FormProvider {...form}>
-        <form className='w-full' onSubmit={(e) => e.preventDefault()}>
-          {filters.length === 0 ? (
-            <BasicSearch setFilters={setFilters} />
-            // biome-ignore lint/style/noNestedTernary: ignore
-          ) : isHideSearchMode ? (
-            <AdvancedFilter addFilter={addFilter} formFilters={formFilters} setFilters={setFilters} />
-          ) : (
-            <div className='flex items-center gap-2'>
-              <ToggleGroup
-                className='data-[variant=outline]:shadow-none'
-                onValueChange={changeMode}
-                type='single'
-                value={mode}
-                variant='outline'
-              >
-                <ToggleGroupItem value={Mode.BasicSearch}>
-                  <Search />
-                </ToggleGroupItem>
+    <div className='flex items-center gap-2'>
+      <ToggleGroup
+        className='data-[variant=outline]:shadow-none'
+        onValueChange={(value) => {
+          if (value) {
+            setMode(value as Mode)
+          }
+        }}
+        type='single'
+        value={mode}
+        variant='outline'
+      >
+        <ToggleGroupItem value={Mode.BasicSearch}>
+          <SearchIcon />
+        </ToggleGroupItem>
 
-                <ToggleGroupItem value={Mode.AdvancedFilter}>
-                  <ListFilter />
-                </ToggleGroupItem>
-              </ToggleGroup>
+        <ToggleGroupItem value={Mode.AdvancedFilter}>
+          <ListFilterIcon />
+        </ToggleGroupItem>
+      </ToggleGroup>
 
-              {mode === Mode.BasicSearch ? (
-                <BasicSearch setFilters={setFilters} />
-              ) : (
-                <AdvancedFilter addFilter={addFilter} formFilters={formFilters} setFilters={setFilters} />
-              )}
-            </div>
-          )}
-        </form>
-      </FormProvider>
-    </SmartFilterContext.Provider>
+      <Activity mode={mode === Mode.BasicSearch ? 'visible' : 'hidden'}>
+        <BasicSearch />
+      </Activity>
+
+      <Activity mode={mode === Mode.AdvancedFilter ? 'visible' : 'hidden'}>
+        <AdvancedFilter />
+      </Activity>
+    </div>
   )
 }

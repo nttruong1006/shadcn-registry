@@ -1,60 +1,34 @@
 import { useMemo } from 'react'
-import { type ControllerRenderProps, useFormContext } from 'react-hook-form'
-import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
-import {
-  defaultValuePerOperation,
-  operationsPerType,
-  type SmartFilterFormInput,
-  type SmartFilterFormOutput
-} from './lib'
-import { useSmartFilterContext } from './smart-filter'
+import { useSmartFilterContext } from '@/registry/new-york/organisms/smart-filter/components/smart-filter'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox.tsx'
+import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
 
 // Component
-const AdvancedFilterNameField = ({
-  index,
-  field,
-  formFiltersWatcher
-}: {
-  index: number
-  field: ControllerRenderProps<SmartFilterFormInput, `filters.${number}.name`>
-  formFiltersWatcher: SmartFilterFormInput['filters']
-}) => {
+const AdvancedFilterNameField = ({ formFilters }: { formFilters: AdvancedFilterFormValueInput['filters'] }) => {
   // Hooks
   const { filters } = useSmartFilterContext()
-  const form = useFormContext<SmartFilterFormInput, unknown, SmartFilterFormOutput>()
-
-  // Methods
-  const changeValue: ComboboxProps['onValueChange'] = (value) => {
-    if (!value) {
-      return
-    }
-
-    const selectedFilter = filters.find((filter) => filter.name === value)
-    if (!selectedFilter) {
-      return
-    }
-
-    const operation = operationsPerType[selectedFilter.type][0]
-    form.setValue(`filters.${index}.type`, selectedFilter.type)
-    form.setValue(`filters.${index}.operation`, operation)
-    form.setValue(`filters.${index}.value`, defaultValuePerOperation[operation])
-
-    field.onChange(value)
-  }
+  const field = useFieldContext<AdvancedFilterFormValueInput['filters'][number]['name']>()
 
   // Memos
   const options = useMemo<ComboboxProps['options']>(() => {
-    const selectedFilters = formFiltersWatcher.map((field) => field.name)
+    const selectedFilters = formFilters.map((field) => field.name)
     return filters
-      .filter((filter) => filter.name === field.value || !selectedFilters.includes(filter.name))
+      .filter((filter) => filter.name === field.state.value || !selectedFilters.includes(filter.name))
       .map((filter) => ({
         value: filter.name,
         label: filter.label
       }))
-  }, [filters, formFiltersWatcher, field.value])
+  }, [filters, formFilters, field.state.value])
 
   // Template
-  return <Combobox isCanRemoveValue={false} onValueChange={changeValue} options={options} value={field.value} />
+  return (
+    <Combobox
+      isCanRemoveValue={false}
+      onValueChange={(value) => field.handleChange(value as string)}
+      options={options}
+      value={field.state.value}
+    />
+  )
 }
 
 export default AdvancedFilterNameField

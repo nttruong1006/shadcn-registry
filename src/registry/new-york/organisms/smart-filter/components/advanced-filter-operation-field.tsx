@@ -1,14 +1,7 @@
 import { useMemo } from 'react'
-import { type ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form'
-import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
-import {
-  defaultValuePerOperation,
-  operationsPerType,
-  type SmartFilterFormInput,
-  type SmartFilterFormOutput,
-  type SmartFilterOperation,
-  SmartFilterType
-} from './lib'
+import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox.tsx'
+import { operationsPerType, type SmartFilterOperation } from './lib/base'
+import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
 const operationLabels: Record<string, Record<string, string | undefined> | undefined> = {
@@ -20,13 +13,13 @@ const operationLabels: Record<string, Record<string, string | undefined> | undef
     hasAnyOf: 'Has any of',
     hasAllOf: 'Has all of'
   },
-  [SmartFilterType.Number]: {
+  number: {
     isLessThan: 'Is less than',
     isLessThanOrEqualTo: 'Is less than or equal to',
     isGreaterThan: 'Is greater than',
     isGreaterThanOrEqualTo: 'Is greater than or equal to'
   },
-  [SmartFilterType.Date]: {
+  date: {
     isLessThan: 'Is before',
     isLessThanOrEqualTo: 'Is before or equal to',
     isGreaterThan: 'Is after',
@@ -35,29 +28,10 @@ const operationLabels: Record<string, Record<string, string | undefined> | undef
 }
 
 // Component
-const AdvancedFilterOperationField = ({
-  index,
-  field
-}: {
-  index: number
-  field: ControllerRenderProps<SmartFilterFormInput, `filters.${number}.operation`>
-}) => {
+const AdvancedFilterOperationField = ({ formFilterName }: { formFilterName: string }) => {
   // Hooks
   const { filters } = useSmartFilterContext()
-  const form = useFormContext<SmartFilterFormInput, unknown, SmartFilterFormOutput>()
-  const formFilterName = useWatch({
-    name: `filters.${index}.name`,
-    control: form.control
-  })
-
-  // Methods
-  const changeValue: ComboboxProps['onValueChange'] = (value) => {
-    if (!value) {
-      return
-    }
-    form.setValue(`filters.${index}.value`, defaultValuePerOperation[value as SmartFilterOperation])
-    field.onChange(value)
-  }
+  const field = useFieldContext<AdvancedFilterFormValueInput['filters'][number]['operation']>()
 
   // Memos
   const options = useMemo<ComboboxProps['options']>(() => {
@@ -71,7 +45,14 @@ const AdvancedFilterOperationField = ({
   }, [filters, formFilterName])
 
   // Template
-  return <Combobox isCanRemoveValue={false} onValueChange={changeValue} options={options} value={field.value} />
+  return (
+    <Combobox
+      isCanRemoveValue={false}
+      onValueChange={(value) => field.handleChange(value as SmartFilterOperation)}
+      options={options}
+      value={field.state.value}
+    />
+  )
 }
 
 export default AdvancedFilterOperationField

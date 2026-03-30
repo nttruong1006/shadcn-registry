@@ -1,62 +1,55 @@
-import { useMemo } from 'react'
-import { SmartFilterType, useSmartFilterForm } from '@/registry/new-york/organisms/smart-filter/components/lib'
+import { useCallback } from 'react'
+import {
+  type Filter,
+  transformFormValueToApiFiltersParam
+} from '@/registry/new-york/organisms/smart-filter/components/lib/base'
 import { SmartFilter, type SmartFilterProps } from '@/registry/new-york/organisms/smart-filter/components/smart-filter'
 
 // Component
-export const SmartFilterDemo = () => {
-  // Hooks
-  const form = useSmartFilterForm()
-
-  // Methods
-  const setFilters: SmartFilterProps['setFilters'] = (formValue) => {
-    console.log(formValue)
-  }
-
-  // Memos
-  const filters = useMemo<SmartFilterProps['filters']>(() => {
-    return [
-      {
-        name: 'fullName',
-        label: 'Full name',
-        type: SmartFilterType.Text
-      },
-      {
-        name: 'age',
-        label: 'Age',
-        type: SmartFilterType.Number
-      },
-      {
-        name: 'graduationDate',
-        label: 'Graduation date',
-        type: SmartFilterType.Date
-      },
-      {
-        name: 'department',
-        label: 'Department',
-        type: SmartFilterType.Select,
-        options: [
-          { value: 'front-end', label: 'Front-end' },
-          { value: 'back-end', label: 'Back-end' }
-        ]
-      },
-      {
-        name: 'technologies',
-        label: 'Technologies',
-        type: SmartFilterType.MultiSelect,
-        options: [
-          { value: 'react', label: 'React' },
-          { value: 'tailwind-css', label: 'TailwindCSS' },
-          { value: 'astro', label: 'Astro' },
-          { value: 'ts', label: 'TypeScript' }
-        ]
-      }
+const filters: Filter[] = [
+  {
+    name: 'fullName',
+    label: 'Full name',
+    type: 'input'
+  },
+  {
+    name: 'age',
+    label: 'Age',
+    type: 'number'
+  },
+  {
+    name: 'graduationDate',
+    label: 'Graduation date',
+    type: 'date'
+  },
+  {
+    name: 'department',
+    label: 'Department',
+    type: 'selectWithOptions',
+    options: [
+      { value: 'front-end', label: 'Front-end' },
+      { value: 'back-end', label: 'Back-end' }
     ]
+  },
+  {
+    name: 'technologies',
+    label: 'Technologies',
+    type: 'selectWithQuery',
+    apiPath: '/version/1.0/options/role'
+  }
+]
+
+export const SmartFilterDemo = () => {
+  // Methods
+  const setFilters: SmartFilterProps['setFilters'] = useCallback((formValue) => {
+    const filtersParam = transformFormValueToApiFiltersParam(formValue, filters)
+    console.log(filtersParam)
   }, [])
 
   // Template
   return (
     <div className='w-sm'>
-      <SmartFilter filters={filters} form={form} setFilters={setFilters} />
+      <SmartFilter filters={filters} setFilters={setFilters} />
     </div>
   )
 }

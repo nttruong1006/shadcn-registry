@@ -1,46 +1,62 @@
+import { useStore } from '@tanstack/react-form'
 import { useDebounce } from '@uidotdev/usehooks'
-import { SearchIcon } from 'lucide-react'
-import { useEffect } from 'react'
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import { Search } from 'lucide-react'
+import { memo, useEffect } from 'react'
 import { Field } from '@/registry/new-york/ui/field/components/field'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
-import type { SmartFilterFormInput, SmartFilterFormOutput } from './lib'
-import type { SmartFilterProps } from './smart-filter'
+import { basicSearchFormSchema, defaultBasicSearchFormValue, useAppForm } from './lib/form'
+import { useSmartFilterContext } from './smart-filter'
 
 // Component
-const BasicSearch = ({ setFilters }: Pick<SmartFilterProps, 'setFilters'>) => {
+const BasicSearch = memo(() => {
   // Hooks
-  const form = useFormContext<SmartFilterFormInput, unknown, SmartFilterFormOutput>()
+  const { id, setFilters } = useSmartFilterContext()
 
-  const formSearch = useWatch({
-    name: 'search',
-    control: form.control
+  const basicSearchForm = useAppForm({
+    formId: `${id}-basic-search`,
+    defaultValues: defaultBasicSearchFormValue,
+    validators: {
+      onSubmit: basicSearchFormSchema
+    }
   })
 
-  const debouncedFormSearch = useDebounce<string>(formSearch.trim(), 400)
+  const formKeyword = useStore(basicSearchForm.store, (state) => state.values.keyword)
+  const debouncedFormKeyword = useDebounce<string>(formKeyword.trim(), 400)
 
   // Effects
   useEffect(() => {
-    setFilters({ search: debouncedFormSearch, filters: [] })
-  }, [debouncedFormSearch, setFilters])
+    setFilters(debouncedFormKeyword)
+  }, [debouncedFormKeyword, setFilters])
 
   // Template
   return (
-    <Controller
-      control={form.control}
-      name='search'
-      render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid}>
-          <InputGroup>
-            <InputGroupInput {...field} aria-invalid={fieldState.invalid} placeholder='Search' />
-            <InputGroupAddon>
-              <SearchIcon />
-            </InputGroupAddon>
-          </InputGroup>
-        </Field>
-      )}
-    />
+    <form id={basicSearchForm.formId} onSubmit={(e) => e.preventDefault()}>
+      <basicSearchForm.AppField name='keyword'>
+        {(field) => {
+          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          return (
+            <Field data-invalid={isInvalid}>
+              <InputGroup>
+                <InputGroupInput
+                  aria-invalid={isInvalid}
+                  id={field.name}
+                  name={field.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder='Search'
+                  value={field.state.value}
+                />
+                <InputGroupAddon>
+                  <Search />
+                </InputGroupAddon>
+              </InputGroup>
+            </Field>
+          )
+        }}
+      </basicSearchForm.AppField>
+    </form>
   )
-}
+})
 
+BasicSearch.displayName = 'BasicSearch'
 export default BasicSearch

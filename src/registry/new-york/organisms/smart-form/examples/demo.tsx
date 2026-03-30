@@ -1,9 +1,19 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import type { SmartFormData } from '@/registry/new-york/organisms/smart-form/components/lib/base'
-import { getFormSchema } from '@/registry/new-york/organisms/smart-form/components/lib/schema'
-import { getDefaultFormValue } from '@/registry/new-york/organisms/smart-form/components/lib/value'
-import { SmartForm } from '@/registry/new-york/organisms/smart-form/components/smart-form'
+import z from 'zod'
+import { useAppForm } from '@/registry/new-york/organisms/smart-form/components/lib/base'
+import {
+  getAutocompleteFieldSchema,
+  getCheckboxFieldSchema,
+  getDateFieldSchema,
+  getEditorFieldSchema,
+  getInputFieldSchema,
+  getMultiFileFieldSchema,
+  getMultiSelectFieldSchema,
+  getNumberFieldSchema,
+  getPasswordFieldSchema,
+  getPhoneNumberFieldSchema,
+  getSelectFieldSchema,
+  getTextareaFieldSchema
+} from '@/registry/new-york/organisms/smart-form/components/lib/schema'
 import { Button } from '@/registry/new-york/ui/button/components/button'
 import {
   Dialog,
@@ -14,339 +24,100 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/registry/new-york/ui/dialog/components/dialog'
+import { FieldDescription, FieldLegend, FieldSet } from '@/registry/new-york/ui/field/components/field'
 
-const FORM_DATA: SmartFormData = {
-  code: 'user',
-  templates: [
-    {
-      code: 'personal',
-      label: 'Personal',
-      fields: [
-        {
-          code: 'fullName',
-          type: 'input',
-          label: 'Full name',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the full name'
-              }
-            }
-          }
-        },
-        {
-          code: 'age',
-          type: 'number',
-          label: 'Age',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the age'
-              }
-            }
-          }
-        },
-        {
-          code: 'birthdate',
-          type: 'date',
-          label: 'Birthdate',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please select the birthdate'
-              }
-            }
-          }
-        },
-        {
-          code: 'gender',
-          type: 'select-with-options',
-          label: 'Gender',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please select the gender'
-              }
-            },
-            options: [
-              { value: 'male', label: 'Male' },
-              { value: 'female', label: 'Female' }
-            ]
-          }
-        },
-        {
-          code: 'phoneNumber',
-          type: 'phone-number',
-          label: 'Phone number',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the phone number'
-              },
-              phone: {
-                value: true,
-                message: 'Phone number is invalid'
-              }
-            }
-          }
-        },
-        {
-          code: 'email',
-          type: 'input',
-          label: 'Email',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the email'
-              },
-              email: {
-                value: true,
-                message: 'Email is invalid'
-              }
-            }
-          }
-        },
-        {
-          code: 'description',
-          type: 'textarea',
-          label: 'Description',
-          className: 'xl:col-span-full',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the description'
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      code: 'professionalSkills',
-      label: 'Professional skills',
-      fields: [
-        {
-          code: 'department',
-          type: 'select-with-options',
-          label: 'Department',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please select the department'
-              }
-            },
-            options: [
-              {
-                value: 'front-end',
-                label: 'Front-end'
-              },
-              {
-                value: 'back-end',
-                label: 'Back-end'
-              },
-              {
-                value: 'ba',
-                label: 'BA'
-              },
-              {
-                value: 'qa-qc',
-                label: 'QA-QC'
-              }
-            ]
-          }
-        },
-        {
-          code: 'technologies',
-          type: 'multi-select-with-options',
-          label: 'Technologies',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please select the technologies'
-              }
-            },
-            options: [
-              {
-                value: 'next.js',
-                label: 'Next.js'
-              },
-              {
-                value: 'sveltekit',
-                label: 'SvelteKit'
-              },
-              {
-                value: 'nuxt.js',
-                label: 'Nuxt.js'
-              },
-              {
-                value: 'remix',
-                label: 'Remix'
-              },
-              {
-                value: 'astro',
-                label: 'Astro'
-              }
-            ]
-          }
-        },
-        {
-          code: 'graduatedUniversity',
-          type: 'autocomplete-with-options',
-          label: 'Graduated university',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the graduated university'
-              }
-            },
-            options: [
-              {
-                value: 'TDTU',
-                label: 'Ton Duc Thang University'
-              },
-              {
-                value: 'VLU',
-                label: 'Van Lang University'
-              },
-              {
-                value: 'UIT',
-                label: 'University of information technology'
-              }
-            ]
-          },
-          className: 'xl:col-span-4'
-        },
-        {
-          code: 'resumes',
-          type: 'multi-file',
-          label: 'Resumes',
-          className: 'xl:col-span-full',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please select the file'
-              }
-            },
-            dropzoneOptions: {
-              maxFiles: 10
-            }
-          }
-        },
-        {
-          code: 'deep-knowledge',
-          type: 'checkbox',
-          label: 'Is has deep knowledge about these techs',
-          className: 'xl:col-span-full'
-        }
-      ]
-    },
-    {
-      code: 'account',
-      label: 'Account',
-      fields: [
-        {
-          code: 'username',
-          type: 'input',
-          label: 'Username',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the username'
-              }
-            }
-          }
-        },
-        {
-          code: 'password',
-          type: 'password',
-          label: 'Password',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the password'
-              }
-            }
-          }
-        },
-        {
-          code: 'password-confirmation',
-          type: 'password',
-          label: 'Password confirmation',
-          className: 'xl:col-span-4',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the password confirmation'
-              }
-            },
-            referenceFields: [
-              {
-                code: 'password',
-                message: 'Password confirmation does not match with the password'
-              }
-            ],
-            isPasswordConfirmation: true
-          }
-        }
-      ]
-    },
-    {
-      code: 'others',
-      label: 'Others',
-      fields: [
-        {
-          code: 'hobby',
-          type: 'editor',
-          label: 'Hobby',
-          className: 'xl:col-span-full',
-          config: {
-            validation: {
-              required: {
-                value: true,
-                message: 'Please enter the hobby'
-              }
-            }
-          }
-        }
-      ]
+const formSchema = z
+  .object({
+    fullName: getInputFieldSchema({
+      required: 'Please enter the full name'
+    }),
+    age: getNumberFieldSchema({
+      required: 'Please enter the age'
+    }),
+    birthdate: getDateFieldSchema({
+      required: 'Please enter the birthdate'
+    }),
+    gender: getSelectFieldSchema({
+      required: 'Please select the gender'
+    }),
+    phoneNumber: getPhoneNumberFieldSchema({
+      required: 'Please enter the phone number',
+      phone: 'Please enter a valid phone number'
+    }),
+    email: getInputFieldSchema({
+      required: 'Please enter the email',
+      email: 'Please enter a valid email'
+    }),
+    description: getTextareaFieldSchema({
+      required: 'Please enter the description'
+    }),
+    department: getSelectFieldSchema({
+      required: 'Please select the department'
+    }),
+    technologies: getMultiSelectFieldSchema({
+      required: 'Please select the technologies'
+    }),
+    graduatedUniversity: getAutocompleteFieldSchema({
+      required: 'Please enter the graduated university'
+    }),
+    resumes: getMultiFileFieldSchema({
+      required: 'Please upload the resumes'
+    }),
+    isDeepKnowledge: getCheckboxFieldSchema(),
+    username: getInputFieldSchema({
+      required: 'Please enter the username'
+    }),
+    password: getPasswordFieldSchema({
+      required: 'Please enter the password'
+    }),
+    passwordConfirmation: getPasswordFieldSchema(),
+    hobby: getEditorFieldSchema({
+      required: 'Please enter the hobby'
+    })
+  })
+  .superRefine((value, context) => {
+    const { password, passwordConfirmation } = value
+    if (password !== passwordConfirmation) {
+      context.addIssue({
+        code: 'custom',
+        path: ['passwordConfirmation'],
+        message: 'Passwords do not match'
+      })
     }
-  ]
+  })
+
+const defaultFormValue: z.input<typeof formSchema> = {
+  fullName: '',
+  age: '',
+  birthdate: null,
+  gender: null,
+  phoneNumber: '',
+  email: '',
+  description: '',
+  department: null,
+  technologies: [],
+  graduatedUniversity: '',
+  resumes: [],
+  isDeepKnowledge: false,
+  username: '',
+  password: '',
+  passwordConfirmation: '',
+  hobby: ''
 }
-
-const FORM_SCHEMA = getFormSchema(FORM_DATA)
-
-const DEFAULT_FORM_VALUE = getDefaultFormValue(FORM_DATA)
 
 // Component
 export const SmartFormDemo = () => {
   // Hooks
-  const form = useForm({
-    resolver: zodResolver(FORM_SCHEMA),
-    defaultValues: DEFAULT_FORM_VALUE
+  const form = useAppForm({
+    formId: 'smart-form-demo',
+    defaultValues: defaultFormValue,
+    validators: {
+      onSubmit: formSchema
+    },
+    onSubmit: ({ value }) => {
+      const safeValue = formSchema.parse(value)
+      console.log(safeValue)
+    }
   })
 
   // Template
@@ -363,7 +134,180 @@ export const SmartFormDemo = () => {
         </DialogHeader>
 
         <DialogScrollableContent>
-          <SmartForm form={form} formData={FORM_DATA} />
+          <form
+            className='space-y-6'
+            id={form.formId}
+            onSubmit={(e) => {
+              e.preventDefault()
+              form.handleSubmit()
+            }}
+          >
+            <form.AppForm>
+              <form.FormContainer>
+                {/* Personal */}
+                <FieldSet>
+                  <FieldLegend>Personal</FieldLegend>
+                  <FieldDescription>Fill personal information</FieldDescription>
+
+                  {/* Form template fields */}
+                  <div className='grid grid-cols-3 gap-x-4 gap-y-6'>
+                    {/* <form.AppField
+                  name='province'
+                  listeners={{
+                    onChangeDebounceMs: 400,
+                    onChange: () => {
+                      form.setFieldValue('district', null)
+                      form.setFieldValue('ward', null)
+                    }
+                  }}
+                >
+                  {(field) => (
+                    <field.SelectWithQuery
+                      label='Province'
+                      isRequired
+                      originalApiPath='/version/1.0/options/province'
+                    />
+                  )}
+                </form.AppField> */}
+
+                    <form.AppField name='fullName'>
+                      {(field) => <field.Input isRequired label='Full name' />}
+                    </form.AppField>
+                    <form.AppField name='age'>{(field) => <field.Number isRequired label='Age' />}</form.AppField>
+                    <form.AppField name='birthdate'>
+                      {(field) => <field.Date isRequired label='Birthdate' />}
+                    </form.AppField>
+                    <form.AppField name='gender'>
+                      {(field) => (
+                        <field.SelectWithOptions
+                          isRequired
+                          label='Gender'
+                          options={[
+                            { value: 'male', label: 'Male' },
+                            { value: 'female', label: 'Female' }
+                          ]}
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField name='phoneNumber'>
+                      {(field) => <field.PhoneNumber isRequired label='Phone number' />}
+                    </form.AppField>
+                    <form.AppField name='email'>{(field) => <field.Input isRequired label='Email' />}</form.AppField>
+                    <form.AppField name='description'>
+                      {(field) => <field.Textarea className='col-span-full' isRequired label='Description' />}
+                    </form.AppField>
+                  </div>
+                </FieldSet>
+
+                {/* Professional skills */}
+                <FieldSet>
+                  <FieldLegend>Professional skills</FieldLegend>
+                  <FieldDescription>Fill professional skills</FieldDescription>
+
+                  {/* Form template fields */}
+                  <div className='grid grid-cols-3 gap-x-4 gap-y-6'>
+                    <form.AppField name='department'>
+                      {(field) => (
+                        <field.SelectWithOptions
+                          isRequired
+                          label='Department'
+                          options={[
+                            { value: 'development', label: 'Development' },
+                            { value: 'design', label: 'Design' },
+                            { value: 'marketing', label: 'Marketing' }
+                          ]}
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField name='technologies'>
+                      {(field) => (
+                        <field.MultiSelectWithOptions
+                          isRequired
+                          label='Technologies'
+                          options={[
+                            { value: 'react', label: 'React' },
+                            { value: 'nextjs', label: 'Next.js' },
+                            { value: 'tailwindcss', label: 'Tailwind CSS' },
+                            { value: 'typescript', label: 'TypeScript' }
+                          ]}
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField name='graduatedUniversity'>
+                      {(field) => (
+                        <field.AutocompleteWithOptions
+                          isRequired
+                          label='Graduated university'
+                          options={[
+                            {
+                              value: 'TDTU',
+                              label: 'Ton Duc Thang University'
+                            },
+                            {
+                              value: 'VLU',
+                              label: 'Van Lang University'
+                            },
+                            {
+                              value: 'UIT',
+                              label: 'University of information technology'
+                            }
+                          ]}
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField name='resumes'>
+                      {(field) => <field.MultiFile className='col-span-full' isRequired label='Resumes' />}
+                    </form.AppField>
+                    <form.AppField name='isDeepKnowledge'>
+                      {(field) => <field.Checkbox label='Is deep knowledge' />}
+                    </form.AppField>
+                  </div>
+                </FieldSet>
+
+                {/* Account */}
+                <FieldSet>
+                  <FieldLegend>Account</FieldLegend>
+                  <FieldDescription>Fill account information</FieldDescription>
+
+                  {/* Form template fields */}
+                  <div className='grid grid-cols-3 gap-x-4 gap-y-6'>
+                    <form.AppField name='username'>
+                      {(field) => <field.Input isRequired label='Username' />}
+                    </form.AppField>
+                    <form.AppField name='password'>
+                      {(field) => <field.Password isRequired label='Password' />}
+                    </form.AppField>
+                    <form.AppField name='passwordConfirmation'>
+                      {(field) => <field.Password isRequired label='Password confirmation' />}
+                    </form.AppField>
+                    <form.AppField name='hobby'>
+                      {(field) => <field.Editor className='col-span-full' isRequired label='Hobby' />}
+                    </form.AppField>
+                  </div>
+                </FieldSet>
+
+                {/* Action buttons */}
+                <div className='flex flex-col justify-stretch gap-4 xl:flex-row xl:justify-end'>
+                  <Button
+                    onClick={() => {
+                      form.reset()
+                    }}
+                    variant='outline'
+                  >
+                    Cancel
+                  </Button>
+
+                  <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+                    {([canSubmit, isSubmitting]) => (
+                      <Button disabled={!canSubmit} form={form.formId} isLoading={isSubmitting} type='submit'>
+                        Submit
+                      </Button>
+                    )}
+                  </form.Subscribe>
+                </div>
+              </form.FormContainer>
+            </form.AppForm>
+          </form>
         </DialogScrollableContent>
       </DialogContent>
     </Dialog>

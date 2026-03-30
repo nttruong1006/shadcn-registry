@@ -8,21 +8,22 @@ import {
   useQuery
 } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import { type UIEvent, useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
-import type { SmartFormFieldData } from './base'
-import { useDependencyFields } from './dependency'
 
 // Use options query
-export const useOptionsQuery = ({ fieldData }: { fieldData: SmartFormFieldData }) => {
-  // Hooks
-  const { dependencyFieldCodes, dependencyFieldValuePerCode } = useDependencyFields({ fieldData })
-
+export const useOptionsQuery = ({
+  originalApiPath,
+  dependencyFieldsValue
+}: {
+  originalApiPath: string
+  dependencyFieldsValue?: Record<string, unknown>
+}) => {
   // States
-  const [apiPath, setApiPath] = useState(fieldData.config?.apiPath)
-  const [isEnabled, setIsEnabled] = useState(!fieldData.config?.apiPath?.includes('/{'))
+  const [apiPath, setApiPath] = React.useState(originalApiPath)
+  const [isEnabled, setIsEnabled] = React.useState(!originalApiPath?.includes('/{'))
 
   // Queries
   const optionsQuery = useQuery<{
@@ -38,32 +39,32 @@ export const useOptionsQuery = ({ fieldData }: { fieldData: SmartFormFieldData }
   })
 
   // Effects
-  useEffect(() => {
-    if (!fieldData.config?.apiPath) {
+  React.useEffect(() => {
+    if (!dependencyFieldsValue) {
       return
     }
 
-    const newQueryPath = dependencyFieldCodes.reduce<string>((result, code) => {
-      const value = dependencyFieldValuePerCode[code]
-      if (value == null) {
+    const newQueryPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
+      const value = dependencyFieldsValue[fieldName]
+      if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
         return result
       }
-      return result.replace(`{${code}}`, value)
-    }, fieldData.config.apiPath)
+      return result.replace(`{${fieldName}}`, value.toString())
+    }, originalApiPath)
 
     setApiPath(newQueryPath)
     setIsEnabled(!newQueryPath?.includes('/{'))
-  }, [dependencyFieldCodes, dependencyFieldValuePerCode, fieldData])
+  }, [dependencyFieldsValue, originalApiPath])
 
   // Memos
-  const options = useMemo<Option[]>(() => {
+  const options = React.useMemo<Option[]>(() => {
     if (!isEnabled) {
       return []
     }
     return (
       optionsQuery.data?.responseData?.rows.map((option) => ({
         value: option.value,
-        label: JSON.stringify(option.label)
+        label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label)
       })) ?? []
     )
   }, [isEnabled, optionsQuery.data])
@@ -92,7 +93,10 @@ export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (q
 }
 
 // Fetch next page
-export const fetchNextPage = (args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) => {
+export const fetchNextPage = (args: {
+  event: React.UIEvent<HTMLDivElement, UIEvent>
+  infiniteQuery: UseInfiniteQueryResult
+}) => {
   // Args
   const { event, infiniteQuery } = args
 
@@ -108,21 +112,20 @@ export const fetchNextPage = (args: { event: UIEvent<HTMLDivElement>; infiniteQu
 
 // Use options infinite query
 export const useOptionsInfiniteQuery = ({
-  fieldData,
+  originalApiPath,
+  dependencyFieldsValue,
   selectedValue,
   isLabelAsValue = false
 }: {
-  fieldData: SmartFormFieldData
-  selectedValue: string | null // If value is array, separate by the "," character
+  originalApiPath: string
+  selectedValue: string | null | undefined // If value is array, separate by the "," character
+  dependencyFieldsValue?: Record<string, unknown>
   isLabelAsValue?: boolean
 }) => {
-  // Hooks
-  const { dependencyFieldCodes, dependencyFieldValuePerCode } = useDependencyFields({ fieldData })
-
   // States
-  const [apiPath, setApiPath] = useState(fieldData.config?.apiPath)
-  const [isEnabled, setIsEnabled] = useState(!fieldData.config?.apiPath?.includes('/{'))
-  const [searchKeyword, setSearchKeyword] = useState('')
+  const [apiPath, setApiPath] = React.useState(originalApiPath)
+  const [isEnabled, setIsEnabled] = React.useState(!originalApiPath?.includes('/{'))
+  const [searchKeyword, setSearchKeyword] = React.useState('')
 
   // Debounced
   const debouncedSearchKeyword = useDebounce(isLabelAsValue ? selectedValue?.trim() : searchKeyword.trim(), 400)
@@ -151,25 +154,25 @@ export const useOptionsInfiniteQuery = ({
   })
 
   // Effects
-  useEffect(() => {
-    if (!fieldData.config?.apiPath) {
+  React.useEffect(() => {
+    if (!dependencyFieldsValue) {
       return
     }
 
-    const newQueryPath = dependencyFieldCodes.reduce<string>((result, code) => {
-      const value = dependencyFieldValuePerCode[code]
-      if (value == null) {
+    const newQueryPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
+      const value = dependencyFieldsValue[fieldName]
+      if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
         return result
       }
-      return result.replace(`{${code}}`, value)
-    }, fieldData.config.apiPath)
+      return result.replace(`{${fieldName}}`, value.toString())
+    }, originalApiPath)
 
     setApiPath(newQueryPath)
     setIsEnabled(!newQueryPath?.includes('/{'))
-  }, [dependencyFieldCodes, dependencyFieldValuePerCode, fieldData])
+  }, [dependencyFieldsValue, originalApiPath])
 
   // Memos
-  const options = useMemo<Option[]>(() => {
+  const options = React.useMemo<Option[]>(() => {
     if (!isEnabled) {
       return []
     }
