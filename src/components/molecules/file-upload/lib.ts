@@ -1,0 +1,2 @@
+// biome-ignore lint/performance/noBarrelFile: ignore
+export * from '@/registry/new-york/molecules/file-upload/components/lib'

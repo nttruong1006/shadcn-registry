@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { toast } from 'sonner'
 
-// [T] Uploaded file
+// Uploaded file
 export interface UploadedFile {
   id: string
   path: string
@@ -16,20 +16,20 @@ export interface UploadedFile {
   >
 }
 
-// [U] Get file
+// Get file url
 export const getFileUrl = (path: string) => {
   if (path.startsWith('https')) {
     return path
   }
-  return `${path}`
+  return `https://${path}`
 }
 
-// [U] Get size text
+// Get size text
 export const getSizeText = (size: number) => {
   return size < 1024 * 1024 ? `${(size / 1024).toFixed(2)}Kb` : `${(size / 1024 / 1024).toFixed(2)}MB`
 }
 
-// [H] Use file upload
+// Use file upload
 export const useFileUpload = (args?: { isThrowError?: boolean }) => {
   // Args
   const { isThrowError = false } = args ?? {}

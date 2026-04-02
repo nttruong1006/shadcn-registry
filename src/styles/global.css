@@ -50,6 +50,7 @@
   --animate-canopy-horizontal: canopy-x var(--transition-duration) linear
     infinite;
   --animate-canopy-vertical: canopy-y var(--transition-duration) linear infinite;
+  --default-transition-duration: 200ms;
 
   @keyframes canopy-x {
     from {
