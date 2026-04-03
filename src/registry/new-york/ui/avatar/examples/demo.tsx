@@ -1,18 +1,27 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/new-york/ui/avatar/components/avatar'
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage
+} from '@/components/atoms/avatar'
 
 // Component
-export const AvatarDemo = () => {
+export function AvatarDemo() {
+  // Template
   return (
-    <div className='flex flex-row flex-wrap items-center gap-12'>
+    <div className='flex flex-row flex-wrap items-center gap-6 md:gap-12'>
       <Avatar>
-        <AvatarImage alt='@shadcn' src='https://github.com/shadcn.png' />
+        <AvatarImage alt='@shadcn' className='grayscale' src='https://github.com/shadcn.png' />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-      <Avatar className='rounded-lg'>
+      <Avatar>
         <AvatarImage alt='@evilrabbit' src='https://github.com/evilrabbit.png' />
         <AvatarFallback>ER</AvatarFallback>
+        <AvatarBadge className='bg-green-600 dark:bg-green-800' />
       </Avatar>
-      <div className='flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale'>
+      <AvatarGroup className='grayscale'>
         <Avatar>
           <AvatarImage alt='@shadcn' src='https://github.com/shadcn.png' />
           <AvatarFallback>CN</AvatarFallback>
@@ -25,7 +34,8 @@ export const AvatarDemo = () => {
           <AvatarImage alt='@evilrabbit' src='https://github.com/evilrabbit.png' />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>
-      </div>
+        <AvatarGroupCount>+3</AvatarGroupCount>
+      </AvatarGroup>
     </div>
   )
 }

@@ -12,18 +12,48 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='ui/avatar/demo' />
 
 ## Installation
-
 <InstallationCard registryName='avatar' />
 
 ## Usage
-
 ```tsx
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/atoms/avatar"
 ```
 
 ```tsx
 <Avatar>
-  <AvatarImage src='https://github.com/shadcn.png' />
+  <AvatarImage src="https://github.com/shadcn.png" />
   <AvatarFallback>CN</AvatarFallback>
 </Avatar>
 ```
+
+## Examples
+### Basic
+<CodePreview path='ui/avatar/basic' />
+
+### Badge
+Use the `AvatarBadge` component to add a badge to the avatar. The badge is positioned at the bottom right of the avatar.
+<CodePreview path='ui/avatar/badge' />
+
+### Badge with icon
+You can also use an icon inside `AvatarBadge`.
+<CodePreview path='ui/avatar/badge-with-icon' />
+
+### Avatar Group
+Use the `AvatarGroup` component to add a group of avatars.
+<CodePreview path='ui/avatar/avatar-group' />
+
+### Avatar Group Count
+Use `AvatarGroupCount` to add a count to the group.
+<CodePreview path='ui/avatar/avatar-group-count' />
+
+### Avatar Group with Icon 
+You can also use an icon inside `AvatarGroupCount`.
+<CodePreview path='ui/avatar/avatar-group-with-icon' />
+
+### Sizes
+Use the `size` prop to change the size of the avatar.
+<CodePreview path='ui/avatar/sizes' />
+
+### Dropdown
+You can use the `Avatar` component as a trigger for a dropdown menu.
+<CodePreview path='ui/avatar/dropdown' />
