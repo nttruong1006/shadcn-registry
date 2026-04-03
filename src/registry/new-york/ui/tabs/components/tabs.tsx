@@ -49,7 +49,7 @@ export const Tabs = ({
   const [previousValue, setPreviousValue] = useState<string | null>(null)
   const [direction, setDirection] = useState(0)
 
-  const value = controlledValue !== undefined ? controlledValue : internalValue
+  const value = controlledValue === undefined ? internalValue : controlledValue
 
   // Methods
   const changeValue = useCallback(

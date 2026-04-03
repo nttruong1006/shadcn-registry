@@ -10,7 +10,8 @@
     "registry:build": "shadcn build",
     "prepare": "husky || true",
     "lint-staged": "lint-staged",
-    "check": "biome check --write --unsafe"
+    "check": "biome check --write --unsafe",
+    "test": "ultracite fix"
   },
   "lint-staged": {
     "src/**/*.{astro,mdx,ts,tsx}": [
@@ -120,7 +121,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.11",
+    "@biomejs/biome": "^2.4.10",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@types/lodash.debounce": "^4.0.9",

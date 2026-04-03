@@ -56,7 +56,8 @@
     "actions": {
       "source": {
         "organizeImports": "on",
-        "useSortedProperties": "on"
+        "useSortedProperties": "on",
+        "useSortedAttributes": "on"
       }
     }
   },
@@ -76,7 +77,8 @@
           },
           "correctness": {
             "noUnusedImports": "off",
-            "noUnusedVariables": "off"
+            "noUnusedVariables": "off",
+            "useJsxKeyInIterable": "off"
           }
         }
       }

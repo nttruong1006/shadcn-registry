@@ -48,7 +48,7 @@ export const FileUpload = ({
   const isReplaceOnSelect = maxFiles === 1 ? true : isReplaceOnSelectProp
   const multiple = maxFiles > 1
   const isDisabled = Boolean(
-    isDisabledProp !== undefined ? isDisabledProp : value.length === maxFiles && !isReplaceOnSelect
+    isDisabledProp === undefined ? value.length === maxFiles && !isReplaceOnSelect : isDisabledProp
   )
 
   // Dropzone

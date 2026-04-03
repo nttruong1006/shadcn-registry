@@ -24,7 +24,7 @@ export const FileUploadDemo = () => {
       <FileUploadInput />
       <FileUploadContent>
         {value.map((item, index) => (
-          <FileUploadItem index={index} key={`${index}-${item instanceof File ? item.name : item.id}`} value={item} />
+          <FileUploadItem index={index} key={`${item instanceof File ? item.name : item.id}`} value={item} />
         ))}
       </FileUploadContent>
     </FileUpload>

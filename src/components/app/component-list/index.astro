@@ -1,5 +1,5 @@
 ---
-import { z } from 'astro:content'
+import { z } from 'astro/zod'
 
 // Schema
 const componentFileSchema = z.object({
@@ -58,7 +58,7 @@ for (const filePath of filePaths) {
     <h3 class="text-2xl font-bold">UI (Shadcn components)</h3>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-10">
       {uiComponents.map((component) => (
-          <a href={`/components/ui/${component.name}`} class='no-underline hover:underline font-medium'>
+          <a class='font-medium no-underline hover:underline' href={`/components/ui/${component.name}`} >
             {component.title}
           </a>
         ))}
@@ -69,7 +69,7 @@ for (const filePath of filePaths) {
     <h3 class="text-2xl font-bold">Molecules (Components that has built on top of Shadcn components)</h3>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-10">
       {moleculeComponents.map((component) => (
-          <a href={`/components/molecules/${component.name}`} class='no-underline hover:underline font-medium'>
+          <a class='font-medium no-underline hover:underline' href={`/components/molecules/${component.name}`} >
             {component.title}
           </a>
         ))}
@@ -82,7 +82,7 @@ for (const filePath of filePaths) {
     </h3>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-10">
       {organismComponents.map((component) => (
-          <a href={`/components/organisms/${component.name}`} class='no-underline hover:underline font-medium'>
+          <a class='font-medium no-underline hover:underline' href={`/components/organisms/${component.name}`}>
             {component.title}
           </a>
         ))}

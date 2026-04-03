@@ -2,9 +2,6 @@
 # Exit on any error
 set -e
 
-# Build the project
-pnpm build
-
 # Check if there are any staged files
 if [ -z "$(git diff --cached --name-only)" ]; then
   echo "No staged files to format"
@@ -67,6 +64,9 @@ NEW_STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
 if [ "$STAGED_HASH" != "$NEW_STAGED_HASH" ]; then
   echo "✨ Files formatted by Ultracite"
 fi
+
+# Build the project
+pnpm build
 
 # Build registries
 # pnpm registry:build
