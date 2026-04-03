@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Context Menu",
   "description": "Displays a menu to the user — such as a set of actions or functions — triggered by a button.",
-  "dependencies": [
-    "@radix-ui/react-context-menu",
-    "lucide-react"
-  ],
+  "dependencies": ["@radix-ui/react-context-menu", "lucide-react"],
   "files": [
     {
       "path": "src/registry/new-york/ui/context-menu/components/context-menu.tsx",

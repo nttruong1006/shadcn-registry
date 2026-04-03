@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Input OTP",
   "description": "Accessible one-time password component with copy paste functionality.",
-  "dependencies": [
-    "input-otp",
-    "lucide-react"
-  ],
+  "dependencies": ["input-otp", "lucide-react"],
   "files": [
     {
       "path": "src/registry/new-york/ui/input-otp/components/input-otp.tsx",

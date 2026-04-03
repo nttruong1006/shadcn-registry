@@ -4,11 +4,7 @@
   "type": "registry:ui",
   "title": "Calendar",
   "description": "A date field component that allows users to enter and edit date.",
-  "dependencies": [
-    "date-fns",
-    "lucide-react",
-    "react-day-picker"
-  ],
+  "dependencies": ["date-fns", "lucide-react", "react-day-picker"],
   "registryDependencies": [
     "https://ntt-shadcn-registry.vercel.app/r/button.json",
     "https://ntt-shadcn-registry.vercel.app/r/spinner.json"

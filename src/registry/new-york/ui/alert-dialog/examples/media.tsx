@@ -1,3 +1,4 @@
+import { CircleFadingPlusIcon } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -6,29 +7,33 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/atoms/alert-dialog'
 import { Button } from '@/components/atoms/button'
 
 // Component
-export function AlertDialogDemo() {
+export function AlertDialogWithMedia() {
   // Template
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='outline'>Show Dialog</Button>
+        <Button variant='outline'>Share Project</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogMedia>
+            <CircleFadingPlusIcon />
+          </AlertDialogMedia>
+          <AlertDialogTitle>Share this project?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your account from our servers.
+            Anyone with the link will be able to view and edit this project.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction>Share</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

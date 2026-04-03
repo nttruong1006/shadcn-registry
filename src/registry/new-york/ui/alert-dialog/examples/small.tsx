@@ -12,23 +12,23 @@ import {
 import { Button } from '@/components/atoms/button'
 
 // Component
-export function AlertDialogDemo() {
+export function AlertDialogSmall() {
   // Template
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant='outline'>Show Dialog</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent size='sm'>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Allow accessory to connect?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your account from our servers.
+            Do you want to allow the USB accessory to connect to this device?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Don&apos;t allow</AlertDialogCancel>
+          <AlertDialogAction>Allow</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Spinner",
   "description": "An indicator that can be used to show a loading state.",
-  "dependencies": [
-    "lucide-react"
-  ],
+  "dependencies": ["lucide-react"],
   "files": [
     {
       "path": "src/registry/new-york/ui/spinner/components/spinner.tsx",

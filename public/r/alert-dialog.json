@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Alert Dialog",
   "description": "A modal dialog that interrupts the user with important content and expects a response.",
-  "dependencies": [
-    "@radix-ui/react-alert-dialog",
-    "lucide-react"
-  ],
+  "dependencies": ["@radix-ui/react-alert-dialog", "lucide-react"],
   "registryDependencies": [
     "https://ntt-shadcn-registry.vercel.app/r/button.json",
     "https://ntt-shadcn-registry.vercel.app/r/spinner.json"

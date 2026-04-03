@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Hover Card",
   "description": "For sighted users to preview content available behind a link.",
-  "dependencies": [
-    "@radix-ui/react-hover-card"
-  ],
+  "dependencies": ["@radix-ui/react-hover-card"],
   "files": [
     {
       "path": "src/registry/new-york/ui/hover-card/components/hover-card.tsx",

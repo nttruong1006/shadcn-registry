@@ -11,10 +11,10 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 
 <CodePreview path='ui/accordion/demo' className='[&_.component-container]:items-start' />
 
-## Installation
+### Installation
 <InstallationCard registryName='accordion' />
 
-## Usage
+### Usage
 ```tsx
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/atoms/accordion'
 ```
@@ -28,22 +28,22 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 </Accordion>
 ```
 
-## Examples
-### Basic
+### Examples
+#### Basic
 <CodePreview path='ui/accordion/basic' className='[&_.component-container]:items-start'/>
 
-### Multiple
+#### Multiple
 Use `type="multiple"` to allow multiple items to be open at the same time.
 <CodePreview path='ui/accordion/multiple' className='[&_.component-container]:items-start'/>
 
-### Disabled
+#### Disabled
 Use the `disabled` prop on `AccordionItem` to disable individual items.
 <CodePreview path='ui/accordion/disabled' className='[&_.component-container]:items-start'/>
 
-### Borders
+#### Borders
 Add `border` to the `Accordion` and `border-b last:border-b-0` to the `AccordionItem` to add borders to the items.
 <CodePreview path='ui/accordion/borders' className='[&_.component-container]:items-start'/>
 
-### Card
+#### Card
 Wrap the `Accordion` in a `Card` component.
 <CodePreview path='ui/accordion/card' className='[&_.component-container]:items-start'/>

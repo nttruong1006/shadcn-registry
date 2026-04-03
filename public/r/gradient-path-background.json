@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Gradient Path Background",
   "description": "A set of SVG paths that animate as if being drawn. Great for tech hero backgrounds.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "src/registry/new-york/molecules/gradient-path-background/components/gradient-path-background.tsx",

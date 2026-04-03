@@ -11,34 +11,35 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 
 <CodePreview path='ui/alert-dialog/demo' />
 
-## Installation
-
+### Installation
 <InstallationCard registryName='alert-dialog' />
 
-## Usage
-
+### Usage
 ```tsx
 import {
   AlertDialog,
-  AlertDialogTitle,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogContent,
+  AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogDescription
-} from '@/components/ui/alert-dialog'
+} from "@/components/atoms/alert-dialog"
 ```
 
 ```tsx
 <AlertDialog>
-  <AlertDialogTrigger>Open</AlertDialogTrigger>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Show Dialog</Button>
+  </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
       <AlertDialogDescription>
-        This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+        This action cannot be undone. This will permanently delete your account
+        from our servers.
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
@@ -48,3 +49,19 @@ import {
   </AlertDialogContent>
 </AlertDialog>
 ```
+
+### Examples
+#### Basic
+<CodePreview path='ui/alert-dialog/basic' />
+
+#### Small
+<CodePreview path='ui/alert-dialog/small' />
+
+#### Media
+<CodePreview path='ui/alert-dialog/media' />
+
+#### Small with media
+<CodePreview path='ui/alert-dialog/small-with-media' />
+
+#### Destructive
+<CodePreview path='ui/alert-dialog/destructive' />

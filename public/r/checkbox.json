@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Checkbox",
   "description": "A control that allows the user to toggle between checked and not checked.",
-  "dependencies": [
-    "@radix-ui/react-checkbox",
-    "lucide-react"
-  ],
+  "dependencies": ["@radix-ui/react-checkbox", "lucide-react"],
   "files": [
     {
       "path": "src/registry/new-york/ui/checkbox/components/checkbox.tsx",

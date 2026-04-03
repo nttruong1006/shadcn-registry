@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Tilt Card",
   "description": "Smooth tilt card that responds naturally to your cursor, giving the card a more polished, modern look.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "src/registry/new-york/molecules/tilt-card/components/tilt-card.tsx",

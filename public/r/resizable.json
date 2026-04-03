@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Resizable",
   "description": "Accessible resizable panel groups and layouts with keyboard support.",
-  "dependencies": [
-    "lucide-react",
-    "react-resizable-panels"
-  ],
+  "dependencies": ["lucide-react", "react-resizable-panels"],
   "files": [
     {
       "path": "src/registry/new-york/ui/resizable/components/resizable.tsx",

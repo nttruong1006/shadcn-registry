@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Empty",
   "description": "Use the Empty component to display a empty state.",
-  "dependencies": [
-    "class-variance-authority"
-  ],
+  "dependencies": ["class-variance-authority"],
   "files": [
     {
       "path": "src/registry/new-york/ui/empty/components/empty.tsx",

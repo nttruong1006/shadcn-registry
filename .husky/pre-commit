@@ -69,7 +69,7 @@ if [ "$STAGED_HASH" != "$NEW_STAGED_HASH" ]; then
 fi
 
 # Build registries
-pnpm registry:build
-git add ./public/r
+# pnpm registry:build
+# git add ./public/r
 
 exit $FORMAT_EXIT_CODE

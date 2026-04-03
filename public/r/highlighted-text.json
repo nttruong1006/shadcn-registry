@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Highlighted Text",
   "description": "Highlighted text with solid background and decorative markers for emphasis.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "src/registry/new-york/molecules/highlighted-text/components/highlighted-text.tsx",

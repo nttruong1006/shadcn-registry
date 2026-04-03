@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Separator",
   "description": "Visually or semantically separates content.",
-  "dependencies": [
-    "@radix-ui/react-separator"
-  ],
+  "dependencies": ["@radix-ui/react-separator"],
   "files": [
     {
       "path": "src/registry/new-york/ui/separator/components/separator.tsx",

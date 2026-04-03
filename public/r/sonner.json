@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Sonner",
   "description": "An opinionated toast component for React.",
-  "dependencies": [
-    "lucide-react",
-    "sonner"
-  ],
+  "dependencies": ["lucide-react", "sonner"],
   "files": [
     {
       "path": "src/registry/new-york/ui/sonner/components/sonner.tsx",

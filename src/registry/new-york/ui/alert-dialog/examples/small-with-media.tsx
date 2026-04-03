@@ -1,3 +1,4 @@
+import { BluetoothIcon } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -6,29 +7,34 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/atoms/alert-dialog'
 import { Button } from '@/components/atoms/button'
 
 // Component
-export function AlertDialogDemo() {
+export function AlertDialogSmallWithMedia() {
   // Template
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant='outline'>Show Dialog</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+
+      <AlertDialogContent size='sm'>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogMedia>
+            <BluetoothIcon />
+          </AlertDialogMedia>
+          <AlertDialogTitle>Allow accessory to connect?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your account from our servers.
+            Do you want to allow the USB accessory to connect to this device?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel>Don&apos;t allow</AlertDialogCancel>
+          <AlertDialogAction>Allow</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

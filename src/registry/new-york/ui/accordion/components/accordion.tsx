@@ -45,7 +45,7 @@ export function AccordionContent({ className, children, ...props }: ComponentPro
   // Template
   return (
     <AccordionPrimitive.Content
-      className='overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down'
+      className='overflow-hidden text-sm data-closed:animate-accordion-up data-open:animate-accordion-down'
       data-slot='accordion-content'
       {...props}
     >

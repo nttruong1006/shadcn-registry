@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Dialog",
   "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
-  "dependencies": [
-    "@radix-ui/react-dialog",
-    "lucide-react"
-  ],
+  "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
   "files": [
     {
       "path": "src/registry/new-york/ui/dialog/components/dialog.tsx",

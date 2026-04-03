@@ -4,9 +4,7 @@
   "type": "registry:component",
   "title": "Pdf Viewer",
   "description": "Embed PDF files without the pain.",
-  "dependencies": [
-    "@embedpdf/react-pdf-viewer"
-  ],
+  "dependencies": ["@embedpdf/react-pdf-viewer"],
   "files": [
     {
       "path": "src/registry/new-york/organisms/pdf-viewer/components/lib.ts",

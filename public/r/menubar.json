@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Menubar",
   "description": "A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.",
-  "dependencies": [
-    "@radix-ui/react-menubar",
-    "lucide-react"
-  ],
+  "dependencies": ["@radix-ui/react-menubar", "lucide-react"],
   "files": [
     {
       "path": "src/registry/new-york/ui/menubar/components/menubar.tsx",

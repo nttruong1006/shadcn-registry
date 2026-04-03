@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Drawer",
   "description": "A drawer component for React.",
-  "dependencies": [
-    "vaul"
-  ],
+  "dependencies": ["vaul"],
   "files": [
     {
       "path": "src/registry/new-york/ui/drawer/components/drawer.tsx",

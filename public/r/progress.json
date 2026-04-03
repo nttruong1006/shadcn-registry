@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Progress",
   "description": "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  "dependencies": [
-    "@radix-ui/react-progress"
-  ],
+  "dependencies": ["@radix-ui/react-progress"],
   "files": [
     {
       "path": "src/registry/new-york/ui/progress/components/progress.tsx",
