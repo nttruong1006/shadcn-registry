@@ -1,0 +1,46 @@
+---
+title: Alert
+description: Displays a callout for user attention.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='alert' />
+
+<CodePreview path='ui/alert/demo' />
+
+## Installation
+<InstallationCard registryName='alert' />
+
+## Usage
+```tsx
+import { Alert, AlertDescription, AlertTitle } from '@/components/atoms/alert'
+```
+
+```tsx
+<Alert>
+  <InfoIcon />
+  <AlertTitle>Heads up!</AlertTitle>
+  <AlertDescription>
+    You can add components and dependencies to your app using the cli.
+  </AlertDescription>
+  <AlertAction>
+    <Button variant="outline">Enable</Button>
+  </AlertAction>
+</Alert>
+```
+
+## Examples
+### Basic
+<CodePreview path='ui/alert/basic' />
+
+### Destructive
+<CodePreview path='ui/alert/destructive' />
+
+### Action
+<CodePreview path='ui/alert/action' />
+
+### Custom Colors
+<CodePreview path='ui/alert/custom-colors' />

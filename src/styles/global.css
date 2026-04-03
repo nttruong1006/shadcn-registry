@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 @import "@astrojs/starlight-tailwind";
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
@@ -45,7 +47,19 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Base override */
+  --font-geist: "Geist Variable", sans-serif;
+  --font-geist-mono: "Geist Mono Variable", sans-serif;
+  --default-font-family: var(--font-geist);
+
+  /* Starlight */
   --color-code: var(--code);
+
+  /* Your preferred text font. Starlight uses a system font stack by default. */
+  --font-sans: var(--font-geist);
+
+  /* Your preferred code font. Starlight uses system monospace fonts by default. */
+  --font-mono: var(--font-geist-mono);
 
   --animate-canopy-horizontal: canopy-x var(--transition-duration) linear
     infinite;
