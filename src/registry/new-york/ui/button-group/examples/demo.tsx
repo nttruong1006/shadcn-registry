@@ -3,15 +3,15 @@ import {
   ArrowLeftIcon,
   CalendarPlusIcon,
   ClockIcon,
-  ListFilterPlusIcon,
+  ListFilterIcon,
   MailCheckIcon,
   MoreHorizontalIcon,
   TagIcon,
   Trash2Icon
 } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { ButtonGroup } from '@/registry/new-york/ui/button-group/components/button-group'
+import { Button } from '@/components/atoms/button'
+import { ButtonGroup } from '@/components/atoms/button-group'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,10 +24,10 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+} from '@/components/atoms/dropdown-menu'
 
 // Component
-export const ButtonGroupDemo = () => {
+export function ButtonGroupDemo() {
   // States
   const [label, setLabel] = useState('personal')
 
@@ -51,7 +51,7 @@ export const ButtonGroupDemo = () => {
               <MoreHorizontalIcon />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align='end' className='w-52'>
+          <DropdownMenuContent align='end' className='w-40'>
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <MailCheckIcon />
@@ -73,7 +73,7 @@ export const ButtonGroupDemo = () => {
                 Add to Calendar
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <ListFilterPlusIcon />
+                <ListFilterIcon />
                 Add to List
               </DropdownMenuItem>
               <DropdownMenuSub>

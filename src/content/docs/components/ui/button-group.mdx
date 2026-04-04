@@ -12,13 +12,15 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='ui/button-group/demo' />
 
 ## Installation
-
 <InstallationCard registryName='button-group' />
 
 ## Usage
-
 ```tsx
-import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from '@/registry/new-york/ui/button/components/button-group'
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+} from "@/components/atoms/button-group"
 ```
 
 ```tsx
@@ -27,3 +29,40 @@ import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from '@/registry/n
   <Button>Button 2</Button>
 </ButtonGroup>
 ```
+
+## Examples
+### Orientation
+<CodePreview path='ui/button-group/orientation' />
+
+### Size
+Control the size of buttons using the `size` prop on individual buttons.
+<CodePreview path='ui/button-group/size' />
+
+### Nested
+Nest `ButtonGroup` components to create button groups with spacing.
+<CodePreview path='ui/button-group/nested' />
+
+### Separator
+The `ButtonGroupSeparator` component visually divides buttons within a group.
+Buttons with variant `outline` do not need a separator since they have a border. For other variants, a separator is recommended to improve the visual hierarchy.
+<CodePreview path='ui/button-group/separator' />
+
+### Split
+Create a split button group by adding two buttons separated by a `ButtonGroupSeparator`.
+<CodePreview path='ui/button-group/split' />
+
+### Input
+Wrap an `Input` component with buttons.
+<CodePreview path='ui/button-group/input' />
+
+### Input Group
+Wrap an `InputGroup` component to create complex input layouts.
+<CodePreview path='ui/button-group/input-group' />
+
+### Dropdown Menu
+Create a split button group with a `DropdownMenu` component.
+<CodePreview path='ui/button-group/dropdown-menu' />
+
+### Select
+Pair with a Select component.
+<CodePreview path='ui/button-group/select' />
