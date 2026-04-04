@@ -1,0 +1,55 @@
+import { addDays } from 'date-fns'
+import { useState } from 'react'
+import { Button } from '@/components/atoms/button'
+import { Calendar } from '@/components/atoms/calendar'
+import { Card, CardContent, CardFooter } from '@/components/atoms/card'
+
+// Component
+export function CalendarWithPresets() {
+  // States
+  const [date, setDate] = useState<Date | undefined>(new Date(new Date().getFullYear(), 1, 12))
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date(new Date().getFullYear(), new Date().getMonth(), 1))
+
+  // Template
+  return (
+    <Card
+      className='mx-auto w-fit max-w-[300px]'
+      // size='sm'
+    >
+      <CardContent>
+        <Calendar
+          className='p-0 [--cell-size:--spacing(9.5)]'
+          fixedWeeks
+          mode='single'
+          month={currentMonth}
+          onMonthChange={setCurrentMonth}
+          onSelect={setDate}
+          selected={date}
+        />
+      </CardContent>
+      <CardFooter className='flex flex-wrap gap-2 border-t'>
+        {[
+          { label: 'Today', value: 0 },
+          { label: 'Tomorrow', value: 1 },
+          { label: 'In 3 days', value: 3 },
+          { label: 'In a week', value: 7 },
+          { label: 'In 2 weeks', value: 14 }
+        ].map((preset) => (
+          <Button
+            className='flex-1'
+            key={preset.value}
+            onClick={() => {
+              const newDate = addDays(new Date(), preset.value)
+              setDate(newDate)
+              setCurrentMonth(new Date(newDate.getFullYear(), newDate.getMonth(), 1))
+            }}
+            size='sm'
+            variant='outline'
+          >
+            {preset.label}
+          </Button>
+        ))}
+      </CardFooter>
+    </Card>
+  )
+}

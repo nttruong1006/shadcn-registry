@@ -1,6 +1,6 @@
 ---
 title: Calendar
-description: A date field component that allows users to enter and edit date.
+description: A calendar component that allows users to select a date or a range of dates.
 ---
 
 import CodePreview from '@/components/app/code-preview/index.astro'
@@ -12,27 +12,51 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='ui/calendar/demo' />
 
 ## Installation
-
 <InstallationCard registryName='calendar' />
 
 ## Usage
-
 ```tsx
-import { Calendar } from '@/components/ui/calendar'
+import { Calendar } from "@/components/atoms/calendar"
 ```
 
 ```tsx
 const [date, setDate] = React.useState<Date | undefined>(new Date())
 
-return <Calendar mode='single' selected={date} onSelect={setDate} className='rounded-lg border' />
+return (
+  <Calendar
+    mode="single"
+    selected={date}
+    onSelect={setDate}
+    className="rounded-lg border"
+  />
+)
 ```
 
 ## Examples
+### Basic
+A basic calendar component. We used `className="rounded-lg border"` to style the calendar.
+<CodePreview path='ui/calendar/basic' />
 
 ### Range Calendar
-
+Use the `mode="range"` prop to enable range selection.
 <CodePreview path='ui/calendar/range' />
 
 ### Month and Year Selector
-
+Use `captionLayout="dropdown"` to show month and year dropdowns.
 <CodePreview path='ui/calendar/month-and-year-selector' />
+
+### Presets
+<CodePreview path='ui/calendar/presets' />
+
+### Date and Time Picker
+<CodePreview path='ui/calendar/date-and-time-picker' />
+
+### Booked Dates
+<CodePreview path='ui/calendar/booked-dates' />
+
+### Custom Cell Size
+<CodePreview path='ui/calendar/custom-cell-size' />
+
+### Week Numbers
+Use `showWeekNumber` to show week numbers.
+<CodePreview path='ui/calendar/week-numbers' />
