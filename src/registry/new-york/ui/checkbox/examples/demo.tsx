@@ -1,39 +1,36 @@
-import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
-import { Label } from '@/registry/new-york/ui/label/components/label'
+import { Checkbox } from '@/components/atoms/checkbox'
+import { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel, FieldTitle } from '@/components/atoms/field'
+import { Label } from '@/components/atoms/label'
 
 // Component
-export const CheckboxDemo = () => {
+export function CheckboxDemo() {
   // Template
   return (
-    <div className='flex flex-col gap-6'>
-      <div className='flex items-center gap-3'>
-        <Checkbox id='terms' />
-        <Label htmlFor='terms'>Accept terms and conditions</Label>
-      </div>
-      <div className='flex items-start gap-3'>
-        <Checkbox defaultChecked id='terms-2' />
-        <div className='grid gap-2'>
-          <Label htmlFor='terms-2'>Accept terms and conditions</Label>
-          <p className='text-muted-foreground text-sm'>
-            By clicking this checkbox, you agree to the terms and conditions.
-          </p>
-        </div>
-      </div>
-      <div className='flex items-start gap-3'>
-        <Checkbox disabled id='toggle' />
-        <Label htmlFor='toggle'>Enable notifications</Label>
-      </div>
-      <Label className='flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-aria-checked:border-blue-600 has-aria-checked:bg-blue-50 dark:has-aria-checked:border-blue-900 dark:has-aria-checked:bg-blue-950'>
-        <Checkbox
-          className='data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700'
-          defaultChecked
-          id='toggle-2'
-        />
-        <div className='grid gap-1.5 font-normal'>
-          <p className='font-medium text-sm leading-none'>Enable notifications</p>
-          <p className='text-muted-foreground text-sm'>You can enable or disable notifications at any time.</p>
-        </div>
-      </Label>
-    </div>
+    <FieldGroup className='max-w-sm'>
+      <Field orientation='horizontal'>
+        <Checkbox id='terms-checkbox' name='terms-checkbox' />
+        <Label htmlFor='terms-checkbox'>Accept terms and conditions</Label>
+      </Field>
+      <Field orientation='horizontal'>
+        <Checkbox defaultChecked id='terms-checkbox-2' name='terms-checkbox-2' />
+        <FieldContent>
+          <FieldLabel htmlFor='terms-checkbox-2'>Accept terms and conditions</FieldLabel>
+          <FieldDescription>By clicking this checkbox, you agree to the terms.</FieldDescription>
+        </FieldContent>
+      </Field>
+      <Field data-disabled orientation='horizontal'>
+        <Checkbox disabled id='toggle-checkbox' name='toggle-checkbox' />
+        <FieldLabel htmlFor='toggle-checkbox'>Enable notifications</FieldLabel>
+      </Field>
+      <FieldLabel>
+        <Field orientation='horizontal'>
+          <Checkbox id='toggle-checkbox-2' name='toggle-checkbox-2' />
+          <FieldContent>
+            <FieldTitle>Enable notifications</FieldTitle>
+            <FieldDescription>You can enable or disable notifications at any time.</FieldDescription>
+          </FieldContent>
+        </Field>
+      </FieldLabel>
+    </FieldGroup>
   )
 }

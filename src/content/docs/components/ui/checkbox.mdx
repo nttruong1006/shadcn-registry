@@ -12,15 +12,37 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='ui/checkbox/demo' />
 
 ## Installation
-
 <InstallationCard registryName='checkbox' />
 
 ## Usage
-
 ```tsx
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox } from "@/components/atoms/checkbox"
 ```
 
 ```tsx
 <Checkbox />
 ```
+
+## Examples
+### Basic
+Pair the checkbox with `Field` and `FieldLabel` for proper layout and labeling.
+<CodePreview path='ui/checkbox/basic' />
+
+### Invalid State
+Set `aria-invalid` on the checkbox and `data-invalid` on the field wrapper to show the invalid styles.
+<CodePreview path='ui/checkbox/invalid-state' />
+
+### Description
+Use `FieldContent` and `FieldDescription` for helper text.
+<CodePreview path='ui/checkbox/description' />
+
+### Disabled
+Use the `disabled` prop to prevent interaction and add the `data-disabled` attribute to the `Field` component for disabled styles.
+<CodePreview path='ui/checkbox/disabled' />
+
+### Group
+Use multiple fields to create a checkbox list.
+<CodePreview path='ui/checkbox/group' />
+
+### Table
+<CodePreview path='ui/checkbox/table' />
