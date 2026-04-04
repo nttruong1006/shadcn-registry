@@ -12,11 +12,9 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='ui/card/demo' />
 
 ## Installation
-
 <InstallationCard registryName='card' />
 
 ## Usage
-
 ```tsx
 import {
   Card,
@@ -26,7 +24,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/atoms/card"
 ```
 
 ```tsx
@@ -44,3 +42,12 @@ import {
   </CardFooter>
 </Card>
 ```
+
+## Examples
+### Size
+Use the `size="sm"` prop to set the size of the card to small. The small size variant uses smaller spacing.
+<CodePreview path='ui/card/size' />
+
+### Image
+Add an image before the card header to create a card with an image.
+<CodePreview path='ui/card/image' />

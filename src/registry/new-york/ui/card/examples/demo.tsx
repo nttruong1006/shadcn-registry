@@ -1,4 +1,4 @@
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   Card,
   CardAction,
@@ -7,12 +7,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/registry/new-york/ui/card/components/card'
-import { Input } from '@/registry/new-york/ui/input/components/input'
-import { Label } from '@/registry/new-york/ui/label/components/label'
+} from '@/components/atoms/card'
+import { Input } from '@/components/atoms/input'
+import { Label } from '@/components/atoms/label'
 
 // Component
-export const CardDemo = () => {
+export function CardDemo() {
   // Template
   return (
     <Card className='w-full max-w-sm'>
@@ -33,8 +33,7 @@ export const CardDemo = () => {
             <div className='grid gap-2'>
               <div className='flex items-center'>
                 <Label htmlFor='password'>Password</Label>
-                {/** biome-ignore lint/a11y/useValidAnchor: Demo */}
-                <a className='ml-auto inline-block text-sm underline-offset-4 hover:underline' href='#'>
+                <a className='ml-auto inline-block text-sm underline-offset-4 hover:underline' href='/'>
                   Forgot your password?
                 </a>
               </div>
