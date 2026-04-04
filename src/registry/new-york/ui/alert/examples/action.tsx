@@ -9,7 +9,7 @@ export function AlertActionExample() {
       <AlertTitle>Dark mode is now available</AlertTitle>
       <AlertDescription>Enable it under your profile settings to get started.</AlertDescription>
       <AlertAction>
-        <Button size='sm' variant='default'>
+        <Button size='xs' variant='default'>
           Enable
         </Button>
       </AlertAction>

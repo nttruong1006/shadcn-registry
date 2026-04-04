@@ -1,8 +1,8 @@
 import { ArrowUpIcon } from 'lucide-react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 
 // Component
-export const ButtonDemo = () => {
+export function ButtonDemo() {
   // Template
   return (
     <div className='flex flex-wrap items-center gap-2 md:flex-row'>

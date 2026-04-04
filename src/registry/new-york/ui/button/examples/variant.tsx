@@ -1,4 +1,4 @@
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 
 // Component
 export const ButtonVariant = () => {
