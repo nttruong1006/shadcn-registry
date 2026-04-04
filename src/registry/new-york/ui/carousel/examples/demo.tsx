@@ -1,20 +1,14 @@
-import { Card, CardContent } from '@/registry/new-york/ui/card/components/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/registry/new-york/ui/carousel/components/carousel'
+import { Card, CardContent } from '@/components/atoms/card'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/atoms/carousel'
 
 // Component
-export const CarouselDemo = () => {
+export function CarouselDemo() {
   // Template
   return (
-    <Carousel className='w-full max-w-xs'>
+    <Carousel className='w-full max-w-48 sm:max-w-xs'>
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: Ignore
+          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
           <CarouselItem key={index}>
             <div className='p-1'>
               <Card>

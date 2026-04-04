@@ -24,7 +24,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/atoms/carousel"
 ```
 
 ```tsx
@@ -41,18 +41,22 @@ import {
 
 ## Examples
 
-### Size
-To set the size of the items, you can use the `basis` utility class on the `<CarouselItem />`.
-<CodePreview path='ui/carousel/size' />
+### Sizes
+To set the size of the items, you can use the `basis` utility class on the `CarouselItem`.
+<CodePreview path='ui/carousel/sizes' />
 
 ### Spacing
-To set the spacing between the items, we use a `pl-[VALUE]` utility on the `<CarouselItem />` and a negative `-ml-[VALUE]` on the `<CarouselContent />`.
+To set the spacing between the items, we use a `pl-[VALUE]` utility on the `CarouselItem` and a negative `-ml-[VALUE]` on the `CarouselContent`.
 <CodePreview path='ui/carousel/spacing' />
 
 ### Orientation
 Use the `orientation` prop to set the orientation of the carousel.
 <CodePreview path='ui/carousel/orientation' />
 
-### Autoplay
+### API
+Use a state and the `setApi` props to get an instance of the carousel API.
+<CodePreview path='ui/carousel/api' />
+
+### Plugins
 You can use the `plugins` prop to add plugins to the carousel.
-<CodePreview path='ui/carousel/autoplay' />
+<CodePreview path='ui/carousel/plugins' />

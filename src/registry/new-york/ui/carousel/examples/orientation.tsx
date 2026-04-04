@@ -1,14 +1,7 @@
-import { Card, CardContent } from '@/registry/new-york/ui/card/components/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/registry/new-york/ui/carousel/components/carousel'
+import { Card, CardContent } from '@/components/atoms/card'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/atoms/carousel'
 
-// Component
-export const CarouselOrientation = () => {
+export function CarouselOrientation() {
   // Template
   return (
     <Carousel
@@ -18,10 +11,10 @@ export const CarouselOrientation = () => {
       }}
       orientation='vertical'
     >
-      <CarouselContent className='-mt-1 h-[200px]'>
+      <CarouselContent className='-mt-1 h-[270px]'>
         {Array.from({ length: 5 }).map((_, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: Ignore
-          <CarouselItem className='pt-1 md:basis-1/2' key={index}>
+          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+          <CarouselItem className='basis-1/2 pt-1' key={index}>
             <div className='p-1'>
               <Card>
                 <CardContent className='flex items-center justify-center p-6'>

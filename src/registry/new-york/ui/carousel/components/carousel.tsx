@@ -1,5 +1,5 @@
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import {
   type ComponentProps,
   createContext,
@@ -9,23 +9,14 @@ import {
   useEffect,
   useState
 } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import { cn } from '@/utils/ui'
 
-type CarouselApi = UseEmblaCarouselType[1]
-type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
-type CarouselOptions = UseCarouselParameters[0]
-type CarouselPlugin = UseCarouselParameters[1]
+export type CarouselApi = UseEmblaCarouselType[1]
+export type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
+export type CarouselOptions = UseCarouselParameters[0]
+export type CarouselPlugin = UseCarouselParameters[1]
 
-const useCarousel = () => {
-  const context = useContext(CarouselContext)
-  if (!context) {
-    throw new Error('useCarousel must be used within the Carousel')
-  }
-  return context
-}
-
-// Carousel
 interface CarouselProps {
   opts?: CarouselOptions
   plugins?: CarouselPlugin
@@ -33,7 +24,7 @@ interface CarouselProps {
   setApi?: (api: CarouselApi) => void
 }
 
-type CarouselContextValue = {
+type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0]
   api: ReturnType<typeof useEmblaCarousel>[1]
   scrollPrev: () => void
@@ -42,9 +33,20 @@ type CarouselContextValue = {
   canScrollNext: boolean
 } & CarouselProps
 
-const CarouselContext = createContext<CarouselContextValue | null>(null)
+const CarouselContext = createContext<CarouselContextProps | null>(null)
 
-export const Carousel = ({
+export function useCarousel() {
+  const context = useContext(CarouselContext)
+
+  if (!context) {
+    throw new Error('useCarousel must be used within a <Carousel />')
+  }
+
+  return context
+}
+
+// Carousel
+export function Carousel({
   orientation = 'horizontal',
   opts,
   setApi,
@@ -52,8 +54,7 @@ export const Carousel = ({
   className,
   children,
   ...props
-}: ComponentProps<'div'> & CarouselProps) => {
-  // Hooks
+}: ComponentProps<'div'> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -61,12 +62,9 @@ export const Carousel = ({
     },
     plugins
   )
-
-  // States
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(false)
 
-  // Methods
   const onSelect = useCallback((api: CarouselApi) => {
     if (!api) {
       return
@@ -96,7 +94,6 @@ export const Carousel = ({
     [scrollPrev, scrollNext]
   )
 
-  // Effects
   useEffect(() => {
     if (!(api && setApi)) {
       return
@@ -131,7 +128,7 @@ export const Carousel = ({
         canScrollNext
       }}
     >
-      {/** biome-ignore lint/a11y/useSemanticElements: Ignore */}
+      {/** biome-ignore lint/a11y/useSemanticElements: ignore */}
       <div
         aria-roledescription='carousel'
         className={cn('relative', className)}
@@ -147,8 +144,7 @@ export const Carousel = ({
 }
 
 // Carousel content
-export const CarouselContent = ({ className, ...props }: ComponentProps<'div'>) => {
-  // Hooks
+export function CarouselContent({ className, ...props }: ComponentProps<'div'>) {
   const { carouselRef, orientation } = useCarousel()
 
   // Template
@@ -160,13 +156,12 @@ export const CarouselContent = ({ className, ...props }: ComponentProps<'div'>) 
 }
 
 // Carousel item
-export const CarouselItem = ({ className, ...props }: ComponentProps<'div'>) => {
-  // Hooks
+export function CarouselItem({ className, ...props }: ComponentProps<'div'>) {
   const { orientation } = useCarousel()
 
   // Template
   return (
-    // biome-ignore lint/a11y/useSemanticElements: Ignore
+    // biome-ignore lint/a11y/useSemanticElements: ignore
     <div
       aria-roledescription='slide'
       className={cn('min-w-0 shrink-0 grow-0 basis-full', orientation === 'horizontal' ? 'pl-4' : 'pt-4', className)}
@@ -178,20 +173,19 @@ export const CarouselItem = ({ className, ...props }: ComponentProps<'div'>) => 
 }
 
 // Carousel previous
-export const CarouselPrevious = ({
+export function CarouselPrevious({
   className,
   variant = 'outline',
-  size = 'icon',
+  size = 'icon-sm',
   ...props
-}: ComponentProps<typeof Button>) => {
-  // Hooks
+}: ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   // Template
   return (
     <Button
       className={cn(
-        'absolute size-8 rounded-full',
+        'absolute touch-manipulation rounded-full',
         orientation === 'horizontal'
           ? 'top-1/2 -left-12 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -204,27 +198,26 @@ export const CarouselPrevious = ({
       variant={variant}
       {...props}
     >
-      <ArrowLeftIcon />
+      <ChevronLeftIcon className='cn-rtl-flip' />
       <span className='sr-only'>Previous slide</span>
     </Button>
   )
 }
 
 // Carousel next
-export const CarouselNext = ({
+export function CarouselNext({
   className,
   variant = 'outline',
-  size = 'icon',
+  size = 'icon-sm',
   ...props
-}: ComponentProps<typeof Button>) => {
-  // Hooks
+}: ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   // Template
   return (
     <Button
       className={cn(
-        'absolute size-8 rounded-full',
+        'absolute touch-manipulation rounded-full',
         orientation === 'horizontal'
           ? 'top-1/2 -right-12 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -237,7 +230,7 @@ export const CarouselNext = ({
       variant={variant}
       {...props}
     >
-      <ArrowRightIcon />
+      <ChevronRightIcon className='cn-rtl-flip' />
       <span className='sr-only'>Next slide</span>
     </Button>
   )

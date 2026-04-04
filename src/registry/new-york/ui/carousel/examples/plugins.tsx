@@ -1,30 +1,24 @@
 import Autoplay from 'embla-carousel-autoplay'
 import { useRef } from 'react'
-import { Card, CardContent } from '@/registry/new-york/ui/card/components/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/registry/new-york/ui/carousel/components/carousel'
+import { Card, CardContent } from '@/components/atoms/card'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/atoms/carousel'
 
 // Component
-export const CarouselAutoplay = () => {
+export function CarouselPlugin() {
   // Refs
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
 
   // Template
   return (
     <Carousel
-      className='w-full max-w-xs'
+      className='w-full max-w-40 sm:max-w-xs'
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
       plugins={[plugin.current]}
     >
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: Ignore
+          // biome-ignore lint/suspicious/noArrayIndexKey: ignore
           <CarouselItem key={index}>
             <div className='p-1'>
               <Card>
