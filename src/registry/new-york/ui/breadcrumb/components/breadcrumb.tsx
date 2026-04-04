@@ -1,16 +1,15 @@
-import { Slot } from '@radix-ui/react-slot'
-import { ChevronRightIcon, MoreHorizontalIcon } from 'lucide-react'
-import type { ComponentProps } from 'react'
+import { ChevronRight, MoreHorizontal } from 'lucide-react'
+import { Slot } from 'radix-ui'
 import { cn } from '@/utils/ui'
 
 // Breadcrumb
-export const Breadcrumb = ({ ...props }: ComponentProps<'nav'>) => {
+export function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
   // Template
   return <nav aria-label='breadcrumb' data-slot='breadcrumb' {...props} />
 }
 
 // Breadcrumb list
-export const BreadcrumbList = ({ className, ...props }: ComponentProps<'ol'>) => {
+export function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   // Template
   return (
     <ol
@@ -25,33 +24,29 @@ export const BreadcrumbList = ({ className, ...props }: ComponentProps<'ol'>) =>
 }
 
 // Breadcrumb item
-export const BreadcrumbItem = ({ className, ...props }: ComponentProps<'li'>) => {
+export function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   // Template
   return <li className={cn('inline-flex items-center gap-1.5', className)} data-slot='breadcrumb-item' {...props} />
 }
 
 // Breadcrumb link
-export const BreadcrumbLink = ({
+export function BreadcrumbLink({
   asChild,
   className,
   ...props
-}: ComponentProps<'a'> & {
+}: React.ComponentProps<'a'> & {
   asChild?: boolean
-}) => {
-  const Comp = asChild ? Slot : 'a'
+}) {
+  const Comp = asChild ? Slot.Root : 'a'
 
   // Template
   return (
-    <Comp
-      className={cn('cursor-pointer transition-colors hover:text-foreground', className)}
-      data-slot='breadcrumb-link'
-      {...props}
-    />
+    <Comp className={cn('transition-colors hover:text-foreground', className)} data-slot='breadcrumb-link' {...props} />
   )
 }
 
 // Breadcrumb page
-export const BreadcrumbPage = ({ className, ...props }: ComponentProps<'span'>) => {
+export function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
   // Template
   return (
     <span
@@ -59,13 +54,14 @@ export const BreadcrumbPage = ({ className, ...props }: ComponentProps<'span'>) 
       aria-disabled='true'
       className={cn('font-normal text-foreground', className)}
       data-slot='breadcrumb-page'
+      role='document'
       {...props}
     />
   )
 }
 
 // Breadcrumb separator
-export const BreadcrumbSeparator = ({ children, className, ...props }: ComponentProps<'li'>) => {
+export function BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<'li'>) {
   // Template
   return (
     <li
@@ -75,13 +71,14 @@ export const BreadcrumbSeparator = ({ children, className, ...props }: Component
       role='presentation'
       {...props}
     >
-      {children ?? <ChevronRightIcon />}
+      {children ?? <ChevronRight />}
     </li>
   )
 }
 
 // Breadcrumb ellipsis
-export const BreadcrumbEllipsis = ({ className, ...props }: ComponentProps<'span'>) => {
+export function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'>) {
+  // Template
   return (
     <span
       aria-hidden='true'
@@ -90,7 +87,7 @@ export const BreadcrumbEllipsis = ({ className, ...props }: ComponentProps<'span
       role='presentation'
       {...props}
     >
-      <MoreHorizontalIcon className='size-4' />
+      <MoreHorizontal className='size-4' />
       <span className='sr-only'>More</span>
     </span>
   )

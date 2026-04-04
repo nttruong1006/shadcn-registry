@@ -1,6 +1,6 @@
+import { ChevronDownIcon, DotIcon } from 'lucide-react'
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -17,24 +17,23 @@ import {
 } from '@/components/atoms/dropdown-menu'
 
 // Component
-export function BreadcrumbDemo() {
+export function BreadcrumbDropdown() {
   // Template
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            {/** biome-ignore lint/a11y/useValidAnchor:ignore */}
-            <a href='#'>Home</a>
-          </BreadcrumbLink>
+          <BreadcrumbLink>Home</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        <BreadcrumbSeparator>
+          <DotIcon />
+        </BreadcrumbSeparator>
         <BreadcrumbItem>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size='icon-sm' variant='ghost'>
-                <BreadcrumbEllipsis />
-                <span className='sr-only'>Toggle menu</span>
+              <Button variant='ghost'>
+                Components
+                <ChevronDownIcon className='size-3.5' />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='start'>
@@ -46,14 +45,9 @@ export function BreadcrumbDemo() {
             </DropdownMenuContent>
           </DropdownMenu>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            {/** biome-ignore lint/a11y/useValidAnchor:ignore */}
-            <a href='#'>Home</a>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        <BreadcrumbSeparator>
+          <DotIcon />
+        </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
         </BreadcrumbItem>
