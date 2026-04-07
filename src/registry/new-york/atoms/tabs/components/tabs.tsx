@@ -14,7 +14,7 @@ interface TabsContextValue {
 
 const TabsContext = createContext<TabsContextValue | null>(null)
 
-const useTabsContext = () => {
+function useTabsContext() {
   const context = useContext(TabsContext)
   if (!context) {
     throw new Error('useTabsContext must be used within the Tabs')
@@ -22,13 +22,13 @@ const useTabsContext = () => {
   return context
 }
 
-export const Tabs = ({
+export function Tabs({
   className,
   defaultValue,
   value: controlledValue,
   onValueChange,
   ...props
-}: TabsPrimitive.Root.Props) => {
+}: TabsPrimitive.Root.Props) {
   const valuesRef = useRef<string[]>([])
   const listRef = useRef<HTMLDivElement>(null)
   const triggersRef = useRef<Map<string, HTMLButtonElement>>(new Map())
@@ -76,7 +76,7 @@ export const Tabs = ({
   )
 }
 
-export const TabsList = ({ className, children, ...props }: TabsPrimitive.List.Props) => {
+export function TabsList({ className, children, ...props }: TabsPrimitive.List.Props) {
   const { value, triggersRef, listRef } = useTabsContext()
 
   const [dimensions, setDimensions] = useState({ width: 0, height: 0, left: 0 })
@@ -138,7 +138,7 @@ export const TabsList = ({ className, children, ...props }: TabsPrimitive.List.P
   )
 }
 
-export const TabsTrigger = ({ className, value, ...props }: TabsPrimitive.Tab.Props) => {
+export function TabsTrigger({ className, value, ...props }: TabsPrimitive.Tab.Props) {
   const { registerTrigger } = useTabsContext()
 
   const register = useCallback(
@@ -151,7 +151,7 @@ export const TabsTrigger = ({ className, value, ...props }: TabsPrimitive.Tab.Pr
   return (
     <TabsPrimitive.Tab
       className={cn(
-        "z-10 inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-transparent px-2 py-1 font-medium text-muted-foreground text-sm transition-[color,box-shadow] focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-primary-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "z-10 inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-transparent px-2 py-1 font-medium text-muted-foreground text-sm transition-[color,box-shadow] hover:text-foreground focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-active:text-primary-foreground data-active:hover:text-primary-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       data-slot='tabs-trigger'
@@ -162,7 +162,7 @@ export const TabsTrigger = ({ className, value, ...props }: TabsPrimitive.Tab.Pr
   )
 }
 
-export const TabsContent = ({ className, value, children, ...props }: TabsPrimitive.Panel.Props) => {
+export function TabsContent({ className, value, children, ...props }: TabsPrimitive.Panel.Props) {
   const { direction } = useTabsContext()
 
   return (

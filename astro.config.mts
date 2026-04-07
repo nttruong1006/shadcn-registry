@@ -98,7 +98,7 @@ export default defineConfig({
         {
           label: 'Components',
           items: [
-            { label: 'UI', autogenerate: { directory: 'components/ui' } },
+            { label: 'Atoms', autogenerate: { directory: 'components/atoms' } },
             {
               label: 'Molecules',
               autogenerate: { directory: 'components/molecules' }
@@ -110,6 +110,7 @@ export default defineConfig({
           ]
         }
       ],
+
       customCss: ['./src/styles/global.css'],
       plugins: [
         starlightThemeBlack({

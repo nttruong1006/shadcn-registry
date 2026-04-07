@@ -32,8 +32,6 @@ const tableData = [
 export function CheckboxInTable() {
   const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set(['1']))
 
-  const selectAll = selectedRows.size === tableData.length
-
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
       setSelectedRows(new Set(tableData.map((row) => row.id)))
@@ -52,6 +50,9 @@ export function CheckboxInTable() {
     setSelectedRows(newSelected)
   }
 
+  const selectAll = selectedRows.size === tableData.length
+  const indeterminate = selectedRows.size > 0 && !selectAll
+
   return (
     <Table>
       <TableHeader>
@@ -60,6 +61,7 @@ export function CheckboxInTable() {
             <Checkbox
               checked={selectAll}
               id='select-all-checkbox'
+              indeterminate={indeterminate}
               name='select-all-checkbox'
               onCheckedChange={handleSelectAll}
             />

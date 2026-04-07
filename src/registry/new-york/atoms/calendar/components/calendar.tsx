@@ -6,7 +6,7 @@ import { cn } from '@/utils/ui'
 
 const defaultClassNames = getDefaultClassNames()
 
-function Calendar({
+export function Calendar({
   className,
   classNames,
   showOutsideDays = true,
@@ -105,11 +105,9 @@ function Calendar({
           if (orientation === 'left') {
             return <ChevronLeftIcon className={cn('cn-rtl-flip size-4', className)} {...props} />
           }
-
           if (orientation === 'right') {
             return <ChevronRightIcon className={cn('cn-rtl-flip size-4', className)} {...props} />
           }
-
           return <ChevronDownIcon className={cn('size-4', className)} {...props} />
         },
         DayButton: ({ ...props }) => <CalendarDayButton locale={locale} {...props} />,
@@ -132,7 +130,7 @@ function Calendar({
   )
 }
 
-function CalendarDayButton({
+export function CalendarDayButton({
   className,
   day,
   modifiers,
@@ -150,7 +148,7 @@ function CalendarDayButton({
   return (
     <Button
       className={cn(
-        'relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 font-normal leading-none data-[range-end=true]:rounded-(--cell-radius) data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-end=true]:bg-primary data-[range-middle=true]:bg-muted data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 dark:hover:text-foreground [&>span]:text-xs [&>span]:opacity-70',
+        'relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 font-normal leading-none data-[range-start=true]:data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-(--cell-radius) data-[range-middle=true]:rounded-none data-[range-end=true]:rounded-r-(--cell-radius) data-[range-start=true]:rounded-r-none data-[range-end=true]:rounded-l-none data-[range-start=true]:rounded-l-(--cell-radius) data-[range-end=true]:bg-primary data-[range-middle=true]:bg-muted data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground data-[range-end=true]:hover:bg-primary data-[range-start=true]:hover:bg-primary data-[selected-single=true]:hover:bg-primary data-[range-end=true]:hover:text-primary-foreground data-[range-start=true]:hover:text-primary-foreground data-[selected-single=true]:hover:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring dark:hover:text-foreground',
         defaultClassNames.day,
         className
       )}
@@ -167,5 +165,3 @@ function CalendarDayButton({
     />
   )
 }
-
-export { Calendar, CalendarDayButton }

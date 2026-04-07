@@ -232,6 +232,10 @@
   .sl-link-card a {
     @apply no-underline!;
   }
+
+  .sl-markdown-content code:not(:where(.not-content *)) {
+    @apply font-normal bg-muted rounded-md;
+  }
 }
 
 @layer components {

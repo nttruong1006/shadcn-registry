@@ -30,7 +30,7 @@ export function BreadcrumbDropdown() {
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
-                <Button className='flex items-center gap-1'>
+                <Button className='flex items-center gap-1' variant='ghost'>
                   Components
                   <ChevronDownIcon data-icon='inline-end' />
                 </Button>
