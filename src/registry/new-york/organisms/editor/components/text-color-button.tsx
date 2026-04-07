@@ -1,14 +1,12 @@
 import { useCurrentEditor } from '@tiptap/react'
-import type { ColorInstance } from 'color'
 import { BaselineIcon, CheckIcon, ChevronDownIcon, CircleSlashIcon } from 'lucide-react'
-import { lazy, memo, Suspense, useState } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+import { lazy, Suspense, useState } from 'react'
+import { Button } from '@/components/atoms/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 
 const ColorPickerButton = lazy(() => import('./color-picker-button'))
 
-// Colors
 const colors: string[] = [
   'oklch(0.27 0.01 34)',
   'oklch(0.27 0.01 286)',
@@ -32,43 +30,40 @@ const colors: string[] = [
   'oklch(0.45 0.17 14)'
 ]
 
-// Component
-const TextColorButton = memo(() => {
-  // Hooks
+export default function TextColorButton() {
   const { editor } = useCurrentEditor()
-
-  // States
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
-  // Methods
-  const setColor = (color: string) => {
+  function setColor(color: string) {
     setSelectedColor(color)
     editor?.chain().focus().setColor(color).run()
   }
 
-  const changeColorFromPicker = (color: ColorInstance) => {
-    setSelectedColor(null)
-    editor?.chain().setColor(color.hex()).run()
-  }
+  // function changeColorFromPicker(color: ColorInstance) {
+  //   setSelectedColor(null)
+  //   editor?.chain().setColor(color.hex()).run()
+  // }
 
-  const clearColor = () => {
+  function clearColor() {
     setSelectedColor(null)
     editor?.chain().focus().unsetColor().run()
   }
 
-  // Template
   return (
     <Popover>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <PopoverTrigger asChild>
-            <Button className='gap-1' variant='ghost'>
-              <BaselineIcon />
-              <ChevronDownIcon />
-            </Button>
-          </PopoverTrigger>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <PopoverTrigger
+              render={
+                <Button className='gap-1' variant='ghost'>
+                  <BaselineIcon />
+                  <ChevronDownIcon />
+                </Button>
+              }
+            />
+          }
+        />
         <TooltipContent>Text color</TooltipContent>
       </Tooltip>
 
@@ -90,23 +85,23 @@ const TextColorButton = memo(() => {
 
         <div className='flex justify-end gap-2'>
           <Suspense fallback={<Button className='animate-pulse bg-muted' size='icon' variant='outline' />}>
-            <ColorPickerButton onValueChange={changeColorFromPicker} />
+            <ColorPickerButton
+            // onValueChange={changeColorFromPicker}
+            />
           </Suspense>
 
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={clearColor} size='icon' variant='outline'>
-                <CircleSlashIcon />
-              </Button>
-            </TooltipTrigger>
-
+            <TooltipTrigger
+              render={
+                <Button onClick={clearColor} size='icon' variant='outline'>
+                  <CircleSlashIcon />
+                </Button>
+              }
+            />
             <TooltipContent>Clear color</TooltipContent>
           </Tooltip>
         </div>
       </PopoverContent>
     </Popover>
   )
-})
-
-TextColorButton.displayName = 'TextColorButton'
-export default TextColorButton
+}

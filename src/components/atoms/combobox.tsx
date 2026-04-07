@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/combobox/components/combobox'
+export * from '@/registry/new-york/atoms/combobox/components/combobox'

@@ -11,7 +11,6 @@ import {
 } from 'react'
 import { cn } from '@/utils/ui'
 
-// Tilt card
 const TiltCardContext = createContext<{
   rotateX: MotionValue<number>
   rotateY: MotionValue<number>
@@ -28,7 +27,6 @@ interface TiltCardProps extends PropsWithChildren {
 
 export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(
   ({ children, className, tiltMaxAngle = 12, tiltReverse = false, scale = 1.05, ...props }, ref) => {
-    // Hooks
     const x = useMotionValue(0)
     const y = useMotionValue(0)
 
@@ -50,10 +48,8 @@ export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(
     // biome-ignore lint/style/noNonNullAssertion: ignore
     useImperativeHandle(ref, () => containerRef.current!)
 
-    // Refs
     const containerRef = useRef<HTMLDivElement>(null)
 
-    // Methods
     const moveMouse = (e: MouseEvent<HTMLDivElement>) => {
       if (!containerRef.current) {
         return
@@ -78,7 +74,6 @@ export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(
       scaleValue.set(1)
     }
 
-    // Template
     return (
       <TiltCardContext.Provider value={{ rotateX, rotateY, scale: scaleValue }}>
         {/** biome-ignore lint/a11y/noStaticElementInteractions: ignore */}
@@ -99,7 +94,6 @@ export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(
   }
 )
 
-// Tilt card content
 interface TiltCardContentProps {
   children: ReactNode
   className?: string
@@ -107,7 +101,6 @@ interface TiltCardContentProps {
 
 export const TiltCardContent = forwardRef<HTMLDivElement, TiltCardContentProps>(
   ({ children, className, ...props }, ref) => {
-    // Hooks
     const context = useContext(TiltCardContext)
 
     if (!context) {
@@ -116,7 +109,6 @@ export const TiltCardContent = forwardRef<HTMLDivElement, TiltCardContentProps>(
 
     const { rotateX, rotateY, scale } = context
 
-    // Template
     return (
       <motion.div
         className={cn('relative overflow-hidden rounded-xl border bg-card text-card-foreground', className)}

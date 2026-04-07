@@ -1,3 +1,4 @@
+import { Placeholder } from '@tiptap/extensions'
 import {
   type Content,
   type Extensions,
@@ -6,8 +7,8 @@ import {
   useEditor
 } from '@tiptap/react'
 import throttle from 'lodash.throttle'
-import { type Dispatch, type RefObject, type SetStateAction, useId, useMemo, useRef, useState } from 'react'
-import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
+import { type Dispatch, type RefObject, type SetStateAction, useMemo, useRef, useState } from 'react'
+import { Spinner } from '@/components/atoms/spinner'
 import BlockquoteButton from './blockquote-button'
 import BoldButton from './bold-button'
 import FileButton from './file-button'
@@ -30,9 +31,10 @@ import UnderlineButton from './underline-button'
 import YoutubeButton from './youtube-button'
 import ZoomButton from './zoom-button'
 
-// Editor
 export type EditorProps = UseEditorOptions & {
+  id: string
   value: Content
+  placeholder?: string
   onValueChange: (value: Content) => void
 }
 
@@ -40,17 +42,15 @@ export type CallbackRef = RefObject<((editor: ReturnType<typeof useEditor> | nul
 
 export type SetExtensions = Dispatch<SetStateAction<Extensions>>
 
-export const Editor = ({ value, onValueChange, ...props }: EditorProps) => {
-  // Hooks
-  const id = useId()
-
-  // Refs
+export function Editor({ id, value, placeholder, onValueChange, ...props }: EditorProps) {
   const callbackRef = useRef<CallbackRef['current']>(null)
+  const [extensions, setExtensions] = useState<Extensions>(() => [
+    ...defaultExtensions,
+    Placeholder.configure({
+      placeholder
+    })
+  ])
 
-  // States
-  const [extensions, setExtensions] = useState<Extensions>(defaultExtensions)
-
-  // Hooks
   const editor = useEditor(
     {
       extensions,
@@ -83,12 +83,12 @@ export const Editor = ({ value, onValueChange, ...props }: EditorProps) => {
       onBlur: ({ editor }) => {
         onValueChange(getEditorValue(editor, 'html'))
       },
+
       ...props
     },
     [extensions]
   )
 
-  // Template
   if (!editor) {
     return <Spinner className='mx-auto size-6' />
   }

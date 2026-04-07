@@ -1,0 +1,59 @@
+---
+title: Avatar
+description: An image element with a fallback for representing the user.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='avatar' />
+
+<CodePreview path='atoms/avatar/demo' />
+
+## Installation
+<InstallationCard registryName='avatar' />
+
+## Usage
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/atoms/avatar"
+```
+
+```tsx
+<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" />
+  <AvatarFallback>CN</AvatarFallback>
+</Avatar>
+```
+
+## Examples
+### Basic
+<CodePreview path='atoms/avatar/basic' />
+
+### Badge
+Use the `AvatarBadge` component to add a badge to the avatar. The badge is positioned at the bottom right of the avatar.
+<CodePreview path='atoms/avatar/badge' />
+
+### Badge with icon
+You can also use an icon inside `AvatarBadge`.
+<CodePreview path='atoms/avatar/badge-with-icon' />
+
+### Avatar Group
+Use the `AvatarGroup` component to add a group of avatars.
+<CodePreview path='atoms/avatar/avatar-group' />
+
+### Avatar Group Count
+Use `AvatarGroupCount` to add a count to the group.
+<CodePreview path='atoms/avatar/avatar-group-count' />
+
+### Avatar Group with Icon 
+You can also use an icon inside `AvatarGroupCount`.
+<CodePreview path='atoms/avatar/avatar-group-with-icon' />
+
+### Sizes
+Use the `size` prop to change the size of the avatar.
+<CodePreview path='atoms/avatar/sizes' />
+
+### Dropdown
+You can use the `Avatar` component as a trigger for a dropdown menu.
+<CodePreview path='atoms/avatar/dropdown' />

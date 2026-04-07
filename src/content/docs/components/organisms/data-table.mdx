@@ -10,14 +10,14 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='organisms/data-table/demo' />
 
 ## Installation
-
 <InstallationCard registryName='data-table' />
 
 ## Usage
-### Client side pagination
+### Client Side Pagination
 ```tsx
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
-import { DataTable, useDataTable } from '@/components/organisms/data-table'
+import { DataTable } from '@/components/organisms/data-table/data-table'
+import { useDataTable } from '@/components/organisms/data-table/lib'
 ```
 
 ```tsx
@@ -29,15 +29,16 @@ const table = useDataTable({
 
 <DataTable table={table} />
 ```
-### Server side pagination
+### Server Side Pagination
 ```tsx
 import { type ColumnDef, type PaginationState} from '@tanstack/react-table'
-import { DataTable, useDataTable } from '@/components/organisms/data-table'
+import { DataTable } from '@/components/organisms/data-table/data-table'
+import { useDataTable } from '@/components/organisms/data-table/lib'
 ```
 
 ```tsx
-const rowCount = React.useState(0)
-const [pagination, setPagination] = React.useState<PaginationState>({
+const rowCount = useState(0)
+const [pagination, setPagination] = useState<PaginationState>({
   pageIndex: 0,
   pageSize: 10
 })

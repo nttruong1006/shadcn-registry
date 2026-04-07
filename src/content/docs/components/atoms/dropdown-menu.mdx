@@ -1,0 +1,94 @@
+---
+title: Dropdown Menu
+description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='dropdown-menu' />
+
+<CodePreview path='atoms/dropdown-menu/demo' />
+
+## Installation
+<InstallationCard registryName='dropdown-menu' />
+
+## Usage
+```tsx
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/atoms/dropdown-menu"
+```
+
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger render={<Button variant="outline" />}>
+    Open
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuGroup>
+      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+      <DropdownMenuItem>Profile</DropdownMenuItem>
+      <DropdownMenuItem>Billing</DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuGroup>
+      <DropdownMenuItem>Team</DropdownMenuItem>
+      <DropdownMenuItem>Subscription</DropdownMenuItem>
+    </DropdownMenuGroup>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+## Examples
+### Basic
+A basic dropdown menu with labels and separators.
+<CodePreview path='atoms/dropdown-menu/basic' />
+
+### Submenu
+Use `DropdownMenuSub` to nest secondary actions.
+<CodePreview path='atoms/dropdown-menu/submenu' />
+
+### Shortcuts
+Add `DropdownMenuShortcut` to show keyboard hints.
+<CodePreview path='atoms/dropdown-menu/shortcuts' />
+
+### Icons
+Combine icons with labels for quick scanning.
+<CodePreview path='atoms/dropdown-menu/icons' />
+
+### Checkboxes
+Use `DropdownMenuCheckboxItem` for toggles.
+<CodePreview path='atoms/dropdown-menu/checkboxes' />
+
+### Checkboxes Icons
+Add icons to checkbox items.
+<CodePreview path='atoms/dropdown-menu/checkboxes-icons' />
+
+### Radio group
+Use `DropdownMenuRadioGroup` for exclusive choices.
+<CodePreview path='atoms/dropdown-menu/radio-group' />
+
+### Radio icons
+Show radio options with icons.
+<CodePreview path='atoms/dropdown-menu/radio-icons' />
+
+### Destructive
+Use `variant="destructive"` for irreversible actions.
+<CodePreview path='atoms/dropdown-menu/destructive' />
+
+### Avatar
+An account switcher dropdown triggered by an avatar.
+<CodePreview path='atoms/dropdown-menu/avatar' />
+
+### Complex
+Use `DropdownMenu` with `DropdownMenuSub` to nest secondary actions.
+<CodePreview path='atoms/dropdown-menu/complex' />

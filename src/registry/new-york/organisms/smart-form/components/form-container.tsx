@@ -1,10 +1,6 @@
 import { type PropsWithChildren, Suspense } from 'react'
-import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
+import { Spinner } from '@/components/atoms/spinner'
 
-// Component
-const FormContainer = ({ children }: PropsWithChildren) => {
-  // Template
+export default function FormContainer({ children }: PropsWithChildren) {
   return <Suspense fallback={<Spinner className='mx-auto size-6' />}>{children}</Suspense>
 }
-
-export default FormContainer

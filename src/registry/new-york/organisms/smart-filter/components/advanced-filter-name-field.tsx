@@ -1,16 +1,17 @@
 import { useMemo } from 'react'
-import { useSmartFilterContext } from '@/registry/new-york/organisms/smart-filter/components/smart-filter'
-import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox.tsx'
+import { Combobox } from '@/components/atoms/combobox'
 import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
+import { useSmartFilterContext } from './smart-filter'
 
-// Component
-const AdvancedFilterNameField = ({ formFilters }: { formFilters: AdvancedFilterFormValueInput['filters'] }) => {
-  // Hooks
+export default function AdvancedFilterNameField({
+  formFilters
+}: {
+  formFilters: AdvancedFilterFormValueInput['filters']
+}) {
   const { filters } = useSmartFilterContext()
   const field = useFieldContext<AdvancedFilterFormValueInput['filters'][number]['name']>()
 
-  // Memos
-  const options = useMemo<ComboboxProps['options']>(() => {
+  const options = useMemo(() => {
     const selectedFilters = formFilters.map((field) => field.name)
     return filters
       .filter((filter) => filter.name === field.state.value || !selectedFilters.includes(filter.name))
@@ -20,15 +21,11 @@ const AdvancedFilterNameField = ({ formFilters }: { formFilters: AdvancedFilterF
       }))
   }, [filters, formFilters, field.state.value])
 
-  // Template
   return (
     <Combobox
-      isCanRemoveValue={false}
+      items={options}
       onValueChange={(value) => field.handleChange(value as string)}
-      options={options}
       value={field.state.value}
     />
   )
 }
-
-export default AdvancedFilterNameField

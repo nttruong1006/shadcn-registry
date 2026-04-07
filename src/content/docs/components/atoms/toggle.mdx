@@ -1,0 +1,39 @@
+---
+title: Toggle
+description: A two-state button that can be either on or off.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='toggle'/>
+
+<CodePreview path='atoms/toggle/demo' />
+
+## Installation
+<InstallationCard registryName='toggle' />
+
+## Usage
+```tsx
+import { Toggle } from "@/components/atoms/toggle"
+```
+
+```tsx
+<Toggle>Toggle</Toggle>
+```
+
+## Examples
+### Outline
+Use `variant="outline"` for an outline style.
+<CodePreview path='atoms/toggle/outline' />
+
+### With Text
+<CodePreview path='atoms/toggle/with-text' />
+
+### Size
+Use the `size` prop to change the size of the toggle.
+<CodePreview path='atoms/toggle/size' />
+
+### Disabled
+<CodePreview path='atoms/toggle/disabled' />

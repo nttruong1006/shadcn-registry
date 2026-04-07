@@ -1,0 +1,78 @@
+---
+title: Item
+description: A versatile component that you can use to display any content.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='item' />
+
+<CodePreview path='atoms/item/demo' />
+
+## Installation
+<InstallationCard registryName='item' />
+
+## Usage
+```tsx
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/atoms/item"
+```
+
+```tsx
+<Item>
+  <ItemMedia variant="icon">
+    <Icon />
+  </ItemMedia>
+  <ItemContent>
+    <ItemTitle>Title</ItemTitle>
+    <ItemDescription>Description</ItemDescription>
+  </ItemContent>
+  <ItemActions>
+    <Button>Action</Button>
+  </ItemActions>
+</Item>
+```
+
+## Examples
+### Variants
+Use the `variant` prop to change the visual style of the item.
+<CodePreview path='atoms/item/variants' />
+
+### Size
+Use the `size` prop to change the size of the item. Available sizes are `default`, `sm`, and `xs`.
+<CodePreview path='atoms/item/size' />
+
+### Icon
+Use `ItemMedia` with `variant="icon"` to display an icon.
+<CodePreview path='atoms/item/icon' />
+
+### Avatar
+You can use `ItemMedia` with `variant="avatar"` to display an avatar.
+<CodePreview path='atoms/item/avatar' />
+
+### Image
+Use `ItemMedia` with `variant="image"` to display an image.
+<CodePreview path='atoms/item/image' />
+
+### Group
+Use `ItemGroup` to group related items together.
+<CodePreview path='atoms/item/group' />
+
+### Header
+Use `ItemHeader` to add a header above the item content.
+<CodePreview path='atoms/item/header' />
+
+### Link
+Use the `render` prop to render the item as a link. The hover and focus states will be applied to the anchor element.
+<CodePreview path='atoms/item/link' />
+
+### Dropdown
+<CodePreview path='atoms/item/dropdown' />

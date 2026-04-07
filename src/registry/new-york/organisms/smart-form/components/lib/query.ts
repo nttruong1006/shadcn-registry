@@ -8,7 +8,7 @@ import {
   useQuery
 } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React from 'react'
+import { type UIEvent, useEffect, useMemo, useState } from 'react'
 import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
@@ -21,11 +21,9 @@ export const useOptionsQuery = ({
   originalApiPath: string
   dependencyFieldsValue?: Record<string, unknown>
 }) => {
-  // States
-  const [apiPath, setApiPath] = React.useState(originalApiPath)
-  const [isEnabled, setIsEnabled] = React.useState(!originalApiPath?.includes('/{'))
+  const [apiPath, setApiPath] = useState(originalApiPath)
+  const [isEnabled, setIsEnabled] = useState(!originalApiPath?.includes('/{'))
 
-  // Queries
   const optionsQuery = useQuery<{
     responseData: {
       rows: Option[]
@@ -38,8 +36,7 @@ export const useOptionsQuery = ({
     enabled: isEnabled
   })
 
-  // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     if (!dependencyFieldsValue) {
       return
     }
@@ -56,8 +53,7 @@ export const useOptionsQuery = ({
     setIsEnabled(!newQueryPath?.includes('/{'))
   }, [dependencyFieldsValue, originalApiPath])
 
-  // Memos
-  const options = React.useMemo<Option[]>(() => {
+  const options = useMemo<Option[]>(() => {
     if (!isEnabled) {
       return []
     }
@@ -94,10 +90,9 @@ export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (q
 
 // Fetch next page
 export const fetchNextPage = (args: {
-  event: React.UIEvent<HTMLDivElement, UIEvent>
+  event: UIEvent<HTMLDivElement, UIEvent>
   infiniteQuery: UseInfiniteQueryResult
 }) => {
-  // Args
   const { event, infiniteQuery } = args
 
   const { scrollTop, offsetHeight, scrollHeight } = event.target as HTMLDivElement
@@ -122,15 +117,12 @@ export const useOptionsInfiniteQuery = ({
   dependencyFieldsValue?: Record<string, unknown>
   isLabelAsValue?: boolean
 }) => {
-  // States
-  const [apiPath, setApiPath] = React.useState(originalApiPath)
-  const [isEnabled, setIsEnabled] = React.useState(!originalApiPath?.includes('/{'))
-  const [searchKeyword, setSearchKeyword] = React.useState('')
+  const [apiPath, setApiPath] = useState(originalApiPath)
+  const [isEnabled, setIsEnabled] = useState(!originalApiPath?.includes('/{'))
+  const [searchKeyword, setSearchKeyword] = useState('')
 
-  // Debounced
   const debouncedSearchKeyword = useDebounce(isLabelAsValue ? selectedValue?.trim() : searchKeyword.trim(), 400)
 
-  // Queries
   const optionsInfiniteQuery = useInfiniteQuery<
     OptionsInfiniteQueryData,
     DefaultError,
@@ -153,8 +145,7 @@ export const useOptionsInfiniteQuery = ({
     getNextPageParam
   })
 
-  // Effects
-  React.useEffect(() => {
+  useEffect(() => {
     if (!dependencyFieldsValue) {
       return
     }
@@ -171,8 +162,7 @@ export const useOptionsInfiniteQuery = ({
     setIsEnabled(!newQueryPath?.includes('/{'))
   }, [dependencyFieldsValue, originalApiPath])
 
-  // Memos
-  const options = React.useMemo<Option[]>(() => {
+  const options = useMemo<Option[]>(() => {
     if (!isEnabled) {
       return []
     }

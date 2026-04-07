@@ -1,0 +1,55 @@
+---
+title: Dialog
+description: A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='dialog' />
+
+<CodePreview path='atoms/dialog/demo' />
+
+## Installation
+<InstallationCard registryName='dialog' />
+
+## Usage
+```tsx
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/atoms/dialog"
+```
+
+```tsx
+<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+```
+
+## Examples
+### Custom Close Button
+Replace the default close control with your own button.
+<CodePreview path='atoms/dialog/custom-close-button' />
+
+### No Close Button
+Use `showCloseButton={false}` to hide the close button.
+<CodePreview path='atoms/dialog/no-close-button' />
+
+### Sticky Footer
+Use `showCloseButton={false}` to hide the close button.
+<CodePreview path='atoms/dialog/sticky-footer' />

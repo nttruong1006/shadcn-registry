@@ -1,10 +1,10 @@
 import { type Column, getCoreRowModel, type RowData, type TableOptions, useReactTable } from '@tanstack/react-table'
 
 // Use data table
-export const useDataTable = <TData extends RowData>({
+export function useDataTable<TData extends RowData>({
   enableColumnPinning = false,
   ...options
-}: Omit<TableOptions<TData>, 'getCoreRowModel'>) => {
+}: Omit<TableOptions<TData>, 'getCoreRowModel'>) {
   return useReactTable<TData>({
     enableColumnPinning,
     getRowId: (row: TData, index: number) =>
@@ -15,13 +15,13 @@ export const useDataTable = <TData extends RowData>({
 }
 
 // Get common pinning styles
-const getBoxShadow = ({
+function getBoxShadow({
   isLastLeftPinnedColumn,
   isFirstRightPinnedColumn
 }: {
   isLastLeftPinnedColumn: boolean
   isFirstRightPinnedColumn: boolean
-}) => {
+}) {
   if (isLastLeftPinnedColumn) {
     return '-2px 0 2px -2px gray inset'
   }
@@ -31,7 +31,7 @@ const getBoxShadow = ({
   return undefined
 }
 
-export const getCommonPinningStyles = <TData extends RowData>(column: Column<TData>): React.CSSProperties => {
+export function getCommonPinningStyles<TData extends RowData>(column: Column<TData>): React.CSSProperties {
   const pinningPosition = column.getIsPinned()
   const isLastLeftPinnedColumn = pinningPosition === 'left' && column.getIsLastColumn('left')
   const isFirstRightPinnedColumn = pinningPosition === 'right' && column.getIsFirstColumn('right')
@@ -47,6 +47,6 @@ export const getCommonPinningStyles = <TData extends RowData>(column: Column<TDa
 }
 
 // Get number order
-export const getNumberOrder = (rowIndex: number, page = 1, pageSize = 10): number => {
+export function getNumberOrder(rowIndex: number, page: number, pageSize: number): number {
   return rowIndex + 1 + (page - 1) * pageSize
 }

@@ -1,14 +1,11 @@
-import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
+import { Checkbox } from '@/components/atoms/checkbox'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { CheckboxFieldInputValue } from './lib/schema'
 
-// Component
-const CheckboxField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
-  // Hooks
+export default function CheckboxField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
   const field = useFieldContext<CheckboxFieldInputValue>()
 
-  // Template
   return (
     <FieldContainer
       className='flex-row-reverse'
@@ -20,13 +17,11 @@ const CheckboxField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldP
     >
       <Checkbox
         checked={field.state.value}
-        disabled={isDisabled}
-        id={field.name}
+        disabled={disabled}
+        id={`${field.form.formId}-${field.name}`}
         name={field.name}
         onCheckedChange={(checked) => field.handleChange(checked === true)}
       />
     </FieldContainer>
   )
 }
-
-export default CheckboxField

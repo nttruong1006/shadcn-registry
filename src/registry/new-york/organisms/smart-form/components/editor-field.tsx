@@ -1,24 +1,21 @@
-import { Editor, type EditorProps } from '@/registry/new-york/organisms/editor/components/editor'
+import { Editor, type EditorProps } from '@/components/organisms/editor/editor'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { EditorFieldInputValue } from './lib/schema'
 
-// Component
-const EditorField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
-  // Hooks
+export default function EditorField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
   const field = useFieldContext<EditorFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-  // Template
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <Editor
-        editable={!isDisabled}
+        editable={!disabled}
+        id={`${field.form.formId}-${field.name}`}
         onValueChange={field.handleChange as EditorProps['onValueChange']}
+        placeholder={`Enter ${typeof label === 'string' ? label.toLowerCase() : 'information'}`}
         value={field.state.value}
       />
     </FieldContainer>
   )
 }
-
-export default EditorField

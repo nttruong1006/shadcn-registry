@@ -1,64 +1,80 @@
 import { EllipsisVertical } from 'lucide-react'
-import { Fragment } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Fragment, type ReactNode } from 'react'
+import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+} from '@/components/atoms/dropdown-menu'
 
-// Component
-export const DataTableActionCell = ({
-  menus,
-  isLoading
-}: {
-  menus: Array<{
-    id: string
-    icon?: React.ReactNode
-    label?: React.ReactNode
-    slot?: React.ReactNode
-    link?: string
-    onClick?: () => void
-  }>
-  isLoading?: boolean
-}) => {
-  // Template
-  if (menus.length === 0) {
+interface BaseMenu {
+  id: string
+  icon?: ReactNode
+  label?: ReactNode
+}
+interface LinkMenu extends BaseMenu {
+  type: 'link'
+  link: string
+}
+
+interface EventMenu extends BaseMenu {
+  type: 'event'
+  onClick: () => void
+}
+
+interface SlotMenu extends BaseMenu {
+  type: 'slot'
+  slot: ReactNode
+}
+
+type Menu = LinkMenu | EventMenu | SlotMenu
+
+export function DataTableActionCell({ menus, loading }: { menus: Menu[]; loading?: boolean }) {
+  if (!menus.length) {
     return null
   }
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button isLoading={isLoading} size='icon' variant='ghost'>
-          <EllipsisVertical className='size-4' />
-        </Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        render={
+          <Button loading={loading} size='icon' variant='ghost'>
+            <EllipsisVertical className='size-4' />
+          </Button>
+        }
+      />
 
       <DropdownMenuContent>
         {menus.map((menu) => {
-          if (menu.slot) {
-            return <Fragment key={menu.id}>{menu.slot}</Fragment>
-          }
+          switch (menu.type) {
+            case 'slot':
+              return <Fragment key={menu.id}>{menu.slot}</Fragment>
 
-          if (menu.link) {
-            return (
-              <DropdownMenuItem asChild key={menu.id}>
-                <a href={menu.link}>
+            case 'link':
+              return (
+                <DropdownMenuItem
+                  key={menu.id}
+                  render={
+                    <a href={menu.link}>
+                      {menu.icon}
+                      {menu.label}
+                    </a>
+                  }
+                />
+              )
+
+            case 'event':
+              return (
+                <DropdownMenuItem key={menu.id} onClick={menu.onClick}>
                   {menu.icon}
                   {menu.label}
-                </a>
-              </DropdownMenuItem>
-            )
-          }
+                </DropdownMenuItem>
+              )
 
-          return (
-            <DropdownMenuItem key={menu.id} onClick={menu.onClick}>
-              {menu.icon}
-              {menu.label}
-            </DropdownMenuItem>
-          )
+            default:
+              return null
+          }
         })}
       </DropdownMenuContent>
     </DropdownMenu>

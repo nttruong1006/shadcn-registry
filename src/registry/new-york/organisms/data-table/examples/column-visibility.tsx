@@ -1,17 +1,17 @@
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
-import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
-import { DataTableColumnVisibilitySelection } from '@/registry/new-york/organisms/data-table/components/data-table-column-visibility-selection'
-import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScrollableContent,
+  DialogScroll,
   DialogTitle,
   DialogTrigger
-} from '@/registry/new-york/ui/dialog/components/dialog'
+} from '@/components/atoms/dialog'
+import { DataTable } from '@/components/organisms/data-table/data-table'
+import { DataTableColumnVisibilitySelection } from '@/components/organisms/data-table/data-table-column-visibility-selection'
+import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
   id: string
@@ -62,9 +62,7 @@ const DATA: Row[] = [
   }
 ]
 
-// Component
-export const DataTableColumnVisibility = () => {
-  // Hooks
+export function DataTableColumnVisibility() {
   const table = useDataTable({
     columns: COLUMNS,
     data: DATA,
@@ -74,12 +72,9 @@ export const DataTableColumnVisibility = () => {
     getPaginationRowModel: getPaginationRowModel()
   })
 
-  // Template
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button>Open</Button>} />
 
       <DialogContent className='w-7xl'>
         <DialogHeader>
@@ -87,14 +82,14 @@ export const DataTableColumnVisibility = () => {
           <DialogDescription>Column visibility</DialogDescription>
         </DialogHeader>
 
-        <DialogScrollableContent>
+        <DialogScroll>
           <div className='space-y-4'>
             <div className='flex justify-end'>
               <DataTableColumnVisibilitySelection table={table} />
             </div>
             <DataTable table={table} />
           </div>
-        </DialogScrollableContent>
+        </DialogScroll>
       </DialogContent>
     </Dialog>
   )

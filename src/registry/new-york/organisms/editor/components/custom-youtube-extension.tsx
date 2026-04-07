@@ -8,38 +8,34 @@ import {
 } from '@tiptap/react'
 import { AlignLeftIcon, ChevronDownIcon, MoveHorizontalIcon, TrashIcon } from 'lucide-react'
 import { type CSSProperties, type IframeHTMLAttributes, useRef, useState } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Separator } from '@/registry/new-york/ui/separator/components/separator'
-import { Skeleton } from '@/registry/new-york/ui/skeleton/components/skeleton'
+} from '@/components/atoms/dropdown-menu'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Separator } from '@/components/atoms/separator'
+import { Skeleton } from '@/components/atoms/skeleton'
 import { cn } from '@/utils/ui'
 import { type Alignment, alignments, containerClassNamePerAlignment, isValidYoutubeUrl, minWidth } from './lib'
 
-// Youtube attributes
 type YoutubeAttributes = IframeHTMLAttributes<HTMLIFrameElement> & {
   alignment: Alignment
   containerStyle: CSSProperties
 }
 
-// Width sizes
 const widthSizes: string[] = ['25%', '50%', '75%', '100%']
 
-// Get youtube embed url
-export const getYoutubeEmbedUrl = (nocookie?: boolean, isPlaylist?: boolean) => {
+function getYoutubeEmbedUrl(nocookie?: boolean, isPlaylist?: boolean) {
   if (isPlaylist) {
     return 'https://www.youtube-nocookie.com/embed/videoseries?list='
   }
   return nocookie ? 'https://www.youtube-nocookie.com/embed/' : 'https://www.youtube.com/embed/'
 }
 
-// Get embed url from youtube url
-const getEmbedUrlFromYoutubeUrl = (options: {
+function getEmbedUrlFromYoutubeUrl(options: {
   url: string
   allowFullscreen?: boolean
   autoplay?: boolean
@@ -59,7 +55,7 @@ const getEmbedUrlFromYoutubeUrl = (options: {
   progressBarColor?: string
   startAt?: number
   rel?: number
-}) => {
+}) {
   const {
     url,
     allowFullscreen,
@@ -187,19 +183,13 @@ const getEmbedUrlFromYoutubeUrl = (options: {
   return outputUrl
 }
 
-// Component
-const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
-  // Props
+function YoutubeComponent(props: ReactNodeViewProps<HTMLImageElement>) {
   const { node, updateAttributes, deleteNode } = props
   const { alignment, containerStyle, ...youtubeAttributes } = node.attrs as YoutubeAttributes
 
-  // Hooks
   const { editor } = useCurrentEditor()
 
-  // Refs
   const containerRef = useRef<HTMLDivElement>(null)
-
-  // States
   const [src] = useState(
     () =>
       getEmbedUrlFromYoutubeUrl({
@@ -207,23 +197,18 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
         nocookie: true
       }) ?? undefined
   )
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isOpenPopover, setIsOpenPopover] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+  const [openPopover, setOpenPopover] = useState(false)
 
-  // Methods
-  // Handle load video
-  const handleLoadVideo = () => {
-    setIsLoaded(true)
+  function loadVideo() {
+    setLoaded(true)
   }
 
-  // Handle change alignment
-  const handleChangeAlignment = (alignment: Alignment) => {
-    // Update alignment
+  function changeAlignment(alignment: Alignment) {
     updateAttributes({
       alignment
     })
 
-    // Update width (full) if alignment is justify
     if (alignment === 'justify') {
       updateAttributes({
         width: containerRef.current?.clientWidth,
@@ -238,8 +223,7 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
     editor?.commands.focus()
   }
 
-  // Handle change width size
-  const handleChangeWidthSize = (size: string) => {
+  function changeWidthSize(size: string) {
     updateAttributes({
       containerStyle: {
         ...containerStyle,
@@ -249,32 +233,30 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
     editor?.commands.focus()
   }
 
-  // Handle delete video
-  const handleDeleteVideo = () => {
+  function deleteVideo() {
     deleteNode()
     editor?.commands.focus()
   }
 
-  // Template
   return (
     <NodeViewWrapper data-drag-handle>
       <div className={cn('flex', containerClassNamePerAlignment[alignment])} ref={containerRef}>
-        <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
+        <Popover onOpenChange={setOpenPopover} open={openPopover}>
           <PopoverTrigger
             className={cn('group relative aspect-video rounded-md border p-6 transition-all', {
-              'border-primary': isOpenPopover,
-              'pointer-events-auto opacity-100': isLoaded
+              'border-primary': openPopover,
+              'pointer-events-auto opacity-100': loaded
             })}
             style={containerStyle}
           >
-            {!isLoaded && <Skeleton className='pointer-events-none absolute inset-0 rounded-md' />}
+            {!loaded && <Skeleton className='pointer-events-none absolute inset-0 rounded-md' />}
 
             {/** biome-ignore lint/a11y/noNoninteractiveElementInteractions: ignore */}
             <iframe
               allowFullScreen={false}
               className='size-full rounded-md object-contain'
               height={youtubeAttributes.height}
-              onLoad={handleLoadVideo}
+              onLoad={loadVideo}
               src={src}
               title='custom-youtube-extension'
               width={youtubeAttributes.width}
@@ -285,12 +267,14 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
             <div className='flex gap-2'>
               {/* Alignment */}
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant='outline'>
-                    <AlignLeftIcon />
-                    <ChevronDownIcon />
-                  </Button>
-                </DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                  render={
+                    <Button variant='outline'>
+                      <AlignLeftIcon />
+                      <ChevronDownIcon />
+                    </Button>
+                  }
+                />
 
                 <DropdownMenuContent>
                   {alignments.map((alignmentOption) => (
@@ -299,7 +283,7 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
                         'bg-accent': alignment === alignmentOption.value
                       })}
                       key={alignmentOption.value}
-                      onClick={() => handleChangeAlignment(alignmentOption.value)}
+                      onClick={() => changeAlignment(alignmentOption.value)}
                     >
                       <alignmentOption.icon />
                       <span>{alignmentOption.label}</span>
@@ -312,12 +296,14 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
 
               {/* Width size */}
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant='outline'>
-                    <MoveHorizontalIcon />
-                    <ChevronDownIcon />
-                  </Button>
-                </DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                  render={
+                    <Button variant='outline'>
+                      <MoveHorizontalIcon />
+                      <ChevronDownIcon />
+                    </Button>
+                  }
+                />
 
                 <DropdownMenuContent>
                   {widthSizes.map((size) => (
@@ -326,7 +312,7 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
                         'bg-accent': containerStyle.width === size
                       })}
                       key={size}
-                      onClick={() => handleChangeWidthSize(size)}
+                      onClick={() => changeWidthSize(size)}
                     >
                       {size}
                     </DropdownMenuItem>
@@ -337,7 +323,7 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
               <Separator className='h-10' orientation='vertical' />
 
               {/* Trash */}
-              <Button onClick={handleDeleteVideo} size='icon' variant='outline'>
+              <Button onClick={deleteVideo} size='icon' variant='outline'>
                 <TrashIcon />
               </Button>
             </div>
@@ -348,7 +334,6 @@ const YoutubeComponent = (props: ReactNodeViewProps<HTMLImageElement>) => {
   )
 }
 
-// Extension
 export const CustomYoutubeExtension = Youtube.extend({
   renderHTML({ HTMLAttributes }) {
     const { alignment, containerStyle, ...youtubeAttributes } = HTMLAttributes as YoutubeAttributes

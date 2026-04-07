@@ -1,9 +1,9 @@
 import { Terminal } from 'lucide-react'
 import { useRef, useState } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Card, CardContent } from '@/registry/new-york/ui/card/components/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york/ui/tabs/components/tabs'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+import { Button } from '@/registry/new-york/atoms/button/components/button'
+import { Card, CardContent } from '@/registry/new-york/atoms/card/components/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york/atoms/tabs/components/tabs'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/atoms/tooltip/components/tooltip'
 import { copyStatusIconPerStatus, copyStatusTextPerStatus, type ModuleProps } from './lib'
 
 // Component
@@ -61,11 +61,13 @@ export const InstallationTabsModule = ({ commandLines }: ModuleProps) => {
             </div>
 
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button className='text-muted-foreground' onClick={copy} size='icon-sm' variant='ghost'>
-                  {copyStatusIconPerStatus[copyStatus]}
-                </Button>
-              </TooltipTrigger>
+              <TooltipTrigger
+                render={
+                  <Button className='text-muted-foreground' onClick={copy} size='icon-sm' variant='ghost'>
+                    {copyStatusIconPerStatus[copyStatus]}
+                  </Button>
+                }
+              />
               <TooltipContent>
                 <p> {copyStatusTextPerStatus[copyStatus]}</p>
               </TooltipContent>

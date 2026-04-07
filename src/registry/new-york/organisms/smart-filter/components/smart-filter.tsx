@@ -1,12 +1,11 @@
 import { ListFilterIcon, SearchIcon } from 'lucide-react'
 import { Activity, createContext, useContext, useState } from 'react'
-import { ToggleGroup, ToggleGroupItem } from '@/registry/new-york/ui/toggle-group/components/toggle-group.tsx'
+import { ToggleGroup, ToggleGroupItem } from '@/components/atoms/toggle-group'
 import AdvancedFilter from './advanced-filter'
 import BasicSearch from './basic-search'
 import type { Filter } from './lib/base'
 import type { AdvancedFilterFormValueOutput, BasicSearchFormValueOutput } from './lib/form'
 
-// Smart filter
 export enum Mode {
   BasicSearch = 'basic-search',
   AdvancedFilter = 'advanced-filter'
@@ -33,15 +32,15 @@ export interface SmartFilterProps {
   isHideSearchMode?: boolean
   setFilters: (value: BasicSearchFormValueOutput['keyword'] | AdvancedFilterFormValueOutput['filters']) => void
 }
+
 const defaultFilters: Filter[] = []
 
-export const SmartFilter = ({
+export function SmartFilter({
   id = 'smart-form',
   filters = defaultFilters,
   isHideSearchMode = false,
   setFilters
-}: SmartFilterProps) => {
-  // Template
+}: SmartFilterProps) {
   return (
     <SmartFilterContext.Provider value={{ id, filters, setFilters }}>
       <SmartFilterContent filters={filters} isHideSearchMode={isHideSearchMode} />
@@ -49,12 +48,11 @@ export const SmartFilter = ({
   )
 }
 
-export const SmartFilterContent = ({
+function SmartFilterContent({
   filters = defaultFilters,
   isHideSearchMode = false
-}: Pick<SmartFilterProps, 'filters' | 'isHideSearchMode'>) => {
-  // States
-  const [mode, setMode] = useState(Mode.BasicSearch)
+}: Pick<SmartFilterProps, 'filters' | 'isHideSearchMode'>) {
+  const [mode, setMode] = useState([Mode.BasicSearch])
 
   // Template
   if (filters.length === 0) {
@@ -69,12 +67,7 @@ export const SmartFilterContent = ({
     <div className='flex items-center gap-2'>
       <ToggleGroup
         className='data-[variant=outline]:shadow-none'
-        onValueChange={(value) => {
-          if (value) {
-            setMode(value as Mode)
-          }
-        }}
-        type='single'
+        onValueChange={(value) => setMode(value as Mode[])}
         value={mode}
         variant='outline'
       >
@@ -87,11 +80,11 @@ export const SmartFilterContent = ({
         </ToggleGroupItem>
       </ToggleGroup>
 
-      <Activity mode={mode === Mode.BasicSearch ? 'visible' : 'hidden'}>
+      <Activity mode={mode[0] === Mode.BasicSearch ? 'visible' : 'hidden'}>
         <BasicSearch />
       </Activity>
 
-      <Activity mode={mode === Mode.AdvancedFilter ? 'visible' : 'hidden'}>
+      <Activity mode={mode[0] === Mode.AdvancedFilter ? 'visible' : 'hidden'}>
         <AdvancedFilter />
       </Activity>
     </div>

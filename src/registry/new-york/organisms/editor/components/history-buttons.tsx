@@ -1,11 +1,8 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { RedoIcon, UndoIcon } from 'lucide-react'
-import { memo } from 'react'
 import TooltipButton from './tooltip-button'
 
-// Component
-const HistoryButtons = memo(() => {
-  // Hooks
+export default function HistoryButtons() {
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
     editor,
@@ -17,7 +14,6 @@ const HistoryButtons = memo(() => {
     }
   })
 
-  // Template
   return (
     <div className='flex gap-1'>
       <TooltipButton
@@ -37,7 +33,4 @@ const HistoryButtons = memo(() => {
       />
     </div>
   )
-})
-
-HistoryButtons.displayName = 'HistoryButtons'
-export default HistoryButtons
+}

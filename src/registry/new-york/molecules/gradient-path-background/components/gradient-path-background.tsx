@@ -2,7 +2,6 @@ import { motion } from 'motion/react'
 import type { PropsWithChildren } from 'react'
 import { cn } from '@/utils/ui'
 
-// Gradient path background
 interface GradientPathBackgroundProps extends PropsWithChildren {
   className?: string
   svgOptions?: {
@@ -11,7 +10,7 @@ interface GradientPathBackgroundProps extends PropsWithChildren {
   }
 }
 
-export const GradientPathBackground = ({ children, className, svgOptions }: GradientPathBackgroundProps) => {
+export function GradientPathBackground({ children, className, svgOptions }: GradientPathBackgroundProps) {
   return (
     <div className={cn('relative w-full', className)}>
       <PathSVG {...svgOptions} />
@@ -46,8 +45,7 @@ const nodes = [
   { x: 850, y: 100 }
 ]
 
-const PathSVG = ({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps['svgOptions'] = {}) => {
-  // Template
+function PathSVG({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps['svgOptions'] = {}) {
   return (
     <motion.svg
       animate={{ opacity: opacityOnAnimate }}

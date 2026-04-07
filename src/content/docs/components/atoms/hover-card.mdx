@@ -1,0 +1,40 @@
+---
+title: Hover Card
+description: For sighted users to preview content available behind a link.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='hover-card' />
+
+<CodePreview path='atoms/hover-card/demo' />
+
+## Installation
+<InstallationCard registryName='hover-card' />
+
+## Usage
+```tsx
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/atoms/hover-card"
+```
+
+```tsx
+<HoverCard>
+  <HoverCardTrigger>Hover</HoverCardTrigger>
+  <HoverCardContent>
+    The React Framework – created and maintained by @vercel.
+  </HoverCardContent>
+</HoverCard>
+```
+
+## Examples
+### Basic
+<CodePreview path='atoms/hover-card/basic' />
+
+### Sides
+<CodePreview path='atoms/hover-card/sides' />

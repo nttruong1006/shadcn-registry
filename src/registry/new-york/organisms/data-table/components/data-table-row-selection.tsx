@@ -1,30 +1,22 @@
 import type { RowData } from '@tanstack/react-table'
 import { ListChecksIcon } from 'lucide-react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/registry/new-york/ui/tooltip/components/tooltip'
+import { Button } from '@/components/atoms/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 
-// Component
-const DataTableRowSelection = <TData extends RowData>({ table }: Pick<DataTableProps<TData>, 'table'>) => {
+function DataTableRowSelection<TData extends RowData>({ table }: Pick<DataTableProps<TData>, 'table'>) {
   const rowCount = table.getRowCount()
   const rowSelectionLength = Object.keys(table.getState().rowSelection).length
   const pageRowCount = table.getPreFilteredRowModel().rows.length
   const { isSelectAllRows, setIsSelectAllRows } = table.options.meta ?? {}
 
-  // Methods
   const toggleSelectAllRows = () => {
     setIsSelectAllRows?.((prev) => !prev)
     table.toggleAllPageRowsSelected(!isSelectAllRows)
   }
 
-  // Template
-  if (rowSelectionLength === 0) {
+  if (!rowSelectionLength) {
     return null
   }
 
@@ -41,12 +33,13 @@ const DataTableRowSelection = <TData extends RowData>({ table }: Pick<DataTableP
       {pageRowCount < rowCount && (
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={toggleSelectAllRows} size='icon-sm' variant='outline'>
-                <ListChecksIcon />
-              </Button>
-            </TooltipTrigger>
-
+            <TooltipTrigger
+              render={
+                <Button onClick={toggleSelectAllRows} size='icon-sm' variant='outline'>
+                  <ListChecksIcon />
+                </Button>
+              }
+            />
             <TooltipContent>
               {isSelectAllRows ? `Unselect all ${rowCount} rows` : `Select all ${rowCount} rows`}
             </TooltipContent>

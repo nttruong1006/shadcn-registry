@@ -1,36 +1,31 @@
-import { Combobox, type ComboboxProps } from '@/registry/new-york/ui/combobox/components/combobox'
+import { Combobox } from '@/components/atoms/combobox'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { SelectFieldInputValue } from './lib/schema'
 
-// Component
-const SelectWithOptionsField = ({
+export default function SelectWithOptionsField({
   label,
-  isDisabled,
+  disabled,
   options,
   ...props
 }: BaseSmartFormFieldFieldProps & {
-  options: ComboboxProps['options']
-}) => {
-  // Hooks
+  options: unknown[]
+}) {
   const field = useFieldContext<SelectFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-  // Template
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <Combobox
-        buttonTriggerProps={{
-          id: field.name,
-          disabled: isDisabled
-        }}
-        onValueChange={field.handleChange as ComboboxProps['onValueChange']}
-        options={options}
-        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+        items={options}
+        // buttonTriggerProps={{
+        //   id: `${field.form.formId}-${field.name}`,
+        //   disabled
+        // }}
+        onValueChange={field.handleChange}
+        // placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
         value={field.state.value}
       />
     </FieldContainer>
   )
 }
-
-export default SelectWithOptionsField

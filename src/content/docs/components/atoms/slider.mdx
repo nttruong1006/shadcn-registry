@@ -1,0 +1,44 @@
+---
+title: Slider
+description: An input where the user selects a value from within a given range.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='slider'/>
+
+<CodePreview path='atoms/slider/demo' />
+
+## Installation
+<InstallationCard registryName='slider' />
+
+## Usage
+```tsx
+import { Slider } from "@/components/atoms/slider"
+```
+
+```tsx
+<Slider defaultValue={[33]} max={100} step={1} />
+```
+
+## Examples
+### Range
+Use an array with two values for a range slider.
+<CodePreview path='atoms/slider/range' />
+
+### Multiple thumbs
+Use an array with multiple values for multiple thumbs.
+<CodePreview path='atoms/slider/multiple-thumbs' />
+
+### Vertical
+Use `orientation="vertical"` for a vertical slider.
+<CodePreview path='atoms/slider/vertical' />
+
+### Controlled
+<CodePreview path='atoms/slider/controlled' />
+
+### Disabled
+Use the `disabled` prop to disable the slider.
+<CodePreview path='atoms/slider/disabled' />

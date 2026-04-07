@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/sonner/components/sonner'
+export * from '@/registry/new-york/atoms/sonner/components/sonner'

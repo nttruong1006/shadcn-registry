@@ -1,11 +1,8 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { QuoteIcon } from 'lucide-react'
-import { memo } from 'react'
 import TooltipButton from './tooltip-button'
 
-// Component
-const BlockquoteButton = memo(() => {
-  // Hooks
+export default function BlockquoteButton() {
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
     editor,
@@ -16,7 +13,6 @@ const BlockquoteButton = memo(() => {
     }
   })
 
-  // Template
   return (
     <TooltipButton
       Icon={QuoteIcon}
@@ -26,7 +22,4 @@ const BlockquoteButton = memo(() => {
       onClick={() => editor?.chain().focus().toggleBlockquote().run()}
     />
   )
-})
-
-BlockquoteButton.displayName = 'BlockquoteButton'
-export default BlockquoteButton
+}

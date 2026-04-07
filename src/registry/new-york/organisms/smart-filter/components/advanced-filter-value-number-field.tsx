@@ -1,17 +1,15 @@
 import { MinusIcon } from 'lucide-react'
-import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
-import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { Field, FieldError } from '@/components/atoms/field'
+import { NumberInput } from '@/components/molecules/number-input'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import { useAdvancedFilterForm } from './lib/form'
 
-// Component
-const AdvancedFilterValueNumberField = ({
+export default function AdvancedFilterValueNumberField({
   index,
   selectedFilter,
   formFilterOperation,
   formFilterValueAdditional
-}: AdvancedFilterValueFieldComponentProps) => {
-  // Hooks
+}: AdvancedFilterValueFieldComponentProps) {
   const advancedFilterForm = useAdvancedFilterForm()
 
   // Template
@@ -28,7 +26,7 @@ const AdvancedFilterValueNumberField = ({
                   aria-invalid={isInvalid}
                   id={field.name}
                   name={field.name}
-                  onFieldChange={field.handleChange}
+                  onFieldChange={(value) => field.handleChange(value.toString())}
                   onValueChange={(event) => {
                     field.handleChange(event.value)
                     if (+formFilterValueAdditional.to < +event.value) {
@@ -56,7 +54,7 @@ const AdvancedFilterValueNumberField = ({
                   id={field.name}
                   min={formFilterValueAdditional.from}
                   name={field.name}
-                  onFieldChange={field.handleChange}
+                  onFieldChange={(value) => field.handleChange(value.toString())}
                   onValueChange={(event) => field.handleChange(event.value)}
                   placeholder={`Enter to ${selectedFilter.label.toLowerCase()}`}
                   value={field.state.value}
@@ -81,7 +79,7 @@ const AdvancedFilterValueNumberField = ({
               aria-invalid={isInvalid}
               id={field.name}
               name={field.name}
-              onFieldChange={field.handleChange}
+              onFieldChange={(value) => field.handleChange(value.toString())}
               onValueChange={(event) => field.handleChange(event.value)}
               placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value as string}
@@ -93,5 +91,3 @@ const AdvancedFilterValueNumberField = ({
     </advancedFilterForm.AppField>
   )
 }
-
-export default AdvancedFilterValueNumberField

@@ -1,11 +1,8 @@
-import React from 'react'
-import { Pagination } from '@/registry/new-york/molecules/pagination/components/pagination'
+import { useState } from 'react'
+import { Pagination } from '@/components/molecules/pagination'
 
-// Component
-export const PaginationDemo = () => {
-  // States
-  const [page, setPage] = React.useState(1)
+export function PaginationDemo() {
+  const [page, setPage] = useState(1)
 
-  // Template
   return <Pagination onChangePage={setPage} page={page} pageCount={10} />
 }

@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/toggle/components/toggle'
+export * from '@/registry/new-york/atoms/toggle/components/toggle'

@@ -27,12 +27,9 @@ const fieldComponents: Record<
   multiSelectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-multi-select-with-infinite-query-field'))
 }
 
-// Component
-const AdvancedFilterValueField = ({ formFilterName, ...props }: AdvancedFilterValueFieldProps) => {
-  // Hooks
+export default function AdvancedFilterValueField({ formFilterName, ...props }: AdvancedFilterValueFieldProps) {
   const { filters } = useSmartFilterContext()
 
-  // Memos
   const selectedFilter = useMemo(() => {
     return filters.find((filter) => filter.name === formFilterName)
   }, [filters, formFilterName])
@@ -45,5 +42,3 @@ const AdvancedFilterValueField = ({ formFilterName, ...props }: AdvancedFilterVa
   const FieldComponent = fieldComponents[selectedFilter.type]
   return <FieldComponent formFilterName={formFilterName} selectedFilter={selectedFilter} {...props} />
 }
-
-export default AdvancedFilterValueField

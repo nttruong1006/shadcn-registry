@@ -10,20 +10,16 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/autocomplete/demo' />
 
 ## Installation
-
 <InstallationCard registryName='autocomplete' />
 
 ## Usage
-
 ```tsx
 import { Autocomplete, type AutocompleteProps, type Option } from '@/components/molecules/autocomplete'
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState<AutocompleteProps['value']>('')
+const [value, setValue] = useState<AutocompleteProps['value']>('')
 
-// Template
 <Autocomplete value={value} onValueChange={setValue} options={OPTIONS} />
 ```
 

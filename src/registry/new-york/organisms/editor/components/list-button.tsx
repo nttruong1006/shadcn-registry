@@ -1,20 +1,17 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { ChevronDownIcon, ListIcon, ListOrderedIcon, ListTodoIcon } from 'lucide-react'
-import { memo } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+} from '@/components/atoms/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
 
-// Component
-const ListButton = memo(() => {
-  // Hooks
+export default function ListButton() {
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
     editor,
@@ -27,19 +24,21 @@ const ListButton = memo(() => {
     }
   })
 
-  // Template
   return (
     <DropdownMenu>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <DropdownMenuTrigger asChild>
-            <Button className='gap-1' variant='ghost'>
-              <ListIcon />
-              <ChevronDownIcon />
-            </Button>
-          </DropdownMenuTrigger>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <DropdownMenuTrigger
+              render={
+                <Button className='gap-1' variant='ghost'>
+                  <ListIcon />
+                  <ChevronDownIcon />
+                </Button>
+              }
+            />
+          }
+        />
         <TooltipContent>List</TooltipContent>
       </Tooltip>
 
@@ -82,7 +81,4 @@ const ListButton = memo(() => {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-})
-
-ListButton.displayName = 'ListButton'
-export default ListButton
+}

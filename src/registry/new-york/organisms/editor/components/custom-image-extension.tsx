@@ -8,53 +8,43 @@ import {
 } from '@tiptap/react'
 import { AlignLeftIcon, ChevronDownIcon, TrashIcon } from 'lucide-react'
 import { type CSSProperties, type ImgHTMLAttributes, type PointerEvent, useRef, useState } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Separator } from '@/registry/new-york/ui/separator/components/separator'
-import { Skeleton } from '@/registry/new-york/ui/skeleton/components/skeleton'
+} from '@/components/atoms/dropdown-menu'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Separator } from '@/components/atoms/separator'
+import { Skeleton } from '@/components/atoms/skeleton'
 import { cn } from '@/utils/ui'
 import { type Alignment, alignments, containerClassNamePerAlignment, minWidth } from './lib'
 
-// Image attributes
 type ImageAttributes = Pick<ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'height' | 'src' | 'title' | 'width'> & {
   alignment: Alignment
   containerStyle: CSSProperties
 }
 
-// Resizing position
 type ResizingPosition = 'left' | 'right'
 
-// Base resize handler class name
 const BASE_RESIZE_HANDLER_CLASS_NAME =
   'invisible absolute top-0 bottom-0 cursor-ew-resize px-2 transition-[visibility_width] group-hover:visible before:absolute before:top-1/2 before:h-1/2 before:max-h-36 before:w-1 before:-translate-y-1/2 before:rounded-md before:bg-muted before:border-muted-foreground before:content-[""]'
 
-// Component
-const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewProps<HTMLImageElement>) => {
-  // Props
+function ImageComponent({ node, updateAttributes, deleteNode }: ReactNodeViewProps<HTMLImageElement>) {
   const { alignment, containerStyle, ...imageAttributes } = node.attrs as ImageAttributes
 
-  // Hooks
   const { editor } = useCurrentEditor()
 
-  // Refs
   const containerRef = useRef<HTMLDivElement>(null)
-
-  // States
   const [isLoaded, setIsLoaded] = useState(false)
   const [isOpenPopover, setIsOpenPopover] = useState(false)
 
-  // Methods
-  const loadImage = () => {
+  function loadImage() {
     setIsLoaded(true)
   }
 
-  const changeAlignment = (alignment: Alignment) => {
+  function changeAlignment(alignment: Alignment) {
     // Update alignment
     updateAttributes({
       alignment
@@ -75,12 +65,12 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
     editor?.commands.focus()
   }
 
-  const downPointer = (pointerDownEvent: PointerEvent<HTMLDivElement>, position: ResizingPosition) => {
+  function downPointer(pointerDownEvent: PointerEvent<HTMLDivElement>, position: ResizingPosition) {
     pointerDownEvent.preventDefault()
     pointerDownEvent.stopPropagation()
 
     // Handle move pointer
-    const handleMovePointer = (pointerMoveEvent: MouseEvent) => {
+    function handleMovePointer(pointerMoveEvent: MouseEvent) {
       pointerMoveEvent.preventDefault()
       pointerMoveEvent.stopPropagation()
 
@@ -117,12 +107,11 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
     document.addEventListener('pointerup', handleUpPointer)
   }
 
-  const deleteImage = () => {
+  function deleteImage() {
     deleteNode()
     editor?.commands.focus()
   }
 
-  // Template
   return (
     <NodeViewWrapper data-drag-handle>
       <div className={cn('flex', containerClassNamePerAlignment[alignment])} ref={containerRef}>
@@ -151,12 +140,14 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
               <div className='flex gap-2'>
                 {/* Alignment */}
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant='outline'>
-                      <AlignLeftIcon />
-                      <ChevronDownIcon />
-                    </Button>
-                  </DropdownMenuTrigger>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button variant='outline'>
+                        <AlignLeftIcon />
+                        <ChevronDownIcon />
+                      </Button>
+                    }
+                  />
 
                   <DropdownMenuContent>
                     {alignments.map((alignmentOption) => (
@@ -199,7 +190,6 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }: ReactNodeViewPro
   )
 }
 
-// Extension
 const CustomImageExtension = Image.extend({
   renderHTML({ HTMLAttributes }) {
     const { alignment, containerStyle, ...imageAttributes } = HTMLAttributes as ImageAttributes

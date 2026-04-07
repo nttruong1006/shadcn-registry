@@ -1,0 +1,45 @@
+---
+title: Tooltip
+description: A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='tooltip'/>
+
+<CodePreview path='atoms/tooltip/demo' />
+
+## Installation
+<InstallationCard registryName='tooltip' />
+
+## Usage
+```tsx
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/atoms/tooltip"
+```
+
+```tsx
+<Tooltip>
+  <TooltipTrigger>Hover</TooltipTrigger>
+  <TooltipContent>
+    <p>Add to library</p>
+  </TooltipContent>
+</Tooltip>
+```
+
+## Examples
+### Side
+Use the `side` prop to change the position of the tooltip.
+<CodePreview path='atoms/tooltip/side' />
+
+### With Keyboard Shortcut
+<CodePreview path='atoms/tooltip/with-keyboard-shortcut' />
+
+### Disabled Button
+Show a tooltip on a disabled button by wrapping it with a span.
+<CodePreview path='atoms/tooltip/disabled-button' />

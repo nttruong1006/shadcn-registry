@@ -1,17 +1,7 @@
-import type { Row, RowData, Table } from '@tanstack/react-table'
-import { Checkbox, type CheckboxProps } from '@/registry/new-york/ui/checkbox/components/checkbox'
+import type { CellContext, RowData } from '@tanstack/react-table'
+import { Checkbox } from '@/components/atoms/checkbox'
 
-// Component
-export const DataTableCheckboxCell = <TData extends RowData>({
-  table,
-  row,
-  checkboxProps
-}: {
-  table: Table<TData>
-  row: Row<TData>
-  checkboxProps?: CheckboxProps
-}) => {
-  // Template
+export function DataTableCheckboxCell<TData extends RowData>({ table, row }: CellContext<TData, unknown>) {
   return (
     <div className='flex h-full items-center justify-center'>
       <Checkbox
@@ -20,7 +10,6 @@ export const DataTableCheckboxCell = <TData extends RowData>({
           row.toggleSelected(value as boolean)
           table?.options.meta?.setIsSelectAllRows?.(false)
         }}
-        {...checkboxProps}
       />
     </div>
   )

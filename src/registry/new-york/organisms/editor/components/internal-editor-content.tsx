@@ -1,12 +1,12 @@
 import { EditorContent, useCurrentEditor } from '@tiptap/react'
 import { PlusIcon, TableCellsMergeIcon, TableCellsSplitIcon, TrashIcon } from 'lucide-react'
-import { type MouseEvent, memo, useCallback, useState } from 'react'
+import { type MouseEvent, useCallback, useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
+} from '@/components/atoms/dropdown-menu'
 
 interface TableDropdownMenu {
   open: boolean
@@ -14,15 +14,11 @@ interface TableDropdownMenu {
   y: number
 }
 
-// Component
-const InternalEditorContent = memo(() => {
-  // Hooks
+export default function InternalEditorContent() {
   const { editor } = useCurrentEditor()
 
-  // States
   const [tableDropdownMenu, setTableDropdownMenu] = useState<TableDropdownMenu>({ open: false, x: 0, y: 0 })
 
-  // Methods
   const clickContextMenu = useCallback((e: MouseEvent) => {
     const cell = (e.target as HTMLElement).closest('td, th')
     if (cell) {
@@ -103,7 +99,4 @@ const InternalEditorContent = memo(() => {
       </DropdownMenu>
     </>
   )
-})
-
-InternalEditorContent.displayName = 'InternalEditorContent'
-export default InternalEditorContent
+}

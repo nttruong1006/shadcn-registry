@@ -1,7 +1,6 @@
 import type { HTMLAttributes, PropsWithChildren } from 'react'
 import { cn } from '@/utils/ui'
 
-// Animated testimonial canopy
 export interface AnimatedTestimonialCanopyProps extends HTMLAttributes<HTMLDivElement> {
   isVertical?: boolean
   repeat?: number
@@ -11,7 +10,7 @@ export interface AnimatedTestimonialCanopyProps extends HTMLAttributes<HTMLDivEl
   maskClassName?: string
 }
 
-export const AnimatedTestimonialCanopy = ({
+export function AnimatedTestimonialCanopy({
   children,
   isVertical = false,
   repeat = 2,
@@ -21,8 +20,7 @@ export const AnimatedTestimonialCanopy = ({
   isApplyMask = true,
   maskClassName,
   ...props
-}: AnimatedTestimonialCanopyProps) => {
-  // Template
+}: AnimatedTestimonialCanopyProps) {
   return (
     <div
       {...props}
@@ -61,22 +59,18 @@ export const AnimatedTestimonialCanopy = ({
   )
 }
 
-// Animated testimonial card
 interface AnimatedTestimonialCardProps extends PropsWithChildren {
   className?: string
 }
 
-export const AnimatedTestimonialCard = ({ className, children }: AnimatedTestimonialCardProps) => {
-  // Template
+export function AnimatedTestimonialCard({ className, children }: AnimatedTestimonialCardProps) {
   return <div className={cn('mx-2', className)}>{children}</div>
 }
 
-// Animated testimonial
 export interface AnimatedTestimonialProps extends PropsWithChildren {
   className?: string
 }
 
-export const AnimatedTestimonial = ({ className, children }: AnimatedTestimonialProps) => {
-  // Template
+export function AnimatedTestimonial({ className, children }: AnimatedTestimonialProps) {
   return <div className={cn('w-full overflow-x-hidden', className)}>{children}</div>
 }

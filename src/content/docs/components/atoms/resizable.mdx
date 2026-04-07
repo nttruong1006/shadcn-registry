@@ -1,0 +1,41 @@
+---
+title: Resizable
+description: Accessible resizable panel groups and layouts with keyboard support.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='resizable' />
+
+<CodePreview path='atoms/resizable/demo' />
+
+## Installation
+<InstallationCard registryName='resizable' />
+
+## Usage
+```tsx
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/atoms/resizable"
+```
+
+```tsx
+<ResizablePanelGroup orientation="horizontal">
+  <ResizablePanel>One</ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel>Two</ResizablePanel>
+</ResizablePanelGroup>
+```
+
+## Examples
+### Vertical
+Use `orientation="vertical"` for vertical resizing.
+<CodePreview path='atoms/resizable/vertical' />
+
+### Handle
+Use the `withHandle` prop on `ResizableHandle` to show a visible handle.
+<CodePreview path='atoms/resizable/handle' />

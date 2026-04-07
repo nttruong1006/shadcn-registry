@@ -1,22 +1,20 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import type { FocusEvent, ReactNode } from 'react'
 import { NumericFormat, type NumericFormatProps } from 'react-number-format'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { ButtonGroup } from '@/registry/new-york/ui/button-group/components/button-group'
-import { Input, type InputProps } from '@/registry/new-york/ui/input/components/input'
-import { InputGroup } from '@/registry/new-york/ui/input-group/components/input-group'
+import { Button } from '@/components/atoms/button'
+import { ButtonGroup } from '@/components/atoms/button-group'
+import { Input, type InputProps } from '@/components/atoms/input'
+import { InputGroup } from '@/components/atoms/input-group'
 import { cn } from '@/utils/ui'
 
-// Number input
 export type NumberInputProps = NumericFormatProps<InputProps> & {
   isDisplayStepper?: boolean
   prefixNode?: ReactNode
   suffixNode?: ReactNode
-  // biome-ignore lint/suspicious/noExplicitAny: ignore
-  onFieldChange?: (...event: any[]) => void
+  onFieldChange?: (value: NonNullable<NumberInputProps['value']>) => void
 }
 
-export const NumberInput = ({
+export function NumberInput({
   value,
   min = Number.NEGATIVE_INFINITY,
   max = Number.POSITIVE_INFINITY,
@@ -33,8 +31,7 @@ export const NumberInput = ({
   suffixNode,
   onFieldChange,
   ...props
-}: NumberInputProps) => {
-  // Methods
+}: NumberInputProps) {
   const increment = () => {
     // Using == for checking both null or undefined
     if (value == null) {
@@ -66,7 +63,6 @@ export const NumberInput = ({
     }
   }
 
-  // Template
   return (
     <ButtonGroup
       className={cn(

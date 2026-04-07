@@ -1,0 +1,41 @@
+---
+title: Textarea
+description: Displays a form textarea or a component that looks like a textarea.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='textarea' />
+
+<CodePreview path='atoms/textarea/demo' />
+
+## Installation
+<InstallationCard registryName='textarea' />
+
+## Usage
+```tsx
+import { Textarea } from "@/components/atoms/textarea"
+```
+
+```tsx
+<Textarea />
+```
+
+## Examples
+### Field
+Use `Field`, `FieldLabel`, and `FieldDescription` to create a textarea with a label and description.
+<CodePreview path='atoms/textarea/field' />
+
+### Disabled
+Use the `disabled` prop to disable the textarea. To style the disabled state, add the `data-disabled` attribute to the `Field` component.
+<CodePreview path='atoms/textarea/disabled' />
+
+### Invalid
+Use the `aria-invalid` prop to mark the textarea as invalid. To style the invalid state, add the `data-invalid` attribute to the `Field` component.
+<CodePreview path='atoms/textarea/invalid' />
+
+### Button
+Pair with `Button` to create a textarea with a submit button.
+<CodePreview path='atoms/textarea/button' />

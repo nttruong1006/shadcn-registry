@@ -12,19 +12,15 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/pagination/demo' />
 
 ## Installation
-
 <InstallationCard registryName='pagination' />
 
 ## Usage
-
 ```tsx
 import { Pagination } from '@/components/molecules/pagination'
 ```
 
 ```tsx
-// States
-const [page, setPage] = React.useState(1)
+const [page, setPage] = useState(1)
 
-// Template
 <Pagination page={page} pageCount={10} onChangePage={setPage} />
 ```

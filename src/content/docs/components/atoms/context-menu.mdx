@@ -1,0 +1,74 @@
+---
+title: Context Menu
+description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='context-menu' />
+
+<CodePreview path='atoms/context-menu/demo' />
+
+## Installation
+<InstallationCard registryName='context-menu' />
+
+## Usage
+```tsx
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/atoms/context-menu"
+```
+
+```tsx
+<ContextMenu>
+  <ContextMenuTrigger>Right click here</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>Profile</ContextMenuItem>
+    <ContextMenuItem>Billing</ContextMenuItem>
+    <ContextMenuItem>Team</ContextMenuItem>
+    <ContextMenuItem>Subscription</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+## Examples
+### Basic
+A simple context menu with a few actions.
+<CodePreview path='atoms/context-menu/basic' />
+
+### Submenu
+Use `ContextMenuSub` to nest secondary actions.
+<CodePreview path='atoms/context-menu/submenu' />
+
+### Shortcuts
+Add `ContextMenuShortcut` to show keyboard hints.
+<CodePreview path='atoms/context-menu/shortcuts' />
+
+### Groups
+Group related actions and separate them with dividers.
+<CodePreview path='atoms/context-menu/groups' />
+
+### Icons
+Combine icons with labels for quick scanning.
+<CodePreview path='atoms/context-menu/icons' />
+
+### Checkboxes
+Use `ContextMenuCheckboxItem` for toggles.
+<CodePreview path='atoms/context-menu/checkboxes' />
+
+### Radio
+Use `ContextMenuRadioItem` for exclusive choices.
+<CodePreview path='atoms/context-menu/radio' />
+
+### Destructive
+Use `variant="destructive"` to style the menu item as destructive.
+<CodePreview path='atoms/context-menu/destructive' />
+
+### Sides
+Control submenu placement with side and align props.
+<CodePreview path='atoms/context-menu/sides' />

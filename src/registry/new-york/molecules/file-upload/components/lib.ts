@@ -30,9 +30,9 @@ export const getSizeText = (size: number) => {
 }
 
 // Use file upload
-export const useFileUpload = (args?: { isThrowError?: boolean }) => {
+export const useFileUpload = (args?: { throwError?: boolean }) => {
   // Args
-  const { isThrowError = false } = args ?? {}
+  const { throwError = false } = args ?? {}
 
   // Methods
   const uploadFile = useCallback(
@@ -44,7 +44,7 @@ export const useFileUpload = (args?: { isThrowError?: boolean }) => {
         // Extract response and return value
         return Promise.resolve(null)
       } catch {
-        if (isThrowError) {
+        if (throwError) {
           throw new Error('An error occurred when upload the file')
         }
         toast.error('Failure', {
@@ -53,11 +53,11 @@ export const useFileUpload = (args?: { isThrowError?: boolean }) => {
         return Promise.resolve(null)
       }
     },
-    [isThrowError]
+    [throwError]
   )
 
   return {
     uploadFile,
-    isUploadFilePending: false
+    fileUploadPending: false
   }
 }

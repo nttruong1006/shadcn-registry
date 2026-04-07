@@ -1,29 +1,24 @@
-import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
+import { NumberInput } from '@/components/molecules/number-input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { NumberFieldInputValue } from './lib/schema'
 
-// Component
-const NumberField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
-  // Hooks
+export default function NumberField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
   const field = useFieldContext<NumberFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-  // Template
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <NumberInput
-        aria-invalid={isInvalid}
-        disabled={isDisabled}
-        id={field.name}
+        aria-invalid={invalid}
+        disabled={disabled}
+        id={`${field.form.formId}-${field.name}`}
         name={field.name}
         onFieldChange={field.handleChange}
         onValueChange={(event) => field.handleChange(event.value)}
-        placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        placeholder={`Enter ${typeof label === 'string' ? label.toLowerCase() : 'information'}`}
         value={field.state.value}
       />
     </FieldContainer>
   )
 }
-
-export default NumberField

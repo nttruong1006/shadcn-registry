@@ -1,0 +1,24 @@
+---
+title: Label
+description: Renders an accessible label associated with controls.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='label' />
+
+<CodePreview path='atoms/label/demo' />
+
+## Installation
+<InstallationCard registryName='label' />
+
+## Usage
+```tsx
+import { Label } from "@/components/atoms/label"
+```
+
+```tsx
+<Label htmlFor="email">Your email address</Label>
+```

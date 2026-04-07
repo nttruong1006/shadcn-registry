@@ -1,0 +1,41 @@
+---
+title: Kbd
+description: Used to display textual user input from keyboard.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='kbd' />
+
+<CodePreview path='atoms/kbd/demo' />
+
+## Installation
+<InstallationCard registryName='kbd' />
+
+## Usage
+```tsx
+import { Kbd } from "@/components/atoms/kbd"
+```
+
+```tsx
+<Kbd>Ctrl</Kbd>
+```
+
+## Examples
+### Group
+Use the `KbdGroup` component to group keyboard keys together.
+<CodePreview path='atoms/kbd/group' />
+
+### Button
+Use the `Kbd` component inside a `Button` component to display a keyboard key inside a button.
+<CodePreview path='atoms/kbd/button' />
+
+### Tooltip
+You can use the `Kbd` component inside a `Tooltip` component to display a tooltip with a keyboard key.
+<CodePreview path='atoms/kbd/tooltip' />
+
+### Input Group
+You can use the `Kbd` component inside a `InputGroupAddon` component to display a keyboard key inside an input group.
+<CodePreview path='atoms/kbd/input-group' />

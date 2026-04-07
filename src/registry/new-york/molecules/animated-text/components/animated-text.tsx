@@ -2,7 +2,6 @@ import { motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { cn } from '@/utils/ui'
 
-// Animated text
 interface AnimatedTextProps {
   text: string
   className?: string
@@ -15,7 +14,7 @@ interface AnimatedTextProps {
   linkClassNames?: string[]
 }
 
-export const AnimatedText = ({
+export function AnimatedText({
   text,
   className,
   blurEffect = true,
@@ -25,12 +24,10 @@ export const AnimatedText = ({
   linkWords = [],
   linkUrls = [],
   linkClassNames = []
-}: AnimatedTextProps) => {
-  // States
+}: AnimatedTextProps) {
   const [visibleCount, setVisibleCount] = useState(0)
   const splitWords = text.split(' ')
 
-  // Methods
   const generateWords = () => {
     return (
       <div>
@@ -120,7 +117,6 @@ export const AnimatedText = ({
     )
   }
 
-  // Effects
   useEffect(() => {
     setVisibleCount(0)
     const intervalId = setInterval(
@@ -138,6 +134,5 @@ export const AnimatedText = ({
     return () => clearInterval(intervalId)
   }, [speed, splitWords.length])
 
-  // Template
   return <div className={cn(className)}>{generateWords()}</div>
 }

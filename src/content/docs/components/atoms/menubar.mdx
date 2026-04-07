@@ -1,0 +1,66 @@
+---
+title: Menubar
+description: A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='menubar' />
+
+<CodePreview path='atoms/menubar/demo' />
+
+## Installation
+<InstallationCard registryName='menubar' />
+
+## Usage
+```tsx
+import {
+  Menubar,
+  MenubarContent,
+  MenubarGroup,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/atoms/menubar"
+```
+
+```tsx
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarGroup>
+        <MenubarItem>
+          New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+        </MenubarItem>
+        <MenubarItem>New Window</MenubarItem>
+      </MenubarGroup>
+      <MenubarSeparator />
+      <MenubarGroup>
+        <MenubarItem>Share</MenubarItem>
+        <MenubarItem>Print</MenubarItem>
+      </MenubarGroup>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>
+```
+
+## Examples
+### Checkbox
+Use `MenubarCheckboxItem` for taggable options.
+<CodePreview path='atoms/menubar/checkbox' />
+
+### Radio
+Use `MenubarRadioGroup` and `MenubarRadioItem` for single-select options.
+<CodePreview path='atoms/menubar/radio' />
+
+### Submenu
+Use `MenubarSub`, `MenubarSubTrigger`, and `MenubarSubContent` for nested menus.
+<CodePreview path='atoms/menubar/submenu' />
+
+### With Icons
+<CodePreview path='atoms/menubar/with-icons' />

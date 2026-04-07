@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from 'lucide-react'
 import { useState } from 'react'
-import { Button, type ButtonProps } from '@/registry/new-york/ui/button/components/button'
+import { Button, type ButtonProps } from '@/components/atoms/button'
 import { cn } from '@/utils/ui'
 import {
   defaultThemeLocalStorageKey,
@@ -12,9 +12,7 @@ import {
   type Theme
 } from './lib'
 
-// Theme icon
-const ThemeIcon = ({ theme }: { theme: Theme | undefined }) => {
-  // Template
+function ThemeIcon({ theme }: { theme: Theme | undefined }) {
   if (theme === 'light') {
     return <MoonIcon />
   }
@@ -24,7 +22,6 @@ const ThemeIcon = ({ theme }: { theme: Theme | undefined }) => {
   return null
 }
 
-// Theme toggle button
 type AnimationVariant = 'circle' | 'circle-blur' | 'gif' | 'polygon'
 
 type StartPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
@@ -37,7 +34,7 @@ export type ThemeToggleButtonProps = Omit<ButtonProps, 'variant' | 'onClick'> & 
   url?: string // For gif variant
 }
 
-export const ThemeToggleButton = ({
+export function ThemeToggleButton({
   themeLocalStorageKey = defaultThemeLocalStorageKey,
   showLabel = false,
   variant = 'circle',
@@ -45,11 +42,9 @@ export const ThemeToggleButton = ({
   url,
   className,
   ...props
-}: ThemeToggleButtonProps) => {
-  // States
+}: ThemeToggleButtonProps) {
   const [theme, setTheme] = useState<Theme>()
 
-  // Methods
   const toggleTheme = () => {
     // Update theme
     document.startViewTransition(() => {
@@ -206,7 +201,7 @@ export const ThemeToggleButton = ({
     <Button
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
       className={cn('relative overflow-hidden transition-all', className)}
-      isLoading={!theme}
+      loading={!theme}
       onClick={toggleTheme}
       ref={() => {
         setTheme(getDefaultTheme())

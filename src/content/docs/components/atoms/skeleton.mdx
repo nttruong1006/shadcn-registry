@@ -1,0 +1,40 @@
+---
+title: Skeleton
+description: Use to show a placeholder while content is loading.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='skeleton' />
+
+<CodePreview path='atoms/skeleton/demo' />
+
+## Installation
+<InstallationCard registryName='skeleton' />
+
+## Usage
+```tsx
+import { Skeleton } from "@/components/atoms/skeleton"
+```
+
+```tsx
+<Skeleton className="h-[20px] w-[100px] rounded-full" />
+```
+
+## Examples
+### Avatar
+<CodePreview path='atoms/skeleton/avatar' />
+
+### Card
+<CodePreview path='atoms/skeleton/card' />
+
+### Text
+<CodePreview path='atoms/skeleton/text' />
+
+### Form
+<CodePreview path='atoms/skeleton/form' />
+
+### Table
+<CodePreview path='atoms/skeleton/table' />

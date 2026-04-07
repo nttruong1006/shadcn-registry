@@ -1,0 +1,54 @@
+---
+title: Popover
+description: Displays rich content in a portal, triggered by a button.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='popover' />
+
+<CodePreview path='atoms/popover/demo' />
+
+## Installation
+<InstallationCard registryName='popover' />
+
+## Usage
+```tsx
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/atoms/popover"
+```
+
+```tsx
+<Popover>
+  <PopoverTrigger render={<Button variant="outline" />}>
+    Open Popover
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>Title</PopoverTitle>
+      <PopoverDescription>Description text here.</PopoverDescription>
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>
+```
+
+## Examples
+### Basic
+A simple popover with a header, title, and description.
+<CodePreview path='atoms/popover/basic' />
+
+### Align
+Use the align prop on PopoverContent to control the horizontal alignment.
+<CodePreview path='atoms/popover/align' />
+
+### With Form
+A popover with form fields inside.
+<CodePreview path='atoms/popover/with-form' />

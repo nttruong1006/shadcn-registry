@@ -1,21 +1,20 @@
 import { flexRender, type RowData } from '@tanstack/react-table'
 import React from 'react'
-import { TableBody, TableCell, TableRow } from '@/registry/new-york/ui/table/components/table'
+import { TableBody, TableCell, TableRow } from '@/registry/new-york/atoms/table/components/table'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
 
-const DataTableBody = <TData extends RowData>({
+function DataTableBody<TData extends RowData>({
   table,
   className,
   onRenderSubComponent,
   onRenderAdditionalRow
 }: Pick<DataTableProps<TData>, 'table' | 'onRenderSubComponent' | 'onRenderAdditionalRow'> & {
   className?: string
-}) => {
+}) {
   const rows = table.getRowModel().rows
 
-  // Template
   return (
     <TableBody className={cn('relative', className)}>
       {rows.map((row) => {

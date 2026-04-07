@@ -1,42 +1,40 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircleIcon, ImageIcon } from 'lucide-react'
-import { memo, useState } from 'react'
+import { useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
 import { toast } from 'sonner'
 import z from 'zod'
+import { Button } from '@/components/atoms/button'
+import { Field, FieldError, FieldLabel } from '@/components/atoms/field'
+import { Input } from '@/components/atoms/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/atoms/tabs'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import {
   FileUpload,
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
   type FileUploadProps
-} from '@/registry/new-york/molecules/file-upload/components/file-upload'
-import { getFileUrl, useFileUpload } from '@/registry/new-york/molecules/file-upload/components/lib'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
-import { Input } from '@/registry/new-york/ui/input/components/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/registry/new-york/ui/tabs/components/tabs'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+} from '@/components/molecules/file-upload/file-upload'
+import { getFileUrl, useFileUpload } from '@/components/molecules/file-upload/lib'
 
-// Form mode
-export enum FormMode {
+enum ImageFormMode {
   Url = 'Url',
   Files = 'Files'
 }
 
-// Image form schema
-export const imageFormSchema = z
+const imageFormSchema = z
   .object({
-    mode: z.enum(FormMode),
+    mode: z.enum(ImageFormMode),
     url: z.string().trim(),
     files: z.array(z.custom<File>())
   })
   .superRefine((form, ctx) => {
     const { mode, url, files } = form
     switch (mode) {
-      case FormMode.Url: {
+      case ImageFormMode.Url: {
         if (!url) {
           ctx.addIssue({
             code: 'custom',
@@ -57,7 +55,7 @@ export const imageFormSchema = z
 
         break
       }
-      case FormMode.Files: {
+      case ImageFormMode.Files: {
         if (!files.length) {
           ctx.addIssue({
             code: 'custom',
@@ -73,15 +71,13 @@ export const imageFormSchema = z
     }
   })
 
-// Default image form value
-export const defaultImageFormValue: z.input<typeof imageFormSchema> = {
-  mode: FormMode.Url,
+const defaultImageFormValue: z.input<typeof imageFormSchema> = {
+  mode: ImageFormMode.Url,
   url: '',
   files: []
 }
 
-// File uploader dropzone options
-export const fileUploaderDropzoneOptions: DropzoneOptions = {
+const fileUploaderDropzoneOptions: DropzoneOptions = {
   maxFiles: 10,
   multiple: true,
   accept: {
@@ -92,18 +88,12 @@ export const fileUploaderDropzoneOptions: DropzoneOptions = {
   }
 }
 
-// Component
-const ImageButton = memo<{
-  id: string
-}>(({ id }) => {
-  // Hooks
+export default function ImageButton({ id }: { id: string }) {
   const { editor } = useCurrentEditor()
-  const { isUploadFilePending, uploadFile } = useFileUpload()
+  const { fileUploadPending, uploadFile } = useFileUpload()
 
-  // States
-  const [isOpenPopover, setIsOpenPopover] = useState(false)
+  const [openPopover, setOpenPopover] = useState(false)
 
-  // Form
   const imageForm = useForm({
     formId: `${id}-file-form`,
     defaultValues: defaultImageFormValue,
@@ -116,11 +106,11 @@ const ImageButton = memo<{
 
         // Add image node view
         switch (mode) {
-          case FormMode.Url: {
+          case ImageFormMode.Url: {
             editor?.chain().focus().setImage({ src: url }).enter().run()
             break
           }
-          case FormMode.Files: {
+          case ImageFormMode.Files: {
             const uploadedFiles = await Promise.all(files.map(async (file) => await uploadFile(file)))
             for (const uploadedFile of uploadedFiles) {
               if (!uploadedFile) {
@@ -143,7 +133,7 @@ const ImageButton = memo<{
         }
 
         // Close popover
-        setIsOpenPopover(false)
+        setOpenPopover(false)
       } catch {
         toast.error('Failure', {
           description: 'An error occurred, please try again'
@@ -152,22 +142,32 @@ const ImageButton = memo<{
     }
   })
 
-  // Template
   return (
-    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
+    <Popover
+      onOpenChange={(open) => {
+        setOpenPopover(open)
+        if (!open) {
+          imageForm.reset()
+        }
+      }}
+      open={openPopover}
+    >
       <Tooltip>
-        <TooltipTrigger asChild>
-          <PopoverTrigger asChild>
-            <Button size='icon' variant='ghost'>
-              <ImageIcon />
-            </Button>
-          </PopoverTrigger>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <PopoverTrigger
+              render={
+                <Button size='icon' variant='ghost'>
+                  <ImageIcon />
+                </Button>
+              }
+            />
+          }
+        />
         <TooltipContent>Image</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='w-xs space-y-6' onCloseAutoFocus={() => imageForm.reset()}>
+      <PopoverContent className='w-xs space-y-6'>
         <div>Acceptable formats: jpeg, jpg, png, webp, svg</div>
 
         <form
@@ -182,20 +182,20 @@ const ImageButton = memo<{
             {(formMode) => (
               <Tabs
                 onValueChange={(value) => {
-                  imageForm.setFieldValue('mode', value as FormMode)
+                  imageForm.setFieldValue('mode', value as ImageFormMode)
                   imageForm.validate('submit')
                 }}
                 value={formMode}
               >
                 {/* Tabs list */}
-                <TabsList className='w-full [&_button]:flex-1' loop>
-                  <TabsTrigger value={FormMode.Url}>URL</TabsTrigger>
-                  <TabsTrigger value={FormMode.Files}>File</TabsTrigger>
+                <TabsList className='w-full [&_button]:flex-1'>
+                  <TabsTrigger value={ImageFormMode.Url}>URL</TabsTrigger>
+                  <TabsTrigger value={ImageFormMode.Files}>File</TabsTrigger>
                 </TabsList>
 
                 {/* Tabs content */}
                 {/* Url tab */}
-                <TabsContent value={FormMode.Url}>
+                <TabsContent value={ImageFormMode.Url}>
                   <imageForm.Field name='url'>
                     {(field) => {
                       const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -221,7 +221,7 @@ const ImageButton = memo<{
                 </TabsContent>
 
                 {/* Files tab */}
-                <TabsContent value={FormMode.Files}>
+                <TabsContent value={ImageFormMode.Files}>
                   <imageForm.Field name='files'>
                     {(field) => {
                       const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -263,18 +263,20 @@ const ImageButton = memo<{
           <imageForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
             {([canSubmit, isSubmitting]) => (
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    disabled={!canSubmit}
-                    form={imageForm.formId}
-                    isLoading={isUploadFilePending || isSubmitting}
-                    size='icon'
-                    type='submit'
-                    variant='outline'
-                  >
-                    <CheckCircleIcon />
-                  </Button>
-                </TooltipTrigger>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      disabled={!canSubmit}
+                      form={imageForm.formId}
+                      loading={fileUploadPending || isSubmitting}
+                      size='icon'
+                      type='submit'
+                      variant='outline'
+                    >
+                      <CheckCircleIcon />
+                    </Button>
+                  }
+                />
                 <TooltipContent>Save</TooltipContent>
               </Tooltip>
             )}
@@ -283,7 +285,4 @@ const ImageButton = memo<{
       </PopoverContent>
     </Popover>
   )
-})
-
-ImageButton.displayName = 'ImageButton'
-export default ImageButton
+}

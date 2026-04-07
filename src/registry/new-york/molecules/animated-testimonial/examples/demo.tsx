@@ -2,10 +2,10 @@ import {
   AnimatedTestimonial,
   AnimatedTestimonialCanopy,
   AnimatedTestimonialCard
-} from '@/registry/new-york/molecules/animated-testimonial/components/animated-testimonial'
+} from '@/components/molecules/animated-testimonial'
 
 // Component
-const AnimatedTextDemo = () => {
+export function AnimatedTextDemo() {
   // Template
   return (
     <AnimatedTestimonial>
@@ -23,5 +23,3 @@ const AnimatedTextDemo = () => {
     </AnimatedTestimonial>
   )
 }
-
-export default AnimatedTextDemo

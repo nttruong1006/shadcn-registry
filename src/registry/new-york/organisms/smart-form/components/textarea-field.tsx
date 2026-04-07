@@ -1,20 +1,17 @@
-import { Textarea } from '@/registry/new-york/ui/textarea/components/textarea'
+import { Textarea } from '@/components/atoms/textarea'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { TextareaFieldInputValue } from './lib/schema'
 
-// Component
-const TextareaField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldProps) => {
-  // Hooks
+export default function TextareaField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
   const field = useFieldContext<TextareaFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-  // Template
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <Textarea
-        aria-invalid={isInvalid}
-        disabled={isDisabled}
+        aria-invalid={invalid}
+        disabled={disabled}
         id={field.name}
         name={field.name}
         onBlur={field.handleBlur}
@@ -25,5 +22,3 @@ const TextareaField = ({ label, isDisabled, ...props }: BaseSmartFormFieldFieldP
     </FieldContainer>
   )
 }
-
-export default TextareaField

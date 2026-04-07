@@ -1,18 +1,9 @@
 import type { Content } from '@tiptap/react'
 import { useState } from 'react'
-import { Editor } from '@/registry/new-york/organisms/editor/components/editor'
-import { Toaster } from '@/registry/new-york/ui/sonner/components/sonner'
+import { Editor } from '@/components/organisms/editor/editor'
 
-// Component
-export const EditorDemo = () => {
-  // States
+export function EditorDemo() {
   const [value, setValue] = useState<Content>('')
 
-  // Template
-  return (
-    <>
-      <Toaster />
-      <Editor onValueChange={setValue} value={value} />
-    </>
-  )
+  return <Editor id='editor-demo' onValueChange={setValue} value={value} />
 }

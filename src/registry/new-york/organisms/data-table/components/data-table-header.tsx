@@ -1,17 +1,15 @@
 import { flexRender, type RowData } from '@tanstack/react-table'
 import { ChevronLeftIcon, ChevronRightIcon, PinOffIcon } from 'lucide-react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { TableHead, TableHeader, TableRow } from '@/registry/new-york/ui/table/components/table'
+import { Button } from '@/components/atoms/button'
+import { TableHead, TableHeader, TableRow } from '@/components/atoms/table'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
 
-// Component
-const DataTableHeader = <TData extends RowData>({
+function DataTableHeader<TData extends RowData>({
   table,
   className
-}: Pick<DataTableProps<TData>, 'table'> & { className?: string }) => {
-  // Template
+}: Pick<DataTableProps<TData>, 'table'> & { className?: string }) {
   return (
     <TableHeader className={cn('sticky top-0 z-20 bg-background', className)}>
       {table.getHeaderGroups().map((headerGroup) => (

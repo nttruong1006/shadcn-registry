@@ -1,8 +1,6 @@
-import { PasswordInput } from '@/registry/new-york/molecules/password-input/components/password-input'
+import { PasswordInput } from '@/components/molecules/password-input'
 
-// Component
-export const PasswordInputDemo = () => {
-  // Template
+export function PasswordInputDemo() {
   return (
     <div className='w-full max-w-xs'>
       <PasswordInput placeholder='Enter password' />

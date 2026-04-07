@@ -1,0 +1,43 @@
+---
+title: Button
+description: Displays a button or a component that looks like a button.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='button' />
+
+<CodePreview path='atoms/button/demo' />
+
+## Installation
+<InstallationCard registryName='button' />
+
+## Usage
+```tsx
+import { Button } from "@/components/atoms/button"
+```
+
+```tsx
+<Button variant="outline">Button</Button>
+```
+
+## Examples
+### Size
+<CodePreview path='atoms/button/size' />
+
+### Variant
+<CodePreview path='atoms/button/variant' />
+
+### Icon
+<CodePreview path='atoms/button/icon' />
+
+### With Icon
+<CodePreview path='atoms/button/with-icon' />
+
+### Rounded
+<CodePreview path='atoms/button/rounded' />
+
+### Spinner
+<CodePreview path='atoms/button/spinner' />

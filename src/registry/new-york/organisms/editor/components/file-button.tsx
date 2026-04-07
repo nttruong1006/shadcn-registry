@@ -1,34 +1,31 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircleIcon, PaperclipIcon } from 'lucide-react'
-import { memo, useState } from 'react'
+import { useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
 import { toast } from 'sonner'
 import z from 'zod'
+import { Button } from '@/components/atoms/button'
+import { Field, FieldError, FieldLabel } from '@/components/atoms/field'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import {
   FileUpload,
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
   type FileUploadProps
-} from '@/registry/new-york/molecules/file-upload/components/file-upload'
-import { getFileUrl, type UploadedFile, useFileUpload } from '@/registry/new-york/molecules/file-upload/components/lib'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+} from '@/components/molecules/file-upload/file-upload'
+import { getFileUrl, type UploadedFile, useFileUpload } from '@/components/molecules/file-upload/lib'
 
-// File form schema
 export const fileFormSchema = z.object({
   files: z.array(z.custom<File>()).min(1, 'Please select the file')
 })
 
-// Default file form value
 export const defaultFileFormValue: z.input<typeof fileFormSchema> = {
   files: []
 }
 
-// File uploader dropzone options
 export const fileUploaderDropzoneOptions: DropzoneOptions = {
   maxFiles: 10,
   multiple: true,
@@ -41,18 +38,12 @@ export const fileUploaderDropzoneOptions: DropzoneOptions = {
   }
 }
 
-// Component
-const FileButton = memo<{
-  id: string
-}>(({ id }) => {
-  // Hooks
+export default function FileButton({ id }: { id: string }) {
   const { editor } = useCurrentEditor()
-  const { isUploadFilePending, uploadFile } = useFileUpload()
+  const { fileUploadPending, uploadFile } = useFileUpload()
 
-  // States
-  const [isOpenPopover, setIsOpenPopover] = useState(false)
+  const [openPopover, setOpenPopover] = useState(false)
 
-  // Form
   const fileForm = useForm({
     formId: `${id}-file-form`,
     defaultValues: defaultFileFormValue,
@@ -89,7 +80,7 @@ const FileButton = memo<{
         }
 
         // Close popover
-        setIsOpenPopover(false)
+        setOpenPopover(false)
       } catch {
         toast.error('Failure', {
           description: 'An error occurred, please try again'
@@ -98,22 +89,33 @@ const FileButton = memo<{
     }
   })
 
-  // Template
   return (
-    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
+    <Popover
+      onOpenChange={(open) => {
+        setOpenPopover(open)
+        if (!open) {
+          fileForm.reset()
+        }
+      }}
+      open={openPopover}
+    >
       <Tooltip>
-        <TooltipTrigger asChild>
-          <PopoverTrigger asChild>
-            <Button size='icon' variant='ghost'>
-              <PaperclipIcon />
-            </Button>
-          </PopoverTrigger>
-        </TooltipTrigger>
+        <TooltipTrigger
+          render={
+            <PopoverTrigger
+              render={
+                <Button size='icon' variant='ghost'>
+                  <PaperclipIcon />
+                </Button>
+              }
+            />
+          }
+        />
 
         <TooltipContent>File</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='w-xs space-y-6' onCloseAutoFocus={() => fileForm.reset()}>
+      <PopoverContent className='w-xs space-y-6'>
         <div>Acceptable formats: doc, docx, xlsx, xml, pdf</div>
 
         <form
@@ -160,18 +162,20 @@ const FileButton = memo<{
           <fileForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
             {([canSubmit, isSubmitting]) => (
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    disabled={!canSubmit}
-                    form={fileForm.formId}
-                    isLoading={isUploadFilePending || isSubmitting}
-                    size='icon'
-                    type='submit'
-                    variant='outline'
-                  >
-                    <CheckCircleIcon />
-                  </Button>
-                </TooltipTrigger>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      disabled={!canSubmit}
+                      form={fileForm.formId}
+                      loading={fileUploadPending || isSubmitting}
+                      size='icon'
+                      type='submit'
+                      variant='outline'
+                    >
+                      <CheckCircleIcon />
+                    </Button>
+                  }
+                />
                 <TooltipContent>submitButton</TooltipContent>
               </Tooltip>
             )}
@@ -180,7 +184,4 @@ const FileButton = memo<{
       </PopoverContent>
     </Popover>
   )
-})
-
-FileButton.displayName = 'FileButton'
-export default FileButton
+}

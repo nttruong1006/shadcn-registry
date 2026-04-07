@@ -1,0 +1,61 @@
+---
+title: Input Group
+description: Display additional information or actions to an input or textarea.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='input-group' />
+
+<CodePreview path='atoms/input-group/demo' />
+
+## Installation
+<InstallationCard registryName='input-group' />
+
+## Usage
+```tsx
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/atoms/input-group"
+```
+
+```tsx
+<InputGroup>
+  <InputGroupInput placeholder="Search..." />
+  <InputGroupAddon>
+    <SearchIcon />
+  </InputGroupAddon>
+</InputGroup>
+```
+
+## Examples
+### Icon
+<CodePreview path='atoms/input-group/icon' />
+
+### Text
+<CodePreview path='atoms/input-group/text' />
+
+### Button
+<CodePreview path='atoms/input-group/button' />
+
+### Kbd
+<CodePreview path='atoms/input-group/kbd' />
+
+### Dropdown
+<CodePreview path='atoms/input-group/dropdown' />
+
+### Spinner
+<CodePreview path='atoms/input-group/spinner' />
+
+### Textarea
+<CodePreview path='atoms/input-group/textarea' />
+
+### Custom Input
+<CodePreview path='atoms/input-group/custom-input' />

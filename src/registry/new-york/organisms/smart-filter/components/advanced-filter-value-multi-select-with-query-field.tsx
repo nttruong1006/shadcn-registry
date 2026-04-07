@@ -1,19 +1,15 @@
-import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
-import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { Field, FieldError } from '@/components/atoms/field'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import { useAdvancedFilterForm } from './lib/form'
-import { useOptionsQuery } from './lib/query'
 
-// Component
-const AdvancedFilterValueMultiSelectWithQueryField = ({
+export default function AdvancedFilterValueMultiSelectWithQueryField({
   index,
   selectedFilter
-}: AdvancedFilterValueFieldComponentProps) => {
-  // Hooks
+}: AdvancedFilterValueFieldComponentProps) {
   const advancedFilterForm = useAdvancedFilterForm()
-  const { options, optionsQuery } = useOptionsQuery({
-    apiPath: 'apiPath' in selectedFilter ? selectedFilter.apiPath : undefined
-  })
+  // const { options, optionsQuery } = useOptionsQuery({
+  //   apiPath: 'apiPath' in selectedFilter ? selectedFilter.apiPath : undefined
+  // })
 
   // Template
   if (!('apiPath' in selectedFilter)) {
@@ -26,7 +22,7 @@ const AdvancedFilterValueMultiSelectWithQueryField = ({
         const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
         return (
           <Field data-invalid={isInvalid}>
-            <MultiSelect
+            {/* <MultiSelect
               buttonTriggerProps={{
                 isLoading: optionsQuery.isFetching
               }}
@@ -34,7 +30,7 @@ const AdvancedFilterValueMultiSelectWithQueryField = ({
               options={options}
               placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value as string[]}
-            />
+            /> */}
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
@@ -42,5 +38,3 @@ const AdvancedFilterValueMultiSelectWithQueryField = ({
     </advancedFilterForm.AppField>
   )
 }
-
-export default AdvancedFilterValueMultiSelectWithQueryField

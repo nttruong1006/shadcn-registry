@@ -1,9 +1,5 @@
-import { GradientPathBackground } from '@/registry/new-york/molecules/gradient-path-background/components/gradient-path-background'
+import { GradientPathBackground } from '@/components/molecules/gradient-path-background'
 
-// Component
-const GradientPathBackgroundDemo = () => {
-  // Template
+export function GradientPathBackgroundDemo() {
   return <GradientPathBackground className='h-96 max-h-full w-full' />
 }
-
-export default GradientPathBackgroundDemo

@@ -6,7 +6,7 @@ description: Generates animated text word-by-word with blur, highlights, links, 
 import CodePreview from '@/components/app/code-preview/index.astro'
 import InstallationCard from '@/components/app/installation-card/index.astro'
 import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
-import {Badge} from '@/registry/new-york/ui/badge/components/badge'
+import {Badge} from '@/registry/new-york/atoms/badge/components/badge'
 import {ArrowUpRight} from 'lucide-react'
 import DocLinkButton from '@/components/app/doc-link-button/index.astro'
 
@@ -15,22 +15,18 @@ import DocLinkButton from '@/components/app/doc-link-button/index.astro'
 <CodePreview path='molecules/animated-text/demo' />
 
 ## Installation
-
 <InstallationCard registryName='animated-text' />
 
 ## Usage
-
 ```tsx
 import { AnimatedText } from '@/components/molecules/animated-text'
 ```
 
 ```tsx
-// Template
 <AnimatedText text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
 ```
 
 ## Examples
-
 ### Highlight
 <CodePreview path='molecules/animated-text/highlight' />
 

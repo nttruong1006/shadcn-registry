@@ -1,17 +1,16 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor } from '@tiptap/react'
 import { CheckCircle, TvMinimalPlay } from 'lucide-react'
-import { memo, useRef, useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import z from 'zod'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
-import { Input } from '@/registry/new-york/ui/input/components/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+import { Button } from '@/components/atoms/button'
+import { Field, FieldError, FieldLabel } from '@/components/atoms/field'
+import { Input } from '@/components/atoms/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import type { CallbackRef, SetExtensions } from './editor'
 import { isValidYoutubeUrl, minWidth } from './lib'
 
-// Youtube form schema
 const youtubeFormSchema = z.object({
   url: z
     .string()
@@ -20,28 +19,25 @@ const youtubeFormSchema = z.object({
     .refine((value) => isValidYoutubeUrl(value), 'URL is invalid')
 })
 
-// Default youtube form value
 const defaultYoutubeFormValue: z.input<typeof youtubeFormSchema> = {
   url: ''
 }
 
-// Component
-const YoutubeButton = memo<{
+export default function YoutubeButton({
+  id,
+  callbackRef,
+  setExtensions
+}: {
   id: string
   callbackRef: CallbackRef
   setExtensions: SetExtensions
-}>(({ id, callbackRef, setExtensions }) => {
-  // Hooks
+}) {
   const { editor } = useCurrentEditor()
   const [isPending, startTransition] = useTransition()
 
-  // Refs
   const isExtensionLoadedRef = useRef(false)
+  const [openPopover, setOpenPopover] = useState(false)
 
-  // States
-  const [isOpenPopover, setIsOpenPopover] = useState(false)
-
-  // Form
   const youtubeForm = useForm({
     formId: `${id}-youtube-form`,
     defaultValues: defaultYoutubeFormValue,
@@ -89,26 +85,36 @@ const YoutubeButton = memo<{
       })
 
       // Close popover
-      setIsOpenPopover(false)
+      setOpenPopover(false)
     }
   })
 
-  // Template
   return (
-    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
+    <Popover
+      onOpenChange={(open) => {
+        setOpenPopover(open)
+        if (!open) {
+          youtubeForm.reset()
+        }
+      }}
+      open={openPopover}
+    >
       <Tooltip>
-        <TooltipTrigger asChild>
-          <PopoverTrigger asChild>
-            <Button isLoading={isPending} size='icon' variant='ghost'>
-              <TvMinimalPlay />
-            </Button>
-          </PopoverTrigger>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <PopoverTrigger
+              render={
+                <Button loading={isPending} size='icon' variant='ghost'>
+                  <TvMinimalPlay />
+                </Button>
+              }
+            />
+          }
+        />
         <TooltipContent>YouTube</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='w-xs space-y-4' onCloseAutoFocus={() => youtubeForm.reset()}>
+      <PopoverContent className='w-xs space-y-4'>
         <form
           className='space-y-6'
           id={youtubeForm.formId}
@@ -145,18 +151,20 @@ const YoutubeButton = memo<{
             <youtubeForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
               {([canSubmit, isSubmitting]) => (
                 <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      disabled={!canSubmit}
-                      form={youtubeForm.formId}
-                      isLoading={isSubmitting}
-                      size='icon'
-                      type='submit'
-                      variant='outline'
-                    >
-                      <CheckCircle />
-                    </Button>
-                  </TooltipTrigger>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        disabled={!canSubmit}
+                        form={youtubeForm.formId}
+                        loading={isSubmitting}
+                        size='icon'
+                        type='submit'
+                        variant='outline'
+                      >
+                        <CheckCircle />
+                      </Button>
+                    }
+                  />
                   <TooltipContent>Save</TooltipContent>
                 </Tooltip>
               )}
@@ -166,7 +174,4 @@ const YoutubeButton = memo<{
       </PopoverContent>
     </Popover>
   )
-})
-
-YoutubeButton.displayName = 'YoutubeButton'
-export default YoutubeButton
+}

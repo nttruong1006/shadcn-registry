@@ -8,29 +8,23 @@ import {
   useCurrentEditor
 } from '@tiptap/react'
 import { PaperclipIcon, TrashIcon } from 'lucide-react'
-import type { MouseEventHandler } from 'react'
+import type { MouseEvent } from 'react'
 import type { FileAttributes } from '@/@types/tiptap'
-import { getSizeText } from '@/registry/new-york/molecules/file-upload/components/lib'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
+import { getSizeText } from '@/components/molecules/file-upload/lib'
 
-// Component
-const FileComponent = (props: ReactNodeViewProps<HTMLAnchorElement>) => {
-  const { node, deleteNode } = props
+function FileComponent({ node, deleteNode }: ReactNodeViewProps<HTMLAnchorElement>) {
   const nodeAttrs = node.attrs as FileAttributes
 
-  // Hooks
   const { editor } = useCurrentEditor()
 
-  // Methods
-  const deleteFile: MouseEventHandler<HTMLButtonElement> = (e) => {
+  function deleteFile(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     e.stopPropagation()
-
     deleteNode()
     editor?.commands.focus()
   }
 
-  // Template
   return (
     <NodeViewWrapper>
       <a
@@ -54,7 +48,6 @@ const FileComponent = (props: ReactNodeViewProps<HTMLAnchorElement>) => {
   )
 }
 
-// Extension
 const FileExtension = Node.create({
   name: 'file',
   group: 'block',

@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/badge/components/badge'
+export * from '@/registry/new-york/atoms/badge/components/badge'

@@ -1,0 +1,35 @@
+---
+title: Sidebar
+description: A composable, themeable and customizable sidebar component.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='sidebar' className='mb-0'/>
+
+## Installation
+<InstallationCard registryName='sidebar' />
+
+## Usage
+```tsx
+import { SidebarProvider, SidebarTrigger } from "@/components/atoms/sidebar"
+```
+
+```tsx
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader />
+    <SidebarContent>
+      <SidebarGroup />
+      <SidebarGroup />
+    </SidebarContent>
+    <SidebarFooter />
+  </Sidebar>
+  <main>
+    <SidebarTrigger />
+    {children}
+  </main>
+</SidebarProvider>
+```

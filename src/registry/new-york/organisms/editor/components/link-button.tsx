@@ -1,18 +1,17 @@
 import { useForm } from '@tanstack/react-form'
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { CheckCircleIcon, CopyIcon, ExternalLinkIcon, LinkIcon, TrashIcon, UnlinkIcon } from 'lucide-react'
-import { type MouseEvent, memo, useRef, useState } from 'react'
+import { type MouseEvent, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import z from 'zod'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
-import { Field, FieldError, FieldLabel } from '@/registry/new-york/ui/field/components/field'
-import { Input } from '@/registry/new-york/ui/input/components/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+import { Button } from '@/components/atoms/button'
+import { Checkbox } from '@/components/atoms/checkbox'
+import { Field, FieldError, FieldLabel } from '@/components/atoms/field'
+import { Input } from '@/components/atoms/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
 
-// Link form schema
 const linkFormSchema = z.object({
   url: z
     .string()
@@ -29,18 +28,13 @@ const linkFormSchema = z.object({
   isOpenInNewTab: z.boolean()
 })
 
-// Default link form value
 const defaultLinkFormValue: z.input<typeof linkFormSchema> = {
   url: '',
   displayText: '',
   isOpenInNewTab: false
 } as const
 
-// Component
-const LinkButton = memo<{
-  id: string
-}>(({ id }) => {
-  // Hooks
+export default function LinkButton({ id }: { id: string }) {
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
     editor,
@@ -49,13 +43,9 @@ const LinkButton = memo<{
     }
   })
 
-  // Refs
   const isUpdateModeRef = useRef(false)
+  const [openPopover, setOpenPopover] = useState(false)
 
-  // States
-  const [isOpenPopover, setIsOpenPopover] = useState(false)
-
-  // Form
   const linkForm = useForm({
     formId: `${id}-link-form`,
     defaultValues: defaultLinkFormValue,
@@ -95,22 +85,21 @@ const LinkButton = memo<{
       chains?.focus().run()
 
       // Close popover
-      setIsOpenPopover(false)
+      setOpenPopover(false)
     }
   })
 
-  // Methods
-  const openLinkInNewTab = () => {
+  function openLinkInNewTab() {
     window.open(linkForm.getFieldValue('url'), '_blank', 'noopener,noreferrer')
   }
 
-  const unsetLink = () => {
+  function unsetLink() {
     editor?.chain().focus().extendMarkRange('link').unsetLink().run()
     linkForm.reset()
-    setIsOpenPopover(false)
+    setOpenPopover(false)
   }
 
-  const copyLink = async (e: MouseEvent<HTMLButtonElement>) => {
+  async function copyLink(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     await navigator.clipboard.writeText(linkForm.getFieldValue('url'))
     toast.success('Success', {
@@ -118,35 +107,15 @@ const LinkButton = memo<{
     })
   }
 
-  const deleteLink = () => {
+  function deleteLink() {
     editor?.chain().focus().extendMarkRange('link').deleteSelection().run()
   }
 
-  // Template
   return (
-    <Popover onOpenChange={setIsOpenPopover} open={isOpenPopover}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <PopoverTrigger asChild>
-            <Button
-              className={cn({
-                'bg-accent text-accent-foreground': editorState?.isActive
-              })}
-              size='icon'
-              variant='ghost'
-            >
-              <LinkIcon />
-            </Button>
-          </PopoverTrigger>
-        </TooltipTrigger>
-
-        <TooltipContent>Link</TooltipContent>
-      </Tooltip>
-
-      <PopoverContent
-        className='space-y-4'
-        onCloseAutoFocus={() => linkForm.reset()}
-        onOpenAutoFocus={() => {
+    <Popover
+      onOpenChange={(open) => {
+        setOpenPopover(open)
+        if (open) {
           const isLinkActive = editor?.isActive('link')
           const { href, target } = editor?.getAttributes('link') ?? {}
 
@@ -158,10 +127,36 @@ const LinkButton = memo<{
             )
             linkForm.setFieldValue('isOpenInNewTab', target === '_blank')
             isUpdateModeRef.current = true
-            setIsOpenPopover(true)
+            setOpenPopover(true)
           }
-        }}
-      >
+        } else {
+          linkForm.reset()
+        }
+      }}
+      open={openPopover}
+    >
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <PopoverTrigger
+              render={
+                <Button
+                  className={cn({
+                    'bg-accent text-accent-foreground': editorState?.isActive
+                  })}
+                  size='icon'
+                  variant='ghost'
+                >
+                  <LinkIcon />
+                </Button>
+              }
+            />
+          }
+        />
+        <TooltipContent>Link</TooltipContent>
+      </Tooltip>
+
+      <PopoverContent className='space-y-4'>
         <form
           className='w-xs space-y-6'
           id={linkForm.formId}
@@ -241,11 +236,13 @@ const LinkButton = memo<{
               <linkForm.Subscribe selector={(state) => state.values.url}>
                 {(linkFormUrl) => (
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button disabled={!linkFormUrl} onClick={openLinkInNewTab} size='icon' variant='outline'>
-                        <ExternalLinkIcon />
-                      </Button>
-                    </TooltipTrigger>
+                    <TooltipTrigger
+                      render={
+                        <Button disabled={!linkFormUrl} onClick={openLinkInNewTab} size='icon' variant='outline'>
+                          <ExternalLinkIcon />
+                        </Button>
+                      }
+                    />
                     <TooltipContent>Open link in new tab</TooltipContent>
                   </Tooltip>
                 )}
@@ -253,11 +250,13 @@ const LinkButton = memo<{
             }
 
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button disabled={!editor?.isActive('link')} onClick={unsetLink} size='icon' variant='outline'>
-                  <UnlinkIcon />
-                </Button>
-              </TooltipTrigger>
+              <TooltipTrigger
+                render={
+                  <Button disabled={!editor?.isActive('link')} onClick={unsetLink} size='icon' variant='outline'>
+                    <UnlinkIcon />
+                  </Button>
+                }
+              />
               <TooltipContent>Unset</TooltipContent>
             </Tooltip>
 
@@ -265,11 +264,13 @@ const LinkButton = memo<{
               <linkForm.Subscribe selector={(state) => state.values.url}>
                 {(linkFormUrl) => (
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button disabled={!linkFormUrl} onClick={copyLink} size='icon' variant='outline'>
-                        <CopyIcon />
-                      </Button>
-                    </TooltipTrigger>
+                    <TooltipTrigger
+                      render={
+                        <Button disabled={!linkFormUrl} onClick={copyLink} size='icon' variant='outline'>
+                          <CopyIcon />
+                        </Button>
+                      }
+                    />
                     <TooltipContent>Copy</TooltipContent>
                   </Tooltip>
                 )}
@@ -280,11 +281,13 @@ const LinkButton = memo<{
               <linkForm.Subscribe selector={(state) => state.values.url}>
                 {(linkFormUrl) => (
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button disabled={!linkFormUrl} onClick={deleteLink} size='icon' variant='outline'>
-                        <TrashIcon />
-                      </Button>
-                    </TooltipTrigger>
+                    <TooltipTrigger
+                      render={
+                        <Button disabled={!linkFormUrl} onClick={deleteLink} size='icon' variant='outline'>
+                          <TrashIcon />
+                        </Button>
+                      }
+                    />
                     <TooltipContent>Delete</TooltipContent>
                   </Tooltip>
                 )}
@@ -294,18 +297,20 @@ const LinkButton = memo<{
             <linkForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
               {([canSubmit, isSubmitting]) => (
                 <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      disabled={!canSubmit}
-                      form={linkForm.formId}
-                      isLoading={isSubmitting}
-                      size='icon'
-                      type='submit'
-                      variant='outline'
-                    >
-                      <CheckCircleIcon />
-                    </Button>
-                  </TooltipTrigger>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        disabled={!canSubmit}
+                        form={linkForm.formId}
+                        loading={isSubmitting}
+                        size='icon'
+                        type='submit'
+                        variant='outline'
+                      >
+                        <CheckCircleIcon />
+                      </Button>
+                    }
+                  />
                   <TooltipContent>Save</TooltipContent>
                 </Tooltip>
               )}
@@ -315,7 +320,4 @@ const LinkButton = memo<{
       </PopoverContent>
     </Popover>
   )
-})
-
-LinkButton.displayName = 'LinkButton'
-export default LinkButton
+}

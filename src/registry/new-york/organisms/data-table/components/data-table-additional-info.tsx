@@ -1,21 +1,19 @@
 import type { RowData } from '@tanstack/react-table'
 import type { DataTableProps } from './data-table'
 
-// Component
-const DataTableAdditionalInfo = <TData extends RowData>({
+function DataTableAdditionalInfo<TData extends RowData>({
   table,
-  isLoading,
-  isError
-}: Pick<DataTableProps<TData>, 'table' | 'isError' | 'isLoading'>) => {
+  loading,
+  error
+}: Pick<DataTableProps<TData>, 'table' | 'error' | 'loading'>) {
   const rowLength = table.getRowModel().rows.length
-  const isEmpty = !(rowLength || isLoading)
+  const empty = !(rowLength || loading)
 
-  // Template
-  if (isError) {
+  if (error) {
     return <div className='flex items-center justify-center p-4'>An error occurred, please reload the page</div>
   }
 
-  if (isEmpty) {
+  if (empty) {
     return <div className='flex items-center justify-center p-4'>No data available</div>
   }
 

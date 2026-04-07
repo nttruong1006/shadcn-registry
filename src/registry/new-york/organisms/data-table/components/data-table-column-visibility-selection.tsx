@@ -1,35 +1,29 @@
 import type { RowData, Table } from '@tanstack/react-table'
 import { ChevronDownIcon } from 'lucide-react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Checkbox } from '@/registry/new-york/ui/checkbox/components/checkbox'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList
-} from '@/registry/new-york/ui/command/components/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
+import { Button } from '@/components/atoms/button'
+import { Checkbox } from '@/components/atoms/checkbox'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/atoms/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 import { cn } from '@/utils/ui'
 
-// Component
-export const DataTableColumnVisibilitySelection = <TData extends RowData>({ table }: { table: Table<TData> }) => {
-  // Template
+export function DataTableColumnVisibilitySelection<TData extends RowData>({ table }: { table: Table<TData> }) {
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button className={cn('font-normal [&_svg]:pointer-events-auto')} variant='outline'>
-          <span>Columns</span>
-          <ChevronDownIcon className='text-muted-foreground' />
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger
+        render={
+          <Button className={cn('font-normal [&_svg]:pointer-events-auto')} variant='outline'>
+            <span>Columns</span>
+            <ChevronDownIcon className='text-muted-foreground' />
+          </Button>
+        }
+      />
 
       <PopoverContent className='min-w-(--radix-popover-trigger-width) p-0'>
         <Command>
           <div className='flex items-center gap-2 border-input border-b px-3'>
             <Checkbox
-              checked={table.getIsAllColumnsVisible() || (table.getIsSomeColumnsVisible() && 'indeterminate')}
+              checked={table.getIsAllColumnsVisible()}
+              indeterminate={table.getIsSomeColumnsVisible()}
               onCheckedChange={(checked) => {
                 table.toggleAllColumnsVisible(checked as boolean)
               }}

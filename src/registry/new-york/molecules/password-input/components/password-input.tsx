@@ -1,26 +1,19 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
-import type { InputProps } from '@/registry/new-york/ui/input/components/input'
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput
-} from '@/registry/new-york/ui/input-group/components/input-group'
+import type { InputProps } from '@/components/atoms/input'
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/atoms/input-group'
 
-// Password input
 export type PasswordInputProps = InputProps
-export const PasswordInput = ({ className, ...props }: PasswordInputProps) => {
-  // States
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
 
-  // Template
+export function PasswordInput({ className, ...props }: PasswordInputProps) {
+  const [showPassword, setShowPassword] = useState(false)
+
   return (
     <InputGroup>
-      <InputGroupInput {...props} type={passwordVisibility ? 'text' : 'password'} />
+      <InputGroupInput {...props} type={showPassword ? 'text' : 'password'} />
       <InputGroupAddon align='inline-end'>
-        <InputGroupButton onClick={() => setPasswordVisibility((prev) => !prev)} size='icon-xs'>
-          {passwordVisibility ? <EyeOff /> : <Eye />}
+        <InputGroupButton onClick={() => setShowPassword((prev) => !prev)} size='icon-xs'>
+          {showPassword ? <EyeOff /> : <Eye />}
         </InputGroupButton>
       </InputGroupAddon>
     </InputGroup>

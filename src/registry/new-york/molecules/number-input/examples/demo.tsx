@@ -1,12 +1,9 @@
-import React from 'react'
-import { NumberInput, type NumberInputProps } from '@/registry/new-york/molecules/number-input/components/number-input'
+import { useState } from 'react'
+import { NumberInput, type NumberInputProps } from '@/components/molecules/number-input'
 
-// Component
-export const NumberInputDemo = () => {
-  // States
-  const [value, setValue] = React.useState<NumberInputProps['value']>('')
+export function NumberInputDemo() {
+  const [value, setValue] = useState<NumberInputProps['value']>('')
 
-  // Template
   return (
     <NumberInput
       className='w-xs'

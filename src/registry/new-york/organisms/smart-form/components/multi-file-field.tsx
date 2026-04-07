@@ -5,7 +5,7 @@ import {
   FileUploadInput,
   FileUploadItem,
   type FileUploadValue
-} from '@/registry/new-york/molecules/file-upload/components/file-upload'
+} from '@/components/molecules/file-upload/file-upload'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { MultiFileFieldInputValue } from './lib/schema'
@@ -14,30 +14,26 @@ const baseDropzoneOptions: DropzoneOptions = {
   maxFiles: 10
 }
 
-// Component
-const MultiFileField = ({
+export default function MultiFileField({
   label,
-  isDisabled,
+  disabled,
   dropzoneOptions = baseDropzoneOptions,
   ...props
 }: BaseSmartFormFieldFieldProps & {
   dropzoneOptions?: DropzoneOptions
-}) => {
-  // Hooks
+}) {
   const field = useFieldContext<MultiFileFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-  // Template
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <FileUpload
+        disabled={disabled}
         dropzoneOptions={baseDropzoneOptions}
-        isDisabled={isDisabled}
         onValueChange={field.handleChange}
         value={field.state.value}
       >
-        <FileUploadInput aria-invalid={isInvalid} id={field.name} />
-
+        <FileUploadInput aria-invalid={invalid} id={`${field.form.formId}-${field.name}`} />
         <FileUploadContent>
           {(field.state.value as FileUploadValue).map((value, index) => (
             <FileUploadItem
@@ -52,5 +48,3 @@ const MultiFileField = ({
     </FieldContainer>
   )
 }
-
-export default MultiFileField

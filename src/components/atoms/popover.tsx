@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/popover/components/popover'
+export * from '@/registry/new-york/atoms/popover/components/popover'

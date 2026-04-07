@@ -49,10 +49,10 @@ export const advancedFilterFormSchema = z.object({
 
         if (operation === 'isBetween') {
           if (value.additional.from === '') {
-            const inavlidFields = ['value.additional', 'value.additional.from']
-            for (const inavlidField of inavlidFields) {
+            const invalidFields = ['value.additional', 'value.additional.from']
+            for (const invalidField of invalidFields) {
               ctx.addIssue({
-                path: [inavlidField],
+                path: [invalidField],
                 message: 'Please enter/select the information',
                 code: 'custom'
               })
@@ -60,10 +60,10 @@ export const advancedFilterFormSchema = z.object({
           }
 
           if (value.additional.to === '') {
-            const inavlidFields = ['value.additional', 'value.additional.to']
-            for (const inavlidField of inavlidFields) {
+            const invalidFields = ['value.additional', 'value.additional.to']
+            for (const invalidField of invalidFields) {
               ctx.addIssue({
-                path: [inavlidField],
+                path: [invalidField],
                 message: 'Please enter/select the information',
                 code: 'custom'
               })
@@ -84,7 +84,7 @@ export type AdvancedFilterFormValueInput = z.input<typeof advancedFilterFormSche
 export type AdvancedFilterFormValueOutput = z.output<typeof advancedFilterFormSchema>
 export const defaultAdvancedFilterFormValue: AdvancedFilterFormValueInput = { filters: [] }
 
-export const useAdvancedFilterForm = () => {
+export function useAdvancedFilterForm() {
   return useFormContext() as unknown as AppFieldExtendedReactFormApi<
     AdvancedFilterFormValueInput,
     FormValidateOrFn<AdvancedFilterFormValueInput> | undefined,

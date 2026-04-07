@@ -1,8 +1,6 @@
-import { HighlightedText } from '@/registry/new-york/molecules/highlighted-text/components/highlighted-text'
+import { HighlightedText } from '@/components/molecules/highlighted-text'
 
-// Component
-const HighlightedTextDemo = () => {
-  // Template
+export function HighlightedTextDemo() {
   return (
     <div className='w-full'>
       <HighlightedText>
@@ -13,5 +11,3 @@ const HighlightedTextDemo = () => {
     </div>
   )
 }
-
-export default HighlightedTextDemo

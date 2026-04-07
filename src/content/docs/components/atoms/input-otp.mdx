@@ -1,0 +1,73 @@
+---
+title: Input OTP
+description: Accessible one-time password component with copy paste functionality.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='input-otp' />
+
+<CodePreview path='atoms/input-otp/demo' />
+
+## Installation
+<InstallationCard registryName='input-otp' />
+
+## Usage
+```tsx
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/atoms/input-otp"
+```
+
+```tsx
+<InputOTP maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
+
+## Examples
+### Pattern
+Use the `pattern` prop to define a custom pattern for the OTP input.
+<CodePreview path='atoms/input-otp/pattern' />
+
+### Separator
+Use the `InputOTPSeparator` component to add a separator between input groups.
+<CodePreview path='atoms/input-otp/separator' />
+
+### Disabled
+Use the `disabled` prop to disable the input.
+<CodePreview path='atoms/input-otp/disabled' />
+
+### Controlled
+Use the `value` and `onChange` props to control the input value.
+<CodePreview path='atoms/input-otp/controlled' />
+
+### Invalid
+Use `aria-invalid` on the slots to show an error state.
+<CodePreview path='atoms/input-otp/invalid' />
+
+### Four Digits
+A common pattern for PIN codes. This uses the `pattern={REGEXP_ONLY_DIGITS}` prop.
+<CodePreview path='atoms/input-otp/four-digits' />
+
+### Alphanumeric
+Use `REGEXP_ONLY_DIGITS_AND_CHARS` to accept both letters and numbers..
+<CodePreview path='atoms/input-otp/alphanumeric' />
+
+### Form
+<CodePreview path='atoms/input-otp/form' />

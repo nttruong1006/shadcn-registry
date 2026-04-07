@@ -4,15 +4,12 @@ import {
   FileUploadContent,
   FileUploadInput,
   FileUploadItem,
-  type FileUploadProps
-} from '@/registry/new-york/molecules/file-upload/components/file-upload'
+  type FileUploadValue
+} from '@/components/molecules/file-upload/file-upload'
 
-// Component
-export const FileUploadDemo = () => {
-  // States
-  const [value, setValue] = React.useState<FileUploadProps['value']>([])
+export function FileUploadDemo() {
+  const [value, setValue] = React.useState<FileUploadValue>([])
 
-  // Template
   return (
     <FileUpload
       dropzoneOptions={{

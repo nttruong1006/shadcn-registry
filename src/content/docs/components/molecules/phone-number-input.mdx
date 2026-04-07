@@ -12,19 +12,15 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/phone-number-input/demo' />
 
 ## Installation
-
 <InstallationCard registryName='phone-number-input' />
 
 ## Usage
-
 ```tsx
 import { Pagination } from '@/components/molecules/pagination'
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState('')
+const [value, setValue] = useState('')
 
-// Template
 <PhoneNumberInput value={value} onValueChange={setValue} />
 ```

@@ -1,0 +1,43 @@
+---
+title: Spinner
+description: An indicator that can be used to show a loading state.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='spinner'/>
+
+<CodePreview path='atoms/spinner/demo' />
+
+## Installation
+<InstallationCard registryName='spinner' />
+
+## Usage
+```tsx
+import { Spinner } from "@/components/atoms/spinner"
+```
+
+```tsx
+<Spinner />
+```
+
+## Examples
+### Size
+Use the `size-*` utility class to change the size of the spinner.
+<CodePreview path='atoms/spinner/size' />
+
+### Button
+Add a spinner to a button to indicate a loading state. Place the `Spinner` before the label with `data-icon="inline-start"` for a start position, or after the label with `data-icon="inline-end"` for an end position.
+<CodePreview path='atoms/spinner/button' />
+
+### Badge
+Add a spinner to a badge to indicate a loading state. Place the `Spinner` before the label with `data-icon="inline-start"` for a start position, or after the label with `data-icon="inline-end"` for an end position.
+<CodePreview path='atoms/spinner/badge' />
+
+### Input Group
+<CodePreview path='atoms/spinner/input-group' />
+
+### Empty
+<CodePreview path='atoms/spinner/empty' />

@@ -6,7 +6,7 @@ description: Smooth tilt card that responds naturally to your cursor, giving the
 import CodePreview from "@/components/app/code-preview/index.astro";
 import InstallationCard from "@/components/app/installation-card/index.astro";
 import ShadcnLinkButton from "@/components/app/shadcn-link-button/index.astro";
-import { Badge } from "@/registry/new-york/ui/badge/components/badge";
+import { Badge } from "@/registry/new-york/atoms/badge/components/badge";
 import { ArrowUpRight } from "lucide-react";
 import DocLinkButton from "@/components/app/doc-link-button/index.astro";
 
@@ -15,17 +15,14 @@ import DocLinkButton from "@/components/app/doc-link-button/index.astro";
 <CodePreview path="molecules/tilt-card/demo" />
 
 ## Installation
-
 <InstallationCard registryName="tilt-card" />
 
 ## Usage
-
 ```tsx
 import { TiltCard, TiltCardContent } from '@/components/molecules/tilt-card'
 ```
 
 ```tsx
-// Template
 <TiltCard className='w-80'>
   <TiltCardContent className='p-6'>
     <div className='mb-4 aspect-video rounded-xl bg-muted'></div>

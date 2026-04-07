@@ -2,30 +2,29 @@ import { CloudUploadIcon, FileIcon, XIcon } from 'lucide-react'
 import { createContext, type HTMLAttributes, type PropsWithChildren, useCallback, useContext, useMemo } from 'react'
 import { type DropzoneOptions, type DropzoneState, type FileRejection, useDropzone } from 'react-dropzone'
 import { toast } from 'sonner'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Input } from '@/registry/new-york/ui/input/components/input'
+import { Button } from '@/components/atoms/button'
+import { Input } from '@/components/atoms/input'
 import { cn } from '@/utils/ui'
 import { getSizeText, type UploadedFile } from './lib'
 
-// File upload
 export type FileUploadValue = Array<File | UploadedFile>
 
 export type FileUploadProps = {
   value: FileUploadValue
   dropzoneOptions?: DropzoneOptions
-  isReplaceOnSelect?: boolean
-  isDisabled?: boolean
+  replaceOnSelect?: boolean
+  disabled?: boolean
   onValueChange: (value: FileUploadProps['value']) => void
 } & HTMLAttributes<HTMLDivElement>
 
 export type FileUploadContextValue = Pick<FileUploadProps, 'value' | 'onValueChange'> & {
   dropzoneState: DropzoneState
-  isDisabled: boolean
+  disabled: boolean
 }
 
 const FileUploadContext = createContext<FileUploadContextValue | null>(null)
 
-export const useFileUploadContext = () => {
+export function useFileUploadContext() {
   const context = useContext(FileUploadContext)
   if (!context) {
     throw new Error('useFileUploadContext must be used within the FileUpload')
@@ -33,36 +32,34 @@ export const useFileUploadContext = () => {
   return context
 }
 
-export const FileUpload = ({
+export function FileUpload({
   className,
   dropzoneOptions,
   value,
-  isReplaceOnSelect: isReplaceOnSelectProp,
-  isDisabled: isDisabledProp,
+  replaceOnSelect: replaceOnSelectProp,
+  disabled: disabledProp,
   children,
   dir,
   onValueChange,
   ...props
-}: FileUploadProps) => {
+}: FileUploadProps) {
   const { maxFiles = 1, maxSize = 20 * 1024 * 1024, ...restDropzoneOptions } = dropzoneOptions ?? {}
-  const isReplaceOnSelect = maxFiles === 1 ? true : isReplaceOnSelectProp
+  const replaceOnSelect = maxFiles === 1 ? true : replaceOnSelectProp
   const multiple = maxFiles > 1
-  const isDisabled = Boolean(
-    isDisabledProp === undefined ? value.length === maxFiles && !isReplaceOnSelect : isDisabledProp
-  )
+  const disabled = Boolean(disabledProp === undefined ? value.length === maxFiles && !replaceOnSelect : disabledProp)
 
   // Dropzone
   const dropzoneState = useDropzone({
     maxFiles,
     maxSize,
     multiple,
-    disabled: isDisabled,
+    disabled,
     ...restDropzoneOptions,
     onDrop: useCallback(
       (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
         const newValues = [...value]
 
-        if (isReplaceOnSelect) {
+        if (replaceOnSelect) {
           newValues.splice(0, newValues.length)
         }
 
@@ -110,17 +107,16 @@ export const FileUpload = ({
           }
         }
       },
-      [value, isReplaceOnSelect, maxFiles, maxSize, dropzoneOptions?.accept, onValueChange]
+      [value, replaceOnSelect, maxFiles, maxSize, dropzoneOptions?.accept, onValueChange]
     )
   })
 
-  // Template
   return (
     <FileUploadContext.Provider
       value={{
         value,
         dropzoneState,
-        isDisabled,
+        disabled,
         onValueChange
       }}
     >
@@ -131,20 +127,17 @@ export const FileUpload = ({
   )
 }
 
-// File upload input
 export type FileUploadInputProps = HTMLAttributes<HTMLDivElement>
 
-export const FileUploadInput = ({ id, className, children, ...restProps }: FileUploadInputProps) => {
-  // Hooks
-  const { dropzoneState, isDisabled } = useFileUploadContext()
-  const dropzoneRootProps = isDisabled ? {} : dropzoneState.getRootProps()
+export function FileUploadInput({ id, className, children, ...restProps }: FileUploadInputProps) {
+  const { dropzoneState, disabled } = useFileUploadContext()
+  const dropzoneRootProps = disabled ? {} : dropzoneState.getRootProps()
 
-  // Template
   return (
     <div
       className={cn(
         'relative w-full rounded-md border bg-transparent text-sm hover:bg-accent/40 aria-invalid:border-destructive dark:bg-input/30',
-        isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
         className
       )}
       {...dropzoneRootProps}
@@ -156,16 +149,14 @@ export const FileUploadInput = ({ id, className, children, ...restProps }: FileU
           <span className='text-center'>Drag and drop a file here or select a file</span>
         </div>
       )}
-
-      <Input disabled={isDisabled} id={id} ref={dropzoneState.inputRef} {...dropzoneState.getInputProps()} />
+      <Input disabled={disabled} id={id} ref={dropzoneState.inputRef} {...dropzoneState.getInputProps()} />
     </div>
   )
 }
 
-// File upload content
 export type FileUploadContentProps = PropsWithChildren & { className?: string }
-export const FileUploadContent = ({ className, children }: FileUploadContentProps) => {
-  // Template
+
+export function FileUploadContent({ className, children }: FileUploadContentProps) {
   return (
     <div className={cn('max-h-80 overflow-auto', className)}>
       <div className='space-y-2'>{children}</div>
@@ -173,17 +164,14 @@ export const FileUploadContent = ({ className, children }: FileUploadContentProp
   )
 }
 
-// File uploader item
 export type FileUploaderItemProps = HTMLAttributes<HTMLDivElement> & {
   value: FileUploadValue[number]
   index: number
 }
 
-export const FileUploadItem = ({ value, index, className, children }: FileUploaderItemProps) => {
-  // Hooks
+export function FileUploadItem({ value, index, className, children }: FileUploaderItemProps) {
   const { value: fileUploadValue, onValueChange } = useFileUploadContext()
 
-  // Memos
   const { name, size } = useMemo<{ name: string; size: string }>(() => {
     const size = value instanceof File ? value.size : (value.compress_info?.['']?.size ?? 0)
     const name = value instanceof File ? value.name : value.original
@@ -193,7 +181,6 @@ export const FileUploadItem = ({ value, index, className, children }: FileUpload
     }
   }, [value])
 
-  // Template
   return (
     <div
       className={cn(

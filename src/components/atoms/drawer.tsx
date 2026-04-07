@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/drawer/components/drawer'
+export * from '@/registry/new-york/atoms/drawer/components/drawer'

@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/button-group/components/button-group'
+export * from '@/registry/new-york/atoms/button-group/components/button-group'

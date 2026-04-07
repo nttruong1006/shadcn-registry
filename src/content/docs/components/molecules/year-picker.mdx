@@ -10,20 +10,16 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/year-picker/demo' />
 
 ## Installation
-
 <InstallationCard registryName='year-picker' />
 
 ## Usage
-
 ```tsx
 import { YearPicker, type YearPickerProps } from '@/components/molecules/year-picker'
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState<YearPickerProps['value']>(null)
+const [value, setValue] = useState<YearPickerProps['value']>(null)
 
-// Template
 <YearPicker value={value} placeholder='Select month' onValueChange={setValue} />
 ```
 

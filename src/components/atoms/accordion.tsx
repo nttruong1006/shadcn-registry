@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/accordion/components/accordion'
+export * from '@/registry/new-york/atoms/accordion/components/accordion'

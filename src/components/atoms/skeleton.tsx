@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/skeleton/components/skeleton'
+export * from '@/registry/new-york/atoms/skeleton/components/skeleton'

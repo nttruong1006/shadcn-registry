@@ -1,11 +1,11 @@
 import { formOptions } from '@tanstack/react-form'
 import { CircleCheckBigIcon, ListFilterIcon, PlusIcon, RefreshCwIcon, TrashIcon } from 'lucide-react'
-import { memo, Suspense, useState } from 'react'
-import { Badge } from '@/registry/new-york/ui/badge/components/badge'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/ui/popover/components/popover'
-import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner.tsx'
+import { Suspense, useState } from 'react'
+import { Badge } from '@/components/atoms/badge'
+import { Button } from '@/components/atoms/button'
+import { Field, FieldError } from '@/components/atoms/field'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Spinner } from '@/components/atoms/spinner'
 import AdvancedFilterNameField from './advanced-filter-name-field'
 import AdvancedFilterOperationField from './advanced-filter-operation-field'
 import AdvancedFilterValueField from './advanced-filter-value-field'
@@ -18,7 +18,7 @@ import {
 } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
-export const generateAdvancedFilterFormId = (id: string) => {
+export function generateAdvancedFilterFormId(id: string) {
   return `${id}-advanced-filter`
 }
 
@@ -27,9 +27,7 @@ export const advancedFilterFormOptions = formOptions({
   validators: { onSubmit: advancedFilterFormSchema }
 })
 
-// Component
-const AdvancedFilter = memo(() => {
-  // Hooks
+export default function AdvancedFilter() {
   const { id, filters, setFilters } = useSmartFilterContext()
   const formId = generateAdvancedFilterFormId(id)
 
@@ -41,16 +39,14 @@ const AdvancedFilter = memo(() => {
       const safeValue = advancedFilterFormSchema.parse(value)
       setFilters(safeValue.filters)
       setTotalFilterApplied(safeValue.filters.length)
-      setIsOpenPopover(false)
+      setOpenPopover(false)
     }
   })
 
-  // States
-  const [isOpenPopover, setIsOpenPopover] = useState(false)
+  const [openPopover, setOpenPopover] = useState(false)
   const [totalFilterApplied, setTotalFilterApplied] = useState(0)
 
-  // Methods
-  const addFilter = (filter: Filter) => {
+  function addFilter(filter: Filter) {
     const { name, type } = filter
     const operation = operationsPerType[type][0]
     advancedFilterForm.pushFieldValue('filters', {
@@ -61,13 +57,13 @@ const AdvancedFilter = memo(() => {
     })
   }
 
-  const executeLogicOnOpenPopover = () => {
+  function executeLogicOnOpenPopover() {
     if (advancedFilterForm.state.values.filters.length === 0) {
       addFilter(filters[0])
     }
   }
 
-  const clickAddingButton = () => {
+  function clickAddingButton() {
     const selectedFilters = advancedFilterForm.state.values.filters.map((field) => field.name)
     const unSelectFilters = filters.filter((filter) => !selectedFilters.includes(filter.name))
     if (unSelectFilters.length > 0) {
@@ -75,7 +71,7 @@ const AdvancedFilter = memo(() => {
     }
   }
 
-  const resetFilter = () => {
+  function resetFilter() {
     advancedFilterForm.clearFieldValues('filters')
     setTotalFilterApplied(0)
     setFilters(defaultAdvancedFilterFormValue.filters)
@@ -94,27 +90,34 @@ const AdvancedFilter = memo(() => {
           advancedFilterForm.handleSubmit()
         }}
       >
-        <Popover modal onOpenChange={setIsOpenPopover} open={isOpenPopover}>
-          <PopoverTrigger asChild>
-            <Button variant='outline'>
-              <span>Filters</span>
-              <ListFilterIcon />
-              {totalFilterApplied > 0 && (
-                <Badge
-                  className='flex size-5 items-center justify-center rounded-sm p-0 leading-none'
-                  variant='secondary'
-                >
-                  {totalFilterApplied}
-                </Badge>
-              )}
-            </Button>
-          </PopoverTrigger>
+        <Popover
+          modal
+          onOpenChange={(open) => {
+            setOpenPopover(open)
+            if (open) {
+              executeLogicOnOpenPopover()
+            }
+          }}
+          open={openPopover}
+        >
+          <PopoverTrigger
+            render={
+              <Button variant='outline'>
+                <span>Filters</span>
+                <ListFilterIcon />
+                {totalFilterApplied > 0 && (
+                  <Badge
+                    className='flex size-5 items-center justify-center rounded-sm p-0 leading-none'
+                    variant='secondary'
+                  >
+                    {totalFilterApplied}
+                  </Badge>
+                )}
+              </Button>
+            }
+          />
 
-          <PopoverContent
-            align='start'
-            className='w-(--radix-popper-available-width) xl:w-auto'
-            onOpenAutoFocus={executeLogicOnOpenPopover}
-          >
+          <PopoverContent align='start' className='w-(--radix-popper-available-width) xl:w-auto'>
             <advancedFilterForm.AppField mode='array' name='filters'>
               {(field) => {
                 return (
@@ -289,7 +292,4 @@ const AdvancedFilter = memo(() => {
       </form>
     </advancedFilterForm.AppForm>
   )
-})
-
-AdvancedFilter.displayName = 'AdvancedFilter'
-export default AdvancedFilter
+}

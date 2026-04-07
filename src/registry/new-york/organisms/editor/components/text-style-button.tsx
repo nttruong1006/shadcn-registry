@@ -1,19 +1,17 @@
 import type { Level } from '@tiptap/extension-heading'
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { ChevronDownIcon, TypeIcon } from 'lucide-react'
-import { memo } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+} from '@/components/atoms/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
 
-// Text styles
 const textStyles: Array<{
   label: string
   level: Level | null
@@ -46,9 +44,7 @@ const textStyles: Array<{
   }
 ]
 
-// Component
-const TextStyleButton = memo(() => {
-  // Hooks
+export default function TextStyleButton() {
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
     editor,
@@ -67,8 +63,7 @@ const TextStyleButton = memo(() => {
     }
   })
 
-  // Methods
-  const changeTextStyle = (textStyle: (typeof textStyles)[number]) => {
+  function changeTextStyle(textStyle: (typeof textStyles)[number]) {
     const { level } = textStyle
     if (level) {
       editor?.chain().focus().toggleHeading({ level }).run()
@@ -81,15 +76,18 @@ const TextStyleButton = memo(() => {
   return (
     <DropdownMenu>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <DropdownMenuTrigger asChild>
-            <Button className='gap-1' variant='ghost'>
-              <TypeIcon />
-              <ChevronDownIcon />
-            </Button>
-          </DropdownMenuTrigger>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <DropdownMenuTrigger
+              render={
+                <Button className='gap-1' variant='ghost'>
+                  <TypeIcon />
+                  <ChevronDownIcon />
+                </Button>
+              }
+            />
+          }
+        />
         <TooltipContent>Text style</TooltipContent>
       </Tooltip>
 
@@ -109,7 +107,4 @@ const TextStyleButton = memo(() => {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-})
-
-TextStyleButton.displayName = 'TextStyleButton'
-export default TextStyleButton
+}

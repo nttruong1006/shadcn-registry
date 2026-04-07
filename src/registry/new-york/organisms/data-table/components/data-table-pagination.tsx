@@ -1,34 +1,25 @@
 import type { RowData } from '@tanstack/react-table'
 import debounce from 'lodash.debounce'
 import type { NumberFormatValues } from 'react-number-format'
-import { NumberInput } from '@/registry/new-york/molecules/number-input/components/number-input'
-import { Pagination } from '@/registry/new-york/molecules/pagination/components/pagination'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/registry/new-york/ui/select/components/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/atoms/select'
+import { NumberInput } from '@/components/molecules/number-input'
+import { Pagination } from '@/components/molecules/pagination'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 
 const pageSizeOptions = [10, 20, 30, 50, 100]
 
-// Component
-const DataTablePagination = <TData extends RowData>({
+function DataTablePagination<TData extends RowData>({
   table,
   className
 }: Pick<DataTableProps<TData>, 'table'> & {
   className?: string
-}) => {
+}) {
   const pagination = table.getState().pagination
   const page = pagination.pageIndex + 1
   const pageSize = pagination.pageSize
   const pageCount = table.getPageCount()
 
-  // Methods
-  // Change number input value
   const changeNumberInputValue = debounce((values: NumberFormatValues) => {
     if (values.floatValue == null || values.floatValue < 1) {
       return
@@ -39,7 +30,6 @@ const DataTablePagination = <TData extends RowData>({
     return table.setPageIndex(values.floatValue - 1)
   }, 400)
 
-  // Template
   return (
     <div
       className={cn(

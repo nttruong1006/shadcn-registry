@@ -1,16 +1,14 @@
 import { toDate } from 'date-fns'
-import { DatePicker, DateRangePicker } from '@/registry/new-york/ui/date-picker/components/date-picker.tsx'
-import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { DatePicker, DateRangePicker } from '@/components/atoms/date-picker'
+import { Field, FieldError } from '@/components/atoms/field'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import { useAdvancedFilterForm } from './lib/form'
 
-// Component
-const AdvancedFilterValueDateField = ({
+export default function AdvancedFilterValueDateField({
   index,
   selectedFilter,
   formFilterOperation
-}: AdvancedFilterValueFieldComponentProps) => {
-  // Hooks
+}: AdvancedFilterValueFieldComponentProps) {
   const advancedFilterForm = useAdvancedFilterForm()
 
   // Template
@@ -65,5 +63,3 @@ const AdvancedFilterValueDateField = ({
     </advancedFilterForm.AppField>
   )
 }
-
-export default AdvancedFilterValueDateField

@@ -1,16 +1,16 @@
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
-import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
-import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScrollableContent,
+  DialogScroll,
   DialogTitle,
   DialogTrigger
-} from '@/registry/new-york/ui/dialog/components/dialog'
+} from '@/components/atoms/dialog'
+import { DataTable } from '@/components/organisms/data-table/data-table'
+import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
   id: string
@@ -110,21 +110,16 @@ const DATA: Row[] = [
   }
 ]
 
-// Component
-export const DataTableColumnSpanning = () => {
-  // Hooks
+export function DataTableColumnSpanning() {
   const table = useDataTable({
     columns: COLUMNS,
     data: DATA,
     getPaginationRowModel: getPaginationRowModel()
   })
 
-  // Template
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button>Open</Button>} />
 
       <DialogContent className='w-7xl'>
         <DialogHeader>
@@ -132,9 +127,9 @@ export const DataTableColumnSpanning = () => {
           <DialogDescription>Column spanning</DialogDescription>
         </DialogHeader>
 
-        <DialogScrollableContent>
+        <DialogScroll>
           <DataTable table={table} />
-        </DialogScrollableContent>
+        </DialogScroll>
       </DialogContent>
     </Dialog>
   )

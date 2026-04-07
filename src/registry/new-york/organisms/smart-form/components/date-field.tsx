@@ -1,34 +1,30 @@
-import { DatePicker, type DatePickerProps } from '@/registry/new-york/ui/date-picker/components/date-picker'
+import { toDate } from 'date-fns'
+import { DatePicker, type DatePickerProps } from '@/components/atoms/date-picker'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { DateFieldInputValue } from './lib/schema'
 
-// Component
-const DateField = ({
+export default function DateField({
   label,
-  isDisabled,
+  disabled,
   datePickerProps,
   ...props
 }: BaseSmartFormFieldFieldProps & {
   datePickerProps?: Partial<DatePickerProps>
-}) => {
-  // Hooks
+}) {
   const field = useFieldContext<DateFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
-  // Template
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <DatePicker
-        id={field.name}
-        isDisabled={isDisabled}
+        disabled={disabled}
+        id={`${field.form.formId}-${field.name}`}
         onValueChange={field.handleChange as DatePickerProps['onValueChange']}
-        placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
-        value={field.state.value}
+        placeholder={`Select ${typeof label === 'string' ? label.toLowerCase() : 'information'}`}
+        value={field.state.value ? toDate(field.state.value) : null}
         {...datePickerProps}
       />
     </FieldContainer>
   )
 }
-
-export default DateField

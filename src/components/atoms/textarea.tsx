@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/textarea/components/textarea'
+export * from '@/registry/new-york/atoms/textarea/components/textarea'

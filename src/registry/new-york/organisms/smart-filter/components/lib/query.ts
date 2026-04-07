@@ -1,6 +1,5 @@
 import {
   type DefaultError,
-  type GetNextPageParamFunction,
   type InfiniteData,
   type QueryKey,
   type UseInfiniteQueryResult,
@@ -14,7 +13,7 @@ import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
 
 // Use options query
-export const useOptionsQuery = ({ apiPath }: { apiPath: string | undefined }) => {
+export function useOptionsQuery({ apiPath }: { apiPath: string | undefined }) {
   // Queries
   const optionsQuery = useQuery<{
     responseData: {
@@ -49,7 +48,7 @@ export const useOptionsQuery = ({ apiPath }: { apiPath: string | undefined }) =>
 export const infiniteQueryPageSize = 100
 
 // Get next page param
-export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (queryFn, _, page) => {
+export function getNextPageParam(queryFn: unknown, _: unknown, page: unknown) {
   const {
     responseData: { count, pageSize }
   } = queryFn as unknown as PaginationQueryData
@@ -63,7 +62,7 @@ export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (q
 }
 
 // Fetch next page
-export const fetchNextPage = (args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) => {
+export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) {
   // Args
   const { event, infiniteQuery } = args
 
@@ -77,7 +76,7 @@ export const fetchNextPage = (args: { event: UIEvent<HTMLDivElement>; infiniteQu
   }
 }
 
-export const useOptionsInfiniteQuery = ({ apiPath }: { apiPath: string | undefined }) => {
+export function useOptionsInfiniteQuery({ apiPath }: { apiPath: string | undefined }) {
   // States
   const [searchKeyword, setSearchKeyword] = useState('')
 

@@ -1,5 +1,16 @@
 import z from 'zod'
-import { useAppForm } from '@/registry/new-york/organisms/smart-form/components/lib/base'
+import { Button } from '@/components/atoms/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogScroll,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/atoms/dialog'
+import { FieldDescription, FieldLegend, FieldSet } from '@/components/atoms/field'
+import { useAppForm } from '@/components/organisms/smart-form/lib/base'
 import {
   getAutocompleteFieldSchema,
   getCheckboxFieldSchema,
@@ -13,18 +24,7 @@ import {
   getPhoneNumberFieldSchema,
   getSelectFieldSchema,
   getTextareaFieldSchema
-} from '@/registry/new-york/organisms/smart-form/components/lib/schema'
-import { Button } from '@/registry/new-york/ui/button/components/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogScrollableContent,
-  DialogTitle,
-  DialogTrigger
-} from '@/registry/new-york/ui/dialog/components/dialog'
-import { FieldDescription, FieldLegend, FieldSet } from '@/registry/new-york/ui/field/components/field'
+} from '@/components/organisms/smart-form/lib/schema'
 
 const formSchema = z
   .object({
@@ -123,9 +123,7 @@ export const SmartFormDemo = () => {
   // Template
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button>Open</Button>} />
 
       <DialogContent className='w-7xl'>
         <DialogHeader>
@@ -133,7 +131,7 @@ export const SmartFormDemo = () => {
           <DialogDescription>Fill information below to create the account</DialogDescription>
         </DialogHeader>
 
-        <DialogScrollableContent>
+        <DialogScroll>
           <form
             className='space-y-6'
             id={form.formId}
@@ -164,37 +162,41 @@ export const SmartFormDemo = () => {
                   {(field) => (
                     <field.SelectWithQuery
                       label='Province'
-                      isRequired
+                      required
                       originalApiPath='/version/1.0/options/province'
                     />
                   )}
                 </form.AppField> */}
 
                     <form.AppField name='fullName'>
-                      {(field) => <field.Input isRequired label='Full name' />}
+                      {(field) => <field.Input label='Full name' required />}
                     </form.AppField>
-                    <form.AppField name='age'>{(field) => <field.Number isRequired label='Age' />}</form.AppField>
+                    <form.AppField name='age'>{(field) => <field.Number label='Age' required />}</form.AppField>
                     <form.AppField name='birthdate'>
-                      {(field) => <field.Date isRequired label='Birthdate' />}
+                      {(field) => <field.Date label='Birthdate' required />}
                     </form.AppField>
                     <form.AppField name='gender'>
                       {(field) => (
                         <field.SelectWithOptions
-                          isRequired
                           label='Gender'
                           options={[
                             { value: 'male', label: 'Male' },
                             { value: 'female', label: 'Female' }
                           ]}
+                          required
                         />
                       )}
                     </form.AppField>
                     <form.AppField name='phoneNumber'>
-                      {(field) => <field.PhoneNumber isRequired label='Phone number' />}
+                      {(field) => (
+                        <field.PhoneNumber
+                        // label='Phone number' required
+                        />
+                      )}
                     </form.AppField>
-                    <form.AppField name='email'>{(field) => <field.Input isRequired label='Email' />}</form.AppField>
+                    <form.AppField name='email'>{(field) => <field.Input label='Email' required />}</form.AppField>
                     <form.AppField name='description'>
-                      {(field) => <field.Textarea className='col-span-full' isRequired label='Description' />}
+                      {(field) => <field.Textarea className='col-span-full' label='Description' required />}
                     </form.AppField>
                   </div>
                 </FieldSet>
@@ -209,54 +211,54 @@ export const SmartFormDemo = () => {
                     <form.AppField name='department'>
                       {(field) => (
                         <field.SelectWithOptions
-                          isRequired
                           label='Department'
                           options={[
                             { value: 'development', label: 'Development' },
                             { value: 'design', label: 'Design' },
                             { value: 'marketing', label: 'Marketing' }
                           ]}
+                          required
                         />
                       )}
                     </form.AppField>
                     <form.AppField name='technologies'>
                       {(field) => (
                         <field.MultiSelectWithOptions
-                          isRequired
-                          label='Technologies'
-                          options={[
-                            { value: 'react', label: 'React' },
-                            { value: 'nextjs', label: 'Next.js' },
-                            { value: 'tailwindcss', label: 'Tailwind CSS' },
-                            { value: 'typescript', label: 'TypeScript' }
-                          ]}
+                        // label='Technologies'
+                        // options={[
+                        //   { value: 'react', label: 'React' },
+                        //   { value: 'nextjs', label: 'Next.js' },
+                        //   { value: 'tailwindcss', label: 'Tailwind CSS' },
+                        //   { value: 'typescript', label: 'TypeScript' }
+                        // ]}
+                        // required
                         />
                       )}
                     </form.AppField>
                     <form.AppField name='graduatedUniversity'>
                       {(field) => (
                         <field.AutocompleteWithOptions
-                          isRequired
-                          label='Graduated university'
-                          options={[
-                            {
-                              value: 'TDTU',
-                              label: 'Ton Duc Thang University'
-                            },
-                            {
-                              value: 'VLU',
-                              label: 'Van Lang University'
-                            },
-                            {
-                              value: 'UIT',
-                              label: 'University of information technology'
-                            }
-                          ]}
+                        // label='Graduated university'
+                        // options={[
+                        //   {
+                        //     value: 'TDTU',
+                        //     label: 'Ton Duc Thang University'
+                        //   },
+                        //   {
+                        //     value: 'VLU',
+                        //     label: 'Van Lang University'
+                        //   },
+                        //   {
+                        //     value: 'UIT',
+                        //     label: 'University of information technology'
+                        //   }
+                        // ]}
+                        // required
                         />
                       )}
                     </form.AppField>
                     <form.AppField name='resumes'>
-                      {(field) => <field.MultiFile className='col-span-full' isRequired label='Resumes' />}
+                      {(field) => <field.MultiFile className='col-span-full' label='Resumes' required />}
                     </form.AppField>
                     <form.AppField name='isDeepKnowledge'>
                       {(field) => <field.Checkbox label='Is deep knowledge' />}
@@ -272,16 +274,16 @@ export const SmartFormDemo = () => {
                   {/* Form template fields */}
                   <div className='grid grid-cols-3 gap-x-4 gap-y-6'>
                     <form.AppField name='username'>
-                      {(field) => <field.Input isRequired label='Username' />}
+                      {(field) => <field.Input label='Username' required />}
                     </form.AppField>
                     <form.AppField name='password'>
-                      {(field) => <field.Password isRequired label='Password' />}
+                      {(field) => <field.Password label='Password' required />}
                     </form.AppField>
                     <form.AppField name='passwordConfirmation'>
-                      {(field) => <field.Password isRequired label='Password confirmation' />}
+                      {(field) => <field.Password label='Password confirmation' required />}
                     </form.AppField>
                     <form.AppField name='hobby'>
-                      {(field) => <field.Editor className='col-span-full' isRequired label='Hobby' />}
+                      {(field) => <field.Editor className='col-span-full' label='Hobby' required />}
                     </form.AppField>
                   </div>
                 </FieldSet>
@@ -299,7 +301,7 @@ export const SmartFormDemo = () => {
 
                   <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
                     {([canSubmit, isSubmitting]) => (
-                      <Button disabled={!canSubmit} form={form.formId} isLoading={isSubmitting} type='submit'>
+                      <Button disabled={!canSubmit} form={form.formId} loading={isSubmitting} type='submit'>
                         Submit
                       </Button>
                     )}
@@ -308,7 +310,7 @@ export const SmartFormDemo = () => {
               </form.FormContainer>
             </form.AppForm>
           </form>
-        </DialogScrollableContent>
+        </DialogScroll>
       </DialogContent>
     </Dialog>
   )

@@ -4,34 +4,28 @@ import {
   FileUploadInput,
   FileUploadItem,
   type FileUploadProps
-} from '@/registry/new-york/molecules/file-upload/components/file-upload'
+} from '@/components/molecules/file-upload/file-upload'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
 import { useFieldContext } from './lib/base'
 import type { FileFieldInputValue } from './lib/schema'
 
-// Component
-const FileField = ({
-  label,
-  isDisabled,
-  fileUploadProps,
-  ...props
-}: BaseSmartFormFieldFieldProps & {
+type FileFieldProps = BaseSmartFormFieldFieldProps & {
   fileUploadProps: Partial<FileUploadProps>
-}) => {
-  // Hooks
-  const field = useFieldContext<FileFieldInputValue>()
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+}
 
-  // Template
+export default function FileField({ label, disabled, fileUploadProps, ...props }: FileFieldProps) {
+  const field = useFieldContext<FileFieldInputValue>()
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
+
   return (
-    <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <FileUpload
-        isDisabled={isDisabled}
+        disabled={disabled}
         onValueChange={(files) => field.handleChange(files[0] ?? null)}
         value={field.state.value ? [field.state.value] : []}
         {...fileUploadProps}
       >
-        <FileUploadInput aria-invalid={isInvalid} id={field.name} />
+        <FileUploadInput aria-invalid={invalid} id={`${field.form.formId}-${field.name}`} />
         <FileUploadContent>
           {field.state.value && <FileUploadItem index={0} value={field.state.value} />}
         </FileUploadContent>
@@ -39,5 +33,3 @@ const FileField = ({
     </FieldContainer>
   )
 }
-
-export default FileField

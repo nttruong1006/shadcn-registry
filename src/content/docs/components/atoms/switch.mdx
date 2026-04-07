@@ -1,0 +1,44 @@
+---
+title: Switch
+description: A control that allows the user to toggle between checked and not checked.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='switch'/>
+
+<CodePreview path='atoms/switch/demo' />
+
+## Installation
+<InstallationCard registryName='switch' />
+
+## Usage
+```tsx
+import { Switch } from "@/components/atoms/switch"
+```
+
+```tsx
+<Switch />
+```
+
+## Examples
+### Description
+<CodePreview path='atoms/switch/description' />
+
+### Choice Card
+Card-style selection where `FieldLabel` wraps the entire `Field` for a clickable card pattern.
+<CodePreview path='atoms/switch/choice-card' />
+
+### Disabled
+Add the `disabled` prop to the `Switch` component to disable the switch. Add the `data-disabled` prop to the `Field` component for styling.
+<CodePreview path='atoms/switch/disabled' />
+
+### Invalid
+Add the `aria-invalid` prop to the `Switch` component to indicate an invalid state. Add the `data-invalid` prop to the `Field` component for styling.
+<CodePreview path='atoms/switch/invalid' />
+
+### Size
+Use the `size` prop to change the size of the switch.
+<CodePreview path='atoms/switch/size' />

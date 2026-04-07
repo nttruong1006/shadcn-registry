@@ -10,20 +10,16 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/month-picker/demo' />
 
 ## Installation
-
 <InstallationCard registryName='month-picker' />
 
 ## Usage
-
 ```tsx
 import { MonthPicker, type MonthPickerProps } from '@/components/molecules/month-picker'
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState<MonthPickerProps['value']>(null)
+const [value, setValue] = useState<MonthPickerProps['value']>(null)
 
-// Template
 <MonthPicker value={value} placeholder='Select month' onValueChange={setValue} />
 ```
 

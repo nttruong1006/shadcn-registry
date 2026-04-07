@@ -1,25 +1,26 @@
 import { useCurrentEditor, useEditorState } from '@tiptap/react'
 import { AlignLeft, ChevronDown } from 'lucide-react'
-import { memo, useRef, useTransition } from 'react'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { useRef, useTransition } from 'react'
+import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
-} from '@/registry/new-york/ui/dropdown-menu/components/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/registry/new-york/ui/tooltip/components/tooltip'
+} from '@/components/atoms/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
 import type { CallbackRef, SetExtensions } from './editor'
 import { alignments } from './lib'
 
-// Component
-const TextAlignButton = memo<{
+export default function TextAlignButton({
+  callbackRef,
+  setExtensions
+}: {
   setExtensions: SetExtensions
   callbackRef: CallbackRef
-}>(({ callbackRef, setExtensions }) => {
-  // Hooks
+}) {
   const { editor } = useCurrentEditor()
   const editorState = useEditorState({
     editor,
@@ -34,24 +35,25 @@ const TextAlignButton = memo<{
       }
     }
   })
-  const [isPending, startTransition] = useTransition()
 
-  // Refs
+  const [isPending, startTransition] = useTransition()
   const isExtensionLoadedRef = useRef(false)
 
-  // Template
   return (
     <DropdownMenu>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <DropdownMenuTrigger asChild>
-            <Button className='gap-1' isLoading={isPending} variant='ghost'>
-              <AlignLeft />
-              <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-        </TooltipTrigger>
-
+        <TooltipTrigger
+          render={
+            <DropdownMenuTrigger
+              render={
+                <Button className='gap-1' loading={isPending} variant='ghost'>
+                  <AlignLeft />
+                  <ChevronDown />
+                </Button>
+              }
+            />
+          }
+        />
         <TooltipContent>Text alignment</TooltipContent>
       </Tooltip>
 
@@ -100,7 +102,4 @@ const TextAlignButton = memo<{
       </DropdownMenuContent>
     </DropdownMenu>
   )
-})
-
-TextAlignButton.displayName = 'TextAlignButton'
-export default TextAlignButton
+}

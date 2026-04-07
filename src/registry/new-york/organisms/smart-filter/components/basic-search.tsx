@@ -1,15 +1,13 @@
 import { useStore } from '@tanstack/react-form'
 import { useDebounce } from '@uidotdev/usehooks'
 import { Search } from 'lucide-react'
-import { memo, useEffect } from 'react'
-import { Field } from '@/registry/new-york/ui/field/components/field'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/new-york/ui/input-group/components/input-group'
+import { useEffect } from 'react'
+import { Field } from '@/components/atoms/field'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/atoms/input-group'
 import { basicSearchFormSchema, defaultBasicSearchFormValue, useAppForm } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
-// Component
-const BasicSearch = memo(() => {
-  // Hooks
+export default function BasicSearch() {
   const { id, setFilters } = useSmartFilterContext()
 
   const basicSearchForm = useAppForm({
@@ -23,7 +21,6 @@ const BasicSearch = memo(() => {
   const formKeyword = useStore(basicSearchForm.store, (state) => state.values.keyword)
   const debouncedFormKeyword = useDebounce<string>(formKeyword.trim(), 400)
 
-  // Effects
   useEffect(() => {
     setFilters(debouncedFormKeyword)
   }, [debouncedFormKeyword, setFilters])
@@ -56,7 +53,4 @@ const BasicSearch = memo(() => {
       </basicSearchForm.AppField>
     </form>
   )
-})
-
-BasicSearch.displayName = 'BasicSearch'
-export default BasicSearch
+}

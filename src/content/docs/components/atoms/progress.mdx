@@ -1,0 +1,33 @@
+---
+title: Progress
+description: Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='progress' />
+
+<CodePreview path='atoms/progress/demo' />
+
+## Installation
+<InstallationCard registryName='progress' />
+
+## Usage
+```tsx
+import { Progress } from "@/components/atoms/progress"
+```
+
+```tsx
+<Progress value={33} />
+```
+
+## Examples
+### Label
+Use `ProgressLabel` and `ProgressValue` to add a label and value display.
+<CodePreview path='atoms/progress/label' />
+
+### Controlled
+A progress bar that can be controlled by a slider.
+<CodePreview path='atoms/progress/controlled' />

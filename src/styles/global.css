@@ -164,7 +164,11 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground text-sm;
+    @apply relative bg-background text-foreground text-sm;
+  }
+
+  a {
+    @apply no-underline;
   }
 }
 

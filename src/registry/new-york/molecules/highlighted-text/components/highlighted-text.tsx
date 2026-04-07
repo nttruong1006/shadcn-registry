@@ -2,7 +2,6 @@ import { motion } from 'motion/react'
 import { type HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { cn } from '@/utils/ui'
 
-// Highlighted text
 interface HighlightedTextProps extends HTMLAttributes<HTMLDivElement> {
   highlightColorClassName?: string
   markerColorClassName?: string
@@ -20,7 +19,7 @@ const MARKER_WIDTH = 2
 const MARKER_OFFSET_X = 8
 const MARKER_OFFSET_Y = 4
 
-export const HighlightedText = ({
+export function HighlightedText({
   children,
   highlightColorClassName = 'bg-muted text-muted-foreground',
   markerColorClassName = 'bg-primary',
@@ -32,17 +31,14 @@ export const HighlightedText = ({
   repeat = false,
   className,
   ...props
-}: HighlightedTextProps) => {
-  // Refs
+}: HighlightedTextProps) {
   const textRef = useRef<HTMLDivElement>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
-  // States
   const [isVisible, setIsVisible] = useState(!triggerOnView)
 
   const isShouldAnimate = animate && isVisible
 
-  // Effects
   useEffect(() => {
     if (!(triggerOnView && textRef.current)) {
       return

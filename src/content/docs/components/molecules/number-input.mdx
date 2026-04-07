@@ -10,20 +10,16 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/number-input/demo' />
 
 ## Installation
-
 <InstallationCard registryName='number-input' />
 
 ## Usage
-
 ```tsx
 import { NumberInput, type NumberInputProps } from '@/components/molecules/number-input'
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState<NumberInputProps['value']>('')
+const [value, setValue] = useState<NumberInputProps['value']>('')
 
-// Template
 <NumberInput
   value={value}
   placeholder='Enter number'

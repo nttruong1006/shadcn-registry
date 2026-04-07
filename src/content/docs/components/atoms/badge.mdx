@@ -1,0 +1,45 @@
+---
+title: Badge
+description: Displays a badge or a component that looks like a badge.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='badge' />
+
+<CodePreview path='atoms/badge/demo' />
+
+## Installation
+<InstallationCard registryName='badge' />
+
+## Usage
+```tsx
+import { Badge } from "@/components/atoms/badge"
+```
+
+```tsx
+<Badge variant="default | outline | secondary | destructive">Badge</Badge>
+```
+
+## Examples
+### Variants
+Use the `variant` prop to change the variant of the badge.
+<CodePreview path='atoms/badge/variants' />
+
+### With Icon
+You can render an icon inside the badge. Use `data-icon="inline-start"` to render the icon on the left and `data-icon="inline-end"` to render the icon on the right.
+<CodePreview path='atoms/badge/with-icon' />
+
+### With Spinner
+You can render a spinner inside the badge. Remember to add the `data-icon="inline-start"` or `data-icon="inline-end"` prop to the spinner.
+<CodePreview path='atoms/badge/with-spinner' />
+
+### Link
+Use the `asChild` prop to render a link as a badge.
+<CodePreview path='atoms/badge/link' />
+
+### Custom Colors
+You can customize the colors of a badge by adding custom classes such as `bg-green-50 dark:bg-green-800` to the `Badge` component.
+<CodePreview path='atoms/badge/custom-colors' />

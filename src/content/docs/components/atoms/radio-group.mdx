@@ -1,0 +1,55 @@
+---
+title: Radio Group
+description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='radio-group' />
+
+<CodePreview path='atoms/radio-group/demo' />
+
+## Installation
+<InstallationCard registryName='radio-group' />
+
+## Usage
+```tsx
+import { Label } from "@/components/atoms/label"
+import { RadioGroup, RadioGroupItem } from "@/components/atoms/radio-group"
+```
+
+```tsx
+<RadioGroup defaultValue="option-one">
+  <div className="flex items-center gap-3">
+    <RadioGroupItem value="option-one" id="option-one" />
+    <Label htmlFor="option-one">Option One</Label>
+  </div>
+  <div className="flex items-center gap-3">
+    <RadioGroupItem value="option-two" id="option-two" />
+    <Label htmlFor="option-two">Option Two</Label>
+  </div>
+</RadioGroup>
+```
+
+## Examples
+### Description
+Radio group items with a description using the `Field` component.
+<CodePreview path='atoms/radio-group/description' />
+
+### Choice Card
+Use `FieldLabel` to wrap the entire `Field` for a clickable card-style selection.
+<CodePreview path='atoms/radio-group/choice-card' />
+
+### Fieldset
+Use `FieldSet` and `FieldLegend` to group radio items with a label and description.
+<CodePreview path='atoms/radio-group/fieldset' />
+
+### Disabled
+Use the `disabled` prop on `RadioGroup` to disable all items.
+<CodePreview path='atoms/radio-group/disabled' />
+
+### Invalid
+Use `aria-invalid` on `RadioGroupItem` and `data-invalid` on `Field` to show validation errors.
+<CodePreview path='atoms/radio-group/invalid' />

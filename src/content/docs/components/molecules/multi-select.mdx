@@ -10,20 +10,16 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/multi-select/demo' />
 
 ## Installation
-
 <InstallationCard registryName='multi-select' />
 
 ## Usage
-
 ```tsx
 import { MultiSelect, type MultiSelectProps, type Option } from '@/components/molecules/multi-select'
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState<MultiSelectProps['value']>([])
+const [value, setValue] = useState<MultiSelectProps['value']>([])
 
-// Template
 <MultiSelect value={value} options={OPTIONS} placeholder='Select framework' onValueChange={setValue} />
 ```
 

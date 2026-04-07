@@ -1,11 +1,7 @@
 import { useCallback } from 'react'
-import {
-  type Filter,
-  transformFormValueToApiFiltersParam
-} from '@/registry/new-york/organisms/smart-filter/components/lib/base'
-import { SmartFilter, type SmartFilterProps } from '@/registry/new-york/organisms/smart-filter/components/smart-filter'
+import { type Filter, transformFormValueToApiFiltersParam } from '@/components/organisms/smart-filter/lib/base'
+import { SmartFilter, type SmartFilterProps } from '@/components/organisms/smart-filter/smart-filter'
 
-// Component
 const filters: Filter[] = [
   {
     name: 'fullName',
@@ -39,14 +35,12 @@ const filters: Filter[] = [
   }
 ]
 
-export const SmartFilterDemo = () => {
-  // Methods
+export function SmartFilterDemo() {
   const setFilters: SmartFilterProps['setFilters'] = useCallback((formValue) => {
     const filtersParam = transformFormValueToApiFiltersParam(formValue, filters)
     console.log(filtersParam)
   }, [])
 
-  // Template
   return (
     <div className='w-sm'>
       <SmartFilter filters={filters} setFilters={setFilters} />

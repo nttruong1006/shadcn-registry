@@ -1,8 +1,6 @@
-import { AnimatedText } from '@/registry/new-york/molecules/animated-text/components/animated-text'
+import { AnimatedText } from '@/components/molecules/animated-text'
 
-// Component
-const AnimatedTextHighlight = () => {
-  // Template
+export function AnimatedTextHighlight() {
   return (
     <div className='w-full'>
       <AnimatedText
@@ -12,5 +10,3 @@ const AnimatedTextHighlight = () => {
     </div>
   )
 }
-
-export default AnimatedTextHighlight

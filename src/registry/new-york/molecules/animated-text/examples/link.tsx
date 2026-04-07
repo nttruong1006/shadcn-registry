@@ -1,8 +1,6 @@
-import { AnimatedText } from '@/registry/new-york/molecules/animated-text/components/animated-text'
+import { AnimatedText } from '@/components/molecules/animated-text'
 
-// Component
-const AnimatedTextLink = () => {
-  // Template
+export function AnimatedTextLink() {
   return (
     <div className='w-full'>
       <AnimatedText
@@ -13,5 +11,3 @@ const AnimatedTextLink = () => {
     </div>
   )
 }
-
-export default AnimatedTextLink

@@ -1,9 +1,7 @@
 import type { Content } from '@tiptap/react'
 import parse from 'html-react-parser'
 
-// Editor content
-export const EditorContent = ({ content }: { content: Content }) => {
-  // Template
+export function EditorContent({ content }: { content: Content }) {
   if (typeof content === 'string') {
     return <div className='tiptap'>{parse(content)}</div>
   }

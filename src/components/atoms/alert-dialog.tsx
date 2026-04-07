@@ -1,2 +1,2 @@
 // biome-ignore lint/performance/noBarrelFile: ignore
-export * from '@/registry/new-york/ui/alert-dialog/components/alert-dialog'
+export * from '@/registry/new-york/atoms/alert-dialog/components/alert-dialog'

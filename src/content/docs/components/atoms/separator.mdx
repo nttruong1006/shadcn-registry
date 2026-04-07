@@ -1,0 +1,37 @@
+---
+title: Separator
+description: Visually or semantically separates content.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='separator' />
+
+<CodePreview path='atoms/separator/demo' />
+
+## Installation
+<InstallationCard registryName='separator' />
+
+## Usage
+```tsx
+import { Separator } from "@/components/atoms/separator"
+```
+
+```tsx
+<Separator />
+```
+
+## Examples
+### Vertical
+Use `orientation="vertical"` for a vertical separator.
+<CodePreview path='atoms/separator/vertical' />
+
+### Menu
+Vertical separators between menu items with descriptions.
+<CodePreview path='atoms/separator/menu' />
+
+### List
+Horizontal separators between list items.
+<CodePreview path='atoms/separator/list' />

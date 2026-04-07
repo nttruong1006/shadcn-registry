@@ -1,16 +1,13 @@
-import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
-import { Combobox } from '@/registry/new-york/ui/combobox/components/combobox'
-import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
+import { Combobox } from '@/components/atoms/combobox'
+import { Field, FieldError } from '@/components/atoms/field'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import { useAdvancedFilterForm } from './lib/form'
 
-// Component
-const AdvancedFilterValueSelectWithOptionsField = ({
+export default function AdvancedFilterValueSelectWithOptionsField({
   index,
   selectedFilter,
   formFilterOperation
-}: AdvancedFilterValueFieldComponentProps) => {
-  // Hooks
+}: AdvancedFilterValueFieldComponentProps) {
   const advancedFilterForm = useAdvancedFilterForm()
 
   // Template
@@ -22,12 +19,12 @@ const AdvancedFilterValueSelectWithOptionsField = ({
           const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
           return (
             <Field data-invalid={isInvalid}>
-              <MultiSelect
+              {/* <MultiSelect
                 onValueChange={field.handleChange}
                 options={'options' in selectedFilter ? selectedFilter.options : []}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
                 value={field.state.value as string[]}
-              />
+              /> */}
               {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           )
@@ -44,11 +41,11 @@ const AdvancedFilterValueSelectWithOptionsField = ({
         return (
           <Field data-invalid={isInvalid}>
             <Combobox
+              items={'options' in selectedFilter ? selectedFilter.options : []}
               onValueChange={(value) => {
                 field.handleChange(value ?? '')
               }}
-              options={'options' in selectedFilter ? selectedFilter.options : []}
-              placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+              // placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value as string}
             />
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -58,5 +55,3 @@ const AdvancedFilterValueSelectWithOptionsField = ({
     </advancedFilterForm.AppField>
   )
 }
-
-export default AdvancedFilterValueSelectWithOptionsField

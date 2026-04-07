@@ -1,0 +1,63 @@
+---
+title: Empty
+description: Use the Empty component to display a empty state.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='empty' />
+
+<CodePreview path='atoms/empty/demo' />
+
+## Installation
+<InstallationCard registryName='empty' />
+
+## Usage
+```tsx
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/atoms/empty"
+```
+
+```tsx
+<Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon">
+      <Icon />
+    </EmptyMedia>
+    <EmptyTitle>No data</EmptyTitle>
+    <EmptyDescription>No data found</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+    <Button>Add data</Button>
+  </EmptyContent>
+</Empty>
+```
+
+## Examples
+### Outline
+Use the `border` utility class to create a outline empty state.
+<CodePreview path='atoms/empty/outline' />
+
+### Background
+Use the `bg-*` and `bg-gradient-*` utilities to add a background to the empty state.
+<CodePreview path='atoms/empty/background' />
+
+### Avatar
+Use the `EmptyMedia` component to display an avatar in the empty state.
+<CodePreview path='atoms/empty/avatar' />
+
+### Avatar Group
+Use the `EmptyMedia` component to display an avatar group in the empty state.
+<CodePreview path='atoms/empty/avatar-group' />
+
+### Input Group
+You can add an `InputGroup` component to the `EmptyContent` component.
+<CodePreview path='atoms/empty/input-group' />

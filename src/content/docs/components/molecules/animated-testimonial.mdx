@@ -6,7 +6,7 @@ description: Minimal testimonials with clean, modern design.
 import CodePreview from '@/components/app/code-preview/index.astro'
 import InstallationCard from '@/components/app/installation-card/index.astro'
 import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
-import { Badge } from '@/registry/new-york/ui/badge/components/badge'
+import { Badge } from '@/registry/new-york/atoms/badge/components/badge'
 import { ArrowUpRight } from 'lucide-react'
 import DocLinkButton from '@/components/app/doc-link-button/index.astro'
 
@@ -15,10 +15,9 @@ import DocLinkButton from '@/components/app/doc-link-button/index.astro'
 <CodePreview path='molecules/animated-testimonial/demo' />
 
 ## Installation
-
 <InstallationCard registryName='animated-testimonial' />
 
-###### Add these animations to `global.css` `theme`
+Add these animations to `global.css` `theme`
 ```css
 --animate-canopy-horizontal: canopy-x var(--transition-duration) linear infinite;
 --animate-canopy-vertical: canopy-y var(--transition-duration) linear infinite;
@@ -43,7 +42,6 @@ import DocLinkButton from '@/components/app/doc-link-button/index.astro'
 ```
 
 ## Usage
-
 ```tsx
 import {
   AnimatedTestimonial,

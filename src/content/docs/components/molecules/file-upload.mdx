@@ -14,11 +14,9 @@ import ServerToaster from '@/components/app/server-toaster/index.astro'
 <CodePreview path='molecules/file-upload/demo' />
 
 ## Installation
-
 <InstallationCard registryName='file-upload' />
 
 ## Usage
-
 ```tsx
 import {
   FileUpload,
@@ -30,10 +28,8 @@ import {
 ```
 
 ```tsx
-// States
-const [value, setValue] = React.useState<FileUploadProps['value']>([])
+const [value, setValue] = useState<FileUploadProps['value']>([])
 
-// Template
 <FileUpload
   value={value}
   dropzoneOptions={{

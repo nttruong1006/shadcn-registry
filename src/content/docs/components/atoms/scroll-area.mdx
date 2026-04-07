@@ -1,0 +1,31 @@
+---
+title: Scroll Area
+description: Augments native scroll functionality for custom, cross-browser styling.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='scroll-area' />
+
+<CodePreview path='atoms/scroll-area/demo' />
+
+## Installation
+<InstallationCard registryName='scroll-area' />
+
+## Usage
+```tsx
+import { ScrollArea, ScrollBar } from "@/components/atoms/scroll-area"
+```
+
+```tsx
+<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+  Your scrollable content here.
+</ScrollArea>
+```
+
+## Examples
+### Horizontal
+Use `ScrollBar` with `orientation="horizontal"` for horizontal scrolling.
+<CodePreview path='atoms/scroll-area/horizontal' />

@@ -1,8 +1,6 @@
-import { PDFViewer } from '@/registry/new-york/organisms/pdf-viewer/components/pdf-viewer'
+import { PDFViewer } from '@/components/organisms/pdf-viewer/pdf-viewer'
 
-// Component
-export const PdfViewerDemo = () => {
-  // Template
+export function PdfViewerDemo() {
   return (
     <PDFViewer
       className='h-[400px] grow'

@@ -10,23 +10,19 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='molecules/theme-toggle-button/demo' />
 
 ## Installation
-
 <InstallationCard registryName='theme-toggle-button' />
 
 ## Usage
-
 ```tsx
 import React from 'react'
 import { observeTheme, ThemeToggleButton } from '@/components/molecules/theme-toggle-button'
 ```
 
 ```tsx
-// Effects
 React.useLayoutEffect(() => {
-  const observer = observeTheme('starlight-theme')
+  const observer = observeTheme('theme')
   return () => observer.disconnect()
 }, [])
 
-// Template
-<ThemeToggleButton themeLocalStorageKey='starlight-theme' />
+<ThemeToggleButton themeLocalStorageKey='theme' />
 ```

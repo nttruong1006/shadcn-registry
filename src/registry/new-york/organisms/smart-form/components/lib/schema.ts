@@ -1,7 +1,7 @@
 import { isDate, toDate } from 'date-fns'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import z from 'zod'
-import type { UploadedFile } from '@/registry/new-york/molecules/file-upload/components/lib'
+import type { UploadedFile } from '@/components/molecules/file-upload/lib'
 
 /*
  * Get input field schema
@@ -29,7 +29,7 @@ interface GetInputFieldSchemaArgs {
   }
 }
 
-export const getInputFieldSchema = (args?: GetInputFieldSchemaArgs) => {
+export function getInputFieldSchema(args?: GetInputFieldSchemaArgs) {
   const { required, email, url, min, max, regex } = args ?? {}
   let fieldSchema = z.string().trim()
 
@@ -112,7 +112,7 @@ interface GetTextareaFieldSchemaArgs {
   }
 }
 
-export const getTextareaFieldSchema = (args?: GetTextareaFieldSchemaArgs) => {
+export function getTextareaFieldSchema(args?: GetTextareaFieldSchemaArgs) {
   const { required, min, max } = args ?? {}
 
   let fieldSchema = z.string().trim()
@@ -155,7 +155,7 @@ interface GetNumberFieldSchemaArgs {
   }
 }
 
-export const getNumberFieldSchema = (args?: GetNumberFieldSchemaArgs) => {
+export function getNumberFieldSchema(args?: GetNumberFieldSchemaArgs) {
   const { required, min, max } = args ?? {}
 
   let fieldSchema = z.number()
@@ -191,7 +191,7 @@ interface GetPhoneNumberFieldSchemaArgs {
   phone: string
 }
 
-export const getPhoneNumberFieldSchema = (args?: GetPhoneNumberFieldSchemaArgs) => {
+export function getPhoneNumberFieldSchema(args?: GetPhoneNumberFieldSchemaArgs) {
   const { required, phone } = args ?? {}
 
   let fieldSchema = z.string().trim()
@@ -242,7 +242,7 @@ interface GetPasswordFieldSchemaArgs {
   }
 }
 
-export const getPasswordFieldSchema = (args?: GetPasswordFieldSchemaArgs) => {
+export function getPasswordFieldSchema(args?: GetPasswordFieldSchemaArgs) {
   const { required, min, max, regex } = args ?? {}
 
   let fieldSchema = z.string().trim()
@@ -329,7 +329,7 @@ interface GetMultiSelectFieldSchemaArgs {
   required?: string
 }
 
-export const getMultiSelectFieldSchema = (args?: GetMultiSelectFieldSchemaArgs) => {
+export function getMultiSelectFieldSchema(args?: GetMultiSelectFieldSchemaArgs) {
   const { required } = args ?? {}
 
   let fieldSchema = z.array(z.string())
@@ -352,7 +352,7 @@ export type MultiSelectFieldOutputValue = z.output<ReturnType<typeof getMultiSel
  */
 type GetAutocompleteFieldSchemaArgs = GetInputFieldSchemaArgs
 
-export const getAutocompleteFieldSchema = (args?: GetAutocompleteFieldSchemaArgs) => {
+export function getAutocompleteFieldSchema(args?: GetAutocompleteFieldSchemaArgs) {
   return getInputFieldSchema(args)
 }
 
@@ -430,7 +430,7 @@ interface GetEditorFieldSchemaArgs {
   required?: string
 }
 
-export const getEditorFieldSchema = (args?: GetEditorFieldSchemaArgs) => {
+export function getEditorFieldSchema(args?: GetEditorFieldSchemaArgs) {
   const { required } = args ?? {}
 
   let fieldSchema = z.string().trim()
@@ -451,7 +451,7 @@ export type EditorFieldOutputValue = z.output<ReturnType<typeof getEditorFieldSc
  * Input: boolean
  * Output: boolean
  */
-export const getCheckboxFieldSchema = () => {
+export function getCheckboxFieldSchema() {
   return z.boolean()
 }
 
@@ -512,7 +512,7 @@ interface GetMultiFileFieldSchemaArgs {
   required?: string
 }
 
-export const getMultiFileFieldSchema = (args?: GetMultiFileFieldSchemaArgs) => {
+export function getMultiFileFieldSchema(args?: GetMultiFileFieldSchemaArgs) {
   const { required } = args ?? {}
 
   let fieldSchema = z.array(z.custom<File | UploadedFile>())

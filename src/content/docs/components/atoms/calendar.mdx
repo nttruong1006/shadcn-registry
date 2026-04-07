@@ -1,0 +1,62 @@
+---
+title: Calendar
+description: A calendar component that allows users to select a date or a range of dates.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='calendar' />
+
+<CodePreview path='atoms/calendar/demo' />
+
+## Installation
+<InstallationCard registryName='calendar' />
+
+## Usage
+```tsx
+import { Calendar } from "@/components/atoms/calendar"
+```
+
+```tsx
+const [date, setDate] = React.useState<Date | undefined>(new Date())
+
+return (
+  <Calendar
+    mode="single"
+    selected={date}
+    onSelect={setDate}
+    className="rounded-lg border"
+  />
+)
+```
+
+## Examples
+### Basic
+A basic calendar component. We used `className="rounded-lg border"` to style the calendar.
+<CodePreview path='atoms/calendar/basic' />
+
+### Range Calendar
+Use the `mode="range"` prop to enable range selection.
+<CodePreview path='atoms/calendar/range' />
+
+### Month and Year Selector
+Use `captionLayout="dropdown"` to show month and year dropdowns.
+<CodePreview path='atoms/calendar/month-and-year-selector' />
+
+### Presets
+<CodePreview path='atoms/calendar/presets' />
+
+### Date and Time Picker
+<CodePreview path='atoms/calendar/date-and-time-picker' />
+
+### Booked Dates
+<CodePreview path='atoms/calendar/booked-dates' />
+
+### Custom Cell Size
+<CodePreview path='atoms/calendar/custom-cell-size' />
+
+### Week Numbers
+Use `showWeekNumber` to show week numbers.
+<CodePreview path='atoms/calendar/week-numbers' />

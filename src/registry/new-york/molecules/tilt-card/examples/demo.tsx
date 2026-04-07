@@ -1,9 +1,7 @@
-import { TiltCard, TiltCardContent } from '@/registry/new-york/molecules/tilt-card/components/tilt-card'
-import { CardDescription, CardTitle } from '@/registry/new-york/ui/card/components/card'
+import { CardDescription, CardTitle } from '@/components/atoms/card'
+import { TiltCard, TiltCardContent } from '@/components/molecules/tilt-card'
 
-// Component
-const GradientPathBackgroundDemo = () => {
-  // Template
+export function GradientPathBackgroundDemo() {
   return (
     <TiltCard className='w-80'>
       <TiltCardContent className='p-6'>
@@ -14,5 +12,3 @@ const GradientPathBackgroundDemo = () => {
     </TiltCard>
   )
 }
-
-export default GradientPathBackgroundDemo

@@ -1,4 +1,3 @@
-import type React from 'react'
 import {
   Field,
   FieldDescription,
@@ -6,47 +5,41 @@ import {
   type FieldErrorProps,
   FieldLabel,
   type FieldProps
-} from '@/registry/new-york/ui/field/components/field'
+} from '@/components/atoms/field'
 import { cn } from '@/utils/ui'
 
 export type SmartFormFieldContainerProps = FieldProps & {
   name: string
-  isRequired?: boolean
+  required?: boolean
   label?: React.ReactNode
   description?: React.ReactNode
-  isInvalid?: boolean
+  invalid?: boolean
   errors?: FieldErrorProps['errors']
 }
 
-export type BaseSmartFormFieldFieldProps = Omit<SmartFormFieldContainerProps, 'name' | 'isInvalid' | 'errors'> & {
-  isDisabled?: boolean
+export type BaseSmartFormFieldFieldProps = Omit<SmartFormFieldContainerProps, 'name' | 'invalid' | 'errors'> & {
+  disabled?: boolean
 }
 
-// Component
-const SmartFormFieldContainer = ({
+export default function SmartFormFieldContainer({
   name,
   label,
-  isRequired,
+  required,
   description,
-  isInvalid,
+  invalid,
   errors,
   children,
   className,
   ...props
-}: SmartFormFieldContainerProps) => {
-  // Template
+}: SmartFormFieldContainerProps) {
   return (
-    <Field className={cn('group/field', className)} data-invalid={isInvalid} {...props}>
+    <Field className={cn('group/field', className)} data-invalid={invalid} {...props}>
       <FieldLabel htmlFor={name}>
-        {label} <span className='text-destructive'>{isRequired && '*'}</span>
+        {label} <span className='text-destructive'>{required && '*'}</span>
       </FieldLabel>
-
       {children}
-
       {description && <FieldDescription>{description}</FieldDescription>}
-      {isInvalid && <FieldError errors={errors} />}
+      {invalid && <FieldError errors={errors} />}
     </Field>
   )
 }
-
-export default SmartFormFieldContainer

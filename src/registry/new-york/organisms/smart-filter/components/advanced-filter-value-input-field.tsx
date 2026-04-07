@@ -1,14 +1,14 @@
-import { Field, FieldError } from '@/registry/new-york/ui/field/components/field.tsx'
-import { Input } from '@/registry/new-york/ui/input/components/input.tsx'
+import { Field, FieldError } from '@/components/atoms/field'
+import { Input } from '@/components/atoms/input'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import { useAdvancedFilterForm } from './lib/form'
 
-// Component
-const AdvancedFilterValueInputField = ({ index, selectedFilter }: AdvancedFilterValueFieldComponentProps) => {
-  // Hooks
+export default function AdvancedFilterValueInputField({
+  index,
+  selectedFilter
+}: AdvancedFilterValueFieldComponentProps) {
   const advancedFilterForm = useAdvancedFilterForm()
 
-  // Template
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
@@ -31,5 +31,3 @@ const AdvancedFilterValueInputField = ({ index, selectedFilter }: AdvancedFilter
     </advancedFilterForm.AppField>
   )
 }
-
-export default AdvancedFilterValueInputField

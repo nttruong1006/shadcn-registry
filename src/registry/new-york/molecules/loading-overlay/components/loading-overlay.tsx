@@ -1,24 +1,22 @@
 import type { PropsWithChildren } from 'react'
-import { Spinner } from '@/registry/new-york/ui/spinner/components/spinner'
+import { Spinner } from '@/components/atoms/spinner'
 import { cn } from '@/utils/ui'
 
-// Loading overlay
-export const LoadingOverlay = ({
+export function LoadingOverlay({
   className,
-  isLoading,
+  loading,
   children
 }: PropsWithChildren & {
   className?: string
-  isLoading?: boolean
-}) => {
-  // Template
+  loading?: boolean
+}) {
   return (
     <div className={cn('relative overflow-hidden', className)}>
       {children}
       <div
         className={cn(
           'absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-muted/60 transition-[visibility]',
-          isLoading ? 'visible' : 'invisible'
+          loading ? 'visible' : 'invisible'
         )}
       >
         <Spinner className='size-6' />

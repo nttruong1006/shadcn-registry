@@ -1,18 +1,18 @@
 import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
 import { FilePenLineIcon, SearchIcon, TrashIcon } from 'lucide-react'
-import { DataTable } from '@/registry/new-york/organisms/data-table/components/data-table'
-import { DataTableActionCell } from '@/registry/new-york/organisms/data-table/components/data-table-action-cell'
-import { useDataTable } from '@/registry/new-york/organisms/data-table/components/lib'
-import { Button } from '@/registry/new-york/ui/button/components/button'
+import { Button } from '@/components/atoms/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScrollableContent,
+  DialogScroll,
   DialogTitle,
   DialogTrigger
-} from '@/registry/new-york/ui/dialog/components/dialog'
+} from '@/components/atoms/dialog'
+import { DataTable } from '@/components/organisms/data-table/data-table'
+import { DataTableActionCell } from '@/components/organisms/data-table/data-table-action-cell'
+import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
   id: string
@@ -47,17 +47,25 @@ const COLUMNS: ColumnDef<Row>[] = [
           {
             id: 'search',
             icon: <SearchIcon />,
-            label: 'View'
+            label: 'View',
+            type: 'event',
+            onClick: () => {
+              console.log('Clicked ...')
+            }
           },
           {
             id: 'update',
             icon: <FilePenLineIcon />,
-            label: 'Update'
+            label: 'Update',
+            type: 'link',
+            link: '/'
           },
           {
             id: 'delete',
             icon: <TrashIcon />,
-            label: 'Delete'
+            label: 'Delete',
+            type: 'slot',
+            slot: <Button>Delete</Button>
           }
         ]}
       />
@@ -86,21 +94,16 @@ const DATA: Row[] = [
   }
 ]
 
-// Component
-export const DataTableActionCellDemo = () => {
-  // Hooks
+export function DataTableActionCellDemo() {
   const table = useDataTable({
     columns: COLUMNS,
     data: DATA,
     getPaginationRowModel: getPaginationRowModel()
   })
 
-  // Template
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button>Open</Button>} />
 
       <DialogContent className='w-7xl'>
         <DialogHeader>
@@ -108,9 +111,9 @@ export const DataTableActionCellDemo = () => {
           <DialogDescription>Action column</DialogDescription>
         </DialogHeader>
 
-        <DialogScrollableContent>
+        <DialogScroll>
           <DataTable table={table} />
-        </DialogScrollableContent>
+        </DialogScroll>
       </DialogContent>
     </Dialog>
   )

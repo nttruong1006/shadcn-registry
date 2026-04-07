@@ -1,0 +1,90 @@
+---
+title: Combobox
+description: Autocomplete input and command palette with a list of suggestions.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='combobox' />
+
+<CodePreview path='atoms/combobox/demo' />
+
+## Installation
+<InstallationCard registryName='combobox' />
+
+## Usage
+```tsx
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/atoms/combobox"
+```
+
+```tsx
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
+
+export function ExampleCombobox() {
+  return (
+    <Combobox items={frameworks}>
+      <ComboboxInput placeholder="Select a framework" />
+      <ComboboxContent>
+        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxList>
+          {(item) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## Examples
+### Basic
+A simple combobox with a list of frameworks.
+<CodePreview path='atoms/combobox/basic' />
+
+### Multiple
+A combobox with multiple selection using `multiple` and `ComboboxChips`.
+<CodePreview path='atoms/combobox/multiple' />
+
+### Clear Button
+Use the `showClear` prop to show a clear button.
+<CodePreview path='atoms/combobox/clear-button' />
+
+### Groups
+Use `ComboboxGroup` and `ComboboxSeparator` to group items.
+<CodePreview path='atoms/combobox/groups' />
+
+### Custom Items
+You can render a custom component inside `ComboboxItem`.
+<CodePreview path='atoms/combobox/custom-items' />
+
+### Invalid
+Use the `aria-invalid` prop to make the combobox invalid.
+<CodePreview path='atoms/combobox/invalid' />
+
+### Disabled
+Use the `disabled` prop to disable the combobox.
+<CodePreview path='atoms/combobox/disabled' />
+
+### Auto Highlight
+Use the `autoHighlight` prop to automatically highlight the first item on filter.
+<CodePreview path='atoms/combobox/auto-highlight' />
+
+### Popup
+You can trigger the combobox from a button or any other component by using the `render` prop. Move the `ComboboxInput` inside the `ComboboxContent`.
+<CodePreview path='atoms/combobox/popup' />
+
+### Input Group
+You can add an addon to the combobox by using the `InputGroupAddon` component inside the `ComboboxInput`.
+<CodePreview path='atoms/combobox/input-group' />
