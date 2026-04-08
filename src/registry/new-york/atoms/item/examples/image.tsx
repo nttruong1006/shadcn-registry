@@ -51,6 +51,7 @@ export function ItemImage() {
               </a>
             }
             role='listitem'
+            variant='outline'
           />
         ))}
       </ItemGroup>

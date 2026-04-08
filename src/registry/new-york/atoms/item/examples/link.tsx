@@ -29,6 +29,7 @@ export function ItemLink() {
             </ItemActions>
           </a>
         }
+        variant='outline'
       />
     </div>
   )
