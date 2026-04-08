@@ -20,15 +20,9 @@ export function ComboboxMultiple() {
     <Combobox autoHighlight defaultValue={[frameworks[0]]} items={frameworks} multiple>
       <ComboboxChips className='w-full max-w-xs' ref={anchor}>
         <ComboboxValue>
-          {(values) => (
-            <>
-              {values.map((value: string) => (
-                <ComboboxChip key={value}>{value}</ComboboxChip>
-              ))}
-              <ComboboxChipsInput />
-            </>
-          )}
+          {(values) => values.map((value: string) => <ComboboxChip key={value}>{value}</ComboboxChip>)}
         </ComboboxValue>
+        <ComboboxChipsInput />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
         <ComboboxEmpty>No items found.</ComboboxEmpty>
