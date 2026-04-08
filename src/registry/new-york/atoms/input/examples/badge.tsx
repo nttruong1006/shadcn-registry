@@ -4,7 +4,7 @@ import { Input } from '@/components/atoms/input'
 
 export function InputBadge() {
   return (
-    <Field>
+    <Field className='max-w-xs'>
       <FieldLabel htmlFor='input-badge'>
         Webhook URL{' '}
         <Badge className='ml-auto' variant='secondary'>

@@ -10,7 +10,7 @@ export function InputGroupKbd() {
         <SearchIcon className='text-muted-foreground' />
       </InputGroupAddon>
       <InputGroupAddon align='inline-end'>
-        <Kbd>⌘K</Kbd>
+        <Kbd>⌘ K</Kbd>
       </InputGroupAddon>
     </InputGroup>
   )

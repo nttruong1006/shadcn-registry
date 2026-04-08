@@ -4,7 +4,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/
 
 export function InputInputGroup() {
   return (
-    <Field>
+    <Field className='max-w-xs'>
       <FieldLabel htmlFor='input-group-url'>Website URL</FieldLabel>
       <InputGroup>
         <InputGroupInput id='input-group-url' placeholder='example.com' />

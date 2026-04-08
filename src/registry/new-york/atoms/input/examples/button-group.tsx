@@ -5,7 +5,7 @@ import { Input } from '@/components/atoms/input'
 
 export function InputButtonGroup() {
   return (
-    <Field>
+    <Field className='max-w-xs'>
       <FieldLabel htmlFor='input-button-group'>Search</FieldLabel>
       <ButtonGroup>
         <Input id='input-button-group' placeholder='Type to search...' />

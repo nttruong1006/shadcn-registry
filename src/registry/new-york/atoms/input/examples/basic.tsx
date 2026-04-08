@@ -1,5 +1,5 @@
 import { Input } from '@/components/atoms/input'
 
 export function InputBasic() {
-  return <Input placeholder='Enter text' />
+  return <Input className='max-w-xs' placeholder='Enter text' />
 }

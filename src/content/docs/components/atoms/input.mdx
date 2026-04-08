@@ -12,11 +12,9 @@ import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
 <CodePreview path='atoms/input/demo' className='[&_input]:max-w-xs' />
 
 ## Installation
-
 <InstallationCard registryName='input' />
 
 ## Usage
-
 ```tsx
 import { Input } from '@/components/atoms/input'
 ```
@@ -24,3 +22,55 @@ import { Input } from '@/components/atoms/input'
 ```tsx
 <Input />
 ```
+
+## Examples
+### Basic
+<CodePreview path='atoms/input/basic' />
+
+### Field
+Use `Field`, `FieldLabel`, and `FieldDescription` to create an input with a label and description.
+<CodePreview path='atoms/input/field' />
+
+### Field Group
+Use `FieldGroup` to show multiple Field blocks and to build forms.
+<CodePreview path='atoms/input/field-group' />
+
+### Disabled
+Use the `disabled` prop to disable the input. To style the disabled state, add the `data-disabled` attribute to the `Field` component.
+<CodePreview path='atoms/input/disabled' />
+
+### Invalid
+Use the `aria-invalid` prop to mark the input as invalid. To style the invalid state, add the `data-invalid` attribute to the `Field` component.
+<CodePreview path='atoms/input/invalid' /> 
+
+### File
+Use the `type="file"` prop to create a file input.
+<CodePreview path='atoms/input/file' /> 
+
+### Inline
+Use `Field` with `orientation="horizontal"` to create an inline input. Pair with `Button` to create a search input with a button.
+<CodePreview path='atoms/input/inline' /> 
+
+### Grid
+Use a grid layout to place multiple inputs side by side.
+<CodePreview path='atoms/input/grid' /> 
+
+### Required
+Use the `required` attribute to indicate required inputs.
+<CodePreview path='atoms/input/required' /> 
+
+### Badge
+Use `Badge` in the label to highlight a recommended field.
+<CodePreview path='atoms/input/badge' /> 
+
+### Input Group
+To add icons, text, or buttons inside an input, use the `InputGroup` component. See the Input Group component for more examples.
+<CodePreview path='atoms/input/input-group' /> 
+
+### Button Group
+To add buttons to an input, use the `ButtonGroup` component. See the Button Group component for more examples.
+<CodePreview path='atoms/input/button-group' /> 
+
+### Form
+A full form example with multiple inputs, a select, and a button.
+<CodePreview path='atoms/input/form' /> 

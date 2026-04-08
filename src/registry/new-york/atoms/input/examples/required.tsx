@@ -3,7 +3,7 @@ import { Input } from '@/components/atoms/input'
 
 export function InputRequired() {
   return (
-    <Field>
+    <Field className='max-w-xs'>
       <FieldLabel htmlFor='input-required'>
         Required Field <span className='text-destructive'>*</span>
       </FieldLabel>

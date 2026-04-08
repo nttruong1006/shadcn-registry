@@ -4,7 +4,7 @@ import { Input } from '@/components/atoms/input'
 
 export function InputInline() {
   return (
-    <Field orientation='horizontal'>
+    <Field className='max-w-xs' orientation='horizontal'>
       <Input placeholder='Search...' type='search' />
       <Button>Search</Button>
     </Field>

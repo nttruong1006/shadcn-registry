@@ -10,7 +10,7 @@ export function InputForm() {
     { label: 'Canada', value: 'ca' }
   ]
   return (
-    <form className='w-full max-w-sm'>
+    <form className='w-full max-w-xs'>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor='form-name'>Name</FieldLabel>

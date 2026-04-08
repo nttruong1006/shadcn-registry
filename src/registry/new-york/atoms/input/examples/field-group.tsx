@@ -4,7 +4,7 @@ import { Input } from '@/components/atoms/input'
 
 export function InputFieldgroup() {
   return (
-    <FieldGroup>
+    <FieldGroup className='max-w-xs'>
       <Field>
         <FieldLabel htmlFor='fieldgroup-name'>Name</FieldLabel>
         <Input id='fieldgroup-name' placeholder='Jordan Lee' />
