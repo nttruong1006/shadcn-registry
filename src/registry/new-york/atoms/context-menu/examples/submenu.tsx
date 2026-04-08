@@ -1,12 +1,8 @@
 import {
   ContextMenu,
-  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuGroup,
   ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
   ContextMenuSub,
@@ -15,59 +11,42 @@ import {
   ContextMenuTrigger
 } from '@/components/atoms/context-menu'
 
-export function ContextMenuDemo() {
+export function ContextMenuSubmenu() {
   return (
     <ContextMenu>
       <ContextMenuTrigger className='flex aspect-video w-full max-w-xs items-center justify-center rounded-xl border border-dashed text-sm'>
         <span className='pointer-fine:inline-block hidden'>Right click here</span>
         <span className='pointer-coarse:inline-block hidden'>Long press here</span>
       </ContextMenuTrigger>
-      <ContextMenuContent className='w-48'>
+      <ContextMenuContent>
         <ContextMenuGroup>
           <ContextMenuItem>
-            Back
-            <ContextMenuShortcut>⌘[</ContextMenuShortcut>
-          </ContextMenuItem>
-          <ContextMenuItem disabled>
-            Forward
-            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+            Copy
+            <ContextMenuShortcut>⌘C</ContextMenuShortcut>
           </ContextMenuItem>
           <ContextMenuItem>
-            Reload
-            <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+            Cut
+            <ContextMenuShortcut>⌘X</ContextMenuShortcut>
           </ContextMenuItem>
-          <ContextMenuSub>
-            <ContextMenuSubTrigger>More Tools</ContextMenuSubTrigger>
-            <ContextMenuSubContent className='w-44'>
-              <ContextMenuGroup>
-                <ContextMenuItem>Save Page...</ContextMenuItem>
-                <ContextMenuItem>Create Shortcut...</ContextMenuItem>
-                <ContextMenuItem>Name Window...</ContextMenuItem>
-              </ContextMenuGroup>
-              <ContextMenuSeparator />
-              <ContextMenuGroup>
-                <ContextMenuItem>Developer Tools</ContextMenuItem>
-              </ContextMenuGroup>
-              <ContextMenuSeparator />
-              <ContextMenuGroup>
-                <ContextMenuItem variant='destructive'>Delete</ContextMenuItem>
-              </ContextMenuGroup>
-            </ContextMenuSubContent>
-          </ContextMenuSub>
         </ContextMenuGroup>
-        <ContextMenuSeparator />
-        <ContextMenuGroup>
-          <ContextMenuCheckboxItem checked>Show Bookmarks</ContextMenuCheckboxItem>
-          <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
-        </ContextMenuGroup>
-        <ContextMenuSeparator />
-        <ContextMenuGroup>
-          <ContextMenuRadioGroup value='pedro'>
-            <ContextMenuLabel>People</ContextMenuLabel>
-            <ContextMenuRadioItem value='pedro'>Pedro Duarte</ContextMenuRadioItem>
-            <ContextMenuRadioItem value='colm'>Colm Tuite</ContextMenuRadioItem>
-          </ContextMenuRadioGroup>
-        </ContextMenuGroup>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>More Tools</ContextMenuSubTrigger>
+          <ContextMenuSubContent>
+            <ContextMenuGroup>
+              <ContextMenuItem>Save Page...</ContextMenuItem>
+              <ContextMenuItem>Create Shortcut...</ContextMenuItem>
+              <ContextMenuItem>Name Window...</ContextMenuItem>
+            </ContextMenuGroup>
+            <ContextMenuSeparator />
+            <ContextMenuGroup>
+              <ContextMenuItem>Developer Tools</ContextMenuItem>
+            </ContextMenuGroup>
+            <ContextMenuSeparator />
+            <ContextMenuGroup>
+              <ContextMenuItem variant='destructive'>Delete</ContextMenuItem>
+            </ContextMenuGroup>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
       </ContextMenuContent>
     </ContextMenu>
   )
