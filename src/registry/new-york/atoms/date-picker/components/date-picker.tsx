@@ -13,14 +13,13 @@ export interface DatePickerProps {
   className?: string
   disabled?: boolean
   placeholder?: string
-  // calendarProps?: Omit<CalendarProps, 'mode' | 'selected' | 'required' | 'onSelect'>
   onValueChange: (value: Date | null | undefined) => void
 }
 
 export function DatePicker({
   id,
   value,
-  canRemove = true,
+  canRemove: canRemoveProp = true,
   className,
   disabled,
   placeholder,
@@ -28,33 +27,40 @@ export function DatePicker({
 }: DatePickerProps) {
   const [openPopover, setOpenPopover] = useState(false)
 
+  const canRemove = !!value && canRemoveProp
+
   return (
     <div className={className}>
       <Popover modal onOpenChange={setOpenPopover} open={openPopover}>
         <PopoverTrigger
           render={
-            <Button
-              aria-expanded={openPopover}
-              className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto'
-              data-empty={!value}
-              disabled={disabled}
-              id={id}
-              variant='outline'
-            >
-              <span className='line-clamp-1 text-ellipsis'>{value ? format(value, 'dd/MM/yyyy') : placeholder}</span>
+            <div className='relative'>
+              <Button
+                aria-expanded={openPopover}
+                className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground'
+                data-empty={!value}
+                disabled={disabled}
+                id={id}
+                variant='outline'
+              >
+                <span className='line-clamp-1 text-ellipsis'>{value ? format(value, 'dd/MM/yyyy') : placeholder}</span>
+              </Button>
 
-              {canRemove && value ? (
-                <XIcon
-                  className='ml-auto size-4 shrink-0 text-muted-foreground transition-transform hover:scale-125'
-                  onClick={(e) => {
+              <Button
+                className='absolute top-1/2 right-1 -translate-y-1/2 [&>svg:not([class*="size-"])]:size-4'
+                disabled={disabled}
+                onClick={(e) => {
+                  if (canRemove) {
                     e.stopPropagation()
                     onValueChange(null)
-                  }}
-                />
-              ) : (
-                <CalendarIcon className='ml-auto size-4 shrink-0 text-muted-foreground' />
-              )}
-            </Button>
+                  }
+                }}
+                size='icon-xs'
+                variant='ghost'
+              >
+                {canRemove ? <XIcon /> : <CalendarIcon />}
+              </Button>
+            </div>
           }
         />
 
@@ -79,52 +85,58 @@ export interface DateRangePickerProps {
   value?: DateRange
   canRemove?: boolean
   className?: string
-  isDisabled?: boolean
+  disabled?: boolean
   placeholder?: string
-  // calendarProps?: Omit<CalendarProps, 'mode' | 'selected' | 'required' | 'onSelect'>
   onValueChange: (value: DateRange) => void
 }
 
 export function DateRangePicker({
   value,
-  canRemove = true,
+  canRemove: canRemoveProp = true,
   className,
-  isDisabled,
+  disabled,
   placeholder,
   onValueChange
 }: DateRangePickerProps) {
   const [openPopover, setOpenPopover] = useState(false)
+
+  const canRemove = !!value?.from && !!value?.to && canRemoveProp
 
   return (
     <div className={className}>
       <Popover onOpenChange={setOpenPopover} open={openPopover}>
         <PopoverTrigger
           render={
-            <Button
-              aria-expanded={openPopover}
-              className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground [&_svg]:pointer-events-auto'
-              data-empty={!(value?.from && value?.to)}
-              disabled={isDisabled}
-              variant='outline'
-            >
-              <span className='line-clamp-1 text-ellipsis'>
-                {value?.from && value?.to
-                  ? `${format(value.from, 'dd/MM/yyyy')} - ${format(value.to, 'dd/MM/yyyy')}`
-                  : placeholder}
-              </span>
+            <div className='relative'>
+              <Button
+                aria-expanded={openPopover}
+                className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground'
+                data-empty={!(value?.from && value?.to)}
+                disabled={disabled}
+                variant='outline'
+              >
+                <span className='line-clamp-1 text-ellipsis'>
+                  {value?.from && value?.to
+                    ? `${format(value.from, 'dd/MM/yyyy')} - ${format(value.to, 'dd/MM/yyyy')}`
+                    : placeholder}
+                </span>
+              </Button>
 
-              {canRemove && value?.from && value?.to ? (
-                <XIcon
-                  className='ml-auto size-4 shrink-0 text-muted-foreground transition-transform hover:scale-125'
-                  onClick={(e) => {
+              <Button
+                className='absolute top-1/2 right-1 -translate-y-1/2 [&>svg:not([class*="size-"])]:size-4'
+                disabled={disabled}
+                onClick={(e) => {
+                  if (canRemove) {
                     e.stopPropagation()
                     onValueChange({ from: undefined, to: undefined })
-                  }}
-                />
-              ) : (
-                <CalendarIcon className='ml-auto size-4 shrink-0 text-muted-foreground' />
-              )}
-            </Button>
+                  }
+                }}
+                size='icon-xs'
+                variant='ghost'
+              >
+                {canRemove ? <XIcon /> : <CalendarIcon />}
+              </Button>
+            </div>
           }
         />
 

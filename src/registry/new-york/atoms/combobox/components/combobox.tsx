@@ -24,10 +24,9 @@ export function ComboboxTrigger({ className, children, ...props }: ComboboxPrimi
   )
 }
 
-export function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
+export function ComboboxClear({ ...props }: ComboboxPrimitive.Clear.Props) {
   return (
     <ComboboxPrimitive.Clear
-      className={cn(className)}
       data-slot='combobox-clear'
       {...props}
       render={
