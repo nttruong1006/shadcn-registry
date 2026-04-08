@@ -125,6 +125,7 @@ export function Calendar({
         ...formatters
       }}
       locale={locale}
+      showOutsideDays={showOutsideDays}
       {...props}
     />
   )
@@ -149,10 +150,12 @@ export function CalendarDayButton({
     <Button
       className={cn(
         'relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 font-normal leading-none data-[range-start=true]:data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-(--cell-radius) data-[range-middle=true]:rounded-none data-[range-end=true]:rounded-r-(--cell-radius) data-[range-start=true]:rounded-r-none data-[range-end=true]:rounded-l-none data-[range-start=true]:rounded-l-(--cell-radius) data-[range-end=true]:bg-primary data-[range-middle=true]:bg-muted data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground data-[range-end=true]:hover:bg-primary data-[range-start=true]:hover:bg-primary data-[selected-single=true]:hover:bg-primary data-[range-end=true]:hover:text-primary-foreground data-[range-start=true]:hover:text-primary-foreground data-[selected-single=true]:hover:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring dark:hover:text-foreground',
+        'data-[outside=false]:text-foreground',
         defaultClassNames.day,
         className
       )}
       data-day={day.date.toLocaleDateString(locale?.code)}
+      data-outside={day.outside}
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       data-range-start={modifiers.range_start}

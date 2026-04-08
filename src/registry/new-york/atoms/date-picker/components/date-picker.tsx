@@ -2,9 +2,9 @@ import { format } from 'date-fns'
 import { CalendarIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
-import { Button } from '@/registry/new-york/atoms/button/components/button'
-import { Calendar } from '@/registry/new-york/atoms/calendar/components/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/registry/new-york/atoms/popover/components/popover'
+import { Button } from '@/components/atoms/button'
+import { Calendar } from '@/components/atoms/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 
 export interface DatePickerProps {
   id?: string
@@ -17,7 +17,7 @@ export interface DatePickerProps {
   onValueChange: (value: Date | null | undefined) => void
 }
 
-export const DatePicker = ({
+export function DatePicker({
   id,
   value,
   canRemove = true,
@@ -25,7 +25,7 @@ export const DatePicker = ({
   disabled,
   placeholder,
   onValueChange
-}: DatePickerProps) => {
+}: DatePickerProps) {
   const [openPopover, setOpenPopover] = useState(false)
 
   return (
@@ -85,14 +85,14 @@ export interface DateRangePickerProps {
   onValueChange: (value: DateRange) => void
 }
 
-export const DateRangePicker = ({
+export function DateRangePicker({
   value,
   canRemove = true,
   className,
   isDisabled,
   placeholder,
   onValueChange
-}: DateRangePickerProps) => {
+}: DateRangePickerProps) {
   const [openPopover, setOpenPopover] = useState(false)
 
   return (
