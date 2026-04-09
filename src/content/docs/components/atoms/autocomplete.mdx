@@ -1,0 +1,66 @@
+---
+title: Autocomplete
+description: An input that suggests options as you type.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+
+<ShadcnLinkButton registryName='autocomplete' />
+
+<CodePreview path='atoms/autocomplete/demo' />
+
+## Installation
+<InstallationCard registryName='autocomplete' />
+
+## Usage
+```tsx
+import {
+  Autocomplete,
+  AutocompleteContent,
+  AutocompleteInput,
+  AutocompleteItem,
+  AutocompleteList
+} from '@/components/atoms/autocomplete'
+```
+
+```tsx
+<Accordion defaultValue={["item-1"]}>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Examples
+### Basic
+A simple autocomplete with a list of frameworks.
+<CodePreview path='atoms/autocomplete/basic' />
+
+### Clear button
+Use the `showClear` prop to show a clear button.
+<CodePreview path='atoms/autocomplete/clear-button' />
+
+### Groups
+Organize related options with `AutocompleteGroup` and `AutocompleteLabel` to add section headings inside the popup.
+<CodePreview path='atoms/autocomplete/groups' />
+
+### Invalid
+Use the `aria-invalid` prop to make the autocomplete invalid.
+<CodePreview path='atoms/autocomplete/invalid' />
+
+### Disabled
+Use the `disabled` prop to disable the autocomplete.
+<CodePreview path='atoms/autocomplete/disabled' />
+
+### Auto highlight
+Use the `autoHighlight` prop to auto highlight the first item.
+<CodePreview path='atoms/autocomplete/auto-highlight' />
+
+### Input group
+You can add an addon to the autocomplete by using the `InputGroupAddon` component inside the `AutocompleteInput`.
+<CodePreview path='atoms/autocomplete/input-group' />

@@ -183,36 +183,6 @@
       "dependencies": ["@radix-ui/react-checkbox", "lucide-react"]
     },
     {
-      "name": "combobox",
-      "type": "registry:ui",
-      "title": "Combobox",
-      "description": "Autocomplete input and command palette with a list of suggestions.",
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/combobox/components/combobox.tsx",
-          "type": "registry:ui",
-          "target": "src/components/ui/combobox.tsx"
-        },
-        {
-          "path": "src/types/base.ts",
-          "type": "registry:file",
-          "target": "src/types/base.ts"
-        }
-      ],
-      "dependencies": [
-        "lucide-react",
-        "cmdk",
-        "@radix-ui/react-dialog",
-        "@radix-ui/react-popover"
-      ],
-      "registryDependencies": [
-        "https://ntt-shadcn-registry.vercel.app/r/button.json",
-        "https://ntt-shadcn-registry.vercel.app/r/command.json",
-        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
-        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
-      ]
-    },
-    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",

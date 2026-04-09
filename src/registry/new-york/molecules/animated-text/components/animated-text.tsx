@@ -84,7 +84,6 @@ export function AnimatedText({
                   // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                   key={`link-${index}`}
                 >
-                  {' '}
                   {wordElement}
                 </a>
               )

@@ -47,8 +47,8 @@ export function ComboboxWithGroupsAndSeparator() {
       <ComboboxContent>
         <ComboboxEmpty>No timezones found.</ComboboxEmpty>
         <ComboboxList>
-          {(group, index) => (
-            <ComboboxGroup items={group.items} key={group.value}>
+          {(group) => (
+            <ComboboxGroup className='group/combobox-group' items={group.items} key={group.value}>
               <ComboboxLabel>{group.value}</ComboboxLabel>
               <ComboboxCollection>
                 {(item) => (
@@ -57,7 +57,7 @@ export function ComboboxWithGroupsAndSeparator() {
                   </ComboboxItem>
                 )}
               </ComboboxCollection>
-              {index < timezones.length - 1 && <ComboboxSeparator />}
+              <ComboboxSeparator className='group-last/combobox-group:hidden' />
             </ComboboxGroup>
           )}
         </ComboboxList>

@@ -28,12 +28,12 @@ export function ComboboxClear({ ...props }: ComboboxPrimitive.Clear.Props) {
   return (
     <ComboboxPrimitive.Clear
       data-slot='combobox-clear'
-      {...props}
       render={
         <InputGroupButton size='icon-xs' variant='ghost'>
           <XIcon className='pointer-events-none' />
         </InputGroupButton>
       }
+      {...props}
     />
   )
 }
@@ -139,8 +139,8 @@ export function ComboboxItem({ className, children, ...props }: ComboboxPrimitiv
   )
 }
 
-export function ComboboxGroup({ className, ...props }: ComboboxPrimitive.Group.Props) {
-  return <ComboboxPrimitive.Group className={cn(className)} data-slot='combobox-group' {...props} />
+export function ComboboxGroup({ ...props }: ComboboxPrimitive.Group.Props) {
+  return <ComboboxPrimitive.Group data-slot='combobox-group' {...props} />
 }
 
 export function ComboboxLabel({ className, ...props }: ComboboxPrimitive.GroupLabel.Props) {
@@ -161,7 +161,7 @@ export function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.P
   return (
     <ComboboxPrimitive.Empty
       className={cn(
-        'hidden w-full justify-center py-2 text-center text-muted-foreground text-sm group-data-empty/combobox-content:flex',
+        'hidden py-2 text-center text-muted-foreground text-sm group-data-empty/combobox-content:block',
         className
       )}
       data-slot='combobox-empty'
