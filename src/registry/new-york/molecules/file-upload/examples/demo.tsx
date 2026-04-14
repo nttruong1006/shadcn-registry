@@ -11,13 +11,7 @@ export function FileUploadDemo() {
   const [value, setValue] = React.useState<FileUploadValue>([])
 
   return (
-    <FileUpload
-      dropzoneOptions={{
-        maxFiles: 5
-      }}
-      onValueChange={setValue}
-      value={value}
-    >
+    <FileUpload maxFiles={5} onValueChange={setValue} value={value}>
       <FileUploadInput />
       <FileUploadContent>
         {value.map((item, index) => (

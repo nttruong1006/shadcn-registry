@@ -29,9 +29,9 @@ export default function MultiFileField({
     <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <FileUpload
         disabled={disabled}
-        dropzoneOptions={baseDropzoneOptions}
         onValueChange={field.handleChange}
         value={field.state.value}
+        {...baseDropzoneOptions}
       >
         <FileUploadInput aria-invalid={invalid} id={`${field.form.formId}-${field.name}`} />
         <FileUploadContent>

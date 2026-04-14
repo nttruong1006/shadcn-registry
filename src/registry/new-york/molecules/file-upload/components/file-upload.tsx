@@ -9,13 +9,14 @@ import { getSizeText, type UploadedFile } from './lib'
 
 export type FileUploadValue = Array<File | UploadedFile>
 
-export type FileUploadProps = {
-  value: FileUploadValue
-  dropzoneOptions?: DropzoneOptions
-  replaceOnSelect?: boolean
-  disabled?: boolean
-  onValueChange: (value: FileUploadProps['value']) => void
-} & HTMLAttributes<HTMLDivElement>
+export type FileUploadProps = DropzoneOptions &
+  PropsWithChildren & {
+    value: FileUploadValue
+    replaceOnSelect?: boolean
+    disabled?: boolean
+    className?: string
+    onValueChange: (value: FileUploadProps['value']) => void
+  }
 
 export type FileUploadContextValue = Pick<FileUploadProps, 'value' | 'onValueChange'> & {
   dropzoneState: DropzoneState
@@ -33,15 +34,13 @@ export function useFileUploadContext() {
 }
 
 export function FileUpload({
-  className,
-  dropzoneOptions,
   value,
   replaceOnSelect: replaceOnSelectProp,
   disabled: disabledProp,
+  className,
   children,
-  dir,
   onValueChange,
-  ...props
+  ...dropzoneOptions
 }: FileUploadProps) {
   const { maxFiles = 1, maxSize = 20 * 1024 * 1024, ...restDropzoneOptions } = dropzoneOptions ?? {}
   const replaceOnSelect = maxFiles === 1 ? true : replaceOnSelectProp
@@ -120,9 +119,7 @@ export function FileUpload({
         onValueChange
       }}
     >
-      <div className={cn('w-full space-y-2', className)} dir={dir} {...props}>
-        {children}
-      </div>
+      <div className={cn('w-full space-y-2', className)}>{children}</div>
     </FileUploadContext.Provider>
   )
 }

@@ -231,7 +231,7 @@ export default function ImageButton({ id }: { id: string }) {
 
                           <FileUpload
                             className='xl:grid-cols-1'
-                            dropzoneOptions={fileUploaderDropzoneOptions}
+                            {...fileUploaderDropzoneOptions}
                             onValueChange={field.handleChange as FileUploadProps['onValueChange']}
                             value={field.state.value}
                           >
