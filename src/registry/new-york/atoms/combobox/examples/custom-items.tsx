@@ -61,17 +61,19 @@ const countries = [
   }
 ]
 
+type Country = (typeof countries)[number]
+
 export function ComboboxWithCustomItems() {
   return (
     <Combobox
       items={countries.filter((country) => country.code !== '')}
-      itemToStringValue={(country: (typeof countries)[number]) => country.label}
+      itemToStringValue={(country: Country) => country.label}
     >
       <ComboboxInput placeholder='Search countries...' />
       <ComboboxContent>
         <ComboboxEmpty>No countries found.</ComboboxEmpty>
         <ComboboxList>
-          {(country) => (
+          {(country: Country) => (
             <ComboboxItem key={country.code} value={country}>
               <Item className='p-0' size='xs'>
                 <ItemContent>
