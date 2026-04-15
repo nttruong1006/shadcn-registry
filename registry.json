@@ -937,39 +937,6 @@
       ]
     },
     {
-      "name": "month-picker",
-      "type": "registry:component",
-      "title": "Month Picker",
-      "description": "A combobox to select a month.",
-      "files": [
-        {
-          "path": "src/registry/new-york/molecules/month-picker/components/month-picker.tsx",
-          "type": "registry:ui",
-          "target": "src/components/molecules/month-picker/index.tsx"
-        },
-        {
-          "path": "src/types/base.ts",
-          "type": "registry:file",
-          "target": "src/types/base.ts"
-        }
-      ],
-      "dependencies": [
-        "date-fns",
-        "lucide-react",
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "embla-carousel-react",
-        "@radix-ui/react-popover"
-      ],
-      "registryDependencies": [
-        "https://ntt-shadcn-registry.vercel.app/r/year-picker.json",
-        "https://ntt-shadcn-registry.vercel.app/r/button.json",
-        "https://ntt-shadcn-registry.vercel.app/r/carousel.json",
-        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
-        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
-      ]
-    },
-    {
       "name": "number-input",
       "type": "registry:component",
       "title": "Number Input",
@@ -1125,39 +1092,6 @@
         }
       ],
       "dependencies": ["motion"]
-    },
-    {
-      "name": "year-picker",
-      "type": "registry:component",
-      "title": "Year Picker",
-      "description": "A combobox to select a year.",
-      "files": [
-        {
-          "path": "src/registry/new-york/molecules/year-picker/components/year-picker.tsx",
-          "type": "registry:ui",
-          "target": "src/components/molecules/year-picker/index.tsx"
-        }
-      ],
-      "dependencies": [
-        "date-fns",
-        "lucide-react",
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "cmdk",
-        "@radix-ui/react-dialog",
-        "@radix-ui/react-popover",
-        "@radix-ui/react-label",
-        "@radix-ui/react-popover"
-      ],
-      "registryDependencies": [
-        "https://ntt-shadcn-registry.vercel.app/r/button.json",
-        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
-        "https://ntt-shadcn-registry.vercel.app/r/label.json",
-        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
-        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
-        "https://ntt-shadcn-registry.vercel.app/r/command.json",
-        "https://ntt-shadcn-registry.vercel.app/r/dialog.json"
-      ]
     },
     {
       "name": "data-table",
