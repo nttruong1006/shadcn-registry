@@ -19,7 +19,6 @@ export function CalendarCustomDays() {
           components={{
             DayButton: ({ children, modifiers, day, ...props }) => {
               const isWeekend = day.date.getDay() === 0 || day.date.getDay() === 6
-
               return (
                 <CalendarDayButton day={day} modifiers={modifiers} {...props}>
                   {children}
@@ -29,11 +28,6 @@ export function CalendarCustomDays() {
             }
           }}
           defaultMonth={range?.from}
-          formatters={{
-            formatMonthDropdown: (date) => {
-              return date.toLocaleString('default', { month: 'long' })
-            }
-          }}
           mode='range'
           numberOfMonths={1}
           onSelect={setRange}

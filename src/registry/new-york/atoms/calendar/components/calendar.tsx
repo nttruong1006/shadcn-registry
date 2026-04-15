@@ -1,6 +1,7 @@
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { type ComponentProps, useEffect, useRef } from 'react'
 import { type DayButton, DayPicker, getDefaultClassNames, type Locale } from 'react-day-picker'
+import { enUS } from 'react-day-picker/locale'
 import { Button, buttonVariants } from '@/components/atoms/button'
 import { cn } from '@/utils/ui'
 
@@ -12,7 +13,7 @@ export function Calendar({
   showOutsideDays = true,
   captionLayout = 'label',
   buttonVariant = 'ghost',
-  locale,
+  locale = enUS,
   formatters,
   components,
   ...props
@@ -121,7 +122,7 @@ export function Calendar({
         ...components
       }}
       formatters={{
-        formatMonthDropdown: (date) => date.toLocaleString(locale?.code, { month: 'short' }),
+        formatMonthDropdown: (date) => date.toLocaleString(locale?.code, { month: '2-digit' }),
         ...formatters
       }}
       locale={locale}
@@ -135,7 +136,7 @@ export function CalendarDayButton({
   className,
   day,
   modifiers,
-  locale,
+  locale = enUS,
   ...props
 }: ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
   const ref = useRef<HTMLButtonElement>(null)
