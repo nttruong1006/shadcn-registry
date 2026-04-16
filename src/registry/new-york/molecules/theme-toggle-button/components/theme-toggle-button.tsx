@@ -204,7 +204,8 @@ export function ThemeToggleButton({
       loading={!theme}
       onClick={toggleTheme}
       ref={() => {
-        setTheme(getDefaultTheme())
+        const defaultTheme = getDefaultTheme(themeLocalStorageKey)
+        setTheme(defaultTheme)
       }}
       size={showLabel ? 'default' : 'icon'}
       variant='ghost'

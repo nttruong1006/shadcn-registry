@@ -1,19 +1,16 @@
 import z from 'zod'
 
-// Theme schema
 export const themeSchema = z.object({
   theme: z.union([z.literal('light'), z.literal('dark')])
 })
 
-// Theme
 export type Theme = z.output<typeof themeSchema>['theme']
 
-// Default theme local storage key
 export const defaultThemeLocalStorageKey = 'theme'
 
-// Get default theme
-export const getDefaultTheme = () => {
-  const themeReference = localStorage.getItem(defaultThemeLocalStorageKey)
+export const getDefaultTheme = (themeLocalStorageKey: string) => {
+  const themeReference = localStorage.getItem(themeLocalStorageKey)
+
   const { success, data } = themeSchema.safeParse({
     theme: themeReference
   })
@@ -25,10 +22,9 @@ export const getDefaultTheme = () => {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-// Observe theme
-export const observeTheme = (key = 'theme') => {
+export const observeTheme = (themeLocalStorageKey: string) => {
   const getTheme = () => {
-    const themeReference = localStorage.getItem(key)
+    const themeReference = localStorage.getItem(themeLocalStorageKey)
     return themeReference ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
   }
 
@@ -41,7 +37,7 @@ export const observeTheme = (key = 'theme') => {
     const isDark =
       document.documentElement.classList.contains('dark') ||
       document.documentElement.getAttribute('data-theme') === 'dark'
-    localStorage.setItem(key, isDark ? 'dark' : 'light')
+    localStorage.setItem(themeLocalStorageKey, isDark ? 'dark' : 'light')
   })
 
   observer.observe(document.documentElement, {
@@ -52,10 +48,8 @@ export const observeTheme = (key = 'theme') => {
   return observer
 }
 
-// Start position
 export type StartPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
-// Get circle cx
 export const getCircleCx = (startPosition: string) => {
   if (startPosition === 'center') {
     return '50'
@@ -66,7 +60,6 @@ export const getCircleCx = (startPosition: string) => {
   return '100'
 }
 
-// Get circle cy
 export const getCircleCy = (startPosition: string) => {
   if (startPosition === 'center') {
     return '50'
@@ -77,7 +70,6 @@ export const getCircleCy = (startPosition: string) => {
   return '100'
 }
 
-// Get circle blur cx
 export const getCircleBlurCx = (startPosition: string) => {
   if (startPosition === 'center') {
     return '50'
@@ -88,7 +80,6 @@ export const getCircleBlurCx = (startPosition: string) => {
   return '100'
 }
 
-// Get circle blur cy
 export const getCircleBlurCy = (startPosition: string) => {
   if (startPosition === 'center') {
     return '50'
