@@ -11,9 +11,9 @@ function DataTableHeader<TData extends RowData>({
   className
 }: Pick<DataTableProps<TData>, 'table'> & { className?: string }) {
   return (
-    <TableHeader className={cn('sticky top-0 z-20 bg-background', className)}>
+    <TableHeader className={cn('sticky top-0 z-20', className)}>
       {table.getHeaderGroups().map((headerGroup) => (
-        <TableRow key={headerGroup.id}>
+        <TableRow className='bg-background hover:bg-background' key={headerGroup.id}>
           {headerGroup.headers.map((header, headerIndex) => {
             const pinningPosition = header.column.getIsPinned()
 
@@ -54,7 +54,7 @@ function DataTableHeader<TData extends RowData>({
                         onClick={() => {
                           header.column.pin('left')
                         }}
-                        size='icon-sm'
+                        size='icon-xs'
                         variant='outline'
                       >
                         <ChevronLeftIcon />
@@ -66,7 +66,7 @@ function DataTableHeader<TData extends RowData>({
                         onClick={() => {
                           header.column.pin(false)
                         }}
-                        size='icon-sm'
+                        size='icon-xs'
                         variant='outline'
                       >
                         <PinOffIcon />
@@ -78,7 +78,7 @@ function DataTableHeader<TData extends RowData>({
                         onClick={() => {
                           header.column.pin('right')
                         }}
-                        size='icon-sm'
+                        size='icon-xs'
                         variant='outline'
                       >
                         <ChevronRightIcon />

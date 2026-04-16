@@ -57,15 +57,20 @@ const COLUMNS: ColumnDef<Row>[] = [
             id: 'update',
             icon: <FilePenLineIcon />,
             label: 'Update',
-            type: 'link',
-            link: '/'
+            type: 'event',
+            onClick: () => {
+              console.log('Clicked ...')
+            }
           },
           {
             id: 'delete',
             icon: <TrashIcon />,
             label: 'Delete',
-            type: 'slot',
-            slot: <Button>Delete</Button>
+            type: 'event',
+            variant: 'destructive',
+            onClick: () => {
+              console.log('Clicked ...')
+            }
           }
         ]}
       />

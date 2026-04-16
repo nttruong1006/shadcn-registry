@@ -5,30 +5,33 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  type DropdownMenuItemVariant,
   DropdownMenuTrigger
 } from '@/components/atoms/dropdown-menu'
 
-interface BaseMenu {
+export interface BaseMenu {
   id: string
   icon?: ReactNode
   label?: ReactNode
+  variant?: DropdownMenuItemVariant
 }
-interface LinkMenu extends BaseMenu {
+
+export interface LinkMenu extends BaseMenu {
   type: 'link'
   link: string
 }
 
-interface EventMenu extends BaseMenu {
+export interface EventMenu extends BaseMenu {
   type: 'event'
   onClick: () => void
 }
 
-interface SlotMenu extends BaseMenu {
+export interface SlotMenu extends BaseMenu {
   type: 'slot'
   slot: ReactNode
 }
 
-type Menu = LinkMenu | EventMenu | SlotMenu
+export type Menu = LinkMenu | EventMenu | SlotMenu
 
 export function DataTableActionCell({ menus, loading }: { menus: Menu[]; loading?: boolean }) {
   if (!menus.length) {
@@ -66,7 +69,7 @@ export function DataTableActionCell({ menus, loading }: { menus: Menu[]; loading
 
             case 'event':
               return (
-                <DropdownMenuItem key={menu.id} onClick={menu.onClick}>
+                <DropdownMenuItem key={menu.id} onClick={menu.onClick} variant={menu.variant}>
                   {menu.icon}
                   {menu.label}
                 </DropdownMenuItem>

@@ -1,14 +1,14 @@
 import type { Table as ReactTable, Row, RowData } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
-import { Table } from '@/registry/new-york/atoms/table/components/table'
-import { LoadingOverlay } from '@/registry/new-york/molecules/loading-overlay/components/loading-overlay'
+import { Table } from '@/components/atoms/table'
+import { LoadingOverlay } from '@/components/molecules/loading-overlay'
 import { cn } from '@/utils/ui'
 import DataTableAdditionalInfo from './data-table-additional-info'
 import DataTableBody from './data-table-body'
 import DataTableFooter from './data-table-footer'
 import DataTableHeader from './data-table-header'
 import DataTablePagination from './data-table-pagination'
-import DataTableRowSelection from './data-table-row-selection'
+import DataTableRowSelect from './data-table-row-select'
 
 export interface DataTableProps<TData extends RowData> {
   id?: string
@@ -67,8 +67,8 @@ export function DataTable<TData extends RowData>({
       {/* Additional info */}
       <DataTableAdditionalInfo error={error} loading={loading} table={table} />
 
-      {/* Row selection */}
-      <DataTableRowSelection table={table} />
+      {/* Row select */}
+      <DataTableRowSelect table={table} />
 
       {/* Pagination */}
       {showPagination && <DataTablePagination className={className?.tablePagination} table={table} />}

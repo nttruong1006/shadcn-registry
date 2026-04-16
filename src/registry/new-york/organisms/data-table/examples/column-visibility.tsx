@@ -10,7 +10,7 @@ import {
   DialogTrigger
 } from '@/components/atoms/dialog'
 import { DataTable } from '@/components/organisms/data-table/data-table'
-import { DataTableColumnVisibilitySelection } from '@/components/organisms/data-table/data-table-column-visibility-selection'
+import { DataTableColumnVisibilitySelect } from '@/components/organisms/data-table/data-table-column-visibility-select'
 import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
@@ -66,9 +66,7 @@ export function DataTableColumnVisibility() {
   const table = useDataTable({
     columns: COLUMNS,
     data: DATA,
-    initialState: {
-      columnVisibility: {}
-    },
+
     getPaginationRowModel: getPaginationRowModel()
   })
 
@@ -85,7 +83,7 @@ export function DataTableColumnVisibility() {
         <DialogScroll>
           <div className='space-y-4'>
             <div className='flex justify-end'>
-              <DataTableColumnVisibilitySelection table={table} />
+              <DataTableColumnVisibilitySelect table={table} />
             </div>
             <DataTable table={table} />
           </div>
