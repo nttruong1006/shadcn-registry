@@ -1,4 +1,4 @@
-import { type ColumnDef, getPaginationRowModel } from '@tanstack/react-table'
+import { type ColumnDef, getPaginationRowModel, type VisibilityState } from '@tanstack/react-table'
 import { Button } from '@/components/atoms/button'
 import {
   Dialog,
@@ -66,7 +66,14 @@ export function DataTableColumnVisibility() {
   const table = useDataTable({
     columns: COLUMNS,
     data: DATA,
-
+    initialState: {
+      columnVisibility: COLUMNS.reduce<VisibilityState>((acc, column) => {
+        if (column.id) {
+          acc[column.id] = true
+        }
+        return acc
+      }, {})
+    },
     getPaginationRowModel: getPaginationRowModel()
   })
 
