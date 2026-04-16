@@ -1,14 +1,5 @@
 import { type MotionValue, motion, useMotionValue, useSpring, useTransform } from 'motion/react'
-import {
-  createContext,
-  forwardRef,
-  type MouseEvent,
-  type PropsWithChildren,
-  type ReactNode,
-  useContext,
-  useImperativeHandle,
-  useRef
-} from 'react'
+import { createContext, type MouseEvent, type PropsWithChildren, type ReactNode, useContext, useRef } from 'react'
 import { cn } from '@/utils/ui'
 
 const TiltCardContext = createContext<{
@@ -25,104 +16,103 @@ interface TiltCardProps extends PropsWithChildren {
   scale?: number
 }
 
-export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(
-  ({ children, className, tiltMaxAngle = 12, tiltReverse = false, scale = 1.05, ...props }, ref) => {
-    const x = useMotionValue(0)
-    const y = useMotionValue(0)
+export function TiltCard({
+  children,
+  className,
+  tiltMaxAngle = 12,
+  tiltReverse = false,
+  scale = 1.05,
+  ...props
+}: TiltCardProps) {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
 
-    const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 })
-    const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 })
-    const scaleValue = useSpring(1, { stiffness: 300, damping: 30 })
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 })
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 })
+  const scaleValue = useSpring(1, { stiffness: 300, damping: 30 })
 
-    const rotateX = useTransform(
-      mouseYSpring,
-      [-0.5, 0.5],
-      tiltReverse ? [tiltMaxAngle, -tiltMaxAngle] : [-tiltMaxAngle, tiltMaxAngle]
-    )
-    const rotateY = useTransform(
-      mouseXSpring,
-      [-0.5, 0.5],
-      tiltReverse ? [-tiltMaxAngle, tiltMaxAngle] : [tiltMaxAngle, -tiltMaxAngle]
-    )
+  const rotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    tiltReverse ? [tiltMaxAngle, -tiltMaxAngle] : [-tiltMaxAngle, tiltMaxAngle]
+  )
+  const rotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    tiltReverse ? [-tiltMaxAngle, tiltMaxAngle] : [tiltMaxAngle, -tiltMaxAngle]
+  )
 
-    // biome-ignore lint/style/noNonNullAssertion: ignore
-    useImperativeHandle(ref, () => containerRef.current!)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-    const containerRef = useRef<HTMLDivElement>(null)
-
-    const moveMouse = (e: MouseEvent<HTMLDivElement>) => {
-      if (!containerRef.current) {
-        return
-      }
-
-      const rect = containerRef.current.getBoundingClientRect()
-      const width = rect.width
-      const height = rect.height
-      const mouseX = e.clientX - rect.left
-      const mouseY = e.clientY - rect.top
-      const xPct = mouseX / width - 0.5
-      const yPct = mouseY / height - 0.5
-
-      x.set(xPct)
-      y.set(yPct)
-      scaleValue.set(scale)
+  const moveMouse = (e: MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) {
+      return
     }
 
-    const leaveMouse = () => {
-      x.set(0)
-      y.set(0)
-      scaleValue.set(1)
-    }
+    const rect = containerRef.current.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+    const xPct = mouseX / width - 0.5
+    const yPct = mouseY / height - 0.5
 
-    return (
-      <TiltCardContext.Provider value={{ rotateX, rotateY, scale: scaleValue }}>
-        {/** biome-ignore lint/a11y/noStaticElementInteractions: ignore */}
-        {/** biome-ignore lint/a11y/noNoninteractiveElementInteractions: ignore */}
-        <div
-          className={cn('relative rounded-xl shadow-sm', className)}
-          onMouseLeave={leaveMouse}
-          onMouseMove={moveMouse}
-          ref={containerRef}
-          style={{ perspective: '1000px' }}
-          {...props}
-        >
-          <div className='absolute inset-0 rounded-xl border' />
-          {children}
-        </div>
-      </TiltCardContext.Provider>
-    )
+    x.set(xPct)
+    y.set(yPct)
+    scaleValue.set(scale)
   }
-)
+
+  const leaveMouse = () => {
+    x.set(0)
+    y.set(0)
+    scaleValue.set(1)
+  }
+
+  return (
+    <TiltCardContext.Provider value={{ rotateX, rotateY, scale: scaleValue }}>
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: ignore */}
+      {/** biome-ignore lint/a11y/noNoninteractiveElementInteractions: ignore */}
+      <div
+        className={cn('relative rounded-xl shadow-sm', className)}
+        onMouseLeave={leaveMouse}
+        onMouseMove={moveMouse}
+        ref={containerRef}
+        style={{ perspective: '1000px' }}
+        {...props}
+      >
+        <div className='absolute inset-0 rounded-xl border' />
+        {children}
+      </div>
+    </TiltCardContext.Provider>
+  )
+}
 
 interface TiltCardContentProps {
   children: ReactNode
   className?: string
 }
 
-export const TiltCardContent = forwardRef<HTMLDivElement, TiltCardContentProps>(
-  ({ children, className, ...props }, ref) => {
-    const context = useContext(TiltCardContext)
+export function TiltCardContent({ children, className, ...props }: TiltCardContentProps) {
+  const context = useContext(TiltCardContext)
 
-    if (!context) {
-      throw new Error('TiltCardContent must be used within TiltCard')
-    }
-
-    const { rotateX, rotateY, scale } = context
-
-    return (
-      <motion.div
-        className={cn('relative overflow-hidden rounded-xl border bg-card text-card-foreground', className)}
-        ref={ref}
-        style={{
-          rotateX,
-          rotateY,
-          scale,
-          transformStyle: 'preserve-3d'
-        }}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    )
+  if (!context) {
+    throw new Error('TiltCardContent must be used within TiltCard')
   }
-)
+
+  const { rotateX, rotateY, scale } = context
+
+  return (
+    <motion.div
+      className={cn('relative overflow-hidden rounded-xl border bg-card text-card-foreground', className)}
+      style={{
+        rotateX,
+        rotateY,
+        scale,
+        transformStyle: 'preserve-3d'
+      }}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
+}
