@@ -119,7 +119,9 @@ export function FileUpload({
         onValueChange
       }}
     >
-      <div className={cn('w-full space-y-2', className)}>{children}</div>
+      <div className={cn('flex w-full flex-col gap-2', className)} data-slot='file-upload'>
+        {children}
+      </div>
     </FileUploadContext.Provider>
   )
 }
@@ -137,6 +139,7 @@ export function FileUploadInput({ id, className, children, ...restProps }: FileU
         disabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
         className
       )}
+      data-slot='file-upload-input'
       {...dropzoneRootProps}
       {...restProps}
     >
@@ -155,7 +158,7 @@ export type FileUploadContentProps = PropsWithChildren & { className?: string }
 
 export function FileUploadContent({ className, children }: FileUploadContentProps) {
   return (
-    <div className={cn('max-h-80 overflow-auto', className)}>
+    <div className={cn('max-h-80 overflow-auto', className)} data-slot='file-upload-content'>
       <div className='space-y-2'>{children}</div>
     </div>
   )
@@ -184,6 +187,7 @@ export function FileUploadItem({ value, index, className, children }: FileUpload
         'flex cursor-default items-center justify-between gap-2 overflow-hidden rounded-md border bg-transparent p-2 transition-colors hover:bg-accent/40',
         className
       )}
+      data-slot='file-upload-item'
     >
       {children ?? (
         <div className='flex items-center gap-2 overflow-hidden'>

@@ -2,7 +2,7 @@ import { flexRender, type RowData } from '@tanstack/react-table'
 import { TableCell, TableFooter, TableRow } from '@/components/atoms/table'
 import type { DataTableProps } from './data-table'
 
-function DataTableFooter<TData extends RowData>({
+export default function DataTableFooter<TData extends RowData>({
   table,
   className
 }: Pick<DataTableProps<TData>, 'table'> & {
@@ -22,5 +22,3 @@ function DataTableFooter<TData extends RowData>({
     </TableFooter>
   )
 }
-
-export default DataTableFooter

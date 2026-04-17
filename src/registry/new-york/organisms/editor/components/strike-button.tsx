@@ -13,7 +13,6 @@ export default function StrikeButton() {
     }
   })
 
-  // Template
   return (
     <TooltipButton
       Icon={StrikethroughIcon}

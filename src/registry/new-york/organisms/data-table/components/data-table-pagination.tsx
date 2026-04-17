@@ -9,7 +9,7 @@ import type { DataTableProps } from './data-table'
 
 const pageSizeOptions = [10, 20, 30, 50, 100]
 
-function DataTablePagination<TData extends RowData>({
+export default function DataTablePagination<TData extends RowData>({
   table,
   className
 }: Pick<DataTableProps<TData>, 'table'> & {
@@ -88,5 +88,3 @@ function DataTablePagination<TData extends RowData>({
     </div>
   )
 }
-
-export default DataTablePagination

@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 
-function DataTableRowSelection<TData extends RowData>({ table }: Pick<DataTableProps<TData>, 'table'>) {
+export default function DataTableRowSelection<TData extends RowData>({ table }: Pick<DataTableProps<TData>, 'table'>) {
   const rowCount = table.getRowCount()
   const rowSelectionLength = Object.keys(table.getState().rowSelection).length
   const pageRowCount = table.getPreFilteredRowModel().rows.length
@@ -49,5 +49,3 @@ function DataTableRowSelection<TData extends RowData>({ table }: Pick<DataTableP
     </div>
   )
 }
-
-export default DataTableRowSelection

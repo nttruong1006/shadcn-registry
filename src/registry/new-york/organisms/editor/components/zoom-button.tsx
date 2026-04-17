@@ -1,5 +1,5 @@
 import { Maximize2Icon, Minimize2Icon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TooltipButton from './tooltip-button'
 
 const zoomInClassName =
@@ -14,6 +14,21 @@ export default function ZoomButton({ id }: { id: string }) {
     editorElement?.classList[newZoomed ? 'add' : 'remove'](...zoomInClassName.split(' '))
     setZoomed(newZoomed)
   }
+
+  // BUG: Move to useKeyPress hook from @uidotdev/usehooks when available (currently this hook is experimental)
+  useEffect(() => {
+    const keydownHandler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        const editorElement = document.querySelector(`#editor-${id}`)
+        editorElement?.classList.remove(...zoomInClassName.split(' '))
+        setZoomed(false)
+      }
+    }
+    window.addEventListener('keydown', keydownHandler)
+    return () => {
+      window.removeEventListener('keydown', keydownHandler)
+    }
+  }, [id])
 
   return (
     <TooltipButton

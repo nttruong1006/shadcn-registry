@@ -1,4 +1,5 @@
 import { useCurrentEditor } from '@tiptap/react'
+import type { ColorInstance } from 'color'
 import { BaselineIcon, CheckIcon, ChevronDownIcon, CircleSlashIcon } from 'lucide-react'
 import { lazy, Suspense, useState } from 'react'
 import { Button } from '@/components/atoms/button'
@@ -39,10 +40,10 @@ export default function TextColorButton() {
     editor?.chain().focus().setColor(color).run()
   }
 
-  // function changeColorFromPicker(color: ColorInstance) {
-  //   setSelectedColor(null)
-  //   editor?.chain().setColor(color.hex()).run()
-  // }
+  function changeColor(color: ColorInstance) {
+    setSelectedColor(null)
+    editor?.chain().setColor(color.hex()).run()
+  }
 
   function clearColor() {
     setSelectedColor(null)
@@ -78,16 +79,14 @@ export default function TextColorButton() {
                 backgroundColor: color
               }}
             >
-              {selectedColor === color && <CheckIcon className='text-background' />}
+              {selectedColor === color && <CheckIcon className='text-foreground' />}
             </Button>
           ))}
         </div>
 
         <div className='flex justify-end gap-2'>
           <Suspense fallback={<Button className='animate-pulse bg-muted' size='icon' variant='outline' />}>
-            <ColorPickerButton
-            // onValueChange={changeColorFromPicker}
-            />
+            <ColorPickerButton onValueChange={changeColor} />
           </Suspense>
 
           <Tooltip>

@@ -27,10 +27,10 @@ export default function TextAlignButton({
     selector: ({ editor }) => {
       return {
         isActive: {
-          left: editor?.isActive({ textAlign: 'left' }),
-          center: editor?.isActive({ textAlign: 'center' }),
-          right: editor?.isActive({ textAlign: 'right' }),
-          justify: editor?.isActive({ textAlign: 'justify' })
+          left: editor?.isActive('paragraph', { textAlign: 'left' }),
+          center: editor?.isActive('paragraph', { textAlign: 'center' }),
+          right: editor?.isActive('paragraph', { textAlign: 'right' }),
+          justify: editor?.isActive('paragraph', { textAlign: 'justify' })
         }
       }
     }
@@ -54,51 +54,56 @@ export default function TextAlignButton({
             />
           }
         />
-        <TooltipContent>Text alignment</TooltipContent>
+        <TooltipContent>Text align</TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent>
-        {alignments.map((alignment) => (
-          <DropdownMenuItem
-            className={cn({
-              'bg-accent text-accent-foreground': editorState?.isActive[alignment.value]
-            })}
-            key={alignment.value}
-            onClick={() => {
-              const callback: CallbackRef['current'] = (editor) => {
-                editor?.chain().focus().setTextAlign(alignment.value).run()
-              }
-
-              if (isExtensionLoadedRef.current) {
-                return callback(editor)
-              }
-
-              // Load extension
-              startTransition(async () => {
-                try {
-                  const extension = await import('@tiptap/extension-text-align')
-
-                  callbackRef.current = callback
-
-                  setExtensions((prev) => [
-                    ...prev,
-                    extension.default.configure({
-                      types: ['heading', 'paragraph']
-                    })
-                  ])
-
-                  isExtensionLoadedRef.current = true
-                } catch (error) {
-                  console.error('An error occurred when load the TextAlign extension', error)
+        {alignments.map((alignment) => {
+          const isActive = editorState?.isActive[alignment.value]
+          return (
+            <DropdownMenuItem
+              className={cn({
+                'bg-accent text-accent-foreground': isActive
+              })}
+              key={alignment.value}
+              onClick={() => {
+                const callback: CallbackRef['current'] = (editor) => {
+                  editor?.chain().focus().setTextAlign(alignment.value).run()
                 }
-              })
-            }}
-          >
-            <alignment.icon />
-            <span>{alignment.label}</span>
-            <DropdownMenuShortcut>{alignment.shortcut}</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        ))}
+
+                if (isExtensionLoadedRef.current) {
+                  return callback(editor)
+                }
+
+                // Load extension
+                startTransition(async () => {
+                  try {
+                    const extension = await import('@tiptap/extension-text-align')
+
+                    callbackRef.current = callback
+
+                    setExtensions((prev) => [
+                      ...prev,
+                      extension.default.configure({
+                        types: ['heading', 'paragraph']
+                      })
+                    ])
+
+                    isExtensionLoadedRef.current = true
+                  } catch (error) {
+                    console.error('An error occurred when load the TextAlign extension', error)
+                  }
+                })
+              }}
+            >
+              <alignment.icon />
+              <span>{alignment.label}</span>
+              <DropdownMenuShortcut className={cn({ 'text-accent-foreground': isActive })}>
+                {alignment.shortcut}
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+          )
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -5,6 +5,7 @@ import { Button } from '@/components/atoms/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger
@@ -18,7 +19,7 @@ const textStyles: Array<{
   shortcut: string
 }> = [
   {
-    label: 'Normal text',
+    label: 'Normal',
     level: null,
     shortcut: 'Ctrl Alt 0'
   },
@@ -72,7 +73,6 @@ export default function TextStyleButton() {
     }
   }
 
-  // Template
   return (
     <DropdownMenu>
       <Tooltip>
@@ -92,18 +92,25 @@ export default function TextStyleButton() {
       </Tooltip>
 
       <DropdownMenuContent>
-        {textStyles.map((textStyle) => (
-          <DropdownMenuItem
-            className={cn({
-              'bg-accent text-accent-foreground': editorState?.isActive[`${textStyle.level}`]
-            })}
-            key={textStyle.level}
-            onClick={() => changeTextStyle(textStyle)}
-          >
-            <span>{textStyle.label}</span>
-            <DropdownMenuShortcut>{textStyle.shortcut}</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuGroup>
+          {textStyles.map((textStyle) => {
+            const isActive = editorState?.isActive[`${textStyle.level}`]
+            return (
+              <DropdownMenuItem
+                className={cn({
+                  'bg-accent text-accent-foreground': isActive
+                })}
+                key={textStyle.level}
+                onClick={() => changeTextStyle(textStyle)}
+              >
+                <span>{textStyle.label}</span>
+                <DropdownMenuShortcut className={cn({ 'text-accent-foreground': isActive })}>
+                  {textStyle.shortcut}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            )
+          })}
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

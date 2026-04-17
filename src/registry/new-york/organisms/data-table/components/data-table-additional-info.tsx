@@ -1,7 +1,7 @@
 import type { RowData } from '@tanstack/react-table'
 import type { DataTableProps } from './data-table'
 
-function DataTableAdditionalInfo<TData extends RowData>({
+export default function DataTableAdditionalInfo<TData extends RowData>({
   table,
   loading,
   error
@@ -19,5 +19,3 @@ function DataTableAdditionalInfo<TData extends RowData>({
 
   return null
 }
-
-export default DataTableAdditionalInfo

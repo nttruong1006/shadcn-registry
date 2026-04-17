@@ -156,9 +156,9 @@ export default function LinkButton({ id }: { id: string }) {
         <TooltipContent>Link</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='space-y-4'>
+      <PopoverContent className='w-xs'>
         <form
-          className='w-xs space-y-6'
+          className='space-y-4'
           id={linkForm.formId}
           onSubmit={(e) => {
             e.preventDefault()
@@ -170,7 +170,9 @@ export default function LinkButton({ id }: { id: string }) {
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={`editor-${linkForm.formId}-url`}>URL *</FieldLabel>
+                  <FieldLabel htmlFor={`editor-${linkForm.formId}-url`}>
+                    <span>URL</span> <span className='text-destructive'>*</span>
+                  </FieldLabel>
 
                   <Input
                     aria-invalid={isInvalid}

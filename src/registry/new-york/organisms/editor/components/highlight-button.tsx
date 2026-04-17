@@ -1,4 +1,5 @@
 import { useCurrentEditor } from '@tiptap/react'
+import type { ColorInstance } from 'color'
 import { CheckIcon, ChevronDownIcon, CircleSlashIcon, HighlighterIcon } from 'lucide-react'
 import { lazy, Suspense, useState } from 'react'
 import { Button } from '@/components/atoms/button'
@@ -40,17 +41,16 @@ export default function HighlightButton() {
     editor?.chain().focus().setHighlight({ color }).run()
   }
 
-  // const changeColorFromPicker = (color: ColorInstance) => {
-  //   setSelectedColor(null)
-  //   editor?.chain().setHighlight({ color: color.hex() }).run()
-  // }
+  const changeColor = (color: ColorInstance) => {
+    setSelectedColor(null)
+    editor?.chain().setHighlight({ color: color.hex() }).run()
+  }
 
   const clearColor = () => {
     setSelectedColor(null)
     editor?.chain().focus().unsetHighlight().run()
   }
 
-  // Template
   return (
     <Popover>
       <Tooltip>
@@ -80,16 +80,14 @@ export default function HighlightButton() {
                 backgroundColor: color
               }}
             >
-              {selectedColor === color && <CheckIcon className='text-foreground' />}
+              {selectedColor === color && <CheckIcon className='text-background' />}
             </Button>
           ))}
         </div>
 
         <div className='flex justify-end gap-2'>
           <Suspense fallback={<Button className='animate-pulse bg-muted' size='icon' variant='outline' />}>
-            <ColorPickerButton
-            // onValueChange={changeColorFromPicker}
-            />
+            <ColorPickerButton onValueChange={changeColor} />
           </Suspense>
 
           <Tooltip>

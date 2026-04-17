@@ -5,7 +5,7 @@ import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
 
-function DataTableBody<TData extends RowData>({
+export default function DataTableBody<TData extends RowData>({
   table,
   className,
   onRenderSubComponent,
@@ -59,5 +59,3 @@ function DataTableBody<TData extends RowData>({
     </TableBody>
   )
 }
-
-export default DataTableBody

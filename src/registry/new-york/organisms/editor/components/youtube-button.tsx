@@ -114,9 +114,9 @@ export default function YoutubeButton({
         <TooltipContent>YouTube</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='w-xs space-y-4'>
+      <PopoverContent className='w-xs'>
         <form
-          className='space-y-6'
+          className='space-y-4'
           id={youtubeForm.formId}
           onSubmit={(e) => {
             e.preventDefault()
@@ -129,7 +129,9 @@ export default function YoutubeButton({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={`editor-${id}-url`}>URL *</FieldLabel>
+                  <FieldLabel htmlFor={`editor-${id}-url`}>
+                    <span>URL</span> <span className='text-destructive'>*</span>
+                  </FieldLabel>
 
                   <Input
                     aria-invalid={isInvalid}

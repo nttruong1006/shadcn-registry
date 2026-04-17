@@ -6,7 +6,7 @@ import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
 
-function DataTableHeader<TData extends RowData>({
+export default function DataTableHeader<TData extends RowData>({
   table,
   className
 }: Pick<DataTableProps<TData>, 'table'> & { className?: string }) {
@@ -94,5 +94,3 @@ function DataTableHeader<TData extends RowData>({
     </TableHeader>
   )
 }
-
-export default DataTableHeader

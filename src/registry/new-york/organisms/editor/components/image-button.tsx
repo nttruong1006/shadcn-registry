@@ -167,10 +167,11 @@ export default function ImageButton({ id }: { id: string }) {
         <TooltipContent>Image</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='w-xs space-y-6'>
+      <PopoverContent className='w-xs'>
         <div>Acceptable formats: jpeg, jpg, png, webp, svg</div>
 
         <form
+          className='space-y-4'
           id={imageForm.formId}
           onSubmit={(e) => {
             e.preventDefault()
@@ -181,6 +182,7 @@ export default function ImageButton({ id }: { id: string }) {
           <imageForm.Subscribe selector={(state) => state.values.mode}>
             {(formMode) => (
               <Tabs
+                className='gap-6'
                 onValueChange={(value) => {
                   imageForm.setFieldValue('mode', value as ImageFormMode)
                   imageForm.validate('submit')
@@ -257,31 +259,31 @@ export default function ImageButton({ id }: { id: string }) {
               </Tabs>
             )}
           </imageForm.Subscribe>
-        </form>
 
-        <div className='flex items-center justify-end gap-1'>
-          <imageForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-            {([canSubmit, isSubmitting]) => (
-              <Tooltip>
-                <TooltipTrigger
-                  render={
-                    <Button
-                      disabled={!canSubmit}
-                      form={imageForm.formId}
-                      loading={fileUploadPending || isSubmitting}
-                      size='icon'
-                      type='submit'
-                      variant='outline'
-                    >
-                      <CheckCircleIcon />
-                    </Button>
-                  }
-                />
-                <TooltipContent>Save</TooltipContent>
-              </Tooltip>
-            )}
-          </imageForm.Subscribe>
-        </div>
+          <div className='flex items-center justify-end gap-2'>
+            <imageForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+              {([canSubmit, isSubmitting]) => (
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        disabled={!canSubmit}
+                        form={imageForm.formId}
+                        loading={fileUploadPending || isSubmitting}
+                        size='icon'
+                        type='submit'
+                        variant='outline'
+                      >
+                        <CheckCircleIcon />
+                      </Button>
+                    }
+                  />
+                  <TooltipContent>Save</TooltipContent>
+                </Tooltip>
+              )}
+            </imageForm.Subscribe>
+          </div>
+        </form>
       </PopoverContent>
     </Popover>
   )

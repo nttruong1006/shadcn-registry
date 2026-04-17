@@ -1,6 +1,7 @@
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import { TaskItem, TaskList } from '@tiptap/extension-list'
+import { TextStyle } from '@tiptap/extension-text-style'
 import type { Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight, type LucideProps } from 'lucide-react'
@@ -33,6 +34,7 @@ export const defaultExtensions = [
   TaskItem.configure({
     nested: true
   }),
+  TextStyle,
   // Placeholder.configure({
   //   placeholder: 'Enter content'
   // }),

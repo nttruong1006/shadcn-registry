@@ -115,10 +115,11 @@ export default function FileButton({ id }: { id: string }) {
         <TooltipContent>File</TooltipContent>
       </Tooltip>
 
-      <PopoverContent className='w-xs space-y-6'>
+      <PopoverContent className='w-xs'>
         <div>Acceptable formats: doc, docx, xlsx, xml, pdf</div>
 
         <form
+          className='space-y-4'
           id={fileForm.formId}
           onSubmit={(e) => {
             e.preventDefault()
@@ -156,31 +157,31 @@ export default function FileButton({ id }: { id: string }) {
               )
             }}
           </fileForm.Field>
-        </form>
 
-        <div className='flex items-center justify-end gap-1'>
-          <fileForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-            {([canSubmit, isSubmitting]) => (
-              <Tooltip>
-                <TooltipTrigger
-                  render={
-                    <Button
-                      disabled={!canSubmit}
-                      form={fileForm.formId}
-                      loading={fileUploadPending || isSubmitting}
-                      size='icon'
-                      type='submit'
-                      variant='outline'
-                    >
-                      <CheckCircleIcon />
-                    </Button>
-                  }
-                />
-                <TooltipContent>submitButton</TooltipContent>
-              </Tooltip>
-            )}
-          </fileForm.Subscribe>
-        </div>
+          <div className='flex items-center justify-end gap-2'>
+            <fileForm.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+              {([canSubmit, isSubmitting]) => (
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        disabled={!canSubmit}
+                        form={fileForm.formId}
+                        loading={fileUploadPending || isSubmitting}
+                        size='icon'
+                        type='submit'
+                        variant='outline'
+                      >
+                        <CheckCircleIcon />
+                      </Button>
+                    }
+                  />
+                  <TooltipContent>submitButton</TooltipContent>
+                </Tooltip>
+              )}
+            </fileForm.Subscribe>
+          </div>
+        </form>
       </PopoverContent>
     </Popover>
   )
