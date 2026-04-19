@@ -14,7 +14,6 @@ import type { Option } from '@/types/base'
 
 // Use options query
 export function useOptionsQuery({ apiPath }: { apiPath: string | undefined }) {
-  // Queries
   const optionsQuery = useQuery<{
     responseData: {
       rows: Option[]
@@ -27,7 +26,6 @@ export function useOptionsQuery({ apiPath }: { apiPath: string | undefined }) {
     enabled: Boolean(apiPath)
   })
 
-  // Memos
   const options = useMemo<Option[]>(() => {
     return (
       optionsQuery.data?.responseData?.rows.map((option) => ({
@@ -63,7 +61,6 @@ export function getNextPageParam(queryFn: unknown, _: unknown, page: unknown) {
 
 // Fetch next page
 export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) {
-  // Args
   const { event, infiniteQuery } = args
 
   const { scrollTop, offsetHeight, scrollHeight } = event.target as HTMLDivElement
@@ -77,13 +74,10 @@ export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQu
 }
 
 export function useOptionsInfiniteQuery({ apiPath }: { apiPath: string | undefined }) {
-  // States
   const [searchKeyword, setSearchKeyword] = useState('')
 
-  // Debounced
   const debouncedSearchKeyword = useDebounce(searchKeyword.trim(), 400)
 
-  // Queries
   const optionsInfiniteQuery = useInfiniteQuery<
     OptionsInfiniteQueryData,
     DefaultError,
@@ -104,7 +98,6 @@ export function useOptionsInfiniteQuery({ apiPath }: { apiPath: string | undefin
     getNextPageParam
   })
 
-  // Memos
   const options = useMemo<Option[]>(() => {
     return optionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
   }, [optionsInfiniteQuery.data])

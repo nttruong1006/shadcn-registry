@@ -1,5 +1,13 @@
 import { useMemo } from 'react'
-import { Combobox } from '@/components/atoms/combobox'
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList
+} from '@/components/atoms/combobox'
+import type { Option } from '@/types/base'
 import { operationsPerType, type SmartFilterOperation } from './lib/base'
 import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
@@ -31,7 +39,7 @@ export default function AdvancedFilterOperationField({ formFilterName }: { formF
   const { filters } = useSmartFilterContext()
   const field = useFieldContext<AdvancedFilterFormValueInput['filters'][number]['operation']>()
 
-  const options = useMemo(() => {
+  const options = useMemo<Option<SmartFilterOperation>[]>(() => {
     const type = filters.find((filter) => filter.name === formFilterName)?.type
     return type
       ? operationsPerType[type].map((operation) => ({
@@ -41,11 +49,25 @@ export default function AdvancedFilterOperationField({ formFilterName }: { formF
       : []
   }, [filters, formFilterName])
 
+  console.log(field.state.value)
+
   return (
     <Combobox
       items={options}
       onValueChange={(value) => field.handleChange(value as SmartFilterOperation)}
       value={field.state.value}
-    />
+    >
+      <ComboboxInput placeholder='Select field' />
+      <ComboboxContent>
+        <ComboboxEmpty>No items found.</ComboboxEmpty>
+        <ComboboxList>
+          {(item: Option<string>) => (
+            <ComboboxItem key={item.value} value={item.value}>
+              {item.label}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
   )
 }

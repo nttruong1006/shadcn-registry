@@ -94,7 +94,7 @@ export const apiOperationPerOperation: Partial<Record<SmartFilterOperation, Smar
 
 // Filter
 const smartFilterTypesWithOptions = ['selectWithOptions', 'multiSelectWithOptions'] as const
-type SmartFilterTypesWithOptions = (typeof smartFilterTypesWithOptions)[number]
+type SmartFilterTypeWithOptions = (typeof smartFilterTypesWithOptions)[number]
 
 const smartFilterTypesWithQuery = [
   'selectWithQuery',
@@ -102,9 +102,9 @@ const smartFilterTypesWithQuery = [
   'multiSelectWithQuery',
   'multiSelectWithInfiniteQuery'
 ] as const
-type SmartFilterTypesWithQuery = (typeof smartFilterTypesWithQuery)[number]
+type SmartFilterTypeWithQuery = (typeof smartFilterTypesWithQuery)[number]
 
-type OtherSmartFilterTypes = Exclude<SmartFilterType, SmartFilterTypesWithOptions | SmartFilterTypesWithQuery>
+type OtherSmartFilterTypes = Exclude<SmartFilterType, SmartFilterTypeWithOptions | SmartFilterTypeWithQuery>
 
 interface BaseFilter {
   label: string
@@ -113,7 +113,7 @@ interface BaseFilter {
 }
 
 interface FilterWithOptions extends BaseFilter {
-  type: SmartFilterTypesWithOptions
+  type: SmartFilterTypeWithOptions
   options: Array<{
     value: string
     label: string
@@ -121,7 +121,7 @@ interface FilterWithOptions extends BaseFilter {
 }
 
 interface FilterWithQuery extends BaseFilter {
-  type: SmartFilterTypesWithQuery
+  type: SmartFilterTypeWithQuery
   apiPath: string
 }
 

@@ -42,7 +42,7 @@ export function SmartFilterDemo() {
   }, [])
 
   return (
-    <div className='w-sm'>
+    <div className='w-xs'>
       <SmartFilter filters={filters} setFilters={setFilters} />
     </div>
   )

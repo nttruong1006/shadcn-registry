@@ -1,6 +1,6 @@
 import { ListFilterIcon, SearchIcon } from 'lucide-react'
-import { Activity, createContext, useContext, useState } from 'react'
-import { ToggleGroup, ToggleGroupItem } from '@/components/atoms/toggle-group'
+import { createContext, useContext, useState } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/atoms/tabs'
 import AdvancedFilter from './advanced-filter'
 import BasicSearch from './basic-search'
 import type { Filter } from './lib/base'
@@ -52,9 +52,8 @@ function SmartFilterContent({
   filters = defaultFilters,
   isHideSearchMode = false
 }: Pick<SmartFilterProps, 'filters' | 'isHideSearchMode'>) {
-  const [mode, setMode] = useState([Mode.BasicSearch])
+  const [mode, setMode] = useState(Mode.BasicSearch)
 
-  // Template
   if (filters.length === 0) {
     return <BasicSearch />
   }
@@ -64,29 +63,21 @@ function SmartFilterContent({
   }
 
   return (
-    <div className='flex items-center gap-2'>
-      <ToggleGroup
-        className='data-[variant=outline]:shadow-none'
-        onValueChange={(value) => setMode(value as Mode[])}
-        value={mode}
-        variant='outline'
-      >
-        <ToggleGroupItem value={Mode.BasicSearch}>
+    <Tabs className='flex flex-row items-center gap-2' onValueChange={(value) => setMode(value)} value={mode}>
+      <TabsList>
+        <TabsTrigger value={Mode.BasicSearch}>
           <SearchIcon />
-        </ToggleGroupItem>
-
-        <ToggleGroupItem value={Mode.AdvancedFilter}>
+        </TabsTrigger>
+        <TabsTrigger value={Mode.AdvancedFilter}>
           <ListFilterIcon />
-        </ToggleGroupItem>
-      </ToggleGroup>
-
-      <Activity mode={mode[0] === Mode.BasicSearch ? 'visible' : 'hidden'}>
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value={Mode.BasicSearch}>
         <BasicSearch />
-      </Activity>
-
-      <Activity mode={mode[0] === Mode.AdvancedFilter ? 'visible' : 'hidden'}>
+      </TabsContent>
+      <TabsContent value={Mode.AdvancedFilter}>
         <AdvancedFilter />
-      </Activity>
-    </div>
+      </TabsContent>
+    </Tabs>
   )
 }

@@ -1,10 +1,9 @@
-import { formOptions } from '@tanstack/react-form'
 import { CircleCheckBigIcon, ListFilterIcon, PlusIcon, RefreshCwIcon, TrashIcon } from 'lucide-react'
 import { Suspense, useState } from 'react'
 import { Badge } from '@/components/atoms/badge'
 import { Button } from '@/components/atoms/button'
 import { Field, FieldError } from '@/components/atoms/field'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
+import { Popover, PopoverContent, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/components/atoms/popover'
 import { Spinner } from '@/components/atoms/spinner'
 import AdvancedFilterNameField from './advanced-filter-name-field'
 import AdvancedFilterOperationField from './advanced-filter-operation-field'
@@ -22,14 +21,12 @@ export function generateAdvancedFilterFormId(id: string) {
   return `${id}-advanced-filter`
 }
 
-export const advancedFilterFormOptions = formOptions({
-  defaultValues: defaultAdvancedFilterFormValue,
-  validators: { onSubmit: advancedFilterFormSchema }
-})
-
 export default function AdvancedFilter() {
   const { id, filters, setFilters } = useSmartFilterContext()
   const formId = generateAdvancedFilterFormId(id)
+
+  const [openPopover, setOpenPopover] = useState(false)
+  const [totalFilterApplied, setTotalFilterApplied] = useState(0)
 
   const advancedFilterForm = useAppForm({
     formId,
@@ -43,9 +40,6 @@ export default function AdvancedFilter() {
     }
   })
 
-  const [openPopover, setOpenPopover] = useState(false)
-  const [totalFilterApplied, setTotalFilterApplied] = useState(0)
-
   function addFilter(filter: Filter) {
     const { name, type } = filter
     const operation = operationsPerType[type][0]
@@ -55,12 +49,6 @@ export default function AdvancedFilter() {
       operation,
       value: defaultValuePerOperation[operation]
     })
-  }
-
-  function executeLogicOnOpenPopover() {
-    if (advancedFilterForm.state.values.filters.length === 0) {
-      addFilter(filters[0])
-    }
   }
 
   function clickAddingButton() {
@@ -80,49 +68,51 @@ export default function AdvancedFilter() {
     }
   }
 
-  // Template
   return (
-    <advancedFilterForm.AppForm>
-      <form
-        id={advancedFilterForm.formId}
-        onSubmit={(e) => {
-          e.preventDefault()
-          advancedFilterForm.handleSubmit()
-        }}
-      >
-        <Popover
-          modal
-          onOpenChange={(open) => {
-            setOpenPopover(open)
-            if (open) {
-              executeLogicOnOpenPopover()
-            }
-          }}
-          open={openPopover}
-        >
-          <PopoverTrigger
-            render={
-              <Button variant='outline'>
-                <span>Filters</span>
-                <ListFilterIcon />
-                {totalFilterApplied > 0 && (
-                  <Badge
-                    className='flex size-5 items-center justify-center rounded-sm p-0 leading-none'
-                    variant='secondary'
-                  >
-                    {totalFilterApplied}
-                  </Badge>
-                )}
-              </Button>
-            }
-          />
+    <Popover
+      modal
+      onOpenChange={(open) => {
+        setOpenPopover(open)
+        if (open && advancedFilterForm.state.values.filters.length === 0) {
+          addFilter(filters[0])
+        }
+      }}
+      open={openPopover}
+    >
+      <PopoverTrigger
+        render={
+          <Button variant='outline'>
+            <span>Filters</span>
+            <ListFilterIcon />
+            {totalFilterApplied > 0 && (
+              <Badge
+                className='flex size-5 items-center justify-center rounded-sm p-0 leading-none'
+                variant='secondary'
+              >
+                {totalFilterApplied}
+              </Badge>
+            )}
+          </Button>
+        }
+      />
 
-          <PopoverContent align='start' className='w-(--radix-popper-available-width) xl:w-auto'>
+      <PopoverContent align='start' className='w-auto'>
+        <PopoverHeader>
+          <PopoverTitle>Filters</PopoverTitle>
+        </PopoverHeader>
+
+        <advancedFilterForm.AppForm>
+          <form
+            id={advancedFilterForm.formId}
+            onSubmit={(e) => {
+              e.preventDefault()
+              advancedFilterForm.handleSubmit()
+            }}
+          >
             <advancedFilterForm.AppField mode='array' name='filters'>
               {(field) => {
                 return (
                   <>
-                    <h3 className='typography-h3'>Filters</h3>
                     <div className='-mx-1 my-2 max-h-72 overflow-y-auto px-1'>
                       {/* Filters */}
                       {field.state.value.map((field, index) => (
@@ -152,15 +142,14 @@ export default function AdvancedFilter() {
                               }}
                               name={`filters[${index}].name`}
                             >
-                              {(subField) => {
-                                const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
+                              {(nameField) => {
+                                const isInvalid = nameField.state.meta.isTouched && !nameField.state.meta.isValid
                                 return (
                                   <Field className='w-full shrink-0 xl:w-52' data-invalid={isInvalid}>
                                     <advancedFilterForm.Subscribe selector={(state) => state.values.filters}>
                                       {(formFilters) => <AdvancedFilterNameField formFilters={formFilters} />}
                                     </advancedFilterForm.Subscribe>
-
-                                    {isInvalid && <FieldError errors={subField.state.meta.errors} />}
+                                    {isInvalid && <FieldError errors={nameField.state.meta.errors} />}
                                   </Field>
                                 )
                               }}
@@ -187,8 +176,9 @@ export default function AdvancedFilter() {
                               }}
                               name={`filters[${index}].operation`}
                             >
-                              {(subField) => {
-                                const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
+                              {(operationField) => {
+                                const isInvalid =
+                                  operationField.state.meta.isTouched && !operationField.state.meta.isValid
                                 return (
                                   <Field className='w-full shrink-0 xl:w-52' data-invalid={isInvalid}>
                                     <advancedFilterForm.Subscribe
@@ -198,7 +188,7 @@ export default function AdvancedFilter() {
                                         <AdvancedFilterOperationField formFilterName={formFilterName} />
                                       )}
                                     </advancedFilterForm.Subscribe>
-                                    {isInvalid && <FieldError errors={subField.state.meta.errors} />}
+                                    {isInvalid && <FieldError errors={operationField.state.meta.errors} />}
                                   </Field>
                                 )
                               }}
@@ -213,8 +203,8 @@ export default function AdvancedFilter() {
                               }
                             >
                               <advancedFilterForm.AppField name={`filters[${index}].value`}>
-                                {(subField) => {
-                                  const isInvalid = subField.state.meta.isTouched && !subField.state.meta.isValid
+                                {(valueField) => {
+                                  const isInvalid = valueField.state.meta.isTouched && !valueField.state.meta.isValid
                                   return (
                                     <Field className='w-full shrink-0 xl:w-52' data-invalid={isInvalid}>
                                       <advancedFilterForm.Subscribe
@@ -233,7 +223,7 @@ export default function AdvancedFilter() {
                                           />
                                         )}
                                       </advancedFilterForm.Subscribe>
-                                      {isInvalid && <FieldError errors={subField.state.meta.errors} />}
+                                      {isInvalid && <FieldError errors={valueField.state.meta.errors} />}
                                     </Field>
                                   )
                                 }}
@@ -261,7 +251,7 @@ export default function AdvancedFilter() {
                     </div>
 
                     {/* Actions */}
-                    <div className='flex items-center justify-end gap-4'>
+                    <div className='flex items-center justify-end gap-2'>
                       <advancedFilterForm.Subscribe selector={(state) => state.values.filters.length}>
                         {(formFiltersLength) =>
                           formFiltersLength < filters.length ? (
@@ -287,9 +277,9 @@ export default function AdvancedFilter() {
                 )
               }}
             </advancedFilterForm.AppField>
-          </PopoverContent>
-        </Popover>
-      </form>
-    </advancedFilterForm.AppForm>
+          </form>
+        </advancedFilterForm.AppForm>
+      </PopoverContent>
+    </Popover>
   )
 }
