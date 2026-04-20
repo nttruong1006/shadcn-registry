@@ -1,12 +1,5 @@
 import { useMemo } from 'react'
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxList
-} from '@/components/atoms/combobox'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/atoms/select'
 import type { Option } from '@/types/base'
 import { type AdvancedFilterFormValueInput, useFieldContext } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
@@ -30,18 +23,19 @@ export default function AdvancedFilterNameField({
   }, [filters, formFilters, field.state.value])
 
   return (
-    <Combobox items={options} onValueChange={(value) => field.handleChange(value as string)} value={field.state.value}>
-      <ComboboxInput />
-      <ComboboxContent>
-        <ComboboxEmpty>No items found.</ComboboxEmpty>
-        <ComboboxList>
-          {(item: Option<string>) => (
-            <ComboboxItem key={item.value} value={item.value}>
-              {item.label}
-            </ComboboxItem>
-          )}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
+    <Select items={options} onValueChange={(value) => field.handleChange(value as string)} value={field.state.value}>
+      <SelectTrigger>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   )
 }
