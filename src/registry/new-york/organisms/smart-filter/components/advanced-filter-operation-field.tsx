@@ -42,12 +42,14 @@ export default function AdvancedFilterOperationField({ formFilterName }: { formF
       : []
   }, [filters, formFilterName])
 
-  console.log(field.state.value)
-
   return (
     <Select
       items={options}
-      onValueChange={(value) => field.handleChange(value as SmartFilterOperation)}
+      onValueChange={(value) => {
+        if (value) {
+          field.handleChange(value)
+        }
+      }}
       value={field.state.value}
     >
       <SelectTrigger>

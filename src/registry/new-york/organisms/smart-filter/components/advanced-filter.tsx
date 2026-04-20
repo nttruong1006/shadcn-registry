@@ -163,11 +163,6 @@ export default function AdvancedFilter() {
                                     return
                                   }
 
-                                  const selectedFilter = filters.find((filter) => filter.name === value)
-                                  if (!selectedFilter) {
-                                    return
-                                  }
-
                                   advancedFilterForm.setFieldValue(
                                     `filters[${index}].value`,
                                     defaultValuePerOperation[value]

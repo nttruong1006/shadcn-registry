@@ -1,4 +1,5 @@
 import { type DateArg, endOfDay, endOfMonth, endOfYear, startOfDay, startOfMonth, startOfYear } from 'date-fns'
+import type { Option } from '@/types/base'
 import type { AdvancedFilterFormValueOutput, BasicSearchFormValueOutput } from './form'
 
 // Smart filter operation
@@ -93,40 +94,37 @@ export const apiOperationPerOperation: Partial<Record<SmartFilterOperation, Smar
 } as const
 
 // Filter
-const smartFilterTypesWithOptions = ['selectWithOptions', 'multiSelectWithOptions'] as const
-type SmartFilterTypeWithOptions = (typeof smartFilterTypesWithOptions)[number]
+const filterTypesWithOptions = ['selectWithOptions', 'multiSelectWithOptions'] as const
+type FilterTypeWithOptions = (typeof filterTypesWithOptions)[number]
 
-const smartFilterTypesWithQuery = [
+const filterTypesWithQuery = [
   'selectWithQuery',
   'selectWithInfiniteQuery',
   'multiSelectWithQuery',
   'multiSelectWithInfiniteQuery'
 ] as const
-type SmartFilterTypeWithQuery = (typeof smartFilterTypesWithQuery)[number]
+type FilterTypeWithQuery = (typeof filterTypesWithQuery)[number]
 
-type OtherSmartFilterTypes = Exclude<SmartFilterType, SmartFilterTypeWithOptions | SmartFilterTypeWithQuery>
+type OtherFilterType = Exclude<SmartFilterType, FilterTypeWithOptions | FilterTypeWithQuery>
 
-interface BaseFilter {
+export interface BaseFilter {
   label: string
   name: string
   dateFormat?: 'date' | 'month' | 'year'
 }
 
-interface FilterWithOptions extends BaseFilter {
-  type: SmartFilterTypeWithOptions
-  options: Array<{
-    value: string
-    label: string
-  }>
+export interface FilterWithOptions extends BaseFilter {
+  type: FilterTypeWithOptions
+  options: Option<string>[]
 }
 
-interface FilterWithQuery extends BaseFilter {
-  type: SmartFilterTypeWithQuery
+export interface FilterWithQuery extends BaseFilter {
+  type: FilterTypeWithQuery
   apiPath: string
 }
 
 interface OtherFilter extends BaseFilter {
-  type: OtherSmartFilterTypes
+  type: OtherFilterType
 }
 
 export type Filter = FilterWithOptions | FilterWithQuery | OtherFilter

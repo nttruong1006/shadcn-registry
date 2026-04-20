@@ -10,12 +10,13 @@ export interface AdvancedFilterValueFieldProps {
   formFilterValueAdditional: AdvancedFilterFormValueInput['filters'][number]['value']['additional']
 }
 
-export type AdvancedFilterValueFieldComponentProps = AdvancedFilterValueFieldProps & { selectedFilter: Filter }
+export type AdvancedFilterValueFieldComponentProps = AdvancedFilterValueFieldProps & {
+  selectedFilter: Filter
+}
 
-const fieldComponents: Record<
-  SmartFilterType,
-  LazyExoticComponent<(props: AdvancedFilterValueFieldComponentProps) => JSX.Element | null>
-> = {
+const fieldComponents: {
+  [key in SmartFilterType]: LazyExoticComponent<(props: AdvancedFilterValueFieldComponentProps) => JSX.Element | null>
+} = {
   input: lazy(() => import('./advanced-filter-value-input-field')),
   number: lazy(() => import('./advanced-filter-value-number-field')),
   date: lazy(() => import('./advanced-filter-value-date-field')),
@@ -27,7 +28,11 @@ const fieldComponents: Record<
   multiSelectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-multi-select-with-infinite-query-field'))
 }
 
-export default function AdvancedFilterValueField({ formFilterName, ...props }: AdvancedFilterValueFieldProps) {
+export default function AdvancedFilterValueField({
+  formFilterName,
+  formFilterOperation,
+  ...props
+}: AdvancedFilterValueFieldProps) {
   const { filters } = useSmartFilterContext()
 
   const selectedFilter = useMemo(() => {
@@ -40,5 +45,13 @@ export default function AdvancedFilterValueField({ formFilterName, ...props }: A
   }
 
   const FieldComponent = fieldComponents[selectedFilter.type]
-  return <FieldComponent formFilterName={formFilterName} selectedFilter={selectedFilter} {...props} />
+  return (
+    <FieldComponent
+      formFilterName={formFilterName}
+      formFilterOperation={formFilterOperation}
+      key={`${formFilterName}-${formFilterOperation}`}
+      selectedFilter={selectedFilter}
+      {...props}
+    />
+  )
 }

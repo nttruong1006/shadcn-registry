@@ -114,7 +114,7 @@ export const defaultStringValue: AdvancedFilterFormValueInput['filters'][number]
 
 // Default string array value
 export const defaultStringArrayValue: AdvancedFilterFormValueInput['filters'][number]['value'] = {
-  default: '',
+  default: [],
   additional: {
     from: '',
     to: ''

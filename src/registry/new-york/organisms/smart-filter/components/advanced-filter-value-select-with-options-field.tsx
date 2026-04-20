@@ -1,6 +1,19 @@
-import { Combobox } from '@/components/atoms/combobox'
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+  useComboboxAnchor
+} from '@/components/atoms/combobox'
 import { Field, FieldError } from '@/components/atoms/field'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
+import type { FilterWithOptions } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
 
 export default function AdvancedFilterValueSelectWithOptionsField({
@@ -8,7 +21,9 @@ export default function AdvancedFilterValueSelectWithOptionsField({
   selectedFilter,
   formFilterOperation
 }: AdvancedFilterValueFieldComponentProps) {
+  const anchor = useComboboxAnchor()
   const advancedFilterForm = useAdvancedFilterForm()
+  const items = (selectedFilter as FilterWithOptions).options
 
   // Template
   // Has any of
@@ -16,15 +31,44 @@ export default function AdvancedFilterValueSelectWithOptionsField({
     return (
       <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
         {(field) => {
+          const selectedOptions = field.state.value as string[]
+          const value = items.filter((item) => selectedOptions.includes(item.value))
           const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+
           return (
             <Field data-invalid={isInvalid}>
-              {/* <MultiSelect
-                onValueChange={field.handleChange}
-                options={'options' in selectedFilter ? selectedFilter.options : []}
-                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
-                value={field.state.value as string[]}
-              /> */}
+              <Combobox
+                items={items}
+                multiple
+                onValueChange={(value) => {
+                  field.handleChange(value.map((item) => item.value))
+                }}
+                value={value}
+              >
+                <ComboboxChips ref={anchor}>
+                  <ComboboxValue>
+                    {(value: typeof items) => {
+                      return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+                    }}
+                  </ComboboxValue>
+                  <ComboboxChipsInput
+                    aria-invalid={isInvalid}
+                    data-invalid={isInvalid}
+                    placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
+                  />
+                </ComboboxChips>
+
+                <ComboboxContent anchor={anchor}>
+                  <ComboboxEmpty>No items found.</ComboboxEmpty>
+                  <ComboboxList>
+                    {(item: FilterWithOptions['options'][number]) => (
+                      <ComboboxItem key={item.value} value={item}>
+                        {item.label}
+                      </ComboboxItem>
+                    )}
+                  </ComboboxList>
+                </ComboboxContent>
+              </Combobox>
               {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           )
@@ -37,17 +81,33 @@ export default function AdvancedFilterValueSelectWithOptionsField({
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
+        const value = items.find((item) => item.value === field.state.value) ?? null
         const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
         return (
           <Field data-invalid={isInvalid}>
             <Combobox
-              items={'options' in selectedFilter ? selectedFilter.options : []}
+              items={items}
               onValueChange={(value) => {
-                field.handleChange(value ?? '')
+                field.handleChange(value?.value ?? '')
               }}
-              // placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
-              value={field.state.value as string}
-            />
+              value={value}
+            >
+              <ComboboxInput
+                aria-invalid={isInvalid}
+                data-invalid={isInvalid}
+                placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
+              />
+              <ComboboxContent>
+                <ComboboxEmpty>No items found.</ComboboxEmpty>
+                <ComboboxList>
+                  {(item: FilterWithOptions['options'][number]) => (
+                    <ComboboxItem key={item.value} value={item}>
+                      {item.label}
+                    </ComboboxItem>
+                  )}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
