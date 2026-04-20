@@ -61,7 +61,7 @@ export default function AdvancedFilterValueSelectWithOptionsField({
                 <ComboboxContent anchor={anchor}>
                   <ComboboxEmpty>No items found.</ComboboxEmpty>
                   <ComboboxList>
-                    {(item: FilterWithOptions['options'][number]) => (
+                    {(item: (typeof items)[number]) => (
                       <ComboboxItem key={item.value} value={item}>
                         {item.label}
                       </ComboboxItem>
@@ -83,6 +83,7 @@ export default function AdvancedFilterValueSelectWithOptionsField({
       {(field) => {
         const value = items.find((item) => item.value === field.state.value) ?? null
         const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+
         return (
           <Field data-invalid={isInvalid}>
             <Combobox
@@ -100,7 +101,7 @@ export default function AdvancedFilterValueSelectWithOptionsField({
               <ComboboxContent>
                 <ComboboxEmpty>No items found.</ComboboxEmpty>
                 <ComboboxList>
-                  {(item: FilterWithOptions['options'][number]) => (
+                  {(item: (typeof items)[number]) => (
                     <ComboboxItem key={item.value} value={item}>
                       {item.label}
                     </ComboboxItem>
