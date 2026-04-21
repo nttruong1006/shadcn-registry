@@ -170,6 +170,10 @@ export function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.P
   )
 }
 
+export function ComboboxStatus({ className, ...props }: ComboboxPrimitive.Status.Props) {
+  return <ComboboxPrimitive.Status className={cn('px-2.5 py-2', className)} data-slot='combobox-status' {...props} />
+}
+
 export function ComboboxSeparator({ className, ...props }: ComboboxPrimitive.Separator.Props) {
   return (
     <ComboboxPrimitive.Separator

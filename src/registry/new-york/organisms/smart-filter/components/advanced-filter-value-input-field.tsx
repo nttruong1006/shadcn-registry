@@ -12,11 +12,11 @@ export default function AdvancedFilterValueInputField({
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
-        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+        const invalid = field.state.meta.isTouched && !field.state.meta.isValid
         return (
-          <Field data-invalid={isInvalid}>
+          <Field data-invalid={invalid}>
             <Input
-              aria-invalid={isInvalid}
+              aria-invalid={invalid}
               id={field.name}
               name={field.name}
               onBlur={field.handleBlur}
@@ -24,7 +24,7 @@ export default function AdvancedFilterValueInputField({
               placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value}
             />
-            {isInvalid && <FieldError errors={field.state.meta.errors} />}
+            {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
       }}

@@ -33,10 +33,10 @@ export default function AdvancedFilterValueSelectWithOptionsField({
         {(field) => {
           const selectedOptions = field.state.value as string[]
           const value = items.filter((item) => selectedOptions.includes(item.value))
-          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
           return (
-            <Field data-invalid={isInvalid}>
+            <Field data-invalid={invalid}>
               <Combobox
                 items={items}
                 multiple
@@ -52,8 +52,8 @@ export default function AdvancedFilterValueSelectWithOptionsField({
                     }}
                   </ComboboxValue>
                   <ComboboxChipsInput
-                    aria-invalid={isInvalid}
-                    data-invalid={isInvalid}
+                    aria-invalid={invalid}
+                    data-invalid={invalid}
                     placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                   />
                 </ComboboxChips>
@@ -69,7 +69,7 @@ export default function AdvancedFilterValueSelectWithOptionsField({
                   </ComboboxList>
                 </ComboboxContent>
               </Combobox>
-              {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              {invalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           )
         }}

@@ -28,10 +28,16 @@ const filters: Filter[] = [
     ]
   },
   {
-    name: 'technologies',
-    label: 'Technologies',
+    name: 'role',
+    label: 'Role',
     type: 'selectWithQuery',
-    apiPath: '/version/1.0/options/role'
+    apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/role'
+  },
+  {
+    name: 'infinite test',
+    label: 'Infinite test',
+    type: 'selectWithInfiniteQuery',
+    apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender'
   }
 ]
 

@@ -40,10 +40,10 @@ export default function AdvancedFilterValueSelectWithQueryField({
         {(field) => {
           const selectedOptions = field.state.value as string[]
           const value = options.filter((item) => selectedOptions.includes(item.value))
-          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
           return (
-            <Field data-invalid={isInvalid}>
+            <Field data-invalid={invalid}>
               <Combobox
                 items={options}
                 multiple
@@ -62,8 +62,8 @@ export default function AdvancedFilterValueSelectWithQueryField({
                   </ComboboxValue>
 
                   <ComboboxChipsInput
-                    aria-invalid={isInvalid}
-                    data-invalid={isInvalid}
+                    aria-invalid={invalid}
+                    data-invalid={invalid}
                     disabled={optionsQuery.isFetching}
                     placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                   />
@@ -80,7 +80,7 @@ export default function AdvancedFilterValueSelectWithQueryField({
                   </ComboboxList>
                 </ComboboxContent>
               </Combobox>
-              {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              {invalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           )
         }}
@@ -93,10 +93,10 @@ export default function AdvancedFilterValueSelectWithQueryField({
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
         const value = options.find((item) => item.value === field.state.value) ?? null
-        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+        const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
         return (
-          <Field data-invalid={isInvalid}>
+          <Field data-invalid={invalid}>
             <Combobox
               items={options}
               onValueChange={(value) => {
@@ -105,8 +105,8 @@ export default function AdvancedFilterValueSelectWithQueryField({
               value={value}
             >
               <ComboboxInput
-                aria-invalid={isInvalid}
-                data-invalid={isInvalid}
+                aria-invalid={invalid}
+                data-invalid={invalid}
                 disabled={optionsQuery.isFetching}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               >
@@ -128,7 +128,7 @@ export default function AdvancedFilterValueSelectWithQueryField({
                 </ComboboxList>
               </ComboboxContent>
             </Combobox>
-            {isInvalid && <FieldError errors={field.state.meta.errors} />}
+            {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
       }}

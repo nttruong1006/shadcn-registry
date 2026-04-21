@@ -17,10 +17,10 @@ export default function AdvancedFilterValueDateField({
     return (
       <advancedFilterForm.AppField name={`filters[${index}].value.additional`}>
         {(field) => {
-          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
           return (
-            <Field data-invalid={isInvalid}>
+            <Field data-invalid={invalid}>
               <DateRangePicker
                 onValueChange={(value) => {
                   field.handleChange({
@@ -34,7 +34,7 @@ export default function AdvancedFilterValueDateField({
                   to: field.state.value.to ? new Date(field.state.value.to) : undefined
                 }}
               />
-              {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              {invalid && <FieldError errors={field.state.meta.errors} />}
             </Field>
           )
         }}
@@ -46,9 +46,9 @@ export default function AdvancedFilterValueDateField({
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
-        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+        const invalid = field.state.meta.isTouched && !field.state.meta.isValid
         return (
-          <Field data-invalid={isInvalid}>
+          <Field data-invalid={invalid}>
             <DatePicker
               onValueChange={(value) => {
                 field.handleChange(value?.toISOString() ?? '')
@@ -56,7 +56,7 @@ export default function AdvancedFilterValueDateField({
               placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value ? toDate(field.state.value as string) : null}
             />
-            {isInvalid && <FieldError errors={field.state.meta.errors} />}
+            {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
       }}

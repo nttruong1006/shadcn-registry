@@ -19,11 +19,11 @@ export default function AdvancedFilterValueNumberField({
       <div className='flex items-center gap-4'>
         <advancedFilterForm.AppField name={`filters[${index}].value.additional.from`}>
           {(field) => {
-            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+            const invalid = field.state.meta.isTouched && !field.state.meta.isValid
             return (
-              <Field data-invalid={isInvalid}>
+              <Field data-invalid={invalid}>
                 <NumberInput
-                  aria-invalid={isInvalid}
+                  aria-invalid={invalid}
                   id={field.name}
                   name={field.name}
                   onFieldChange={(value) => field.handleChange(value.toString())}
@@ -36,7 +36,7 @@ export default function AdvancedFilterValueNumberField({
                   placeholder={`Enter from ${selectedFilter.label.toLowerCase()}`}
                   value={field.state.value}
                 />
-                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                {invalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             )
           }}
@@ -46,11 +46,11 @@ export default function AdvancedFilterValueNumberField({
 
         <advancedFilterForm.AppField name={`filters[${index}].value.additional.to`}>
           {(field) => {
-            const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+            const invalid = field.state.meta.isTouched && !field.state.meta.isValid
             return (
-              <Field data-invalid={isInvalid}>
+              <Field data-invalid={invalid}>
                 <NumberInput
-                  aria-invalid={isInvalid}
+                  aria-invalid={invalid}
                   id={field.name}
                   min={formFilterValueAdditional.from}
                   name={field.name}
@@ -59,7 +59,7 @@ export default function AdvancedFilterValueNumberField({
                   placeholder={`Enter to ${selectedFilter.label.toLowerCase()}`}
                   value={field.state.value}
                 />
-                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                {invalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             )
           }}
@@ -72,11 +72,11 @@ export default function AdvancedFilterValueNumberField({
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
-        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+        const invalid = field.state.meta.isTouched && !field.state.meta.isValid
         return (
-          <Field data-invalid={isInvalid}>
+          <Field data-invalid={invalid}>
             <NumberInput
-              aria-invalid={isInvalid}
+              aria-invalid={invalid}
               id={field.name}
               name={field.name}
               onFieldChange={(value) => field.handleChange(value.toString())}
@@ -84,7 +84,7 @@ export default function AdvancedFilterValueNumberField({
               placeholder={`Enter ${selectedFilter.label.toLowerCase()}`}
               value={field.state.value as string}
             />
-            {isInvalid && <FieldError errors={field.state.meta.errors} />}
+            {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
       }}
