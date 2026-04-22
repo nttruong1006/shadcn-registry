@@ -3,21 +3,25 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useCallback, useMemo, useState } from 'react'
 import {
   Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
   ComboboxContent,
   ComboboxEmpty,
-  ComboboxInput,
   ComboboxItem,
   ComboboxList,
-  ComboboxStatus
+  ComboboxStatus,
+  ComboboxValue,
+  useComboboxAnchor
 } from '@/components/atoms/combobox'
-import { InputGroupAddon } from '@/components/atoms/input-group'
 import { Spinner } from '@/components/atoms/spinner'
 import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
 
-export function ComboboxAsyncSearchSingleInfiniteScroll() {
-  const [value, setValue] = useState<Option | null>(null)
+export function ComboboxAsyncSearchMultipleInfiniteScroll() {
+  const anchor = useComboboxAnchor()
+  const [value, setValue] = useState<Option[]>([])
   const [searchKeyword, setSearchKeyword] = useState('')
   const debouncedSearchKeyword = useDebounce(searchKeyword.trim(), 400)
 
@@ -57,12 +61,14 @@ export function ComboboxAsyncSearchSingleInfiniteScroll() {
   const items = useMemo<Option[]>(() => {
     const queryData = optionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
 
-    if (value) {
-      const valueIndex = queryData.findIndex((item) => item.value === value.value)
-      if (valueIndex >= 0) {
-        // Update reference of selected item bacause of queryData will be changed after refetching
-        queryData[valueIndex] = value
-      }
+    if (value.length > 0) {
+      // Update reference of selected item bacause of queryData will be changed after refetching
+      queryData.forEach((item, index) => {
+        const valueIndex = value.findIndex((valueItem) => valueItem.value === item.value)
+        if (valueIndex >= 0) {
+          queryData[index] = value[valueIndex]
+        }
+      })
     }
 
     return queryData
@@ -73,19 +79,27 @@ export function ComboboxAsyncSearchSingleInfiniteScroll() {
       filter={null}
       inputValue={searchKeyword}
       items={items}
+      multiple
       onInputValueChange={setSearchKeyword}
       onValueChange={setValue}
       value={value}
     >
-      <ComboboxInput className='w-xs' disabled={optionsInfiniteQuery.isLoading} placeholder='Select information'>
-        {optionsInfiniteQuery.isLoading && (
-          <InputGroupAddon align='inline-start'>
-            <Spinner />
-          </InputGroupAddon>
-        )}
-      </ComboboxInput>
+      <ComboboxChips className='w-xs' ref={anchor}>
+        {optionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
 
-      <ComboboxContent>
+        <ComboboxValue>
+          {(value: typeof items) => {
+            return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+          }}
+        </ComboboxValue>
+
+        <ComboboxChipsInput
+          disabled={optionsInfiniteQuery.isLoading}
+          placeholder={value.length > 0 ? '' : 'Select information'}
+        />
+      </ComboboxChips>
+
+      <ComboboxContent anchor={anchor}>
         {optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage && (
           <ComboboxStatus className='flex items-center gap-2'>
             <Spinner />
