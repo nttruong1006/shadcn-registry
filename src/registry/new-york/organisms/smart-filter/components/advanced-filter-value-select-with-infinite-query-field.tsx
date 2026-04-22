@@ -28,6 +28,7 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
   const anchor = useComboboxAnchor()
   const advancedFilterForm = useAdvancedFilterForm()
   const selectedFilter = selectedFilterProp as FilterWithQuery
+
   const { options, optionsInfiniteQuery, searchKeyword, setSearchKeyword } = useOptionsInfiniteQuery({
     apiPath: selectedFilter.apiPath
   })

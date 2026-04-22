@@ -18,11 +18,12 @@ import { useAdvancedFilterForm } from './lib/form'
 
 export default function AdvancedFilterValueSelectWithOptionsField({
   index,
-  selectedFilter,
+  selectedFilter: selectedFilterProp,
   formFilterOperation
 }: AdvancedFilterValueFieldComponentProps) {
   const anchor = useComboboxAnchor()
   const advancedFilterForm = useAdvancedFilterForm()
+  const selectedFilter = selectedFilterProp as FilterWithOptions
   const items = (selectedFilter as FilterWithOptions).options
 
   // Template

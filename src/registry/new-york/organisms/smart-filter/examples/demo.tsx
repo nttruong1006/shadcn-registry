@@ -34,8 +34,8 @@ const filters: Filter[] = [
     apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/role'
   },
   {
-    name: 'infinite test',
-    label: 'Infinite test',
+    name: 'sender',
+    label: 'Sender',
     type: 'selectWithInfiniteQuery',
     apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender'
   }
