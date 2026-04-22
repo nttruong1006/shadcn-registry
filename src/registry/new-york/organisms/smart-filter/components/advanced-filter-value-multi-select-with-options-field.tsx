@@ -65,6 +65,7 @@ export default function AdvancedFilterValueMultiSelectWithOptionsField({
                 </ComboboxList>
               </ComboboxContent>
             </Combobox>
+
             {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )

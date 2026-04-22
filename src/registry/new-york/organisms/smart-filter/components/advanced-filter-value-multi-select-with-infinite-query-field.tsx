@@ -30,6 +30,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
   const { options, optionsInfiniteQuery, searchKeyword, setSearchKeyword } = useOptionsInfiniteQuery({
     apiPath: selectedFilter.apiPath
   })
+  const fetching = optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
 
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
@@ -37,7 +38,6 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
         const selectedOptions = field.state.value as string[]
         const value = options.filter((item) => selectedOptions.includes(item.value))
         const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-        const firstFetching = optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
 
         return (
           <Field data-invalid={invalid}>
@@ -52,7 +52,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
               value={value}
             >
               <ComboboxChips ref={anchor}>
-                {firstFetching && <Spinner className='text-muted-foreground' />}
+                {fetching && <Spinner className='text-muted-foreground' />}
 
                 <ComboboxValue>
                   {(value: typeof options) => {
@@ -63,7 +63,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                 <ComboboxChipsInput
                   aria-invalid={invalid}
                   data-invalid={invalid}
-                  disabled={firstFetching}
+                  disabled={fetching}
                   placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                 />
               </ComboboxChips>

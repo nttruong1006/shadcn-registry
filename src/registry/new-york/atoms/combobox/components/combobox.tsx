@@ -161,7 +161,7 @@ export function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.P
   return (
     <ComboboxPrimitive.Empty
       className={cn(
-        'hidden py-2 text-center text-muted-foreground text-sm group-data-empty/combobox-content:block',
+        'hidden px-2.5 py-2 text-center text-muted-foreground text-sm group-data-empty/combobox-content:block',
         className
       )}
       data-slot='combobox-empty'
@@ -171,7 +171,13 @@ export function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.P
 }
 
 export function ComboboxStatus({ className, ...props }: ComboboxPrimitive.Status.Props) {
-  return <ComboboxPrimitive.Status className={cn('px-2.5 py-2', className)} data-slot='combobox-status' {...props} />
+  return (
+    <ComboboxPrimitive.Status
+      className={cn('px-2.5 py-2 text-muted-foreground', className)}
+      data-slot='combobox-status'
+      {...props}
+    />
+  )
 }
 
 export function ComboboxSeparator({ className, ...props }: ComboboxPrimitive.Separator.Props) {

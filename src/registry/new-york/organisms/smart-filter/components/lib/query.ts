@@ -75,7 +75,6 @@ export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQu
 
 export function useOptionsInfiniteQuery({ apiPath }: { apiPath: string | undefined }) {
   const [searchKeyword, setSearchKeyword] = useState('')
-
   const debouncedSearchKeyword = useDebounce(searchKeyword.trim(), 400)
 
   const optionsInfiniteQuery = useInfiniteQuery<

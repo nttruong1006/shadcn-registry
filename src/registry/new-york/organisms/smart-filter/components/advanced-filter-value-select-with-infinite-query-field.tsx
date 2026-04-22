@@ -32,6 +32,7 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
   const { options, optionsInfiniteQuery, searchKeyword, setSearchKeyword } = useOptionsInfiniteQuery({
     apiPath: selectedFilter.apiPath
   })
+  const fetching = optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
 
   // Template
   // Has any of
@@ -42,7 +43,6 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
           const selectedOptions = field.state.value as string[]
           const value = options.filter((item) => selectedOptions.includes(item.value))
           const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-          const firstFetching = optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
 
           return (
             <Field data-invalid={invalid}>
@@ -57,7 +57,7 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
                 value={value}
               >
                 <ComboboxChips ref={anchor}>
-                  {firstFetching && <Spinner className='text-muted-foreground' />}
+                  {fetching && <Spinner className='text-muted-foreground' />}
 
                   <ComboboxValue>
                     {(value: typeof options) => {
@@ -68,7 +68,7 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
                   <ComboboxChipsInput
                     aria-invalid={invalid}
                     data-invalid={invalid}
-                    disabled={firstFetching}
+                    disabled={fetching}
                     placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                   />
                 </ComboboxChips>
@@ -106,7 +106,6 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
       {(field) => {
         const value = options.find((item) => item.value === field.state.value) ?? null
         const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-        const firstFetching = optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
 
         return (
           <Field data-invalid={invalid}>
@@ -120,10 +119,10 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
               <ComboboxInput
                 aria-invalid={invalid}
                 data-invalid={invalid}
-                disabled={firstFetching}
+                disabled={fetching}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               >
-                {firstFetching && (
+                {fetching && (
                   <InputGroupAddon align='inline-start'>
                     <Spinner />
                   </InputGroupAddon>
