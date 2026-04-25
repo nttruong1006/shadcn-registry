@@ -1,10 +1,9 @@
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { MinusIcon, PlusIcon } from 'lucide-react'
 import type { FocusEvent, ReactNode } from 'react'
 import { NumericFormat, type NumericFormatProps } from 'react-number-format'
 import { Button } from '@/components/atoms/button'
 import { ButtonGroup } from '@/components/atoms/button-group'
 import { Input, type InputProps } from '@/components/atoms/input'
-import { InputGroup } from '@/components/atoms/input-group'
 import { cn } from '@/utils/ui'
 
 export type NumberInputProps = NumericFormatProps<InputProps> & {
@@ -72,25 +71,23 @@ export function NumberInput({
         className
       )}
     >
-      <InputGroup>
-        <NumericFormat
-          allowNegative={allowNegative}
-          aria-invalid={invalid}
-          className={cn(isDisplayStepper && 'rounded-r-none border-0')}
-          customInput={Input}
-          decimalScale={decimalScale}
-          decimalSeparator={decimalSeparator}
-          disabled={disabled}
-          max={max}
-          min={min}
-          step={step}
-          thousandSeparator={thousandSeparator}
-          value={value}
-          valueIsNumericString={valueIsNumericString}
-          {...props}
-          onBlur={blur}
-        />
-      </InputGroup>
+      <NumericFormat
+        allowNegative={allowNegative}
+        aria-invalid={invalid}
+        className={cn(isDisplayStepper && 'rounded-r-none')}
+        customInput={Input}
+        decimalScale={decimalScale}
+        decimalSeparator={decimalSeparator}
+        disabled={disabled}
+        max={max}
+        min={min}
+        step={step}
+        thousandSeparator={thousandSeparator}
+        value={value}
+        valueIsNumericString={valueIsNumericString}
+        {...props}
+        onBlur={blur}
+      />
 
       {isDisplayStepper && (
         <>
@@ -101,7 +98,7 @@ export function NumberInput({
             size='icon'
             variant='outline'
           >
-            <ChevronDown />
+            <MinusIcon />
           </Button>
 
           <Button
@@ -111,7 +108,7 @@ export function NumberInput({
             size='icon'
             variant='outline'
           >
-            <ChevronUp />
+            <PlusIcon />
           </Button>
         </>
       )}

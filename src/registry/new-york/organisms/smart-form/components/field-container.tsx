@@ -35,8 +35,6 @@ export default function SmartFormFieldContainer({
 }: SmartFormFieldContainerProps) {
   const field = useFieldContext()
 
-  console.log(props)
-
   return (
     <Field className={cn('group/field', className)} data-invalid={invalid} {...props}>
       <FieldLabel htmlFor={`${field.form.formId}-${field.name}`}>

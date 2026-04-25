@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { CheckCircleIcon, CopyIcon, ExternalLinkIcon, LinkIcon, TrashIcon, UnlinkIcon } from 'lucide-react'
 import { type MouseEvent, useRef, useState } from 'react'
 import { toast } from 'sonner'
@@ -11,6 +11,7 @@ import { Input } from '@/components/atoms/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
+import { useInternalEditor } from './lib'
 
 const linkFormSchema = z.object({
   url: z
@@ -35,11 +36,11 @@ const defaultLinkFormValue: z.input<typeof linkFormSchema> = {
 } as const
 
 export default function LinkButton({ id }: { id: string }) {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
-      return { isActive: editor?.isActive('link') }
+      return { isActive: editor.isActive('link'), isEditable: editor.isEditable }
     }
   })
 
@@ -116,14 +117,14 @@ export default function LinkButton({ id }: { id: string }) {
       onOpenChange={(open) => {
         setOpenPopover(open)
         if (open) {
-          const isLinkActive = editor?.isActive('link')
-          const { href, target } = editor?.getAttributes('link') ?? {}
+          const isLinkActive = editor.isActive('link')
+          const { href, target } = editor.getAttributes('link') ?? {}
 
           if (isLinkActive && href) {
             linkForm.setFieldValue('url', href)
             linkForm.setFieldValue(
               'displayText',
-              editor?.view.domAtPos(editor?.state.selection.from).node.textContent ?? ''
+              editor.view.domAtPos(editor.state.selection.from).node.textContent ?? ''
             )
             linkForm.setFieldValue('isOpenInNewTab', target === '_blank')
             isUpdateModeRef.current = true
@@ -142,8 +143,9 @@ export default function LinkButton({ id }: { id: string }) {
               render={
                 <Button
                   className={cn({
-                    'bg-accent text-accent-foreground': editorState?.isActive
+                    'bg-accent text-accent-foreground': editorState.isActive
                   })}
+                  disabled={!editorState.isEditable}
                   size='icon'
                   variant='ghost'
                 >

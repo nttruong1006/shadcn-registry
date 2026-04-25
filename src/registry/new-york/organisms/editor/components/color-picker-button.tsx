@@ -1,3 +1,4 @@
+import { useEditorState } from '@tiptap/react'
 import { PaletteIcon } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
@@ -12,8 +13,19 @@ import {
   type ColorPickerProps,
   ColorPickerSelection
 } from '@/components/molecules/color-picker'
+import { useInternalEditor } from './lib'
 
 export default function ColorPickerButton(props: ColorPickerProps) {
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable
+      }
+    }
+  })
+
   return (
     <Popover>
       <Tooltip>
@@ -21,7 +33,7 @@ export default function ColorPickerButton(props: ColorPickerProps) {
           render={
             <PopoverTrigger
               render={
-                <Button size='icon' variant='outline'>
+                <Button disabled={!editorState.isEditable} size='icon' variant='outline'>
                   <PaletteIcon />
                 </Button>
               }

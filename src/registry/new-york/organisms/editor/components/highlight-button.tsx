@@ -1,10 +1,11 @@
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import type { ColorInstance } from 'color'
 import { CheckIcon, ChevronDownIcon, CircleSlashIcon, HighlighterIcon } from 'lucide-react'
 import { lazy, Suspense, useState } from 'react'
 import { Button } from '@/components/atoms/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
+import { useInternalEditor } from './lib'
 
 const ColorPickerButton = lazy(() => import('./color-picker-button'))
 
@@ -32,23 +33,31 @@ const colors: string[] = [
 ]
 
 export default function HighlightButton() {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable && editor.can().toggleHighlight()
+      }
+    }
+  })
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
   const setColor = (color: string) => {
     setSelectedColor(color)
-    editor?.chain().focus().setHighlight({ color }).run()
+    editor.chain().focus().setHighlight({ color }).run()
   }
 
   const changeColor = (color: ColorInstance) => {
     setSelectedColor(null)
-    editor?.chain().setHighlight({ color: color.hex() }).run()
+    editor.chain().setHighlight({ color: color.hex() }).run()
   }
 
   const clearColor = () => {
     setSelectedColor(null)
-    editor?.chain().focus().unsetHighlight().run()
+    editor.chain().focus().unsetHighlight().run()
   }
 
   return (
@@ -58,7 +67,7 @@ export default function HighlightButton() {
           render={
             <PopoverTrigger
               render={
-                <Button className='gap-1' variant='ghost'>
+                <Button className='gap-1' disabled={!editorState.isEditable} variant='ghost'>
                   <HighlighterIcon />
                   <ChevronDownIcon />
                 </Button>

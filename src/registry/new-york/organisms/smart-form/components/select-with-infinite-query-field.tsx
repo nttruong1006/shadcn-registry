@@ -43,7 +43,7 @@ export default function SelectWithInfiniteQueryField({
         items={items}
         onInputValueChange={setSearchKeyword}
         onValueChange={(value) => {
-          field.handleChange(value?.value ?? '')
+          field.handleChange(value?.value ?? null)
         }}
         value={value}
       >

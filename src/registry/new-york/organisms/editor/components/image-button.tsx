@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { CheckCircleIcon, ImageIcon } from 'lucide-react'
 import { useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
@@ -19,6 +19,7 @@ import {
   type FileUploadProps
 } from '@/components/molecules/file-upload/file-upload'
 import { getFileUrl, useFileUpload } from '@/components/molecules/file-upload/lib'
+import { useInternalEditor } from './lib'
 
 enum ImageFormMode {
   Url = 'Url',
@@ -89,10 +90,18 @@ const fileUploaderDropzoneOptions: DropzoneOptions = {
 }
 
 export default function ImageButton({ id }: { id: string }) {
-  const { editor } = useCurrentEditor()
-  const { fileUploadPending, uploadFile } = useFileUpload()
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable
+      }
+    }
+  })
 
   const [openPopover, setOpenPopover] = useState(false)
+  const { fileUploadPending, uploadFile } = useFileUpload()
 
   const imageForm = useForm({
     formId: `${id}-file-form`,
@@ -157,7 +166,7 @@ export default function ImageButton({ id }: { id: string }) {
           render={
             <PopoverTrigger
               render={
-                <Button size='icon' variant='ghost'>
+                <Button disabled={!editorState.isEditable} size='icon' variant='ghost'>
                   <ImageIcon />
                 </Button>
               }

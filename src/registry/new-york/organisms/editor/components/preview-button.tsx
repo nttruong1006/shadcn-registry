@@ -1,17 +1,18 @@
-import { type Content, useCurrentEditor, useEditorState } from '@tiptap/react'
+import { type Content, useEditorState } from '@tiptap/react'
 import { EyeIcon } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/atoms/dialog'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { EditorContent } from './editor-content'
+import { useInternalEditor } from './lib'
 
 export default function PreviewButton({ value }: { value: Content }) {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
       return {
-        isEmpty: editor?.isEmpty
+        isEmpty: editor.isEmpty
       }
     }
   })
@@ -23,7 +24,7 @@ export default function PreviewButton({ value }: { value: Content }) {
           render={
             <DialogTrigger
               render={
-                <Button disabled={editorState?.isEmpty} size='icon' variant='ghost'>
+                <Button disabled={editorState.isEmpty} size='icon' variant='ghost'>
                   <EyeIcon />
                 </Button>
               }

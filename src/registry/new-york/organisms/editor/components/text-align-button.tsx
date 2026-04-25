@@ -1,4 +1,4 @@
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { AlignLeft, ChevronDown } from 'lucide-react'
 import { useRef, useTransition } from 'react'
 import { Button } from '@/components/atoms/button'
@@ -12,7 +12,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
 import type { CallbackRef, SetExtensions } from './editor'
-import { alignments } from './lib'
+import { alignments, useInternalEditor } from './lib'
 
 export default function TextAlignButton({
   callbackRef,
@@ -21,17 +21,18 @@ export default function TextAlignButton({
   setExtensions: SetExtensions
   callbackRef: CallbackRef
 }) {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
       return {
         isActive: {
-          left: editor?.isActive('paragraph', { textAlign: 'left' }),
-          center: editor?.isActive('paragraph', { textAlign: 'center' }),
-          right: editor?.isActive('paragraph', { textAlign: 'right' }),
-          justify: editor?.isActive('paragraph', { textAlign: 'justify' })
-        }
+          left: editor.isActive('paragraph', { textAlign: 'left' }),
+          center: editor.isActive('paragraph', { textAlign: 'center' }),
+          right: editor.isActive('paragraph', { textAlign: 'right' }),
+          justify: editor.isActive('paragraph', { textAlign: 'justify' })
+        },
+        isEditable: editor.isEditable
       }
     }
   })
@@ -46,7 +47,7 @@ export default function TextAlignButton({
           render={
             <DropdownMenuTrigger
               render={
-                <Button className='gap-1' loading={isPending} variant='ghost'>
+                <Button className='gap-1' disabled={!editorState.isEditable} loading={isPending} variant='ghost'>
                   <AlignLeft />
                   <ChevronDown />
                 </Button>
@@ -59,7 +60,7 @@ export default function TextAlignButton({
 
       <DropdownMenuContent>
         {alignments.map((alignment) => {
-          const isActive = editorState?.isActive[alignment.value]
+          const isActive = editorState.isActive[alignment.value]
           return (
             <DropdownMenuItem
               className={cn({
@@ -68,7 +69,7 @@ export default function TextAlignButton({
               key={alignment.value}
               onClick={() => {
                 const callback: CallbackRef['current'] = (editor) => {
-                  editor?.chain().focus().setTextAlign(alignment.value).run()
+                  editor.chain().focus().setTextAlign(alignment.value).run()
                 }
 
                 if (isExtensionLoadedRef.current) {

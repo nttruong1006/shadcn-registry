@@ -1,26 +1,30 @@
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { BoldIcon } from 'lucide-react'
+import { useInternalEditor } from './lib'
 import TooltipButton from './tooltip-button'
 
 export default function BoldButton() {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
       return {
-        isActive: editor?.isActive('bold')
+        isActive: editor.isActive('bold'),
+        isEditable: editor.isEditable && editor.can().toggleBold()
       }
     }
   })
 
-  // Template
+  console.log(editorState)
+
   return (
     <TooltipButton
+      disabled={!editorState.isEditable}
       Icon={BoldIcon}
-      isActive={editorState?.isActive}
+      isActive={editorState.isActive}
       kbd='Ctrl B'
       label='Bold'
-      onClick={() => editor?.chain().focus().toggleBold().run()}
+      onClick={() => editor.chain().focus().toggleBold().run()}
     />
   )
 }

@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { CheckCircleIcon, PaperclipIcon } from 'lucide-react'
 import { useState } from 'react'
 import type { DropzoneOptions } from 'react-dropzone'
@@ -17,6 +17,7 @@ import {
   type FileUploadProps
 } from '@/components/molecules/file-upload/file-upload'
 import { getFileUrl, type UploadedFile, useFileUpload } from '@/components/molecules/file-upload/lib'
+import { useInternalEditor } from './lib'
 
 export const fileFormSchema = z.object({
   files: z.array(z.custom<File>()).min(1, 'Please select the file')
@@ -39,10 +40,18 @@ export const fileUploaderDropzoneOptions: DropzoneOptions = {
 }
 
 export default function FileButton({ id }: { id: string }) {
-  const { editor } = useCurrentEditor()
-  const { fileUploadPending, uploadFile } = useFileUpload()
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable
+      }
+    }
+  })
 
   const [openPopover, setOpenPopover] = useState(false)
+  const { fileUploadPending, uploadFile } = useFileUpload()
 
   const fileForm = useForm({
     formId: `${id}-file-form`,
@@ -104,7 +113,7 @@ export default function FileButton({ id }: { id: string }) {
           render={
             <PopoverTrigger
               render={
-                <Button size='icon' variant='ghost'>
+                <Button disabled={!editorState.isEditable} size='icon' variant='ghost'>
                   <PaperclipIcon />
                 </Button>
               }

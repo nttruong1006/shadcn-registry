@@ -10,7 +10,7 @@ export default function EditorField({ label, disabled, ...props }: BaseSmartForm
   return (
     <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <Editor
-        editable={!disabled}
+        editable={false}
         id={`${field.form.formId}-${field.name}`}
         onValueChange={field.handleChange as EditorProps['onValueChange']}
         placeholder={`Enter ${typeof label === 'string' ? label.toLowerCase() : 'information'}`}

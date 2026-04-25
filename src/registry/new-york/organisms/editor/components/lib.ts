@@ -2,12 +2,21 @@ import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import { TaskItem, TaskList } from '@tiptap/extension-list'
 import { TextStyle } from '@tiptap/extension-text-style'
-import type { Editor } from '@tiptap/react'
+import { type Editor, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight, type LucideProps } from 'lucide-react'
 import type React from 'react'
 import CustomImageExtension from './custom-image-extension'
 import FileExtension from './file-extension'
+
+// Use internal editor state selector
+export const useInternalEditor = (): Editor => {
+  const { editor } = useCurrentEditor()
+  if (!editor) {
+    throw new Error('useInternalEditor must be used within the EditorContext')
+  }
+  return editor
+}
 
 // Alignment
 export type Alignment = 'left' | 'center' | 'right' | 'justify'

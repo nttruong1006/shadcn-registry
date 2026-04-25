@@ -35,6 +35,7 @@ export function DatePicker({
     <div className={className}>
       <Popover modal onOpenChange={setOpenPopover} open={openPopover}>
         <PopoverTrigger
+          nativeButton={false}
           render={
             <div className='relative'>
               <Button

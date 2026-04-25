@@ -38,11 +38,11 @@ export type EditorProps = UseEditorOptions & {
   onValueChange: (value: Content) => void
 }
 
-export type CallbackRef = RefObject<((editor: ReturnType<typeof useEditor> | null) => void) | null>
+export type CallbackRef = RefObject<((editor: ReturnType<typeof useEditor>) => void) | null>
 
 export type SetExtensions = Dispatch<SetStateAction<Extensions>>
 
-export function Editor({ id, value, placeholder, onValueChange, ...props }: EditorProps) {
+export function Editor({ id, value, placeholder, editable = true, onValueChange, ...props }: EditorProps) {
   const callbackRef = useRef<CallbackRef['current']>(null)
   const [extensions, setExtensions] = useState<Extensions>(() => [
     ...defaultExtensions,
@@ -83,10 +83,10 @@ export function Editor({ id, value, placeholder, onValueChange, ...props }: Edit
       onBlur: ({ editor }) => {
         onValueChange(getEditorValue(editor, 'html'))
       },
-
+      editable,
       ...props
     },
-    [extensions]
+    [editable, extensions]
   )
 
   if (!editor) {
@@ -99,7 +99,10 @@ export function Editor({ id, value, placeholder, onValueChange, ...props }: Edit
         className='w-full transition-all [&_.tiptap]:max-h-[500px] [&_.tiptap]:min-h-64 [&_.tiptap]:overflow-auto [&_.tiptap]:border-none [&_.tiptap]:p-6 [&_.tiptap]:outline-none'
         id={`editor-${id}`}
       >
-        <div className='text rounded-md border border-input text-foreground ring-offset-background transition-[color,box-shadow] placeholder:text-muted-foreground has-[.ProseMirror-focused]:border-ring has-[.ProseMirror-focused]:ring-[3px] has-[.ProseMirror-focused]:ring-ring/50 group-data-[invalid=true]/field:border-destructive group-data-[invalid=true]/field:ring-destructive/20 group-data-[invalid=true]/field:has-[.ProseMirror-focused]:border-destructive group-data-[invalid=true]/field:dark:ring-destructive/40'>
+        <div
+          aria-disabled={!editable}
+          className='rounded-lg border border-input bg-transparent text-foreground ring-offset-background transition-[color,box-shadow] placeholder:text-muted-foreground has-[.ProseMirror-focused]:border-ring has-[.ProseMirror-focused]:ring-[3px] has-[.ProseMirror-focused]:ring-ring/50 aria-disabled:bg-input/50 aria-disabled:opacity-50 group-data-[invalid=true]/field:border-destructive group-data-[invalid=true]/field:ring-3 group-data-[invalid=true]/field:ring-destructive/20 dark:group-data-[invalid=true]/field:border-destructive/50 dark:group-data-[invalid=true]/field:ring-destructive/40 dark:aria-disabled:bg-input/80'
+        >
           <div className='flex flex-wrap items-center gap-1 border-input border-b p-4'>
             <HistoryButtons />
             <ToolbarSeparator />

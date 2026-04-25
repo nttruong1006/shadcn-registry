@@ -1,4 +1,4 @@
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { ChevronDownIcon, ListIcon, ListOrderedIcon, ListTodoIcon } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
 import {
@@ -10,16 +10,18 @@ import {
 } from '@/components/atoms/dropdown-menu'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
+import { useInternalEditor } from './lib'
 
 export default function ListButton() {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
       return {
-        isBulletListActive: editor?.isActive('bulletList'),
-        isOrderedListActive: editor?.isActive('orderedList'),
-        isTaskListActive: editor?.isActive('taskList')
+        isBulletListActive: editor.isActive('bulletList'),
+        isOrderedListActive: editor.isActive('orderedList'),
+        isTaskListActive: editor.isActive('taskList'),
+        isEditable: editor.isEditable
       }
     }
   })
@@ -31,7 +33,7 @@ export default function ListButton() {
           render={
             <DropdownMenuTrigger
               render={
-                <Button className='gap-1' variant='ghost'>
+                <Button className='gap-1' disabled={!editorState.isEditable} variant='ghost'>
                   <ListIcon />
                   <ChevronDownIcon />
                 </Button>
@@ -46,9 +48,9 @@ export default function ListButton() {
         {/* Bullet list */}
         <DropdownMenuItem
           className={cn({
-            'bg-accent text-accent-foreground': editorState?.isBulletListActive
+            'bg-accent text-accent-foreground': editorState.isBulletListActive
           })}
-          onClick={() => editor?.chain().focus().toggleBulletList().run()}
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
           <ListIcon />
           <span>Bullet list</span>
@@ -58,9 +60,9 @@ export default function ListButton() {
         {/* Ordered list */}
         <DropdownMenuItem
           className={cn({
-            'bg-accent text-accent-foreground': editorState?.isOrderedListActive
+            'bg-accent text-accent-foreground': editorState.isOrderedListActive
           })}
-          onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
         >
           <ListOrderedIcon />
           <span>Ordered list</span>
@@ -70,9 +72,9 @@ export default function ListButton() {
         {/* Task list */}
         <DropdownMenuItem
           className={cn({
-            'bg-accent text-accent-foreground': editorState?.isTaskListActive
+            'bg-accent text-accent-foreground': editorState.isTaskListActive
           })}
-          onClick={() => editor?.chain().focus().toggleTaskList().run()}
+          onClick={() => editor.chain().focus().toggleTaskList().run()}
         >
           <ListTodoIcon />
           <span>Task list</span>

@@ -1,7 +1,8 @@
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { TableIcon } from 'lucide-react'
 import { useRef, useTransition } from 'react'
 import type { CallbackRef, SetExtensions } from './editor'
+import { useInternalEditor } from './lib'
 import TooltipButton from './tooltip-button'
 
 export default function TableButton({
@@ -11,18 +12,28 @@ export default function TableButton({
   callbackRef: CallbackRef
   setExtensions: SetExtensions
 }) {
-  const { editor } = useCurrentEditor()
-  const [isPending, startTransition] = useTransition()
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable
+      }
+    }
+  })
+
   const isExtensionLoadedRef = useRef(false)
+  const [isPending, startTransition] = useTransition()
 
   return (
     <TooltipButton
+      disabled={!editorState.isEditable}
       Icon={TableIcon}
       label='Table'
       loading={isPending}
       onClick={() => {
         const callback: CallbackRef['current'] = (editor) => {
-          editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+          editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
         }
 
         if (isExtensionLoadedRef.current) {

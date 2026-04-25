@@ -1,10 +1,11 @@
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import type { ColorInstance } from 'color'
 import { BaselineIcon, CheckIcon, ChevronDownIcon, CircleSlashIcon } from 'lucide-react'
 import { lazy, Suspense, useState } from 'react'
 import { Button } from '@/components/atoms/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
+import { useInternalEditor } from './lib'
 
 const ColorPickerButton = lazy(() => import('./color-picker-button'))
 
@@ -32,22 +33,31 @@ const colors: string[] = [
 ]
 
 export default function TextColorButton() {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable && editor.can().toggleBold()
+      }
+    }
+  })
+
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
   function setColor(color: string) {
     setSelectedColor(color)
-    editor?.chain().focus().setColor(color).run()
+    editor.chain().focus().setColor(color).run()
   }
 
   function changeColor(color: ColorInstance) {
     setSelectedColor(null)
-    editor?.chain().setColor(color.hex()).run()
+    editor.chain().setColor(color.hex()).run()
   }
 
   function clearColor() {
     setSelectedColor(null)
-    editor?.chain().focus().unsetColor().run()
+    editor.chain().focus().unsetColor().run()
   }
 
   return (
@@ -57,7 +67,7 @@ export default function TextColorButton() {
           render={
             <PopoverTrigger
               render={
-                <Button className='gap-1' variant='ghost'>
+                <Button className='gap-1' disabled={!editorState.isEditable} variant='ghost'>
                   <BaselineIcon />
                   <ChevronDownIcon />
                 </Button>

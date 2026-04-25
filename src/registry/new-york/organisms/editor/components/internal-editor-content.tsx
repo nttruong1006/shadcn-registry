@@ -33,7 +33,12 @@ export default function InternalEditorContent() {
 
   return (
     <>
-      <EditorContent className='editor-content' editor={editor} onContextMenu={clickContextMenu} role='presentation' />
+      <EditorContent
+        className='editor-content bg-transparent dark:bg-input/30'
+        editor={editor}
+        onContextMenu={clickContextMenu}
+        role='presentation'
+      />
 
       <DropdownMenu
         onOpenChange={(open) => setTableDropdownMenu((prev) => ({ ...prev, open }))}

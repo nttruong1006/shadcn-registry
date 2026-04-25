@@ -1,5 +1,5 @@
 import type { Level } from '@tiptap/extension-heading'
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { ChevronDownIcon, TypeIcon } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
 import {
@@ -12,6 +12,7 @@ import {
 } from '@/components/atoms/dropdown-menu'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import { cn } from '@/utils/ui'
+import { useInternalEditor } from './lib'
 
 const textStyles: Array<{
   label: string
@@ -46,20 +47,21 @@ const textStyles: Array<{
 ]
 
 export default function TextStyleButton() {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
       return {
         isActive: {
-          null: editor?.isActive('paragraph'),
-          1: editor?.isActive('heading', { level: 1 }),
-          2: editor?.isActive('heading', { level: 2 }),
-          3: editor?.isActive('heading', { level: 3 }),
-          4: editor?.isActive('heading', { level: 4 }),
-          5: editor?.isActive('heading', { level: 5 }),
-          6: editor?.isActive('heading', { level: 6 })
-        }
+          null: editor.isActive('paragraph'),
+          1: editor.isActive('heading', { level: 1 }),
+          2: editor.isActive('heading', { level: 2 }),
+          3: editor.isActive('heading', { level: 3 }),
+          4: editor.isActive('heading', { level: 4 }),
+          5: editor.isActive('heading', { level: 5 }),
+          6: editor.isActive('heading', { level: 6 })
+        },
+        isEditable: editor.isEditable
       }
     }
   })
@@ -67,9 +69,9 @@ export default function TextStyleButton() {
   function changeTextStyle(textStyle: (typeof textStyles)[number]) {
     const { level } = textStyle
     if (level) {
-      editor?.chain().focus().toggleHeading({ level }).run()
+      editor.chain().focus().toggleHeading({ level }).run()
     } else {
-      editor?.chain().focus().setParagraph().run()
+      editor.chain().focus().setParagraph().run()
     }
   }
 
@@ -80,7 +82,7 @@ export default function TextStyleButton() {
           render={
             <DropdownMenuTrigger
               render={
-                <Button className='gap-1' variant='ghost'>
+                <Button className='gap-1' disabled={!editorState.isEditable} variant='ghost'>
                   <TypeIcon />
                   <ChevronDownIcon />
                 </Button>

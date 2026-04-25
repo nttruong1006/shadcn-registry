@@ -134,9 +134,9 @@ export function FileUploadInput({ id, className, children, ...restProps }: FileU
 
   return (
     <div
+      aria-disabled={disabled}
       className={cn(
-        'relative w-full rounded-md border bg-transparent text-sm hover:bg-accent/40 aria-invalid:border-destructive dark:bg-input/30',
-        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
+        'relative w-full rounded-md border bg-transparent text-sm transition-colors hover:bg-muted aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-input/50 aria-disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 dark:aria-disabled:bg-input/80 dark:hover:bg-input/50',
         className
       )}
       data-slot='file-upload-input'

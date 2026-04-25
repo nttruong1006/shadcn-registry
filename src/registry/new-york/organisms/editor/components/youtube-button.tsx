@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { CheckCircle, TvMinimalPlay } from 'lucide-react'
 import { useRef, useState, useTransition } from 'react'
 import z from 'zod'
@@ -9,7 +9,7 @@ import { Input } from '@/components/atoms/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/atoms/tooltip'
 import type { CallbackRef, SetExtensions } from './editor'
-import { isValidYoutubeUrl, minWidth } from './lib'
+import { isValidYoutubeUrl, minWidth, useInternalEditor } from './lib'
 
 const youtubeFormSchema = z.object({
   url: z
@@ -32,11 +32,19 @@ export default function YoutubeButton({
   callbackRef: CallbackRef
   setExtensions: SetExtensions
 }) {
-  const { editor } = useCurrentEditor()
-  const [isPending, startTransition] = useTransition()
+  const editor = useInternalEditor()
+  const editorState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      return {
+        isEditable: editor.isEditable
+      }
+    }
+  })
 
   const isExtensionLoadedRef = useRef(false)
   const [openPopover, setOpenPopover] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const youtubeForm = useForm({
     formId: `${id}-youtube-form`,
@@ -104,7 +112,7 @@ export default function YoutubeButton({
           render={
             <PopoverTrigger
               render={
-                <Button loading={isPending} size='icon' variant='ghost'>
+                <Button disabled={!editorState.isEditable} loading={isPending} size='icon' variant='ghost'>
                   <TvMinimalPlay />
                 </Button>
               }

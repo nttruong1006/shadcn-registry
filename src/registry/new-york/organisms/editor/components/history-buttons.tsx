@@ -1,15 +1,16 @@
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { useEditorState } from '@tiptap/react'
 import { RedoIcon, UndoIcon } from 'lucide-react'
+import { useInternalEditor } from './lib'
 import TooltipButton from './tooltip-button'
 
 export default function HistoryButtons() {
-  const { editor } = useCurrentEditor()
+  const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
       return {
-        isUndoDisabled: !editor?.can().undo(),
-        isRedoDisabled: !editor?.can().redo()
+        isUndoEnabled: editor.isEditable && editor.can().undo(),
+        isRedoEnabled: editor.isEditable && editor.can().redo()
       }
     }
   })
@@ -17,19 +18,19 @@ export default function HistoryButtons() {
   return (
     <div className='flex gap-1'>
       <TooltipButton
-        disabled={editorState?.isUndoDisabled}
+        disabled={!editorState.isUndoEnabled}
         Icon={UndoIcon}
         kbd='Ctrl Z'
         label='Undo'
-        onClick={() => editor?.chain().focus().undo().run()}
+        onClick={() => editor.chain().focus().undo().run()}
       />
 
       <TooltipButton
-        disabled={editorState?.isRedoDisabled}
+        disabled={!editorState.isRedoEnabled}
         Icon={RedoIcon}
         kbd='Ctrl Y'
         label='Redo'
-        onClick={() => editor?.chain().focus().redo().run()}
+        onClick={() => editor.chain().focus().redo().run()}
       />
     </div>
   )
