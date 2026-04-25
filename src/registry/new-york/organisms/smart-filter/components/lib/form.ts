@@ -6,6 +6,7 @@ import {
   type FormValidateOrFn
 } from '@tanstack/react-form'
 import z from 'zod'
+import type { Option } from '@/types/base'
 import { type SmartFilterOperation, smartFilterOperations, smartFilterTypes } from './base'
 
 // Create form hook
@@ -137,3 +138,40 @@ export const defaultValuePerOperation: Record<
   hasAnyOf: defaultStringArrayValue,
   hasAllOf: defaultStringArrayValue
 } as const
+
+/**
+ * Update reference of selected item bacause queryData will be changed after refetching
+ */
+export function updateSelectedItemReferencesAndGetItems({
+  value,
+  queryData
+}: {
+  value: Option | Option[] | null
+  queryData: Option[]
+}): Option[] {
+  // Multiple
+  if (Array.isArray(value)) {
+    if (value.length > 0) {
+      // Update reference of selected item bacause of queryData will be changed after refetching
+      queryData.forEach((item, index) => {
+        const valueIndex = value.findIndex((valueItem) => valueItem.value === item.value)
+        if (valueIndex >= 0) {
+          queryData[index] = value[valueIndex]
+        }
+      })
+    }
+
+    return queryData
+  }
+
+  // Single
+  if (value) {
+    const valueIndex = queryData.findIndex((item) => item.value === value.value)
+    if (valueIndex >= 0) {
+      // Update reference of selected item bacause of queryData will be changed after refetching
+      queryData[valueIndex] = value
+    }
+  }
+
+  return queryData
+}

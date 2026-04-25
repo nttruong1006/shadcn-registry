@@ -7,14 +7,14 @@ import type { SelectFieldInputValue } from './lib/schema'
 export default function SelectWithInfiniteQueryField({
   label,
   disabled,
-  originalApiPath,
+  originalQueryPath,
   dependencyFieldsValue,
   ...props
 }: BaseSmartFormFieldFieldProps & Parameters<typeof useOptionsInfiniteQuery>[0]) {
   const field = useFieldContext<SelectFieldInputValue>()
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
   const { options } = useOptionsInfiniteQuery({
-    originalApiPath,
+    originalQueryPath,
     dependencyFieldsValue,
     selectedValue: field.state.value
   })

@@ -15,7 +15,7 @@ import { Field, FieldError } from '@/components/atoms/field'
 import { Spinner } from '@/components/atoms/spinner'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import type { FilterWithQuery } from './lib/base'
-import { useAdvancedFilterForm } from './lib/form'
+import { updateSelectedItemReferencesAndGetItems, useAdvancedFilterForm } from './lib/form'
 import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
 
 // Component
@@ -27,10 +27,10 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
   const advancedFilterForm = useAdvancedFilterForm()
   const selectedFilter = selectedFilterProp as FilterWithQuery
 
-  const { options, optionsInfiniteQuery, searchKeyword, setSearchKeyword } = useOptionsInfiniteQuery({
-    apiPath: selectedFilter.apiPath
-  })
-  const fetching = optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
+  const { options, optionsInfiniteQuery, searchKeyword, debouncedSearchKeyword, setSearchKeyword } =
+    useOptionsInfiniteQuery({
+      apiPath: selectedFilter.apiPath
+    })
 
   return (
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
@@ -38,10 +38,12 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
         const selectedOptions = field.state.value as string[]
         const value = options.filter((item) => selectedOptions.includes(item.value))
         const invalid = field.state.meta.isTouched && !field.state.meta.isValid
+        const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
 
         return (
           <Field data-invalid={invalid}>
             <Combobox
+              filter={null}
               inputValue={searchKeyword}
               items={options}
               multiple
@@ -52,7 +54,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
               value={value}
             >
               <ComboboxChips ref={anchor}>
-                {fetching && <Spinner className='text-muted-foreground' />}
+                {optionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
 
                 <ComboboxValue>
                   {(value: typeof options) => {
@@ -63,16 +65,25 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                 <ComboboxChipsInput
                   aria-invalid={invalid}
                   data-invalid={invalid}
-                  disabled={fetching}
+                  disabled={optionsInfiniteQuery.isLoading}
                   placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                 />
               </ComboboxChips>
 
               <ComboboxContent anchor={anchor}>
-                <ComboboxEmpty>No items found.</ComboboxEmpty>
+                {optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage && (
+                  <ComboboxStatus className='flex items-center gap-2'>
+                    <Spinner />
+                    <span>Searching for "{debouncedSearchKeyword}"...</span>
+                  </ComboboxStatus>
+                )}
+
+                {!optionsInfiniteQuery.isFetching && items.length === 0 && (
+                  <ComboboxEmpty>No matched for "{debouncedSearchKeyword}"</ComboboxEmpty>
+                )}
 
                 <ComboboxList onScroll={(event) => fetchNextPage({ event, infiniteQuery: optionsInfiniteQuery })}>
-                  {(item: (typeof options)[number]) => (
+                  {(item: (typeof items)[number]) => (
                     <ComboboxItem key={item.value} value={item}>
                       {item.label}
                     </ComboboxItem>
@@ -80,7 +91,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                 </ComboboxList>
 
                 {optionsInfiniteQuery.isFetchingNextPage && (
-                  <ComboboxStatus className='flex items-center justify-center'>
+                  <ComboboxStatus className='flex justify-center'>
                     <Spinner />
                   </ComboboxStatus>
                 )}

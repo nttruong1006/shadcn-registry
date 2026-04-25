@@ -15,25 +15,25 @@ import type { Option } from '@/types/base'
 
 // Use options query
 export const useOptionsQuery = ({
-  originalApiPath,
+  originalQueryPath,
   dependencyFieldsValue
 }: {
-  originalApiPath: string
+  originalQueryPath: string
   dependencyFieldsValue?: Record<string, unknown>
 }) => {
-  const [apiPath, setApiPath] = useState(originalApiPath)
-  const [isEnabled, setIsEnabled] = useState(!originalApiPath?.includes('/{'))
+  const [queryPath, setQueryPath] = useState(originalQueryPath)
+  const [enabled, setEnabled] = useState(!originalQueryPath?.includes('/{'))
 
   const optionsQuery = useQuery<{
     responseData: {
       rows: Option[]
     }
   }>({
-    queryKey: apiPath ? apiPath?.split('?') : [],
+    queryKey: queryPath.split('?'),
     queryFn: ({ signal }) => {
-      return executeAxios({ url: apiPath, method: 'GET', signal })
+      return executeAxios({ url: queryPath, method: 'GET', signal })
     },
-    enabled: isEnabled
+    enabled
   })
 
   useEffect(() => {
@@ -47,14 +47,14 @@ export const useOptionsQuery = ({
         return result
       }
       return result.replace(`{${fieldName}}`, value.toString())
-    }, originalApiPath)
+    }, originalQueryPath)
 
-    setApiPath(newQueryPath)
-    setIsEnabled(!newQueryPath?.includes('/{'))
-  }, [dependencyFieldsValue, originalApiPath])
+    setQueryPath(newQueryPath)
+    setEnabled(!newQueryPath?.includes('/{'))
+  }, [dependencyFieldsValue, originalQueryPath])
 
   const options = useMemo<Option[]>(() => {
-    if (!isEnabled) {
+    if (!enabled) {
       return []
     }
     return (
@@ -63,7 +63,7 @@ export const useOptionsQuery = ({
         label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label)
       })) ?? []
     )
-  }, [isEnabled, optionsQuery.data])
+  }, [enabled, optionsQuery.data])
 
   return {
     optionsQuery,
@@ -107,21 +107,21 @@ export const fetchNextPage = (args: {
 
 // Use options infinite query
 export const useOptionsInfiniteQuery = ({
-  originalApiPath,
+  originalQueryPath,
   dependencyFieldsValue,
   selectedValue,
-  isLabelAsValue = false
+  valueAsLabel = false
 }: {
-  originalApiPath: string
+  originalQueryPath: string
   selectedValue: string | null | undefined // If value is array, separate by the "," character
   dependencyFieldsValue?: Record<string, unknown>
-  isLabelAsValue?: boolean
+  valueAsLabel?: boolean
 }) => {
-  const [apiPath, setApiPath] = useState(originalApiPath)
-  const [isEnabled, setIsEnabled] = useState(!originalApiPath?.includes('/{'))
+  const [queryPath, setQueryPath] = useState(originalQueryPath)
+  const [enabled, setEnabled] = useState(!originalQueryPath?.includes('/{'))
   const [searchKeyword, setSearchKeyword] = useState('')
 
-  const debouncedSearchKeyword = useDebounce(isLabelAsValue ? selectedValue?.trim() : searchKeyword.trim(), 400)
+  const debouncedSearchKeyword = useDebounce(valueAsLabel ? selectedValue?.trim() : searchKeyword.trim(), 400)
 
   const optionsInfiniteQuery = useInfiniteQuery<
     OptionsInfiniteQueryData,
@@ -130,17 +130,17 @@ export const useOptionsInfiniteQuery = ({
     QueryKey,
     number | undefined
   >({
-    queryKey: apiPath ? [...apiPath.split('?'), debouncedSearchKeyword] : [debouncedSearchKeyword],
+    queryKey: queryPath ? [...queryPath.split('?'), debouncedSearchKeyword] : [debouncedSearchKeyword],
     queryFn: ({ signal, pageParam }) => {
       return executeAxios({
-        url: isLabelAsValue
-          ? `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
-          : `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${selectedValue ? `&preSelected=${selectedValue}` : ''}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
+        url: valueAsLabel
+          ? `${queryPath}${queryPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
+          : `${queryPath}${queryPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${selectedValue ? `&preSelected=${selectedValue}` : ''}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
         method: 'GET',
         signal
       })
     },
-    enabled: isEnabled,
+    enabled,
     initialPageParam: 1,
     getNextPageParam
   })
@@ -156,18 +156,18 @@ export const useOptionsInfiniteQuery = ({
         return result
       }
       return result.replace(`{${fieldName}}`, value.toString())
-    }, originalApiPath)
+    }, originalQueryPath)
 
-    setApiPath(newQueryPath)
-    setIsEnabled(!newQueryPath?.includes('/{'))
-  }, [dependencyFieldsValue, originalApiPath])
+    setQueryPath(newQueryPath)
+    setEnabled(!newQueryPath?.includes('/{'))
+  }, [dependencyFieldsValue, originalQueryPath])
 
   const options = useMemo<Option[]>(() => {
-    if (!isEnabled) {
+    if (!enabled) {
       return []
     }
     return optionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
-  }, [isEnabled, optionsInfiniteQuery.data])
+  }, [enabled, optionsInfiniteQuery.data])
 
   return {
     optionsInfiniteQuery,

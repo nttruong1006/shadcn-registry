@@ -17,14 +17,14 @@ export function ComboboxMultiple() {
   const anchor = useComboboxAnchor()
 
   return (
-    <Combobox autoHighlight defaultValue={[frameworks[0]]} items={frameworks} multiple>
+    <Combobox autoHighlight items={frameworks} multiple>
       <ComboboxChips className='w-full max-w-xs' ref={anchor}>
         <ComboboxValue>
           {(values) => values.map((value: string) => <ComboboxChip key={value}>{value}</ComboboxChip>)}
         </ComboboxValue>
         <ComboboxChipsInput />
       </ComboboxChips>
-      <ComboboxContent anchor={anchor}>
+      <ComboboxContent anchor={anchor} className='w-full max-w-xs'>
         <ComboboxEmpty>No items found.</ComboboxEmpty>
         <ComboboxList>
           {(item) => (

@@ -8,7 +8,7 @@ import type { SelectFieldInputValue } from './lib/schema'
 const SelectWithQueryField = ({
   label,
   disabled,
-  originalApiPath,
+  originalQueryPath,
   dependencyFieldsValue,
   ...props
 }: BaseSmartFormFieldFieldProps & Parameters<typeof useOptionsQuery>[0]) => {
@@ -16,7 +16,7 @@ const SelectWithQueryField = ({
   const field = useFieldContext<SelectFieldInputValue>()
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
   const { options } = useOptionsQuery({
-    originalApiPath,
+    originalQueryPath,
     dependencyFieldsValue
   })
 

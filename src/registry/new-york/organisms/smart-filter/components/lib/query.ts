@@ -65,7 +65,7 @@ export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQu
 
   const { scrollTop, offsetHeight, scrollHeight } = event.target as HTMLDivElement
   if (
-    scrollTop + offsetHeight >= scrollHeight - 32 * 20 &&
+    scrollTop + offsetHeight >= scrollHeight - 28 * 20 &&
     !infiniteQuery.isFetchingNextPage &&
     infiniteQuery.hasNextPage
   ) {
@@ -105,6 +105,7 @@ export function useOptionsInfiniteQuery({ apiPath }: { apiPath: string | undefin
     optionsInfiniteQuery,
     options,
     searchKeyword,
+    debouncedSearchKeyword,
     setSearchKeyword
   }
 }
