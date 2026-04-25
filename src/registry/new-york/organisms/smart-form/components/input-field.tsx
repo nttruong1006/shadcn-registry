@@ -1,6 +1,6 @@
 import { Input } from '@/components/atoms/input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { InputFieldInputValue } from './lib/schema'
 
 export default function InputField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {

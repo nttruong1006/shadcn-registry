@@ -11,6 +11,7 @@ export type NumberInputProps = NumericFormatProps<InputProps> & {
   isDisplayStepper?: boolean
   prefixNode?: ReactNode
   suffixNode?: ReactNode
+  invalid?: boolean
   onFieldChange?: (value: NonNullable<NumberInputProps['value']>) => void
 }
 
@@ -29,6 +30,7 @@ export function NumberInput({
   disabled,
   prefixNode,
   suffixNode,
+  invalid,
   onFieldChange,
   ...props
 }: NumberInputProps) {
@@ -73,6 +75,7 @@ export function NumberInput({
       <InputGroup>
         <NumericFormat
           allowNegative={allowNegative}
+          aria-invalid={invalid}
           className={cn(isDisplayStepper && 'rounded-r-none border-0')}
           customInput={Input}
           decimalScale={decimalScale}
@@ -92,7 +95,6 @@ export function NumberInput({
       {isDisplayStepper && (
         <>
           <Button
-            aria-invalid={props['aria-invalid']}
             aria-label='Decrease value'
             disabled={disabled || (value != null && +value <= +min)}
             onClick={decrement}
@@ -103,7 +105,6 @@ export function NumberInput({
           </Button>
 
           <Button
-            aria-invalid={props['aria-invalid']}
             aria-label='Increase value'
             disabled={disabled || (value != null && +value >= +max)}
             onClick={increment}

@@ -15,7 +15,7 @@ import { Spinner } from '@/components/atoms/spinner'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import type { FilterWithQuery } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
-import { useOptionsQuery } from './lib/query'
+import { useGetOptionsQuery } from './lib/query'
 
 export default function AdvancedFilterValueMultiSelectWithQueryField({
   index,
@@ -25,7 +25,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
   const advancedFilterForm = useAdvancedFilterForm()
   const selectedFilter = selectedFilterProp as FilterWithQuery
 
-  const { options, optionsQuery } = useOptionsQuery({
+  const { options, getOptionsQuery } = useGetOptionsQuery({
     apiPath: selectedFilter.apiPath
   })
 
@@ -47,7 +47,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
               value={value}
             >
               <ComboboxChips ref={anchor}>
-                {optionsQuery.isFetching && <Spinner className='text-muted-foreground' />}
+                {getOptionsQuery.isFetching && <Spinner className='text-muted-foreground' />}
 
                 <ComboboxValue>
                   {(value: typeof options) => {
@@ -58,7 +58,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                 <ComboboxChipsInput
                   aria-invalid={invalid}
                   data-invalid={invalid}
-                  disabled={optionsQuery.isFetching}
+                  disabled={getOptionsQuery.isFetching}
                   placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                 />
               </ComboboxChips>

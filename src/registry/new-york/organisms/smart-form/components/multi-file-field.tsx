@@ -7,7 +7,7 @@ import {
   type FileUploadValue
 } from '@/components/molecules/file-upload/file-upload'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { MultiFileFieldInputValue } from './lib/schema'
 
 const baseDropzoneOptions: DropzoneOptions = {

@@ -1,6 +1,6 @@
 import { NumberInput } from '@/components/molecules/number-input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { NumberFieldInputValue } from './lib/schema'
 
 export default function NumberField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
@@ -10,9 +10,9 @@ export default function NumberField({ label, disabled, ...props }: BaseSmartForm
   return (
     <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <NumberInput
-        aria-invalid={invalid}
         disabled={disabled}
         id={`${field.form.formId}-${field.name}`}
+        invalid={invalid}
         name={field.name}
         onFieldChange={field.handleChange}
         onValueChange={(event) => field.handleChange(event.value)}

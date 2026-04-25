@@ -10,7 +10,7 @@ import {
   DialogTrigger
 } from '@/components/atoms/dialog'
 import { FieldDescription, FieldLegend, FieldSet } from '@/components/atoms/field'
-import { useAppForm } from '@/components/organisms/smart-form/lib/base'
+import { useAppForm } from '@/components/organisms/smart-form/lib/form'
 import {
   getAutocompleteFieldSchema,
   getCheckboxFieldSchema,
@@ -188,11 +188,7 @@ export const SmartFormDemo = () => {
                       )}
                     </form.AppField>
                     <form.AppField name='phoneNumber'>
-                      {(field) => (
-                        <field.PhoneNumber
-                        // label='Phone number' required
-                        />
-                      )}
+                      {(field) => <field.PhoneNumber label='Phone number' required />}
                     </form.AppField>
                     <form.AppField name='email'>{(field) => <field.Input label='Email' required />}</form.AppField>
                     <form.AppField name='description'>
@@ -224,36 +220,27 @@ export const SmartFormDemo = () => {
                     <form.AppField name='technologies'>
                       {(field) => (
                         <field.MultiSelectWithOptions
-                        // label='Technologies'
-                        // options={[
-                        //   { value: 'react', label: 'React' },
-                        //   { value: 'nextjs', label: 'Next.js' },
-                        //   { value: 'tailwindcss', label: 'Tailwind CSS' },
-                        //   { value: 'typescript', label: 'TypeScript' }
-                        // ]}
-                        // required
+                          label='Technologies'
+                          options={[
+                            { value: 'react', label: 'React' },
+                            { value: 'nextjs', label: 'Next.js' },
+                            { value: 'tailwindcss', label: 'Tailwind CSS' },
+                            { value: 'typescript', label: 'TypeScript' }
+                          ]}
+                          required
                         />
                       )}
                     </form.AppField>
                     <form.AppField name='graduatedUniversity'>
                       {(field) => (
                         <field.AutocompleteWithOptions
-                        // label='Graduated university'
-                        // options={[
-                        //   {
-                        //     value: 'TDTU',
-                        //     label: 'Ton Duc Thang University'
-                        //   },
-                        //   {
-                        //     value: 'VLU',
-                        //     label: 'Van Lang University'
-                        //   },
-                        //   {
-                        //     value: 'UIT',
-                        //     label: 'University of information technology'
-                        //   }
-                        // ]}
-                        // required
+                          label='Graduated university'
+                          options={[
+                            'Ton Duc Thang University',
+                            'Van Lang University',
+                            'University of information technology'
+                          ]}
+                          required
                         />
                       )}
                     </form.AppField>

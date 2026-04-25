@@ -12,6 +12,7 @@ export interface DatePickerProps {
   canRemove?: boolean
   className?: string
   disabled?: boolean
+  invalid?: boolean
   placeholder?: string
   onValueChange: (value: Date | null | undefined) => void
 }
@@ -22,6 +23,7 @@ export function DatePicker({
   canRemove: canRemoveProp = true,
   className,
   disabled,
+  invalid,
   placeholder,
   onValueChange
 }: DatePickerProps) {
@@ -37,6 +39,7 @@ export function DatePicker({
             <div className='relative'>
               <Button
                 aria-expanded={openPopover}
+                aria-invalid={invalid}
                 className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground'
                 data-empty={!value}
                 disabled={disabled}

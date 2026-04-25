@@ -1,6 +1,6 @@
 import { PasswordInput } from '@/components/molecules/password-input'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { PasswordFieldInputValue } from './lib/schema'
 
 export default function PasswordField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {

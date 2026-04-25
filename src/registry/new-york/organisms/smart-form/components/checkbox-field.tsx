@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/atoms/checkbox'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { CheckboxFieldInputValue } from './lib/schema'
 
 export default function CheckboxField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {

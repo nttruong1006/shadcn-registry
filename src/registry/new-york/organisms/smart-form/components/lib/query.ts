@@ -13,25 +13,25 @@ import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
 
-// Use options query
-export const useOptionsQuery = ({
-  originalQueryPath,
+// Use get options query
+export const useGetOptionsQuery = ({
+  originalApiPath,
   dependencyFieldsValue
 }: {
-  originalQueryPath: string
+  originalApiPath: string
   dependencyFieldsValue?: Record<string, unknown>
 }) => {
-  const [queryPath, setQueryPath] = useState(originalQueryPath)
-  const [enabled, setEnabled] = useState(!originalQueryPath?.includes('/{'))
+  const [apiPath, setApiPath] = useState(originalApiPath)
+  const [enabled, setEnabled] = useState(!originalApiPath?.includes('/{'))
 
-  const optionsQuery = useQuery<{
+  const getOptionsQuery = useQuery<{
     responseData: {
       rows: Option[]
     }
   }>({
-    queryKey: queryPath.split('?'),
+    queryKey: apiPath.split('?'),
     queryFn: ({ signal }) => {
-      return executeAxios({ url: queryPath, method: 'GET', signal })
+      return executeAxios({ url: apiPath, method: 'GET', signal })
     },
     enabled
   })
@@ -41,32 +41,32 @@ export const useOptionsQuery = ({
       return
     }
 
-    const newQueryPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
+    const newApiPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
       const value = dependencyFieldsValue[fieldName]
       if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
         return result
       }
       return result.replace(`{${fieldName}}`, value.toString())
-    }, originalQueryPath)
+    }, originalApiPath)
 
-    setQueryPath(newQueryPath)
-    setEnabled(!newQueryPath?.includes('/{'))
-  }, [dependencyFieldsValue, originalQueryPath])
+    setApiPath(newApiPath)
+    setEnabled(!newApiPath?.includes('/{'))
+  }, [dependencyFieldsValue, originalApiPath])
 
   const options = useMemo<Option[]>(() => {
     if (!enabled) {
       return []
     }
     return (
-      optionsQuery.data?.responseData?.rows.map((option) => ({
+      getOptionsQuery.data?.responseData?.rows.map((option) => ({
         value: option.value,
         label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label)
       })) ?? []
     )
-  }, [enabled, optionsQuery.data])
+  }, [enabled, getOptionsQuery.data])
 
   return {
-    optionsQuery,
+    getOptionsQuery,
     options
   }
 }
@@ -75,10 +75,10 @@ export const useOptionsQuery = ({
 export const infiniteQueryPageSize = 100
 
 // Get next page param
-export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (queryFn, _, page) => {
+export const getNextPageParam: GetNextPageParamFunction<number, PaginationQueryData> = (queryFn, _, page) => {
   const {
     responseData: { count, pageSize }
-  } = queryFn as unknown as PaginationQueryData
+  } = queryFn
   const queryPage = page as unknown as number
   const totalPage = Math.ceil(count / pageSize)
 
@@ -89,15 +89,16 @@ export const getNextPageParam: GetNextPageParamFunction<number | undefined> = (q
 }
 
 // Fetch next page
-export const fetchNextPage = (args: {
-  event: UIEvent<HTMLDivElement, UIEvent>
+export function fetchNextPage({
+  event,
+  infiniteQuery
+}: {
+  event: UIEvent<HTMLDivElement>
   infiniteQuery: UseInfiniteQueryResult
-}) => {
-  const { event, infiniteQuery } = args
-
+}) {
   const { scrollTop, offsetHeight, scrollHeight } = event.target as HTMLDivElement
   if (
-    scrollTop + offsetHeight >= scrollHeight - 32 * 20 &&
+    scrollTop + offsetHeight >= scrollHeight - 28 * 20 &&
     !infiniteQuery.isFetchingNextPage &&
     infiniteQuery.hasNextPage
   ) {
@@ -105,37 +106,37 @@ export const fetchNextPage = (args: {
   }
 }
 
-// Use options infinite query
-export const useOptionsInfiniteQuery = ({
-  originalQueryPath,
+// Use get options infinite query
+export function useGetOptionsInfiniteQuery({
+  originalApiPath,
   dependencyFieldsValue,
   selectedValue,
   valueAsLabel = false
 }: {
-  originalQueryPath: string
+  originalApiPath: string
   selectedValue: string | null | undefined // If value is array, separate by the "," character
   dependencyFieldsValue?: Record<string, unknown>
   valueAsLabel?: boolean
-}) => {
-  const [queryPath, setQueryPath] = useState(originalQueryPath)
-  const [enabled, setEnabled] = useState(!originalQueryPath?.includes('/{'))
+}) {
+  const [apiPath, setApiPath] = useState(originalApiPath)
+  const [enabled, setEnabled] = useState(!originalApiPath?.includes('/{'))
   const [searchKeyword, setSearchKeyword] = useState('')
 
   const debouncedSearchKeyword = useDebounce(valueAsLabel ? selectedValue?.trim() : searchKeyword.trim(), 400)
 
-  const optionsInfiniteQuery = useInfiniteQuery<
+  const getOptionsInfiniteQuery = useInfiniteQuery<
     OptionsInfiniteQueryData,
     DefaultError,
     InfiniteData<OptionsInfiniteQueryData>,
     QueryKey,
-    number | undefined
+    number
   >({
-    queryKey: queryPath ? [...queryPath.split('?'), debouncedSearchKeyword] : [debouncedSearchKeyword],
+    queryKey: [...apiPath.split('?'), debouncedSearchKeyword],
     queryFn: ({ signal, pageParam }) => {
       return executeAxios({
         url: valueAsLabel
-          ? `${queryPath}${queryPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
-          : `${queryPath}${queryPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${selectedValue ? `&preSelected=${selectedValue}` : ''}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
+          ? `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
+          : `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${selectedValue ? `&preSelected=${selectedValue}` : ''}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
         method: 'GET',
         signal
       })
@@ -150,29 +151,30 @@ export const useOptionsInfiniteQuery = ({
       return
     }
 
-    const newQueryPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
+    const newApiPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
       const value = dependencyFieldsValue[fieldName]
       if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
         return result
       }
       return result.replace(`{${fieldName}}`, value.toString())
-    }, originalQueryPath)
+    }, apiPath)
 
-    setQueryPath(newQueryPath)
-    setEnabled(!newQueryPath?.includes('/{'))
-  }, [dependencyFieldsValue, originalQueryPath])
+    setApiPath(newApiPath)
+    setEnabled(!newApiPath?.includes('/{'))
+  }, [dependencyFieldsValue, apiPath])
 
   const options = useMemo<Option[]>(() => {
     if (!enabled) {
       return []
     }
-    return optionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
-  }, [enabled, optionsInfiniteQuery.data])
+    return getOptionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
+  }, [enabled, getOptionsInfiniteQuery.data])
 
   return {
-    optionsInfiniteQuery,
+    getOptionsInfiniteQuery,
     options,
     searchKeyword,
+    debouncedSearchKeyword,
     setSearchKeyword
   }
 }

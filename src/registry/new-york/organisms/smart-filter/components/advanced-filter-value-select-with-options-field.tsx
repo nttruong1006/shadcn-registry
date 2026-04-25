@@ -84,10 +84,10 @@ export default function AdvancedFilterValueSelectWithOptionsField({
     <advancedFilterForm.AppField name={`filters[${index}].value.default`}>
       {(field) => {
         const value = items.find((item) => item.value === field.state.value) ?? null
-        const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+        const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
         return (
-          <Field data-invalid={isInvalid}>
+          <Field data-invalid={invalid}>
             <Combobox
               items={items}
               onValueChange={(value) => {
@@ -96,8 +96,8 @@ export default function AdvancedFilterValueSelectWithOptionsField({
               value={value}
             >
               <ComboboxInput
-                aria-invalid={isInvalid}
-                data-invalid={isInvalid}
+                aria-invalid={invalid}
+                data-invalid={invalid}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               />
               <ComboboxContent>
@@ -111,7 +111,8 @@ export default function AdvancedFilterValueSelectWithOptionsField({
                 </ComboboxList>
               </ComboboxContent>
             </Combobox>
-            {isInvalid && <FieldError errors={field.state.meta.errors} />}
+
+            {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )
       }}

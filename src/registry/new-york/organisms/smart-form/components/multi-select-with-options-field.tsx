@@ -1,38 +1,72 @@
-// import { MultiSelect, type MultiSelectProps } from '@/registry/new-york/molecules/multi-select/components/multi-select'
-// import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-// import { useFieldContext } from './lib/base'
-// import type { MultiSelectFieldInputValue } from './lib/schema'
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+  useComboboxAnchor
+} from '@/components/atoms/combobox'
+import type { Option } from '@/types/base'
+import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import { useFieldContext } from './lib/form'
+import type { MultiSelectFieldInputValue } from './lib/schema'
 
-// // Component
-// const MultiSelectWithOptionsField = ({
-//   label,
-//   isDisabled,
-//   options,
-//   ...props
-// }: BaseSmartFormFieldFieldProps & {
-//   options: MultiSelectProps['options']
-// }) => {
-//   // Hooks
-//   const field = useFieldContext<MultiSelectFieldInputValue>()
-//   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+export default function MultiSelectWithOptionsField({
+  label,
+  disabled,
+  options,
+  ...props
+}: BaseSmartFormFieldFieldProps & {
+  options: Option[]
+}) {
+  const anchor = useComboboxAnchor()
+  const field = useFieldContext<MultiSelectFieldInputValue>()
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const selectedOptions = field.state.value as string[]
+  const value = options.filter((item) => selectedOptions.includes(item.value))
 
-//   // Template
-//   return (
-//     <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
-//       <MultiSelect
-//         buttonTriggerProps={{
-//           id: field.name,
-//           disabled: isDisabled
-//         }}
-//         onValueChange={field.handleChange}
-//         options={options}
-//         placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
-//         value={field.state.value}
-//       />
-//     </FieldContainer>
-//   )
-// }
+  return (
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+      <Combobox
+        items={options}
+        multiple
+        onValueChange={(value) => {
+          field.handleChange(value.map((item) => item.value))
+        }}
+        value={value}
+      >
+        <ComboboxChips ref={anchor}>
+          <ComboboxValue>
+            {(value: typeof options) => {
+              return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+            }}
+          </ComboboxValue>
+          <ComboboxChipsInput
+            aria-invalid={invalid}
+            data-invalid={invalid}
+            disabled={disabled}
+            id={`${field.form.formId}-${field.name}`}
+            placeholder={
+              value.length > 0 ? undefined : `Select ${typeof label === 'string' ? label.toLowerCase() : 'information'}`
+            }
+          />
+        </ComboboxChips>
 
-// export default MultiSelectWithOptionsField
-
-export default () => null
+        <ComboboxContent anchor={anchor}>
+          <ComboboxEmpty>No items found.</ComboboxEmpty>
+          <ComboboxList>
+            {(item: (typeof options)[number]) => (
+              <ComboboxItem key={item.value} value={item}>
+                {item.label}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+    </FieldContainer>
+  )
+}

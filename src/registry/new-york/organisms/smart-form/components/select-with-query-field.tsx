@@ -1,41 +1,69 @@
-import { Combobox } from '@/components/atoms/combobox'
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList
+} from '@/components/atoms/combobox'
+import { InputGroupAddon } from '@/components/atoms/input-group'
+import { Spinner } from '@/components/atoms/spinner'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
-import { useOptionsQuery } from './lib/query'
+import { useFieldContext } from './lib/form'
+import { useGetOptionsQuery } from './lib/query'
 import type { SelectFieldInputValue } from './lib/schema'
 
-// Component
-const SelectWithQueryField = ({
+export default function SelectWithQueryField({
   label,
   disabled,
-  originalQueryPath,
+  originalApiPath,
   dependencyFieldsValue,
   ...props
-}: BaseSmartFormFieldFieldProps & Parameters<typeof useOptionsQuery>[0]) => {
-  // Hooks
+}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsQuery>[0]) {
   const field = useFieldContext<SelectFieldInputValue>()
-  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-  const { options } = useOptionsQuery({
-    originalQueryPath,
+
+  const { getOptionsQuery, options } = useGetOptionsQuery({
+    originalApiPath,
     dependencyFieldsValue
   })
 
-  // Template
+  const value = options.find((item) => item.value === field.state.value) ?? null
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
+
   return (
     <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
       <Combobox
         items={options}
-        // buttonTriggerProps={{
-        //   id: `${field.form.formId}-${field.name}`,
-        //   disabled,
-        //   isLoading: optionsQuery.isFetching
-        // }}
-        onValueChange={field.handleChange}
-        // placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
-        value={field.state.value}
-      />
+        onValueChange={(value) => {
+          field.handleChange(value?.value ?? null)
+        }}
+        value={value}
+      >
+        <ComboboxInput
+          aria-invalid={invalid}
+          data-invalid={invalid}
+          disabled={disabled || getOptionsQuery.isFetching}
+          id={`${field.form.formId}-${field.name}`}
+          placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+        >
+          {getOptionsQuery.isFetching && (
+            <InputGroupAddon align='inline-start'>
+              <Spinner />
+            </InputGroupAddon>
+          )}
+        </ComboboxInput>
+
+        <ComboboxContent>
+          <ComboboxEmpty>No items found.</ComboboxEmpty>
+          <ComboboxList>
+            {(item: (typeof options)[number]) => (
+              <ComboboxItem key={item.value} value={item}>
+                {item.label}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
     </FieldContainer>
   )
 }
-
-export default SelectWithQueryField

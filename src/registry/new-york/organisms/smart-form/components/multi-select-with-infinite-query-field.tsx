@@ -1,60 +1,104 @@
-// import { Spinner } from '@/registry/new-york/atoms/spinner/components/spinner'
-// import { MultiSelect } from '@/registry/new-york/molecules/multi-select/components/multi-select'
-// import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-// import { useFieldContext } from './lib/base'
-// import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
-// import type { MultiSelectFieldInputValue } from './lib/schema'
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxStatus,
+  ComboboxValue,
+  useComboboxAnchor
+} from '@/components/atoms/combobox'
+import { Spinner } from '@/components/atoms/spinner'
+import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import { updateSelectedItemReferencesAndGetItems } from './lib/base'
+import { useFieldContext } from './lib/form'
+import { fetchNextPage, useGetOptionsInfiniteQuery } from './lib/query'
+import type { MultiSelectFieldInputValue } from './lib/schema'
 
-// // Component
-// const MultiSelectWithInfiniteQueryField = ({
-//   label,
-//   isDisabled,
-//   originalApiPath,
-//   dependencyFieldsValue,
-//   ...props
-// }: BaseSmartFormFieldFieldProps & Parameters<typeof useOptionsInfiniteQuery>[0]) => {
-//   // Hooks
-//   const field = useFieldContext<MultiSelectFieldInputValue>()
-//   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-//   const { optionsInfiniteQuery, options, searchKeyword, setSearchKeyword } = useOptionsInfiniteQuery({
-//     originalApiPath,
-//     dependencyFieldsValue,
-//     selectedValue: field.state.value.length > 0 ? field.state.value.join(',') : null
-//   })
+export default function MultiSelectWithInfiniteQueryField({
+  label,
+  disabled,
+  originalApiPath,
+  dependencyFieldsValue,
+  ...props
+}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
+  const anchor = useComboboxAnchor()
+  const field = useFieldContext<MultiSelectFieldInputValue>()
 
-//   // Template
-//   return (
-//     <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
-//       <MultiSelect
-//         buttonTriggerProps={{
-//           id: field.name,
-//           disabled: isDisabled,
-//           isLoading: optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage
-//         }}
-//         commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
-//         commandInputProps={{
-//           value: searchKeyword,
-//           onValueChange: setSearchKeyword
-//         }}
-//         commandListProps={{
-//           onScroll: (event) =>
-//             fetchNextPage({
-//               event,
-//               infiniteQuery: optionsInfiniteQuery
-//             })
-//         }}
-//         commandProps={{
-//           shouldFilter: false
-//         }}
-//         onValueChange={field.handleChange}
-//         options={options}
-//         placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
-//         value={field.state.value}
-//       />
-//     </FieldContainer>
-//   )
-// }
+  const { getOptionsInfiniteQuery, options, searchKeyword, debouncedSearchKeyword, setSearchKeyword } =
+    useGetOptionsInfiniteQuery({
+      originalApiPath,
+      dependencyFieldsValue,
+      selectedValue: field.state.value.length > 0 ? field.state.value.join(',') : null
+    })
 
-// export default MultiSelectWithInfiniteQueryField
+  const value = options.filter((item) => field.state.value.includes(item.value))
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
 
-export default () => null
+  return (
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+      <Combobox
+        filter={null}
+        inputValue={searchKeyword}
+        items={options}
+        multiple
+        onInputValueChange={setSearchKeyword}
+        onValueChange={(value) => {
+          field.handleChange(value.map((item) => item.value))
+        }}
+        value={value}
+      >
+        <ComboboxChips ref={anchor}>
+          {getOptionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
+
+          <ComboboxValue>
+            {(value: typeof options) => {
+              return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+            }}
+          </ComboboxValue>
+
+          <ComboboxChipsInput
+            aria-invalid={invalid}
+            data-invalid={invalid}
+            disabled={disabled || getOptionsInfiniteQuery.isLoading}
+            id={`${field.form.formId}-${field.name}`}
+            placeholder={
+              value.length > 0 ? undefined : `Select ${typeof label === 'string' ? label.toLowerCase() : 'information'}`
+            }
+          />
+        </ComboboxChips>
+
+        <ComboboxContent anchor={anchor}>
+          {getOptionsInfiniteQuery.isFetching && !getOptionsInfiniteQuery.isFetchingNextPage && (
+            <ComboboxStatus className='flex items-center gap-2'>
+              <Spinner />
+              <span>Searching for "{debouncedSearchKeyword}"...</span>
+            </ComboboxStatus>
+          )}
+
+          {!getOptionsInfiniteQuery.isFetching && items.length === 0 && (
+            <ComboboxEmpty>No matched for "{debouncedSearchKeyword}"</ComboboxEmpty>
+          )}
+
+          <ComboboxList onScroll={(event) => fetchNextPage({ event, infiniteQuery: getOptionsInfiniteQuery })}>
+            {(item: (typeof items)[number]) => (
+              <ComboboxItem key={item.value} value={item}>
+                {item.label}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+
+          {getOptionsInfiniteQuery.isFetchingNextPage && (
+            <ComboboxStatus className='flex justify-center'>
+              <Spinner />
+            </ComboboxStatus>
+          )}
+        </ComboboxContent>
+      </Combobox>
+    </FieldContainer>
+  )
+}

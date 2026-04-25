@@ -1,6 +1,6 @@
 import { Editor, type EditorProps } from '@/components/organisms/editor/editor'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { EditorFieldInputValue } from './lib/schema'
 
 export default function EditorField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {

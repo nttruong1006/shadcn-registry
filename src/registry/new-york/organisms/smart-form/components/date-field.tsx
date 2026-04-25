@@ -1,7 +1,7 @@
 import { toDate } from 'date-fns'
 import { DatePicker, type DatePickerProps } from '@/components/atoms/date-picker'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { DateFieldInputValue } from './lib/schema'
 
 export default function DateField({
@@ -20,6 +20,7 @@ export default function DateField({
       <DatePicker
         disabled={disabled}
         id={`${field.form.formId}-${field.name}`}
+        invalid={invalid}
         onValueChange={field.handleChange as DatePickerProps['onValueChange']}
         placeholder={`Select ${typeof label === 'string' ? label.toLowerCase() : 'information'}`}
         value={field.state.value ? toDate(field.state.value) : null}

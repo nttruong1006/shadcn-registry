@@ -16,7 +16,7 @@ import { Spinner } from '@/components/atoms/spinner'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import type { FilterWithQuery } from './lib/base'
 import { updateSelectedItemReferencesAndGetItems, useAdvancedFilterForm } from './lib/form'
-import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
+import { fetchNextPage, useGetOptionsInfiniteQuery } from './lib/query'
 
 // Component
 export default function AdvancedFilterValueMultiSelectWithQueryField({
@@ -27,8 +27,8 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
   const advancedFilterForm = useAdvancedFilterForm()
   const selectedFilter = selectedFilterProp as FilterWithQuery
 
-  const { options, optionsInfiniteQuery, searchKeyword, debouncedSearchKeyword, setSearchKeyword } =
-    useOptionsInfiniteQuery({
+  const { options, getOptionsInfiniteQuery, searchKeyword, debouncedSearchKeyword, setSearchKeyword } =
+    useGetOptionsInfiniteQuery({
       apiPath: selectedFilter.apiPath
     })
 
@@ -54,7 +54,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
               value={value}
             >
               <ComboboxChips ref={anchor}>
-                {optionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
+                {getOptionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
 
                 <ComboboxValue>
                   {(value: typeof options) => {
@@ -65,24 +65,24 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                 <ComboboxChipsInput
                   aria-invalid={invalid}
                   data-invalid={invalid}
-                  disabled={optionsInfiniteQuery.isLoading}
+                  disabled={getOptionsInfiniteQuery.isLoading}
                   placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                 />
               </ComboboxChips>
 
               <ComboboxContent anchor={anchor}>
-                {optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage && (
+                {getOptionsInfiniteQuery.isFetching && !getOptionsInfiniteQuery.isFetchingNextPage && (
                   <ComboboxStatus className='flex items-center gap-2'>
                     <Spinner />
                     <span>Searching for "{debouncedSearchKeyword}"...</span>
                   </ComboboxStatus>
                 )}
 
-                {!optionsInfiniteQuery.isFetching && items.length === 0 && (
+                {!getOptionsInfiniteQuery.isFetching && items.length === 0 && (
                   <ComboboxEmpty>No matched for "{debouncedSearchKeyword}"</ComboboxEmpty>
                 )}
 
-                <ComboboxList onScroll={(event) => fetchNextPage({ event, infiniteQuery: optionsInfiniteQuery })}>
+                <ComboboxList onScroll={(event) => fetchNextPage({ event, infiniteQuery: getOptionsInfiniteQuery })}>
                   {(item: (typeof items)[number]) => (
                     <ComboboxItem key={item.value} value={item}>
                       {item.label}
@@ -90,7 +90,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                   )}
                 </ComboboxList>
 
-                {optionsInfiniteQuery.isFetchingNextPage && (
+                {getOptionsInfiniteQuery.isFetchingNextPage && (
                   <ComboboxStatus className='flex justify-center'>
                     <Spinner />
                   </ComboboxStatus>

@@ -1,59 +1,66 @@
-// import { Spinner } from '@/registry/new-york/atoms/spinner/components/spinner'
-// import { Autocomplete } from '@/registry/new-york/molecules/autocomplete/components/autocomplete'
-// import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-// import { useFieldContext } from './lib/base'
-// import { fetchNextPage, useOptionsInfiniteQuery } from './lib/query'
-// import type { AutocompleteFieldInputValue } from './lib/schema'
+import {
+  Autocomplete,
+  AutocompleteContent,
+  AutocompleteInput,
+  AutocompleteItem,
+  AutocompleteList,
+  AutocompleteStatus
+} from '@/components/atoms/autocomplete'
+import { InputGroupAddon } from '@/components/atoms/input-group'
+import { Spinner } from '@/components/atoms/spinner'
+import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import { useFieldContext } from './lib/form'
+import { fetchNextPage, useGetOptionsInfiniteQuery } from './lib/query'
+import type { AutocompleteFieldInputValue } from './lib/schema'
 
-// // Component
-// const AutocompleteWithInfiniteQueryField = ({
-//   label,
-//   isDisabled,
-//   originalApiPath,
-//   dependencyFieldsValue,
-//   selectedValue,
-//   ...props
-// }: BaseSmartFormFieldFieldProps & Parameters<typeof useOptionsInfiniteQuery>[0]) => {
-//   // Hooks
-//   const field = useFieldContext<AutocompleteFieldInputValue>()
-//   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-//   const { optionsInfiniteQuery, options } = useOptionsInfiniteQuery({
-//     originalApiPath,
-//     dependencyFieldsValue,
-//     selectedValue: field.state.value,
-//     isLabelAsValue: true
-//   })
+export default function AutocompleteWithInfiniteQueryField({
+  label,
+  disabled,
+  originalApiPath,
+  dependencyFieldsValue,
+  ...props
+}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
+  const field = useFieldContext<AutocompleteFieldInputValue>()
+  const invalid = field.state.meta.isTouched && !field.state.meta.isValid
+  const { getOptionsInfiniteQuery, options } = useGetOptionsInfiniteQuery({
+    originalApiPath,
+    dependencyFieldsValue,
+    selectedValue: field.state.value,
+    valueAsLabel: true
+  })
 
-//   // Template
-//   return (
-//     <FieldContainer errors={field.state.meta.errors} isInvalid={isInvalid} label={label} name={field.name} {...props}>
-//       <Autocomplete
-//         commandGroupSlot={optionsInfiniteQuery.isFetchingNextPage ? <Spinner className='mx-auto my-2' /> : null}
-//         commandListProps={{
-//           onScroll: (event) =>
-//             fetchNextPage({
-//               event,
-//               infiniteQuery: optionsInfiniteQuery
-//             })
-//         }}
-//         commandProps={{
-//           shouldFilter: false
-//         }}
-//         inputProps={{
-//           id: field.name,
-//           disabled: isDisabled,
-//           'aria-invalid': isInvalid
-//         }}
-//         isLoading={optionsInfiniteQuery.isFetching && !optionsInfiniteQuery.isFetchingNextPage}
-//         onValueChange={field.handleChange}
-//         options={options}
-//         placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
-//         value={field.state.value}
-//       />
-//     </FieldContainer>
-//   )
-// }
+  return (
+    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+      <Autocomplete items={options} onValueChange={field.handleChange} openOnInputClick value={field.state.value}>
+        <AutocompleteInput
+          aria-invalid={invalid}
+          disabled={disabled || getOptionsInfiniteQuery.isLoading}
+          id={`${field.form.formId}-${field.name}`}
+          placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+        >
+          {getOptionsInfiniteQuery.isLoading && (
+            <InputGroupAddon>
+              <Spinner />
+            </InputGroupAddon>
+          )}
+        </AutocompleteInput>
 
-// export default AutocompleteWithInfiniteQueryField
+        <AutocompleteContent>
+          <AutocompleteList onScroll={(event) => fetchNextPage({ event, infiniteQuery: getOptionsInfiniteQuery })}>
+            {(item: string) => (
+              <AutocompleteItem key={item} value={item}>
+                {item}
+              </AutocompleteItem>
+            )}
+          </AutocompleteList>
 
-export default () => null
+          {getOptionsInfiniteQuery.isFetchingNextPage && (
+            <AutocompleteStatus className='flex justify-center'>
+              <Spinner />
+            </AutocompleteStatus>
+          )}
+        </AutocompleteContent>
+      </Autocomplete>
+    </FieldContainer>
+  )
+}

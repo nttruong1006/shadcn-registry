@@ -7,6 +7,7 @@ import {
   type FieldProps
 } from '@/components/atoms/field'
 import { cn } from '@/utils/ui'
+import { useFieldContext } from './lib/form'
 
 export type SmartFormFieldContainerProps = FieldProps & {
   name: string
@@ -32,9 +33,13 @@ export default function SmartFormFieldContainer({
   className,
   ...props
 }: SmartFormFieldContainerProps) {
+  const field = useFieldContext()
+
+  console.log(props)
+
   return (
     <Field className={cn('group/field', className)} data-invalid={invalid} {...props}>
-      <FieldLabel htmlFor={name}>
+      <FieldLabel htmlFor={`${field.form.formId}-${field.name}`}>
         {label} <span className='text-destructive'>{required && '*'}</span>
       </FieldLabel>
       {children}

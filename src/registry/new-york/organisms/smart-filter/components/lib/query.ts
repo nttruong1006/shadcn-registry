@@ -1,5 +1,6 @@
 import {
   type DefaultError,
+  type GetNextPageParamFunction,
   type InfiniteData,
   type QueryKey,
   type UseInfiniteQueryResult,
@@ -12,44 +13,37 @@ import { executeAxios } from '@/lib/axios'
 import type { OptionsInfiniteQueryData, PaginationQueryData } from '@/types/api'
 import type { Option } from '@/types/base'
 
-// Use options query
-export function useOptionsQuery({ apiPath }: { apiPath: string | undefined }) {
-  const optionsQuery = useQuery<{
+// Use get options query
+export function useGetOptionsQuery({ apiPath }: { apiPath: string }) {
+  const getOptionsQuery = useQuery<{
     responseData: {
       rows: Option[]
     }
   }>({
-    queryKey: apiPath ? apiPath.split('?') : [],
+    queryKey: apiPath.split('?'),
     queryFn: ({ signal }) => {
       return executeAxios({ url: apiPath, method: 'GET', signal })
-    },
-    enabled: Boolean(apiPath)
+    }
   })
 
-  const options = useMemo<Option[]>(() => {
-    return (
-      optionsQuery.data?.responseData?.rows.map((option) => ({
-        value: option.value,
-        label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label)
-      })) ?? []
-    )
-  }, [optionsQuery.data])
+  const options = useMemo(() => {
+    return getOptionsQuery.data?.responseData?.rows ?? []
+  }, [getOptionsQuery.data])
 
   return {
-    optionsQuery,
+    getOptionsQuery,
     options
   }
 }
 
-// Use options infinite query
 // Infinite query page size
 export const infiniteQueryPageSize = 100
 
 // Get next page param
-export function getNextPageParam(queryFn: unknown, _: unknown, page: unknown) {
+export const getNextPageParam: GetNextPageParamFunction<number, PaginationQueryData> = (queryFn, _, page) => {
   const {
     responseData: { count, pageSize }
-  } = queryFn as unknown as PaginationQueryData
+  } = queryFn
   const queryPage = page as unknown as number
   const totalPage = Math.ceil(count / pageSize)
 
@@ -60,9 +54,13 @@ export function getNextPageParam(queryFn: unknown, _: unknown, page: unknown) {
 }
 
 // Fetch next page
-export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQuery: UseInfiniteQueryResult }) {
-  const { event, infiniteQuery } = args
-
+export function fetchNextPage({
+  event,
+  infiniteQuery
+}: {
+  event: UIEvent<HTMLDivElement>
+  infiniteQuery: UseInfiniteQueryResult
+}) {
   const { scrollTop, offsetHeight, scrollHeight } = event.target as HTMLDivElement
   if (
     scrollTop + offsetHeight >= scrollHeight - 28 * 20 &&
@@ -73,36 +71,36 @@ export function fetchNextPage(args: { event: UIEvent<HTMLDivElement>; infiniteQu
   }
 }
 
-export function useOptionsInfiniteQuery({ apiPath }: { apiPath: string | undefined }) {
+// Use get options infinite query
+export function useGetOptionsInfiniteQuery({ apiPath }: { apiPath: string }) {
   const [searchKeyword, setSearchKeyword] = useState('')
   const debouncedSearchKeyword = useDebounce(searchKeyword.trim(), 400)
 
-  const optionsInfiniteQuery = useInfiniteQuery<
+  const getOptionsInfiniteQuery = useInfiniteQuery<
     OptionsInfiniteQueryData,
     DefaultError,
     InfiniteData<OptionsInfiniteQueryData>,
     QueryKey,
-    number | undefined
+    number
   >({
-    queryKey: apiPath ? [...apiPath.split('?'), debouncedSearchKeyword] : [debouncedSearchKeyword],
+    queryKey: [...apiPath.split('?'), debouncedSearchKeyword],
     queryFn: ({ signal, pageParam }) => {
       return executeAxios({
-        url: `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
+        url: `${apiPath}${apiPath.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
         method: 'GET',
         signal
       })
     },
-    enabled: Boolean(apiPath),
     initialPageParam: 1,
     getNextPageParam
   })
 
   const options = useMemo<Option[]>(() => {
-    return optionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
-  }, [optionsInfiniteQuery.data])
+    return getOptionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
+  }, [getOptionsInfiniteQuery.data])
 
   return {
-    optionsInfiniteQuery,
+    getOptionsInfiniteQuery,
     options,
     searchKeyword,
     debouncedSearchKeyword,

@@ -17,7 +17,7 @@ import { Spinner } from '@/components/atoms/spinner'
 import type { AdvancedFilterValueFieldComponentProps } from './advanced-filter-value-field'
 import type { FilterWithQuery } from './lib/base'
 import { useAdvancedFilterForm } from './lib/form'
-import { useOptionsQuery } from './lib/query'
+import { useGetOptionsQuery } from './lib/query'
 
 export default function AdvancedFilterValueSelectWithQueryField({
   index,
@@ -28,7 +28,7 @@ export default function AdvancedFilterValueSelectWithQueryField({
   const advancedFilterForm = useAdvancedFilterForm()
   const selectedFilter = selectedFilterProp as FilterWithQuery
 
-  const { options, optionsQuery } = useOptionsQuery({
+  const { options, getOptionsQuery } = useGetOptionsQuery({
     apiPath: selectedFilter.apiPath
   })
 
@@ -53,7 +53,7 @@ export default function AdvancedFilterValueSelectWithQueryField({
                 value={value}
               >
                 <ComboboxChips ref={anchor}>
-                  {optionsQuery.isFetching && <Spinner className='text-muted-foreground' />}
+                  {getOptionsQuery.isFetching && <Spinner className='text-muted-foreground' />}
 
                   <ComboboxValue>
                     {(value: typeof options) => {
@@ -64,7 +64,7 @@ export default function AdvancedFilterValueSelectWithQueryField({
                   <ComboboxChipsInput
                     aria-invalid={invalid}
                     data-invalid={invalid}
-                    disabled={optionsQuery.isFetching}
+                    disabled={getOptionsQuery.isFetching}
                     placeholder={value.length > 0 ? '' : `Select ${selectedFilter.label.toLowerCase()}`}
                   />
                 </ComboboxChips>
@@ -108,10 +108,10 @@ export default function AdvancedFilterValueSelectWithQueryField({
               <ComboboxInput
                 aria-invalid={invalid}
                 data-invalid={invalid}
-                disabled={optionsQuery.isFetching}
+                disabled={getOptionsQuery.isFetching}
                 placeholder={`Select ${selectedFilter.label.toLowerCase()}`}
               >
-                {optionsQuery.isFetching && (
+                {getOptionsQuery.isFetching && (
                   <InputGroupAddon align='inline-start'>
                     <Spinner />
                   </InputGroupAddon>
@@ -129,6 +129,7 @@ export default function AdvancedFilterValueSelectWithQueryField({
                 </ComboboxList>
               </ComboboxContent>
             </Combobox>
+
             {invalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
         )

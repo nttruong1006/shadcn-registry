@@ -1,6 +1,6 @@
 import { Textarea } from '@/components/atoms/textarea'
 import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { useFieldContext } from './lib/base'
+import { useFieldContext } from './lib/form'
 import type { TextareaFieldInputValue } from './lib/schema'
 
 export default function TextareaField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
@@ -12,7 +12,7 @@ export default function TextareaField({ label, disabled, ...props }: BaseSmartFo
       <Textarea
         aria-invalid={invalid}
         disabled={disabled}
-        id={field.name}
+        id={`${field.form.formId}-${field.name}`}
         name={field.name}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
