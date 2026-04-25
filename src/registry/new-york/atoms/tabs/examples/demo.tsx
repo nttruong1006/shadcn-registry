@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/atoms/tab
 
 export function TabsDemo() {
   return (
-    <Tabs className='w-[400px]' defaultValue='overview'>
+    <Tabs className='w-md max-w-full' defaultValue='overview'>
       <TabsList>
         <TabsTrigger value='overview'>Overview</TabsTrigger>
         <TabsTrigger value='analytics'>Analytics</TabsTrigger>
