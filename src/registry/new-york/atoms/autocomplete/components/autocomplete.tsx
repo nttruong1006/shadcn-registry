@@ -101,7 +101,22 @@ export function AutocompleteList({ className, ...props }: AutocompletePrimitive.
   )
 }
 
-export function AutocompleteItem({ className, ...props }: AutocompletePrimitive.Item.Props) {
+function getAutocompleteTitle(value: AutocompletePrimitive.Item.Props['value']) {
+  if (!value) {
+    return null
+  }
+
+  switch (typeof value) {
+    case 'string':
+      return value
+    case 'object':
+      return value.label ?? null
+    default:
+      return null
+  }
+}
+
+export function AutocompleteItem({ className, value, ...props }: AutocompletePrimitive.Item.Props) {
   return (
     <AutocompletePrimitive.Item
       className={cn(
@@ -109,6 +124,8 @@ export function AutocompleteItem({ className, ...props }: AutocompletePrimitive.
         className
       )}
       data-slot='autocomplete-item'
+      title={getAutocompleteTitle(value)}
+      value={value}
       {...props}
     />
   )

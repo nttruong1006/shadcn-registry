@@ -117,7 +117,22 @@ export function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Pro
   )
 }
 
-export function ComboboxItem({ className, children, ...props }: ComboboxPrimitive.Item.Props) {
+function getComboboxItemTitle(value: ComboboxPrimitive.Item.Props['value']) {
+  if (!value) {
+    return null
+  }
+
+  switch (typeof value) {
+    case 'string':
+      return value
+    case 'object':
+      return value.label ?? null
+    default:
+      return null
+  }
+}
+
+export function ComboboxItem({ className, children, value, ...props }: ComboboxPrimitive.Item.Props) {
   return (
     <ComboboxPrimitive.Item
       className={cn(
@@ -125,6 +140,8 @@ export function ComboboxItem({ className, children, ...props }: ComboboxPrimitiv
         className
       )}
       data-slot='combobox-item'
+      title={getComboboxItemTitle(value)}
+      value={value}
       {...props}
     >
       {children}
