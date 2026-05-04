@@ -1,0 +1,21 @@
+---
+title: Native Pdf Viewer
+description: Embed PDF files without the pain using native iframe.
+---
+
+import CodePreview from '@/components/app/code-preview/index.astro'
+import InstallationCard from '@/components/app/installation-card/index.astro'
+
+<CodePreview path='organisms/native-pdf-viewer/demo' />
+
+## Installation
+<InstallationCard registryName='native-pdf-viewer' />
+
+## Usage
+```tsx
+import { NativePDFViewer } from '@/components/organisms/native-pdf-viewer/native-pdf-viewer'
+```
+
+```tsx
+<NativePDFViewer className='h-[400px]' src='https://snippet.embedpdf.com/ebook.pdf' />
+```
