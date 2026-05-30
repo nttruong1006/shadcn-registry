@@ -8,7 +8,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "http://localhost:4321/r/input-group.json"
+    "https://ntt-shadcn-registry.vercel.app/r/input-group.json"
   ],
   "files": [
     {

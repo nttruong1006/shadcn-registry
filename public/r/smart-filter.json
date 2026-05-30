@@ -13,22 +13,22 @@
     "@tanstack/react-query"
   ],
   "registryDependencies": [
-    "http://localhost:4321/r/select.json",
-    "http://localhost:4321/r/date-picker.json",
-    "http://localhost:4321/r/button.json",
-    "http://localhost:4321/r/spinner.json",
-    "http://localhost:4321/r/calendar.json",
-    "http://localhost:4321/r/popover.json",
-    "http://localhost:4321/r/field.json",
-    "http://localhost:4321/r/input.json",
-    "http://localhost:4321/r/combobox.json",
-    "http://localhost:4321/r/input-group.json",
-    "http://localhost:4321/r/textarea.json",
-    "http://localhost:4321/r/number-input.json",
-    "http://localhost:4321/r/button-group.json",
-    "http://localhost:4321/r/separator.json",
-    "http://localhost:4321/r/tabs.json",
-    "http://localhost:4321/r/badge.json"
+    "https://ntt-shadcn-registry.vercel.app/r/select.json",
+    "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
+    "https://ntt-shadcn-registry.vercel.app/r/button.json",
+    "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+    "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
+    "https://ntt-shadcn-registry.vercel.app/r/popover.json",
+    "https://ntt-shadcn-registry.vercel.app/r/field.json",
+    "https://ntt-shadcn-registry.vercel.app/r/input.json",
+    "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+    "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+    "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
+    "https://ntt-shadcn-registry.vercel.app/r/number-input.json",
+    "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
+    "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+    "https://ntt-shadcn-registry.vercel.app/r/tabs.json",
+    "https://ntt-shadcn-registry.vercel.app/r/badge.json"
   ],
   "files": [
     {

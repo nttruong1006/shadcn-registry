@@ -9,13 +9,13 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "http://localhost:4321/r/button.json",
-    "http://localhost:4321/r/spinner.json",
-    "http://localhost:4321/r/input.json",
-    "http://localhost:4321/r/separator.json",
-    "http://localhost:4321/r/sheet.json",
-    "http://localhost:4321/r/skeleton.json",
-    "http://localhost:4321/r/tooltip.json"
+    "https://ntt-shadcn-registry.vercel.app/r/button.json",
+    "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+    "https://ntt-shadcn-registry.vercel.app/r/input.json",
+    "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+    "https://ntt-shadcn-registry.vercel.app/r/sheet.json",
+    "https://ntt-shadcn-registry.vercel.app/r/skeleton.json",
+    "https://ntt-shadcn-registry.vercel.app/r/tooltip.json"
   ],
   "files": [
     {

@@ -7,7 +7,7 @@
     "@tanstack/react-query"
   ],
   "registryDependencies": [
-    "http://localhost:4321/r/spinner.json"
+    "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
   ],
   "files": [
     {

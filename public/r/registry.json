@@ -60,8 +60,8 @@
       ],
       "dependencies": ["@base-ui/react", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
       ]
     },
     {
@@ -82,7 +82,9 @@
         }
       ],
       "dependencies": ["@base-ui/react", "lucide-react"],
-      "registryDependencies": ["http://localhost:4321/r/input-group.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json"
+      ]
     },
     {
       "name": "avatar",
@@ -159,7 +161,9 @@
         }
       ],
       "dependencies": ["@base-ui/react", "class-variance-authority"],
-      "registryDependencies": ["http://localhost:4321/r/spinner.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
+      ]
     },
     {
       "name": "button-group",
@@ -179,7 +183,9 @@
         }
       ],
       "dependencies": ["@base-ui/react", "class-variance-authority"],
-      "registryDependencies": ["http://localhost:4321/r/separator.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json"
+      ]
     },
     {
       "name": "calendar",
@@ -200,8 +206,8 @@
       ],
       "dependencies": ["lucide-react", "react-day-picker"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
       ]
     },
     {
@@ -241,8 +247,8 @@
       ],
       "dependencies": ["embla-carousel-react", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
       ]
     },
     {
@@ -283,11 +289,11 @@
       ],
       "dependencies": ["@base-ui/react", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/textarea.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json"
       ]
     },
     {
@@ -309,12 +315,12 @@
       ],
       "dependencies": ["cmdk", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/dialog.json",
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/textarea.json"
+        "https://ntt-shadcn-registry.vercel.app/r/dialog.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json"
       ]
     },
     {
@@ -350,10 +356,10 @@
       ],
       "dependencies": ["date-fns", "lucide-react", "react-day-picker"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/calendar.json",
-        "http://localhost:4321/r/popover.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json"
       ]
     },
     {
@@ -375,8 +381,8 @@
       ],
       "dependencies": ["@base-ui/react", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
       ]
     },
     {
@@ -455,8 +461,8 @@
       ],
       "dependencies": ["class-variance-authority"],
       "registryDependencies": [
-        "http://localhost:4321/r/label.json",
-        "http://localhost:4321/r/separator.json"
+        "https://ntt-shadcn-registry.vercel.app/r/label.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json"
       ]
     },
     {
@@ -516,10 +522,10 @@
       ],
       "dependencies": ["class-variance-authority"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/textarea.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json"
       ]
     },
     {
@@ -559,7 +565,9 @@
         }
       ],
       "dependencies": ["@base-ui/react", "class-variance-authority"],
-      "registryDependencies": ["http://localhost:4321/r/separator.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json"
+      ]
     },
     {
       "name": "kbd",
@@ -615,7 +623,9 @@
         }
       ],
       "dependencies": ["@base-ui/react", "lucide-react"],
-      "registryDependencies": ["http://localhost:4321/r/dropdown-menu.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/dropdown-menu.json"
+      ]
     },
     {
       "name": "navigation-menu",
@@ -792,8 +802,8 @@
       ],
       "dependencies": ["@base-ui/react", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
       ]
     },
     {
@@ -824,13 +834,13 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/separator.json",
-        "http://localhost:4321/r/sheet.json",
-        "http://localhost:4321/r/skeleton.json",
-        "http://localhost:4321/r/tooltip.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/sheet.json",
+        "https://ntt-shadcn-registry.vercel.app/r/skeleton.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tooltip.json"
       ]
     },
     {
@@ -1014,7 +1024,9 @@
         }
       ],
       "dependencies": ["@base-ui/react", "class-variance-authority"],
-      "registryDependencies": ["http://localhost:4321/r/toggle.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/toggle.json"
+      ]
     },
     {
       "name": "tooltip",
@@ -1086,10 +1098,10 @@
       ],
       "dependencies": ["@base-ui/react", "color", "lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/select.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/select.json"
       ]
     },
     {
@@ -1121,9 +1133,9 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json"
       ]
     },
     {
@@ -1181,7 +1193,9 @@
           "target": "src/utils/ui.ts"
         }
       ],
-      "registryDependencies": ["http://localhost:4321/r/spinner.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
+      ]
     },
     {
       "name": "number-input",
@@ -1206,11 +1220,11 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/button-group.json",
-        "http://localhost:4321/r/separator.json",
-        "http://localhost:4321/r/input.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json"
       ]
     },
     {
@@ -1232,9 +1246,9 @@
       ],
       "dependencies": ["lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/tooltip.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tooltip.json"
       ]
     },
     {
@@ -1251,11 +1265,11 @@
       ],
       "dependencies": ["lucide-react"],
       "registryDependencies": [
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/textarea.json"
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json"
       ]
     },
     {
@@ -1282,13 +1296,13 @@
       ],
       "dependencies": ["lucide-react", "react-phone-number-input"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/combobox.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/textarea.json",
-        "http://localhost:4321/r/item.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
+        "https://ntt-shadcn-registry.vercel.app/r/item.json"
       ]
     },
     {
@@ -1315,8 +1329,8 @@
       ],
       "dependencies": ["lucide-react", "zod"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
       ]
     },
     {
@@ -1423,23 +1437,23 @@
       ],
       "devDependencies": ["@types/lodash.debounce"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/dropdown-menu.json",
-        "http://localhost:4321/r/table.json",
-        "http://localhost:4321/r/checkbox.json",
-        "http://localhost:4321/r/combobox.json",
-        "http://localhost:4321/r/select.json",
-        "http://localhost:4321/r/number-input.json",
-        "http://localhost:4321/r/button-group.json",
-        "http://localhost:4321/r/separator.json",
-        "http://localhost:4321/r/pagination.json",
-        "http://localhost:4321/r/tooltip.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/textarea.json",
-        "http://localhost:4321/r/loading-overlay.json",
-        "http://localhost:4321/r/popover.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dropdown-menu.json",
+        "https://ntt-shadcn-registry.vercel.app/r/table.json",
+        "https://ntt-shadcn-registry.vercel.app/r/checkbox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/select.json",
+        "https://ntt-shadcn-registry.vercel.app/r/number-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/pagination.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tooltip.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
+        "https://ntt-shadcn-registry.vercel.app/r/loading-overlay.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json"
       ]
     },
     {
@@ -1624,23 +1638,23 @@
       ],
       "devDependencies": ["@types/lodash.throttle"],
       "registryDependencies": [
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/popover.json",
-        "http://localhost:4321/r/tooltip.json",
-        "http://localhost:4321/r/color-picker.json",
-        "http://localhost:4321/r/select.json",
-        "http://localhost:4321/r/dropdown-menu.json",
-        "http://localhost:4321/r/separator.json",
-        "http://localhost:4321/r/skeleton.json",
-        "http://localhost:4321/r/field.json",
-        "http://localhost:4321/r/label.json",
-        "http://localhost:4321/r/file-upload.json",
-        "http://localhost:4321/r/tabs.json",
-        "http://localhost:4321/r/checkbox.json",
-        "http://localhost:4321/r/kbd.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/dialog.json"
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tooltip.json",
+        "https://ntt-shadcn-registry.vercel.app/r/color-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/select.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dropdown-menu.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/skeleton.json",
+        "https://ntt-shadcn-registry.vercel.app/r/field.json",
+        "https://ntt-shadcn-registry.vercel.app/r/label.json",
+        "https://ntt-shadcn-registry.vercel.app/r/file-upload.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tabs.json",
+        "https://ntt-shadcn-registry.vercel.app/r/checkbox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/kbd.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dialog.json"
       ]
     },
     {
@@ -1661,7 +1675,9 @@
         }
       ],
       "dependencies": ["@tanstack/react-query"],
-      "registryDependencies": ["http://localhost:4321/r/spinner.json"]
+      "registryDependencies": [
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json"
+      ]
     },
     {
       "name": "pdf-viewer",
@@ -1804,22 +1820,22 @@
         "@tanstack/react-query"
       ],
       "registryDependencies": [
-        "http://localhost:4321/r/select.json",
-        "http://localhost:4321/r/date-picker.json",
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/calendar.json",
-        "http://localhost:4321/r/popover.json",
-        "http://localhost:4321/r/field.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/combobox.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/textarea.json",
-        "http://localhost:4321/r/number-input.json",
-        "http://localhost:4321/r/button-group.json",
-        "http://localhost:4321/r/separator.json",
-        "http://localhost:4321/r/tabs.json",
-        "http://localhost:4321/r/badge.json"
+        "https://ntt-shadcn-registry.vercel.app/r/select.json",
+        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
+        "https://ntt-shadcn-registry.vercel.app/r/field.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
+        "https://ntt-shadcn-registry.vercel.app/r/number-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tabs.json",
+        "https://ntt-shadcn-registry.vercel.app/r/badge.json"
       ]
     },
     {
@@ -2002,33 +2018,33 @@
       ],
       "devDependencies": ["@types/lodash.throttle"],
       "registryDependencies": [
-        "http://localhost:4321/r/file-upload.json",
-        "http://localhost:4321/r/autocomplete.json",
-        "http://localhost:4321/r/input-group.json",
-        "http://localhost:4321/r/button.json",
-        "http://localhost:4321/r/spinner.json",
-        "http://localhost:4321/r/input.json",
-        "http://localhost:4321/r/textarea.json",
-        "http://localhost:4321/r/checkbox.json",
-        "http://localhost:4321/r/date-picker.json",
-        "http://localhost:4321/r/calendar.json",
-        "http://localhost:4321/r/popover.json",
-        "http://localhost:4321/r/editor.json",
-        "http://localhost:4321/r/tooltip.json",
-        "http://localhost:4321/r/color-picker.json",
-        "http://localhost:4321/r/select.json",
-        "http://localhost:4321/r/dropdown-menu.json",
-        "http://localhost:4321/r/separator.json",
-        "http://localhost:4321/r/skeleton.json",
-        "http://localhost:4321/r/field.json",
-        "http://localhost:4321/r/label.json",
-        "http://localhost:4321/r/tabs.json",
-        "http://localhost:4321/r/kbd.json",
-        "http://localhost:4321/r/dialog.json",
-        "http://localhost:4321/r/combobox.json",
-        "http://localhost:4321/r/number-input.json",
-        "http://localhost:4321/r/password-input.json",
-        "http://localhost:4321/r/phone-number-input.json"
+        "https://ntt-shadcn-registry.vercel.app/r/file-upload.json",
+        "https://ntt-shadcn-registry.vercel.app/r/autocomplete.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input-group.json",
+        "https://ntt-shadcn-registry.vercel.app/r/button.json",
+        "https://ntt-shadcn-registry.vercel.app/r/spinner.json",
+        "https://ntt-shadcn-registry.vercel.app/r/input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/textarea.json",
+        "https://ntt-shadcn-registry.vercel.app/r/checkbox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/date-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/calendar.json",
+        "https://ntt-shadcn-registry.vercel.app/r/popover.json",
+        "https://ntt-shadcn-registry.vercel.app/r/editor.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tooltip.json",
+        "https://ntt-shadcn-registry.vercel.app/r/color-picker.json",
+        "https://ntt-shadcn-registry.vercel.app/r/select.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dropdown-menu.json",
+        "https://ntt-shadcn-registry.vercel.app/r/separator.json",
+        "https://ntt-shadcn-registry.vercel.app/r/skeleton.json",
+        "https://ntt-shadcn-registry.vercel.app/r/field.json",
+        "https://ntt-shadcn-registry.vercel.app/r/label.json",
+        "https://ntt-shadcn-registry.vercel.app/r/tabs.json",
+        "https://ntt-shadcn-registry.vercel.app/r/kbd.json",
+        "https://ntt-shadcn-registry.vercel.app/r/dialog.json",
+        "https://ntt-shadcn-registry.vercel.app/r/combobox.json",
+        "https://ntt-shadcn-registry.vercel.app/r/number-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/password-input.json",
+        "https://ntt-shadcn-registry.vercel.app/r/phone-number-input.json"
       ]
     }
   ]

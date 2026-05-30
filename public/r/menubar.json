@@ -8,7 +8,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "http://localhost:4321/r/dropdown-menu.json"
+    "https://ntt-shadcn-registry.vercel.app/r/dropdown-menu.json"
   ],
   "files": [
     {
