@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loading-overlay",
+  "title": "Loading Overlay",
+  "description": "A component to display loading state of the overlay area.",
+  "registryDependencies": [
+    "http://localhost:4321/r/spinner.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/molecules/loading-overlay/components/loading-overlay.tsx",
+      "content": "import type { PropsWithChildren } from 'react'\nimport { Spinner } from '@/components/atoms/spinner'\nimport { cn } from '@/utils/ui'\n\nexport function LoadingOverlay({\n  className,\n  loading,\n  children\n}: PropsWithChildren & {\n  className?: string\n  loading?: boolean\n}) {\n  return (\n    <div className={cn('relative overflow-hidden', className)}>\n      {children}\n      <div\n        className={cn(\n          'absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-muted/60 transition-[visibility]',\n          loading ? 'visible' : 'invisible'\n        )}\n      >\n        <Spinner className='size-6' />\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/molecules/loading-overlay/loading-overlay.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:component"
+}

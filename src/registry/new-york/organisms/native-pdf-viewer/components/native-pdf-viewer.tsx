@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { skipToken, useQuery } from '@tanstack/react-query'
 import type { IframeHTMLAttributes } from 'react'
 import { Spinner } from '@/components/atoms/spinner'
 import { cn } from '@/utils/ui'
@@ -6,14 +6,15 @@ import { cn } from '@/utils/ui'
 export function NativePDFViewer({ src, className, ...props }: IframeHTMLAttributes<HTMLIFrameElement>) {
   const getPdfQuery = useQuery({
     queryKey: ['pdf', src],
-    queryFn: async () => {
-      const response = await fetch(src as string)
-      if (!response.ok) {
-        throw new Error(`Failed to fetch PDF: ${response.status}`)
-      }
-      return await response.blob()
-    },
-    enabled: !!src,
+    queryFn: src
+      ? async () => {
+          const response = await fetch(src)
+          if (!response.ok) {
+            throw new Error(`Failed to fetch PDF: ${response.status}`)
+          }
+          return await response.blob()
+        }
+      : skipToken,
     retry: 0
   })
 

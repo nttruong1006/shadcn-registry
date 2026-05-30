@@ -15,7 +15,8 @@ export default function ZoomButton({ id }: { id: string }) {
     setZoomed(newZoomed)
   }
 
-  // TODO: Move to useKeyPress hook from @uidotdev/usehooks when available (currently this hook is experimental)
+  // Todo: Move to useKeyPress hook from @uidotdev/usehooks when available (currently this hook is experimental)
+  // Info: https://usehooks.com/usekeypress
   useEffect(() => {
     const keydownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {

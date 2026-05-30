@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "title": "Spinner",
+  "description": "An indicator that can be used to show a loading state.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/spinner/components/spinner.tsx",
+      "content": "import { Loader2Icon } from 'lucide-react'\nimport type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function Spinner({ className, ...props }: ComponentProps<'svg'>) {\n  return <Loader2Icon aria-label='Loading' className={cn('size-4 animate-spin', className)} role='status' {...props} />\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/spinner.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

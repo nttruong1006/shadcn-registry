@@ -51,5 +51,25 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
-  }
+  },
+  "better-comments.tags": [
+    {
+      "tag": "todo",
+      "color": "oklch(50% 0.134 242.749)",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "oklch(74.6% 0.16 232.661)",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "todo",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    }
+  ]
 }

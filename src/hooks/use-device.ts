@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 // Use is mobile
-export const useIsMobile = (mobileBreakpoint = 768) => {
+export function useIsMobile(mobileBreakpoint = 768) {
   // States
   const [isMobile, setIsMobile] = useState<boolean>(false)
 

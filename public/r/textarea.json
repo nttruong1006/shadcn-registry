@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "Displays a form textarea or a component that looks like a textarea.",
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/textarea/components/textarea.tsx",
+      "content": "import type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function Textarea({ className, ...props }: ComponentProps<'textarea'>) {\n  return (\n    <textarea\n      className={cn(\n        'field-sizing-content line flex min-h-[3lh] w-full resize-none rounded-lg border border-input bg-transparent px-2.5 py-2 text-base outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 dark:disabled:bg-input/80',\n        className\n      )}\n      data-slot='textarea'\n      {...props}\n    />\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/textarea.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

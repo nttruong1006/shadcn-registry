@@ -98,14 +98,14 @@ export default defineConfig({
         {
           label: 'Components',
           items: [
-            { label: 'Atoms', autogenerate: { directory: 'components/atoms' } },
+            { label: 'Atoms', items: [{ autogenerate: { directory: 'components/atoms' } }] },
             {
               label: 'Molecules',
-              autogenerate: { directory: 'components/molecules' }
+              items: [{ autogenerate: { directory: 'components/molecules' } }]
             },
             {
               label: 'Organisms',
-              autogenerate: { directory: 'components/organisms' }
+              items: [{ autogenerate: { directory: 'components/organisms' } }]
             }
           ]
         }

@@ -4,10 +4,12 @@ import { HttpStatusCode, isAxiosError } from 'axios'
 const retryCount = 3
 
 // Delay retry
-const delayRetry = (failureCount: number) => failureCount * 1000 + Math.random() * 1000
+function delayRetry(failureCount: number) {
+  return failureCount * 1000 + Math.random() * 1000
+}
 
 // Retry
-const retry = (failureCount: number, error: Error) => {
+function retry(failureCount: number, error: Error) {
   // Check retry count and is axios error
   if (failureCount > retryCount || !isAxiosError(error)) {
     return false

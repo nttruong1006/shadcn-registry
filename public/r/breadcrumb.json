@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "description": "Displays the path to the current resource using a hierarchy of links.",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/breadcrumb/components/breadcrumb.tsx",
+      "content": "import { mergeProps } from '@base-ui/react/merge-props'\nimport { useRender } from '@base-ui/react/use-render'\nimport { ChevronRightIcon, MoreHorizontalIcon } from 'lucide-react'\nimport type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function Breadcrumb({ className, ...props }: ComponentProps<'nav'>) {\n  return <nav aria-label='breadcrumb' className={cn(className)} data-slot='breadcrumb' {...props} />\n}\n\nexport function BreadcrumbList({ className, ...props }: ComponentProps<'ol'>) {\n  return (\n    <ol\n      className={cn('wrap-break-word flex flex-wrap items-center gap-1.5 text-muted-foreground text-sm', className)}\n      data-slot='breadcrumb-list'\n      {...props}\n    />\n  )\n}\n\nexport function BreadcrumbItem({ className, ...props }: ComponentProps<'li'>) {\n  return <li className={cn('inline-flex items-center gap-1', className)} data-slot='breadcrumb-item' {...props} />\n}\n\nexport function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProps<'a'>) {\n  return useRender({\n    defaultTagName: 'a',\n    props: mergeProps<'a'>(\n      {\n        className: cn('transition-colors hover:text-foreground', className)\n      },\n      props\n    ),\n    render,\n    state: {\n      slot: 'breadcrumb-link'\n    }\n  })\n}\n\nexport function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {\n  return (\n    // biome-ignore lint/a11y/useFocusableInteractive: ignore\n    // biome-ignore lint/a11y/useSemanticElements: ignore\n    <span\n      aria-current='page'\n      aria-disabled='true'\n      className={cn('font-normal text-foreground', className)}\n      data-slot='breadcrumb-page'\n      role='link'\n      {...props}\n    />\n  )\n}\n\nexport function BreadcrumbSeparator({ children, className, ...props }: ComponentProps<'li'>) {\n  return (\n    <li\n      aria-hidden='true'\n      className={cn('[&>svg]:size-3.5', className)}\n      data-slot='breadcrumb-separator'\n      role='presentation'\n      {...props}\n    >\n      {children ?? <ChevronRightIcon className='cn-rtl-flip' />}\n    </li>\n  )\n}\n\nexport function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {\n  return (\n    <span\n      aria-hidden='true'\n      className={cn('flex size-5 items-center justify-center [&>svg]:size-4', className)}\n      data-slot='breadcrumb-ellipsis'\n      role='presentation'\n      {...props}\n    >\n      <MoreHorizontalIcon />\n      <span className='sr-only'>More</span>\n    </span>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/breadcrumb.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

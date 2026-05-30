@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "title": "Tabs",
+  "description": "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/tabs/components/tabs.tsx",
+      "content": "import { Tabs as TabsPrimitive } from '@base-ui/react/tabs'\nimport { cn } from '@/utils/ui'\n\nexport function Tabs({ className, ...props }: TabsPrimitive.Root.Props) {\n  return <TabsPrimitive.Root className={cn('flex flex-col gap-2', className)} data-slot='tabs' {...props} />\n}\n\nexport function TabsList({ className, children, ...props }: TabsPrimitive.List.Props) {\n  return (\n    <TabsPrimitive.List\n      className={cn(\n        'relative z-0 flex h-9 w-fit items-center justify-center rounded-lg bg-muted/50 p-1 text-muted-foreground',\n        className\n      )}\n      data-slot='tabs-list'\n      {...props}\n    >\n      {children}\n      <TabsPrimitive.Indicator className='absolute top-1/2 left-0 z-[-1] h-6 w-(--active-tab-width) translate-x-(--active-tab-left) -translate-y-1/2 rounded-md bg-muted transition-all' />\n    </TabsPrimitive.List>\n  )\n}\n\nexport function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {\n  return (\n    <TabsPrimitive.Tab\n      className={cn(\n        \"z-10 inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border border-transparent px-2 py-1 font-medium text-muted-foreground text-sm transition-colors focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0\",\n        'hover:text-foreground data-active:text-foreground data-active:hover:text-foreground',\n        className\n      )}\n      data-slot='tabs-trigger'\n      {...props}\n    />\n  )\n}\n\nexport function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {\n  return (\n    <TabsPrimitive.Panel className={cn('relative grow outline-none', className)} data-slot='tabs-content' {...props} />\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/tabs.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "title": "Slider",
+  "description": "An input where the user selects a value from within a given range.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/slider/components/slider.tsx",
+      "content": "import { Slider as SliderPrimitive } from '@base-ui/react/slider'\nimport { useMemo } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function Slider({ className, defaultValue, value, min = 0, max = 100, ...props }: SliderPrimitive.Root.Props) {\n  const _values = useMemo(() => {\n    if (Array.isArray(value)) {\n      return value\n    }\n    if (Array.isArray(defaultValue)) {\n      return defaultValue\n    }\n    return [min, max]\n  }, [value, defaultValue, min, max])\n\n  return (\n    <SliderPrimitive.Root\n      className={cn('data-vertical:h-full data-horizontal:w-full', className)}\n      data-slot='slider'\n      defaultValue={defaultValue}\n      max={max}\n      min={min}\n      thumbAlignment='edge'\n      value={value}\n      {...props}\n    >\n      <SliderPrimitive.Control className='relative flex w-full touch-none select-none items-center data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto data-vertical:flex-col data-disabled:opacity-50'>\n        <SliderPrimitive.Track\n          className='relative grow select-none overflow-hidden rounded-full bg-muted data-horizontal:h-1 data-vertical:h-full data-horizontal:w-full data-vertical:w-1'\n          data-slot='slider-track'\n        >\n          <SliderPrimitive.Indicator\n            className='select-none bg-primary data-horizontal:h-full data-vertical:w-full'\n            data-slot='slider-range'\n          />\n        </SliderPrimitive.Track>\n        {Array.from({ length: _values.length }, (_, index) => (\n          <SliderPrimitive.Thumb\n            className='relative block size-3 shrink-0 select-none rounded-full border border-ring bg-white ring-ring/50 transition-[color,box-shadow] after:absolute after:-inset-2 hover:ring-3 focus-visible:outline-hidden focus-visible:ring-3 active:ring-3 disabled:pointer-events-none disabled:opacity-50'\n            data-slot='slider-thumb'\n            // biome-ignore lint/suspicious/noArrayIndexKey: ignore\n            key={index}\n          />\n        ))}\n      </SliderPrimitive.Control>\n    </SliderPrimitive.Root>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/slider.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

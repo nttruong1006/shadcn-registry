@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp",
+  "title": "Input OTP",
+  "description": "Accessible one-time password component with copy paste functionality.",
+  "dependencies": [
+    "input-otp",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/input-otp/components/input-otp.tsx",
+      "content": "import { OTPInput, OTPInputContext } from 'input-otp'\nimport { MinusIcon } from 'lucide-react'\nimport { type ComponentProps, useContext } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function InputOTP({\n  className,\n  containerClassName,\n  ...props\n}: ComponentProps<typeof OTPInput> & {\n  containerClassName?: string\n}) {\n  return (\n    <OTPInput\n      className={cn('disabled:cursor-not-allowed', className)}\n      containerClassName={cn('cn-input-otp flex items-center has-disabled:opacity-50', containerClassName)}\n      data-slot='input-otp'\n      spellCheck={false}\n      {...props}\n    />\n  )\n}\n\nexport function InputOTPGroup({ className, ...props }: ComponentProps<'div'>) {\n  return (\n    <div\n      className={cn(\n        'flex items-center rounded-lg has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40',\n        className\n      )}\n      data-slot='input-otp-group'\n      {...props}\n    />\n  )\n}\n\nexport function InputOTPSlot({\n  index,\n  className,\n  ...props\n}: ComponentProps<'div'> & {\n  index: number\n}) {\n  const inputOTPContext = useContext(OTPInputContext)\n  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {}\n\n  return (\n    <div\n      className={cn(\n        'relative flex size-8 items-center justify-center border-input border-y border-r text-sm outline-none transition-all first:rounded-l-lg first:border-l last:rounded-r-lg aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-3 data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40',\n        className\n      )}\n      data-active={isActive}\n      data-slot='input-otp-slot'\n      {...props}\n    >\n      {char}\n      {hasFakeCaret && (\n        <div className='pointer-events-none absolute inset-0 flex items-center justify-center'>\n          <div className='h-4 w-px animate-caret-blink bg-foreground duration-1000' />\n        </div>\n      )}\n    </div>\n  )\n}\n\nexport function InputOTPSeparator({ ...props }: ComponentProps<'div'>) {\n  return (\n    // biome-ignore lint/a11y/useFocusableInteractive:ignore\n    // biome-ignore lint/a11y/useSemanticElements: ignore\n    <div\n      className=\"flex items-center [&_svg:not([class*='size-'])]:size-4\"\n      data-slot='input-otp-separator'\n      // biome-ignore lint/a11y/useAriaPropsForRole: ignore\n      role='separator'\n      {...props}\n    >\n      <MinusIcon />\n    </div>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/input-otp.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

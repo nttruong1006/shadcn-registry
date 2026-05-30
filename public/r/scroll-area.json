@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "description": "Augments native scroll functionality for custom, cross-browser styling.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/scroll-area/components/scroll-area.tsx",
+      "content": "import { ScrollArea as ScrollAreaPrimitive } from '@base-ui/react/scroll-area'\nimport { cn } from '@/utils/ui'\n\nexport function ScrollArea({ className, children, ...props }: ScrollAreaPrimitive.Root.Props) {\n  return (\n    <ScrollAreaPrimitive.Root className={cn('relative', className)} data-slot='scroll-area' {...props}>\n      <ScrollAreaPrimitive.Viewport\n        className='size-full rounded-[inherit] outline-none transition-[color,box-shadow] focus-visible:outline-1 focus-visible:ring-[3px] focus-visible:ring-ring/50'\n        data-slot='scroll-area-viewport'\n      >\n        {children}\n      </ScrollAreaPrimitive.Viewport>\n      <ScrollBar />\n      <ScrollAreaPrimitive.Corner />\n    </ScrollAreaPrimitive.Root>\n  )\n}\n\nexport function ScrollBar({ className, orientation = 'vertical', ...props }: ScrollAreaPrimitive.Scrollbar.Props) {\n  return (\n    <ScrollAreaPrimitive.Scrollbar\n      className={cn(\n        'flex touch-none select-none p-px transition-colors data-horizontal:h-2.5 data-vertical:h-full data-vertical:w-2.5 data-horizontal:flex-col data-horizontal:border-t data-horizontal:border-t-transparent data-vertical:border-l data-vertical:border-l-transparent',\n        className\n      )}\n      data-orientation={orientation}\n      data-slot='scroll-area-scrollbar'\n      orientation={orientation}\n      {...props}\n    >\n      <ScrollAreaPrimitive.Thumb className='relative flex-1 rounded-full bg-border' data-slot='scroll-area-thumb' />\n    </ScrollAreaPrimitive.Scrollbar>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/scroll-area.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

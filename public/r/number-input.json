@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "number-input",
+  "title": "Number Input",
+  "description": "An input to type number.",
+  "dependencies": [
+    "lucide-react",
+    "react-number-format",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "http://localhost:4321/r/button.json",
+    "http://localhost:4321/r/spinner.json",
+    "http://localhost:4321/r/button-group.json",
+    "http://localhost:4321/r/separator.json",
+    "http://localhost:4321/r/input.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/molecules/number-input/components/number-input.tsx",
+      "content": "import { MinusIcon, PlusIcon } from 'lucide-react'\nimport type { FocusEvent, ReactNode } from 'react'\nimport { NumericFormat, type NumericFormatProps } from 'react-number-format'\nimport { Button } from '@/components/atoms/button'\nimport { ButtonGroup } from '@/components/atoms/button-group'\nimport { Input, type InputProps } from '@/components/atoms/input'\nimport { cn } from '@/utils/ui'\n\nexport type NumberInputProps = NumericFormatProps<InputProps> & {\n  isDisplayStepper?: boolean\n  prefixNode?: ReactNode\n  suffixNode?: ReactNode\n  invalid?: boolean\n  onFieldChange?: (value: NonNullable<NumberInputProps['value']>) => void\n}\n\nexport function NumberInput({\n  value,\n  min = Number.NEGATIVE_INFINITY,\n  max = Number.POSITIVE_INFINITY,\n  step = 1,\n  decimalScale = 3,\n  allowNegative = true,\n  thousandSeparator = '.',\n  decimalSeparator = ',',\n  valueIsNumericString = true,\n  className,\n  isDisplayStepper = true,\n  disabled,\n  prefixNode,\n  suffixNode,\n  invalid,\n  onFieldChange,\n  ...props\n}: NumberInputProps) {\n  const increment = () => {\n    // Using == for checking both null or undefined\n    if (value == null) {\n      return\n    }\n    onFieldChange?.(+value + +step)\n  }\n\n  const decrement = () => {\n    // Using == for checking both null or undefined\n    if (value == null) {\n      return\n    }\n    onFieldChange?.(+value - +step)\n  }\n\n  const blur = (e: FocusEvent<HTMLInputElement, Element>) => {\n    props.onBlur?.(e)\n\n    // Using == for checking both null or undefined\n    if (value == null) {\n      return\n    }\n    if (value < min) {\n      return onFieldChange?.(min)\n    }\n    if (value > max) {\n      return onFieldChange?.(max)\n    }\n  }\n\n  return (\n    <ButtonGroup\n      className={cn(\n        'w-full aria-invalid:border-destructive! aria-invalid:ring-destructive/20! dark:aria-invalid:ring-destructive/40',\n        className\n      )}\n    >\n      <NumericFormat\n        allowNegative={allowNegative}\n        aria-invalid={invalid}\n        className={cn(isDisplayStepper && 'rounded-r-none')}\n        customInput={Input}\n        decimalScale={decimalScale}\n        decimalSeparator={decimalSeparator}\n        disabled={disabled}\n        max={max}\n        min={min}\n        step={step}\n        thousandSeparator={thousandSeparator}\n        value={value}\n        valueIsNumericString={valueIsNumericString}\n        {...props}\n        onBlur={blur}\n      />\n\n      {isDisplayStepper && (\n        <>\n          <Button\n            aria-label='Decrease value'\n            disabled={disabled || (value != null && +value <= +min)}\n            onClick={decrement}\n            size='icon'\n            variant='outline'\n          >\n            <MinusIcon />\n          </Button>\n\n          <Button\n            aria-label='Increase value'\n            disabled={disabled || (value != null && +value >= +max)}\n            onClick={increment}\n            size='icon'\n            variant='outline'\n          >\n            <PlusIcon />\n          </Button>\n        </>\n      )}\n    </ButtonGroup>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/molecules/number-input/number-input.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:component"
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
+  "dependencies": [
+    "@base-ui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "http://localhost:4321/r/button.json",
+    "http://localhost:4321/r/spinner.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/atoms/dialog/components/dialog.tsx",
+      "content": "import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'\nimport { XIcon } from 'lucide-react'\nimport type { ComponentProps, HTMLAttributes } from 'react'\nimport { Button } from '@/components/atoms/button'\nimport { cn } from '@/utils/ui'\n\nexport function Dialog({ ...props }: DialogPrimitive.Root.Props) {\n  return <DialogPrimitive.Root data-slot='dialog' {...props} />\n}\n\nexport function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {\n  return <DialogPrimitive.Trigger data-slot='dialog-trigger' {...props} />\n}\n\nexport function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {\n  return <DialogPrimitive.Portal data-slot='dialog-portal' {...props} />\n}\n\nexport function DialogClose({ ...props }: DialogPrimitive.Close.Props) {\n  return <DialogPrimitive.Close data-slot='dialog-close' {...props} />\n}\n\nexport function DialogOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) {\n  return (\n    <DialogPrimitive.Backdrop\n      className={cn(\n        'data-open:fade-in-0 data-closed:fade-out-0 fixed inset-0 isolate z-50 bg-black/10 duration-100 data-closed:animate-out data-open:animate-in supports-backdrop-filter:backdrop-blur-xs',\n        className\n      )}\n      data-slot='dialog-overlay'\n      {...props}\n    />\n  )\n}\n\nexport function DialogContent({\n  className,\n  children,\n  showCloseButton = true,\n  ...props\n}: DialogPrimitive.Popup.Props & {\n  showCloseButton?: boolean\n}) {\n  return (\n    <DialogPortal>\n      <DialogOverlay />\n      <DialogPrimitive.Popup\n        className={cn(\n          'data-open:fade-in-0 data-open:zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100dvw-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-popover-foreground text-sm outline-none ring-1 ring-foreground/10 duration-100 has-[div[data-slot=dialog-scroll]]:grid-rows-[auto_1fr_auto] data-closed:animate-out data-open:animate-in',\n          className\n        )}\n        data-slot='dialog-content'\n        {...props}\n      >\n        {children}\n        {showCloseButton && (\n          <DialogPrimitive.Close\n            data-slot='dialog-close'\n            render={\n              <Button className='absolute top-2 right-2' size='icon-sm' variant='ghost'>\n                <XIcon />\n                <span className='sr-only'>Close</span>\n              </Button>\n            }\n          />\n        )}\n      </DialogPrimitive.Popup>\n    </DialogPortal>\n  )\n}\n\nexport const DialogScroll = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => {\n  return (\n    <div className={cn('-m-4 overflow-y-auto overflow-x-hidden p-4', className)} data-slot='dialog-scroll' {...props}>\n      {children}\n    </div>\n  )\n}\n\nexport function DialogHeader({ className, ...props }: ComponentProps<'div'>) {\n  return <div className={cn('flex flex-col gap-2', className)} data-slot='dialog-header' {...props} />\n}\n\nexport function DialogFooter({\n  className,\n  showCloseButton = false,\n  children,\n  ...props\n}: ComponentProps<'div'> & {\n  showCloseButton?: boolean\n}) {\n  return (\n    <div\n      className={cn(\n        '-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end',\n        className\n      )}\n      data-slot='dialog-footer'\n      {...props}\n    >\n      {children}\n      {showCloseButton && <DialogPrimitive.Close render={<Button variant='outline'>Close</Button>} />}\n    </div>\n  )\n}\n\nexport function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {\n  return (\n    <DialogPrimitive.Title\n      className={cn('cn-font-heading font-medium text-base leading-none', className)}\n      data-slot='dialog-title'\n      {...props}\n    />\n  )\n}\n\nexport function DialogDescription({ className, ...props }: DialogPrimitive.Description.Props) {\n  return (\n    <DialogPrimitive.Description\n      className={cn(\n        'text-muted-foreground text-sm *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground',\n        className\n      )}\n      data-slot='dialog-description'\n      {...props}\n    />\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/atoms/dialog.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

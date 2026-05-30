@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "native-pdf-viewer",
+  "title": "Native PDF Viewer",
+  "description": "Embed PDF files using the browser's native iframe renderer.",
+  "dependencies": [
+    "@tanstack/react-query"
+  ],
+  "registryDependencies": [
+    "http://localhost:4321/r/spinner.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/organisms/native-pdf-viewer/components/native-pdf-viewer.tsx",
+      "content": "import { skipToken, useQuery } from '@tanstack/react-query'\nimport type { IframeHTMLAttributes } from 'react'\nimport { Spinner } from '@/components/atoms/spinner'\nimport { cn } from '@/utils/ui'\n\nexport function NativePDFViewer({ src, className, ...props }: IframeHTMLAttributes<HTMLIFrameElement>) {\n  const getPdfQuery = useQuery({\n    queryKey: ['pdf', src],\n    queryFn: src\n      ? async () => {\n          const response = await fetch(src)\n          if (!response.ok) {\n            throw new Error(`Failed to fetch PDF: ${response.status}`)\n          }\n          return await response.blob()\n        }\n      : skipToken,\n    retry: 0\n  })\n\n  if (getPdfQuery.isFetching) {\n    return <Spinner className='mx-auto size-6' />\n  }\n\n  if (getPdfQuery.isError) {\n    return <div>Failed to display PDF</div>\n  }\n\n  return <iframe className={cn('w-full', className)} src={src} {...props} />\n}\n",
+      "type": "registry:ui",
+      "target": "src/components/organisms/native-pdf-viewer/native-pdf-viewer.tsx"
+    },
+    {
+      "path": "src/utils/ui.ts",
+      "content": "import { type ClassValue, clsx } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\n// Utils\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+      "type": "registry:file",
+      "target": "src/utils/ui.ts"
+    }
+  ],
+  "type": "registry:component"
+}

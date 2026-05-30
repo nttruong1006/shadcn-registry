@@ -1,6 +1,6 @@
 import { flexRender, type RowData } from '@tanstack/react-table'
 import React from 'react'
-import { TableBody, TableCell, TableRow } from '@/registry/new-york/atoms/table/components/table'
+import { TableBody, TableCell, TableRow } from '@/components/atoms/table'
 import { cn } from '@/utils/ui'
 import type { DataTableProps } from './data-table'
 import { getCommonPinningStyles } from './lib'
