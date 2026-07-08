@@ -53,11 +53,11 @@ function ImageComponent({ node, updateAttributes, deleteNode }: ReactNodeViewPro
     // Update width (full) if alignment is justify
     if (alignment === 'justify') {
       updateAttributes({
-        width: containerRef.current?.clientWidth,
         containerStyle: {
           ...containerStyle,
           width: '100%'
-        }
+        },
+        width: containerRef.current?.clientWidth
       })
     }
 
@@ -84,11 +84,11 @@ function ImageComponent({ node, updateAttributes, deleteNode }: ReactNodeViewPro
       )
 
       updateAttributes({
-        width: newWidth,
         containerStyle: {
           ...containerStyle,
           width: `${Math.round((newWidth * 100) / containerWidth)}%`
-        }
+        },
+        width: newWidth
       })
     }
 
@@ -191,6 +191,25 @@ function ImageComponent({ node, updateAttributes, deleteNode }: ReactNodeViewPro
 }
 
 const CustomImageExtension = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      alignment: {
+        default: 'center'
+      },
+      containerStyle: {
+        default: {
+          width: `${minWidth}px`
+        }
+      },
+      width: {
+        default: minWidth
+      }
+    }
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(ImageComponent)
+  },
   renderHTML({ HTMLAttributes }) {
     const { alignment, containerStyle, ...imageAttributes } = HTMLAttributes as ImageAttributes
     return [
@@ -214,25 +233,6 @@ const CustomImageExtension = Image.extend({
         ]
       ]
     ]
-  },
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      width: {
-        default: minWidth
-      },
-      alignment: {
-        default: 'center'
-      },
-      containerStyle: {
-        default: {
-          width: `${minWidth}px`
-        }
-      }
-    }
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(ImageComponent)
   }
 })
 

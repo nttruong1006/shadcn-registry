@@ -20,59 +20,58 @@ const { PUBLIC_SITE_URL, PUBLIC_GITHUB_REPO_URL } = loadEnv(process.env.NODE_ENV
 export default defineConfig({
   env: {
     schema: {
-      PUBLIC_SITE_URL: envField.string({
-        context: 'server',
-        access: 'public',
-        min: 1,
-        url: true
-      }),
       PUBLIC_GITHUB_REPO_URL: envField.string({
-        context: 'server',
         access: 'public',
+        context: 'server',
         min: 1,
         url: true
       }),
       PUBLIC_SHADCN_URL: envField.string({
-        context: 'server',
         access: 'public',
+        context: 'server',
+        min: 1,
+        url: true
+      }),
+      PUBLIC_SITE_URL: envField.string({
+        access: 'public',
+        context: 'server',
         min: 1,
         url: true
       })
     }
   },
-  site: PUBLIC_SITE_URL,
   integrations: [
     starlight({
-      title: 'NTT Shadcn Registry',
+      customCss: ['./src/styles/global.css'],
       head: [
         // Add ICO favicon fallback for Safari.
         {
-          tag: 'link',
           attrs: {
-            rel: 'icon',
             href: '/favicon.ico',
+            rel: 'icon',
             type: 'image/vnd.microsoft.icon'
-          }
+          },
+          tag: 'link'
         },
         // Add dark mode favicon.
         {
-          tag: 'link',
           attrs: {
-            rel: 'icon',
             href: '/favicon-32x32.png',
             media: '(prefers-color-scheme: dark)',
+            rel: 'icon',
             type: 'image/png'
-          }
+          },
+          tag: 'link'
         },
         // Add light mode favicon.
         {
-          tag: 'link',
           attrs: {
-            rel: 'icon',
             href: '/favicon-32x32.png',
             media: '(prefers-color-scheme: light)',
+            rel: 'icon',
             type: 'image/png'
-          }
+          },
+          tag: 'link'
         }
       ],
       logo: {
@@ -80,40 +79,10 @@ export default defineConfig({
         light: './src/assets/images/logo-light.svg',
         replacesTitle: true
       },
-      social: [
-        {
-          icon: 'github',
-          label: 'GitHub',
-          href: PUBLIC_GITHUB_REPO_URL
-        }
-      ],
-      sidebar: [
-        {
-          label: 'Getting Started',
-          items: [
-            { label: 'Introduction', slug: 'getting-started/introduction' },
-            { label: 'Installation', slug: 'getting-started/installation' }
-          ]
-        },
-        {
-          label: 'Components',
-          items: [
-            { label: 'Atoms', items: [{ autogenerate: { directory: 'components/atoms' } }] },
-            {
-              label: 'Molecules',
-              items: [{ autogenerate: { directory: 'components/molecules' } }]
-            },
-            {
-              label: 'Organisms',
-              items: [{ autogenerate: { directory: 'components/organisms' } }]
-            }
-          ]
-        }
-      ],
-
-      customCss: ['./src/styles/global.css'],
       plugins: [
         starlightThemeBlack({
+          footerText:
+            'Built by [Nguyen The Truong](https://ntt-portfolio.vercel.app) for use with [Shadcn](https://ui.shadcn.com)',
           navLinks: [
             {
               label: 'Docs',
@@ -123,11 +92,43 @@ export default defineConfig({
               label: 'Components',
               link: '/components'
             }
-          ],
-          footerText:
-            'Built by [Nguyen The Truong](https://ntt-portfolio.vercel.app) for use with [Shadcn](https://ui.shadcn.com)'
+          ]
         })
-      ]
+      ],
+      sidebar: [
+        {
+          items: [
+            { label: 'Introduction', slug: 'getting-started/introduction' },
+            { label: 'Installation', slug: 'getting-started/installation' }
+          ],
+          label: 'Getting Started'
+        },
+        {
+          items: [
+            {
+              items: [{ autogenerate: { directory: 'components/atoms' } }],
+              label: 'Atoms'
+            },
+            {
+              items: [{ autogenerate: { directory: 'components/molecules' } }],
+              label: 'Molecules'
+            },
+            {
+              items: [{ autogenerate: { directory: 'components/organisms' } }],
+              label: 'Organisms'
+            }
+          ],
+          label: 'Components'
+        }
+      ],
+      social: [
+        {
+          href: PUBLIC_GITHUB_REPO_URL,
+          icon: 'github',
+          label: 'GitHub'
+        }
+      ],
+      title: 'NTT Shadcn Registry'
     }),
     react(),
     sitemap(),
@@ -135,9 +136,12 @@ export default defineConfig({
       sitemap: `${PUBLIC_SITE_URL}/sitemap-index.xml`
     })
   ],
+  site: PUBLIC_SITE_URL,
   vite: {
+    build: {
+      cssMinify: 'esbuild'
+    },
     plugins: [
-      // @ts-expect-error: Astro still Vite v6 while tailwindcss will pull in Vite v7 => types mismatch
       tailwindcss(),
       visualizer({
         filename: 'dist/stats.html',

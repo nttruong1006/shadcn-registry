@@ -28,18 +28,6 @@ export function ComboboxAsyncSearchSingleInfiniteScroll() {
     QueryKey,
     number | undefined
   >({
-    queryKey: [
-      'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender',
-      debouncedSearchKeyword
-    ],
-    queryFn: ({ signal, pageParam }) => {
-      return executeAxios({
-        url: `https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender?page=${pageParam}&pageSize=${10}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
-        method: 'GET',
-        signal
-      })
-    },
-    initialPageParam: 1,
     getNextPageParam: useCallback((queryFn: unknown, _: unknown, page: unknown) => {
       const {
         responseData: { count, pageSize }
@@ -51,7 +39,18 @@ export function ComboboxAsyncSearchSingleInfiniteScroll() {
         return null
       }
       return queryPage + 1
-    }, [])
+    }, []),
+    initialPageParam: 1,
+    queryFn: ({ signal, pageParam }) =>
+      executeAxios({
+        method: 'GET',
+        signal,
+        url: `https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender?page=${pageParam}&pageSize=${10}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
+      }),
+    queryKey: [
+      'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender',
+      debouncedSearchKeyword
+    ]
   })
 
   const items = useMemo<Option[]>(() => {

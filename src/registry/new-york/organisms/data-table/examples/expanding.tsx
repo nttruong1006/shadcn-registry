@@ -25,8 +25,6 @@ type Row = {
 
 const COLUMNS: ColumnDef<Row>[] = [
   {
-    id: 'expanding',
-    size: 64,
     cell: ({ row }) => {
       if (row.getCanExpand()) {
         const style = {
@@ -49,78 +47,80 @@ const COLUMNS: ColumnDef<Row>[] = [
       }
 
       return null
-    }
+    },
+    id: 'expanding',
+    size: 64
   },
   {
-    id: 'no',
-    header: 'No',
-    size: 64,
     cell: ({ row }) => {
       const parentRowIndexes = row.getParentRows().map((parentRow) => parentRow.index + 1)
       const index = [...parentRowIndexes, row.index + 1].join('.')
       return index
-    }
+    },
+    header: 'No',
+    id: 'no',
+    size: 64
   },
   {
-    id: 'firstName',
     accessorKey: 'firstName',
+    cell: (info) => info.getValue(),
     header: 'First name',
-    size: 112,
-    cell: (info) => info.getValue()
+    id: 'firstName',
+    size: 112
   },
   {
-    id: 'lastName',
     accessorKey: 'lastName',
+    cell: (info) => info.getValue(),
     header: 'Last name',
-    size: 112,
-    cell: (info) => info.getValue()
+    id: 'lastName',
+    size: 112
   },
   {
-    id: 'age',
-    size: 112,
     accessorKey: 'age',
-    header: () => 'Age'
+    header: () => 'Age',
+    id: 'age',
+    size: 112
   }
 ]
 
 const DATA: Row[] = [
   {
-    id: '1',
-    firstName: 'tanner',
-    lastName: 'linsley',
     age: 24,
+    firstName: 'tanner',
+    id: '1',
+    lastName: 'linsley',
     subRows: [
       {
-        id: '1.1',
-        firstName: 'Jane',
-        lastName: 'test',
         age: 5,
+        firstName: 'Jane',
+        id: '1.1',
+        lastName: 'test',
         subRows: [
           {
-            id: '1.1.1',
-            firstName: 'third',
-            lastName: 'child',
             age: 0,
+            firstName: 'third',
+            id: '1.1.1',
+            lastName: 'child',
             subRows: []
           },
           {
-            id: '1.1.2',
-            firstName: 'test 1',
-            lastName: 'test 2',
             age: 0,
+            firstName: 'test 1',
+            id: '1.1.2',
+            lastName: 'test 2',
             subRows: [
               {
-                id: '1.1.2.1',
-                firstName: 'test 3',
-                lastName: 'test 4',
                 age: 0,
+                firstName: 'test 3',
+                id: '1.1.2.1',
+                lastName: 'test 4',
                 subRows: []
               },
               {
-                id: '1.1.2.2',
-                firstName: 'test 5',
-                lastName: 'test 6',
                 age: 0,
+                firstName: 'test 5',
+                id: '1.1.2.2',
+                lastName: 'test 6',
                 subRows: []
               }
             ]
@@ -130,32 +130,32 @@ const DATA: Row[] = [
     ]
   },
   {
-    id: '2',
-    firstName: 'tandy',
-    lastName: 'miller',
     age: 40,
-    subRows: [{ id: '2.1', firstName: 'Jim', lastName: 'test', age: 10, subRows: [] }]
+    firstName: 'tandy',
+    id: '2',
+    lastName: 'miller',
+    subRows: [{ age: 10, firstName: 'Jim', id: '2.1', lastName: 'test', subRows: [] }]
   },
   {
-    id: '3',
-    firstName: 'joe',
-    lastName: 'dirte',
     age: 45,
+    firstName: 'joe',
+    id: '3',
+    lastName: 'dirte',
     subRows: []
   }
 ]
 
 export function DataTableExpanding() {
   const table = useDataTable({
-    columns: COLUMNS,
-    data: DATA,
-    getPaginationRowModel: getPaginationRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
-    // Need getSubRows for expanding
-    getSubRows: (row) => row.subRows,
     autoResetExpanded: false,
     // Not reset page automatically when expanding
-    autoResetPageIndex: false
+    autoResetPageIndex: false,
+    columns: COLUMNS,
+    data: DATA,
+    getExpandedRowModel: getExpandedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    // Need getSubRows for expanding
+    getSubRows: (row) => row.subRows
   })
 
   return (

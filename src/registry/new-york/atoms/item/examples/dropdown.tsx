@@ -12,19 +12,19 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/comp
 
 const people = [
   {
-    username: 'shadcn',
     avatar: 'https://github.com/shadcn.png',
-    email: 'shadcn@vercel.com'
+    email: 'shadcn@vercel.com',
+    username: 'shadcn'
   },
   {
-    username: 'maxleiter',
     avatar: 'https://github.com/maxleiter.png',
-    email: 'maxleiter@vercel.com'
+    email: 'maxleiter@vercel.com',
+    username: 'maxleiter'
   },
   {
-    username: 'evilrabbit',
     avatar: 'https://github.com/evilrabbit.png',
-    email: 'evilrabbit@vercel.com'
+    email: 'evilrabbit@vercel.com',
+    username: 'evilrabbit'
   }
 ]
 

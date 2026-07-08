@@ -14,6 +14,8 @@ import { cn } from '@/utils/ui'
 import { useInternalEditor } from './lib'
 
 const linkFormSchema = z.object({
+  displayText: z.string().trim(),
+  isOpenInNewTab: z.boolean(),
   url: z
     .string()
     .trim()
@@ -24,35 +26,28 @@ const linkFormSchema = z.object({
           url
         ),
       'URL is invalid'
-    ),
-  displayText: z.string().trim(),
-  isOpenInNewTab: z.boolean()
+    )
 })
 
 const defaultLinkFormValue: z.input<typeof linkFormSchema> = {
-  url: '',
   displayText: '',
-  isOpenInNewTab: false
+  isOpenInNewTab: false,
+  url: ''
 } as const
 
 export default function LinkButton({ id }: { id: string }) {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return { isActive: editor.isActive('link'), isEditable: editor.isEditable }
-    }
+    selector: ({ editor }) => ({ isActive: editor.isActive('link'), isEditable: editor.isEditable })
   })
 
   const isUpdateModeRef = useRef(false)
   const [openPopover, setOpenPopover] = useState(false)
 
   const linkForm = useForm({
-    formId: `${id}-link-form`,
     defaultValues: defaultLinkFormValue,
-    validators: {
-      onSubmit: linkFormSchema
-    },
+    formId: `${id}-link-form`,
     onSubmit: ({ value }) => {
       const { url, displayText, isOpenInNewTab } = linkFormSchema.parse(value)
 
@@ -61,17 +56,17 @@ export default function LinkButton({ id }: { id: string }) {
         ?.chain()
         .extendMarkRange('link')
         .insertContent({
-          type: 'text',
-          text: displayText || url,
           marks: [
             {
-              type: 'link',
               attrs: {
                 href: url,
                 target: isOpenInNewTab ? '_blank' : '_self'
-              }
+              },
+              type: 'link'
             }
-          ]
+          ],
+          text: displayText || url,
+          type: 'text'
         })
         .setLink({ href: url })
 
@@ -87,6 +82,9 @@ export default function LinkButton({ id }: { id: string }) {
 
       // Close popover
       setOpenPopover(false)
+    },
+    validators: {
+      onSubmit: linkFormSchema
     }
   })
 

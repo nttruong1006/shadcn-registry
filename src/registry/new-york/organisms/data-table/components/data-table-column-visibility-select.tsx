@@ -21,7 +21,7 @@ export function DataTableColumnVisibilitySelect<TData extends RowData>({ table }
       .filter((column) => column.id && column.getCanHide() && typeof column.columnDef.header === 'string')
   )
 
-  const columnVisibility = table.getState().columnVisibility
+  const { columnVisibility } = table.getState()
   const visibleColumns = columns.filter((column) => columnVisibility[column.id] ?? true)
 
   const allColumnsVisible = table.getIsAllColumnsVisible()

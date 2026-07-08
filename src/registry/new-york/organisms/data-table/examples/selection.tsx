@@ -15,57 +15,57 @@ import { DataTableCheckboxHeader } from '@/components/organisms/data-table/data-
 import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
-  id: string
-  firstName: string
-  lastName: string
   age: number
+  firstName: string
+  id: string
+  lastName: string
 }
 
 const COLUMNS: ColumnDef<Row>[] = [
   {
-    id: 'selection',
-    size: 80,
+    cell: DataTableCheckboxCell,
     header: DataTableCheckboxHeader,
-    cell: DataTableCheckboxCell
+    id: 'selection',
+    size: 80
   },
   {
-    id: 'firstName',
     accessorKey: 'firstName',
     header: 'First name',
+    id: 'firstName',
     size: 112
   },
   {
-    id: 'lastName',
     accessorKey: 'lastName',
     header: 'Last name',
+    id: 'lastName',
     size: 112
   },
   {
-    id: 'age',
     accessorKey: 'age',
     header: 'Age',
+    id: 'age',
     size: 112
   }
 ]
 
 const DATA: Row[] = [
   {
-    id: '1',
+    age: 24,
     firstName: 'tanner',
-    lastName: 'linsley',
-    age: 24
+    id: '1',
+    lastName: 'linsley'
   },
   {
-    id: '2',
+    age: 40,
     firstName: 'tandy',
-    lastName: 'miller',
-    age: 40
+    id: '2',
+    lastName: 'miller'
   },
   {
-    id: '3',
+    age: 45,
     firstName: 'joe',
-    lastName: 'dirte',
-    age: 45
+    id: '3',
+    lastName: 'dirte'
   }
 ]
 
@@ -73,10 +73,10 @@ export function DataTableSelection() {
   const table = useDataTable({
     columns: COLUMNS,
     data: DATA,
+    getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       rowSelection: {}
-    },
-    getPaginationRowModel: getPaginationRowModel()
+    }
   })
 
   // Template

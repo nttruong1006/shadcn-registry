@@ -49,34 +49,50 @@ function FileComponent({ node, deleteNode }: ReactNodeViewProps<HTMLAnchorElemen
 }
 
 const FileExtension = Node.create({
-  name: 'file',
-  group: 'block',
-  selectable: true,
-  draggable: true,
-  addOptions() {
-    return {
-      HTMLAttributes: {
-        target: '_blank',
-        rel: 'noreferrer'
-      }
-    }
-  },
   addAttributes() {
     return {
-      url: {
+      mime: {
         default: null
       },
       name: {
         default: null
       },
-      mime: {
-        default: null
-      },
       size: {
         default: 0
+      },
+      url: {
+        default: null
       }
     }
   },
+  // @ts-expect-error - tiptap custom command not in core type definitions
+  addCommands() {
+    return {
+      insertFile:
+        (options: FileAttributes) =>
+        ({ commands }: CommandProps) =>
+          commands.insertContent({
+            attrs: {
+              ...options
+            },
+            type: this.name
+          })
+    }
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(FileComponent)
+  },
+  addOptions() {
+    return {
+      HTMLAttributes: {
+        rel: 'noreferrer',
+        target: '_blank'
+      }
+    }
+  },
+  draggable: true,
+  group: 'block',
+  name: 'file',
   parseHTML() {
     return [
       {
@@ -90,23 +106,23 @@ const FileExtension = Node.create({
     return [
       'a',
       mergeAttributes(this.options.HTMLAttributes, {
-        href: url,
         class:
-          'flex items-center gap-4 rounded-md border p-4 transition-colors duration-200 hover:bg-gray-200 hover:no-underline'
+          'flex items-center gap-4 rounded-md border p-4 transition-colors duration-200 hover:bg-gray-200 hover:no-underline',
+        href: url
       }),
       [
         'svg',
         {
-          xmlns: 'http://www.w3.org/2000/svg',
-          width: '24',
-          height: '24',
-          viewBox: '0 0 24 24',
+          class: 'lucide lucide-paperclip-icon lucide-paperclip size-4',
           fill: 'none',
+          height: '24',
           stroke: 'currentColor',
-          'stroke-width': '2',
           'stroke-linecap': 'round',
           'stroke-linejoin': 'round',
-          class: 'lucide lucide-paperclip-icon lucide-paperclip size-4'
+          'stroke-width': '2',
+          viewBox: '0 0 24 24',
+          width: '24',
+          xmlns: 'http://www.w3.org/2000/svg'
         },
         [
           'path',
@@ -125,24 +141,7 @@ const FileExtension = Node.create({
       ]
     ]
   },
-  // @ts-expect-error - tiptap custom command not in core type definitions
-  addCommands() {
-    return {
-      insertFile:
-        (options: FileAttributes) =>
-        ({ commands }: CommandProps) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs: {
-              ...options
-            }
-          })
-        }
-    }
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(FileComponent)
-  }
+  selectable: true
 })
 
 export default FileExtension

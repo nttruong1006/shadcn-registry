@@ -56,9 +56,9 @@ export default function AdvancedFilterValueSelectWithQueryField({
                   {getOptionsQuery.isFetching && <Spinner className='text-muted-foreground' />}
 
                   <ComboboxValue>
-                    {(value: typeof options) => {
-                      return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
-                    }}
+                    {(value: typeof options) =>
+                      value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+                    }
                   </ComboboxValue>
 
                   <ComboboxChipsInput

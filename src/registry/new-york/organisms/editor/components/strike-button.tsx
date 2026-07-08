@@ -7,12 +7,10 @@ export default function StrikeButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: editor.isActive('strike'),
-        isEditable: editor.isEditable && editor.can().toggleStrike()
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: editor.isActive('strike'),
+      isEditable: editor.isEditable && editor.can().toggleStrike()
+    })
   })
 
   return (

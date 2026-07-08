@@ -29,24 +29,24 @@ export default function AdvancedFilter() {
   const [totalFilterApplied, setTotalFilterApplied] = useState(0)
 
   const advancedFilterForm = useAppForm({
-    formId,
     defaultValues: defaultAdvancedFilterFormValue,
-    validators: { onSubmit: advancedFilterFormSchema },
+    formId,
     onSubmit: ({ value }) => {
       const safeValue = advancedFilterFormSchema.parse(value)
       setFilters(safeValue.filters)
       setTotalFilterApplied(safeValue.filters.length)
       setOpenPopover(false)
-    }
+    },
+    validators: { onSubmit: advancedFilterFormSchema }
   })
 
   function addFilter(filter: Filter) {
     const { name, type } = filter
-    const operation = operationsPerType[type][0]
+    const [operation] = operationsPerType[type]
     advancedFilterForm.pushFieldValue('filters', {
       name,
-      type,
       operation,
+      type,
       value: defaultValuePerOperation[operation]
     })
   }
@@ -131,7 +131,7 @@ export default function AdvancedFilter() {
                                     return
                                   }
 
-                                  const operation = operationsPerType[selectedFilter.type][0]
+                                  const [operation] = operationsPerType[selectedFilter.type]
                                   advancedFilterForm.setFieldValue(`filters[${index}].type`, selectedFilter.type)
                                   advancedFilterForm.setFieldValue(`filters[${index}].operation`, operation)
                                   advancedFilterForm.setFieldValue(

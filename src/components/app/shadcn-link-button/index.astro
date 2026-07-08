@@ -3,12 +3,12 @@ import ShadcnLinkButton from './_module'
 
 // Props
 interface Props {
-  registryName: string
   className?: string
+  registryName: string
 }
 
 const { registryName, className } = Astro.props
 ---
 
 <!-- Template -->
-<ShadcnLinkButton registryName={registryName} className={className} />
+<ShadcnLinkButton className={className} registryName={registryName} />

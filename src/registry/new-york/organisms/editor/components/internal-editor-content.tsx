@@ -48,8 +48,8 @@ export default function InternalEditorContent() {
           align='start'
           side='right'
           style={{
-            position: 'fixed',
             left: tableDropdownMenu.x,
+            position: 'fixed',
             top: tableDropdownMenu.y
           }}
         >

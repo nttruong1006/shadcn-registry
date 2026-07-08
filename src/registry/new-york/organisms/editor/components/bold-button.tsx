@@ -7,15 +7,11 @@ export default function BoldButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: editor.isActive('bold'),
-        isEditable: editor.isEditable && editor.can().toggleBold()
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: editor.isActive('bold'),
+      isEditable: editor.isEditable && editor.can().toggleBold()
+    })
   })
-
-  console.log(editorState)
 
   return (
     <TooltipButton

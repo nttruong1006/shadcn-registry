@@ -7,10 +7,11 @@ import {
 } from '@/components/atoms/autocomplete'
 import { InputGroupAddon } from '@/components/atoms/input-group'
 import { Spinner } from '@/components/atoms/spinner'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import SmartFormFieldContainer from './field-container'
+import type { BaseSmartFormFieldComponentProps } from './lib/base'
 import { useFieldContext } from './lib/form'
 import { useGetOptionsQuery } from './lib/query'
-import type { AutocompleteFieldInputValue } from './lib/schema'
+import type { AutocompleteFieldInputValue } from './lib/schemas/autocomplete'
 
 export default function AutocompleteWithQueryField({
   label,
@@ -18,19 +19,29 @@ export default function AutocompleteWithQueryField({
   originalApiPath,
   dependencyFieldsValue,
   ...props
-}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsQuery>[0]) {
+}: BaseSmartFormFieldComponentProps & Parameters<typeof useGetOptionsQuery>[0]) {
   const field = useFieldContext<AutocompleteFieldInputValue>()
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-  const { getOptionsQuery, options } = useGetOptionsQuery({ originalApiPath, dependencyFieldsValue })
+  const { getOptionsQuery, options } = useGetOptionsQuery({
+    dependencyFieldsValue,
+    originalApiPath
+  })
 
   return (
-    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+    <SmartFormFieldContainer
+      errors={field.state.meta.errors}
+      invalid={invalid}
+      label={label}
+      name={field.name}
+      {...props}
+    >
       <Autocomplete items={options} onValueChange={field.handleChange} openOnInputClick value={field.state.value}>
         <AutocompleteInput
           aria-invalid={invalid}
           disabled={disabled || getOptionsQuery.isLoading}
           id={`${field.form.formId}-${field.name}`}
           placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+          showClear
         >
           {getOptionsQuery.isLoading && (
             <InputGroupAddon>
@@ -49,6 +60,6 @@ export default function AutocompleteWithQueryField({
           </AutocompleteList>
         </AutocompleteContent>
       </Autocomplete>
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

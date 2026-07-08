@@ -4,10 +4,10 @@ import type { AdvancedFilterFormValueInput } from './lib/form'
 import { useSmartFilterContext } from './smart-filter'
 
 export interface AdvancedFilterValueFieldProps {
-  index: number
   formFilterName: AdvancedFilterFormValueInput['filters'][number]['name']
   formFilterOperation: AdvancedFilterFormValueInput['filters'][number]['operation']
   formFilterValueAdditional: AdvancedFilterFormValueInput['filters'][number]['value']['additional']
+  index: number
 }
 
 export type AdvancedFilterValueFieldComponentProps = AdvancedFilterValueFieldProps & {
@@ -17,15 +17,15 @@ export type AdvancedFilterValueFieldComponentProps = AdvancedFilterValueFieldPro
 const fieldComponents: {
   [key in SmartFilterType]: LazyExoticComponent<(props: AdvancedFilterValueFieldComponentProps) => JSX.Element | null>
 } = {
-  input: lazy(() => import('./advanced-filter-value-input-field')),
-  number: lazy(() => import('./advanced-filter-value-number-field')),
   date: lazy(() => import('./advanced-filter-value-date-field')),
-  selectWithOptions: lazy(() => import('./advanced-filter-value-select-with-options-field')),
-  selectWithQuery: lazy(() => import('./advanced-filter-value-select-with-query-field')),
-  selectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-select-with-infinite-query-field')),
+  input: lazy(() => import('./advanced-filter-value-input-field')),
+  multiSelectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-multi-select-with-infinite-query-field')),
   multiSelectWithOptions: lazy(() => import('./advanced-filter-value-multi-select-with-options-field')),
   multiSelectWithQuery: lazy(() => import('./advanced-filter-value-multi-select-with-query-field')),
-  multiSelectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-multi-select-with-infinite-query-field'))
+  number: lazy(() => import('./advanced-filter-value-number-field')),
+  selectWithInfiniteQuery: lazy(() => import('./advanced-filter-value-select-with-infinite-query-field')),
+  selectWithOptions: lazy(() => import('./advanced-filter-value-select-with-options-field')),
+  selectWithQuery: lazy(() => import('./advanced-filter-value-select-with-query-field'))
 }
 
 export default function AdvancedFilterValueField({
@@ -35,9 +35,10 @@ export default function AdvancedFilterValueField({
 }: AdvancedFilterValueFieldProps) {
   const { filters } = useSmartFilterContext()
 
-  const selectedFilter = useMemo(() => {
-    return filters.find((filter) => filter.name === formFilterName)
-  }, [filters, formFilterName])
+  const selectedFilter = useMemo(
+    () => filters.find((filter) => filter.name === formFilterName),
+    [filters, formFilterName]
+  )
 
   // Template
   if (!selectedFilter) {

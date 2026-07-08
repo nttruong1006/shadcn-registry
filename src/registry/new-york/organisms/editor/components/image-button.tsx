@@ -28,9 +28,9 @@ enum ImageFormMode {
 
 const imageFormSchema = z
   .object({
+    files: z.array(z.custom<File>()),
     mode: z.enum(ImageFormMode),
-    url: z.string().trim(),
-    files: z.array(z.custom<File>())
+    url: z.string().trim()
   })
   .superRefine((form, ctx) => {
     const { mode, url, files } = form
@@ -39,8 +39,8 @@ const imageFormSchema = z
         if (!url) {
           ctx.addIssue({
             code: 'custom',
-            path: ['url'],
-            message: 'Please enter the URL'
+            message: 'Please enter the URL',
+            path: ['url']
           })
           break
         }
@@ -48,8 +48,8 @@ const imageFormSchema = z
         if (!/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png|webp|svg)/g.test(url)) {
           ctx.addIssue({
             code: 'custom',
-            path: ['url'],
-            message: 'URL is invalid'
+            message: 'URL is invalid',
+            path: ['url']
           })
           break
         }
@@ -60,8 +60,8 @@ const imageFormSchema = z
         if (!files.length) {
           ctx.addIssue({
             code: 'custom',
-            path: ['files'],
-            message: 'Please select the image file'
+            message: 'Please select the image file',
+            path: ['files']
           })
         }
         break
@@ -73,42 +73,37 @@ const imageFormSchema = z
   })
 
 const defaultImageFormValue: z.input<typeof imageFormSchema> = {
+  files: [],
   mode: ImageFormMode.Url,
-  url: '',
-  files: []
+  url: ''
 }
 
 const fileUploaderDropzoneOptions: DropzoneOptions = {
-  maxFiles: 10,
-  multiple: true,
   accept: {
     'image/jpeg': ['.jpeg', '.jpg'],
     'image/png': ['.png'],
-    'image/webp': ['.webp'],
-    'image/svg+xml': ['.svg']
-  }
+    'image/svg+xml': ['.svg'],
+    'image/webp': ['.webp']
+  },
+  maxFiles: 10,
+  multiple: true
 }
 
 export default function ImageButton({ id }: { id: string }) {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable
+    })
   })
 
   const [openPopover, setOpenPopover] = useState(false)
   const { fileUploadPending, uploadFile } = useFileUpload()
 
   const imageForm = useForm({
-    formId: `${id}-file-form`,
     defaultValues: defaultImageFormValue,
-    validators: {
-      onSubmit: imageFormSchema
-    },
+    formId: `${id}-file-form`,
     onSubmit: async ({ value }) => {
       try {
         const { mode, url, files } = imageFormSchema.parse(value)
@@ -148,6 +143,9 @@ export default function ImageButton({ id }: { id: string }) {
           description: 'An error occurred, please try again'
         })
       }
+    },
+    validators: {
+      onSubmit: imageFormSchema
     }
   })
 

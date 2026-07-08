@@ -13,100 +13,100 @@ import { DataTable } from '@/components/organisms/data-table/data-table'
 import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
-  id: string
-  firstName: string
-  lastName: string
   age: number
-  visits: number
-  status: string
+  firstName: string
+  id: string
+  lastName: string
   progress: number
+  status: string
+  visits: number
 }
 
 const COLUMNS: ColumnDef<Row>[] = [
   {
-    id: 'name',
-    header: () => <div className='text-center'>Name</div>,
-    size: 112,
     columns: [
       {
-        id: 'firstName',
         accessorKey: 'firstName',
         header: 'First name',
+        id: 'firstName',
         size: 112
       },
       {
-        id: 'lastName',
         accessorKey: 'lastName',
         header: 'Last name',
+        id: 'lastName',
         size: 112
       }
-    ]
+    ],
+    header: () => <div className='text-center'>Name</div>,
+    id: 'name',
+    size: 112
   },
   {
-    id: 'info',
-    header: () => <div className='text-center'>Info</div>,
     columns: [
       {
-        id: 'age',
         accessorKey: 'age',
         header: () => 'Age',
+        id: 'age',
         size: 64
       },
       {
-        id: 'moreInfo',
-        header: () => <div className='text-center'>More Info</div>,
         columns: [
           {
-            id: 'visits',
             accessorKey: 'visits',
             header: () => <span>Visits</span>,
+            id: 'visits',
             size: 64
           },
           {
-            id: 'status',
             accessorKey: 'status',
             header: 'Status',
+            id: 'status',
             size: 112
           },
           {
-            id: 'progress',
             accessorKey: 'progress',
             header: 'Profile Progress',
+            id: 'progress',
             size: 112
           }
-        ]
+        ],
+        header: () => <div className='text-center'>More Info</div>,
+        id: 'moreInfo'
       }
-    ]
+    ],
+    header: () => <div className='text-center'>Info</div>,
+    id: 'info'
   }
 ]
 
 const DATA: Row[] = [
   {
-    id: '1',
-    firstName: 'tanner',
-    lastName: 'linsley',
     age: 24,
-    visits: 100,
+    firstName: 'tanner',
+    id: '1',
+    lastName: 'linsley',
+    progress: 50,
     status: 'In Relationship',
-    progress: 50
+    visits: 100
   },
   {
-    id: '2',
-    firstName: 'tandy',
-    lastName: 'miller',
     age: 40,
-    visits: 40,
+    firstName: 'tandy',
+    id: '2',
+    lastName: 'miller',
+    progress: 80,
     status: 'Single',
-    progress: 80
+    visits: 40
   },
   {
-    id: '3',
-    firstName: 'joe',
-    lastName: 'dirte',
     age: 45,
-    visits: 20,
+    firstName: 'joe',
+    id: '3',
+    lastName: 'dirte',
+    progress: 10,
     status: 'Complicated',
-    progress: 10
+    visits: 20
   }
 ]
 

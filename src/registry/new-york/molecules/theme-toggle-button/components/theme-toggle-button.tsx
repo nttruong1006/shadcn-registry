@@ -65,11 +65,11 @@ export function ThemeToggleButton({
     // Generate animation CSS based on variant
     let css = ''
     const positions = {
+      'bottom-left': 'bottom left',
+      'bottom-right': 'bottom right',
       center: 'center',
       'top-left': 'top left',
-      'top-right': 'top right',
-      'bottom-left': 'bottom left',
-      'bottom-right': 'bottom right'
+      'top-right': 'top right'
     }
 
     if (variant === 'circle') {

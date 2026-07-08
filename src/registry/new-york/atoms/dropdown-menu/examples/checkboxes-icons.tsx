@@ -13,8 +13,8 @@ import {
 export function DropdownMenuCheckboxesIcons() {
   const [notifications, setNotifications] = useState({
     email: true,
-    sms: false,
-    push: true
+    push: true,
+    sms: false
   })
 
   return (

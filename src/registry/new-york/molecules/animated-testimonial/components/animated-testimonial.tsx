@@ -2,12 +2,12 @@ import type { HTMLAttributes, PropsWithChildren } from 'react'
 import { cn } from '@/utils/ui'
 
 export interface AnimatedTestimonialCanopyProps extends HTMLAttributes<HTMLDivElement> {
-  isVertical?: boolean
-  repeat?: number
-  isReverse?: boolean
-  isPauseOnHover?: boolean
   isApplyMask?: boolean
+  isPauseOnHover?: boolean
+  isReverse?: boolean
+  isVertical?: boolean
   maskClassName?: string
+  repeat?: number
 }
 
 export function AnimatedTestimonialCanopy({
@@ -44,10 +44,10 @@ export function AnimatedTestimonialCanopy({
       {Array.from({ length: repeat }).map((_, index) => (
         <div
           className={cn('flex shrink-0 gap-(--gap)', {
-            'group-hover:paused': isPauseOnHover,
-            'direction-[reverse]': isReverse,
             'animate-canopy-horizontal flex-row': !isVertical,
-            'animate-canopy-isVertical flex-col': isVertical
+            'animate-canopy-isVertical flex-col': isVertical,
+            'direction-[reverse]': isReverse,
+            'group-hover:paused': isPauseOnHover
           })}
           // biome-ignore lint/suspicious/noArrayIndexKey: ignore
           key={`item-${index}`}

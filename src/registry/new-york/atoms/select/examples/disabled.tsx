@@ -6,7 +6,7 @@ export function SelectDisabled() {
     { label: 'Apple', value: 'apple' },
     { label: 'Banana', value: 'banana' },
     { label: 'Blueberry', value: 'blueberry' },
-    { label: 'Grapes', value: 'grapes', disabled: true },
+    { disabled: true, label: 'Grapes', value: 'grapes' },
     { label: 'Pineapple', value: 'pineapple' }
   ]
   return (

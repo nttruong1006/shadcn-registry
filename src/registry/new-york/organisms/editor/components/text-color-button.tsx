@@ -36,11 +36,9 @@ export default function TextColorButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable && editor.can().toggleBold()
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable && editor.can().toggleBold()
+    })
   })
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null)

@@ -9,11 +9,11 @@ import {
 } from '@/components/atoms/combobox'
 import { InputGroupAddon } from '@/components/atoms/input-group'
 import { Spinner } from '@/components/atoms/spinner'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { updateSelectedItemReferencesAndGetItems } from './lib/base'
+import SmartFormFieldContainer from './field-container'
+import { type BaseSmartFormFieldComponentProps, updateSelectedItemReferencesAndGetItems } from './lib/base'
 import { useFieldContext } from './lib/form'
 import { fetchNextPage, useGetOptionsInfiniteQuery } from './lib/query'
-import type { SelectFieldInputValue } from './lib/schema'
+import type { SelectFieldInputValue } from './lib/schemas/select'
 
 export default function SelectWithInfiniteQueryField({
   label,
@@ -21,29 +21,38 @@ export default function SelectWithInfiniteQueryField({
   originalApiPath,
   dependencyFieldsValue,
   ...props
-}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
+}: BaseSmartFormFieldComponentProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
   const field = useFieldContext<SelectFieldInputValue>()
 
   const { getOptionsInfiniteQuery, options, searchKeyword, debouncedSearchKeyword, setSearchKeyword } =
     useGetOptionsInfiniteQuery({
-      originalApiPath,
       dependencyFieldsValue,
+      originalApiPath,
       selectedValue: field.state.value
     })
 
   const value = options.find((item) => item.value === field.state.value) ?? null
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-  const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
+  const items = updateSelectedItemReferencesAndGetItems({
+    queryData: options,
+    value
+  })
 
   return (
-    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+    <SmartFormFieldContainer
+      errors={field.state.meta.errors}
+      invalid={invalid}
+      label={label}
+      name={field.name}
+      {...props}
+    >
       <Combobox
         filter={null}
         inputValue={searchKeyword}
         items={items}
         onInputValueChange={setSearchKeyword}
-        onValueChange={(value) => {
-          field.handleChange(value?.value ?? null)
+        onValueChange={(event) => {
+          field.handleChange(event?.value ?? null)
         }}
         value={value}
       >
@@ -53,6 +62,7 @@ export default function SelectWithInfiniteQueryField({
           disabled={disabled || getOptionsInfiniteQuery.isLoading}
           id={`${field.form.formId}-${field.name}`}
           placeholder={`Select ${typeof label === 'string' ? label.toLowerCase() : 'information'}`}
+          showClear
         >
           {getOptionsInfiniteQuery.isLoading && (
             <InputGroupAddon align='inline-start'>
@@ -88,6 +98,6 @@ export default function SelectWithInfiniteQueryField({
           )}
         </ComboboxContent>
       </Combobox>
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

@@ -50,15 +50,15 @@ for (const filePath of filePaths) {
 
 <!-- Template -->
 <div class="space-y-20 not-content">
-  <ComponentList type="atoms" title="Atoms (Shadcn components)" components={atomComponents} />
+  <ComponentList components={atomComponents} title="Atoms (Shadcn components)" type="atoms" />
   <ComponentList
-    type="molecules"
-    title="Molecules (Components that has built on top of Shadcn components)"
     components={moleculeComponents}
+    title="Molecules (Components that has built on top of Shadcn components)"
+    type="molecules"
   />
   <ComponentList
-    type="organisms"
-    title="Organisms (Components that has built on top of Shadcn components and Molecule components)"
     components={organismComponents}
+    title="Organisms (Components that has built on top of Shadcn components and Molecule components)"
+    type="organisms"
   />
 </div>

@@ -27,8 +27,8 @@ export const useSmartFilterContext = () => {
 }
 
 export interface SmartFilterProps {
-  id?: string
   filters?: Filter[]
+  id?: string
   isHideSearchMode?: boolean
   setFilters: (value: BasicSearchFormValueOutput['keyword'] | AdvancedFilterFormValueOutput['filters']) => void
 }
@@ -42,7 +42,7 @@ export function SmartFilter({
   setFilters
 }: SmartFilterProps) {
   return (
-    <SmartFilterContext.Provider value={{ id, filters, setFilters }}>
+    <SmartFilterContext.Provider value={{ filters, id, setFilters }}>
       <SmartFilterContent filters={filters} isHideSearchMode={isHideSearchMode} />
     </SmartFilterContext.Provider>
   )

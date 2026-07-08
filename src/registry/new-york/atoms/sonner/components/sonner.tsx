@@ -19,8 +19,8 @@ export const Toaster = ({ richColors = true, closeButton = true, ...props }: Toa
     const observer = new MutationObserver(observeTheme)
 
     observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class', 'data-theme']
+      attributeFilter: ['class', 'data-theme'],
+      attributes: true
     })
 
     return () => observer.disconnect()
@@ -31,31 +31,31 @@ export const Toaster = ({ richColors = true, closeButton = true, ...props }: Toa
       className='toaster group'
       closeButton={closeButton}
       icons={{
-        success: <CircleCheckIcon className='size-4' />,
-        info: <InfoIcon className='size-4' />,
-        warning: <TriangleAlertIcon className='size-4' />,
         error: <OctagonXIcon className='size-4' />,
-        loading: <Loader2Icon className='size-4 animate-spin' />
+        info: <InfoIcon className='size-4' />,
+        loading: <Loader2Icon className='size-4 animate-spin' />,
+        success: <CircleCheckIcon className='size-4' />,
+        warning: <TriangleAlertIcon className='size-4' />
       }}
       ref={observeTheme}
       style={
         {
-          '--normal-bg': 'var(--popover)',
-          '--normal-text': 'var(--popover-foreground)',
-          '--normal-border': 'var(--border)',
           '--border-radius': 'var(--radius)',
-          '--toast-close-button-start': 'auto',
+          '--normal-bg': 'var(--popover)',
+          '--normal-border': 'var(--border)',
+          '--normal-text': 'var(--popover-foreground)',
           '--toast-close-button-end': '0',
+          '--toast-close-button-start': 'auto',
           '--toast-close-button-transform': 'translate(35%, -35%)'
         } as React.CSSProperties
       }
       theme={theme}
       toastOptions={{
-        duration: 3000,
         classNames: {
-          toast: 'cn-toast',
-          closeButton: '!cursor-default'
-        }
+          closeButton: '!cursor-default',
+          toast: 'cn-toast'
+        },
+        duration: 3000
       }}
       {...props}
     />

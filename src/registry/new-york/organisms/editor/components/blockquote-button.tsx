@@ -7,12 +7,10 @@ export default function BlockquoteButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: editor.isActive('blockquote'),
-        isEditable: editor.isEditable && editor.can().toggleBlockquote()
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: editor.isActive('blockquote'),
+      isEditable: editor.isEditable && editor.can().toggleBlockquote()
+    })
   })
 
   return (

@@ -36,11 +36,9 @@ export default function HighlightButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable && editor.can().toggleHighlight()
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable && editor.can().toggleHighlight()
+    })
   })
 
   const [selectedColor, setSelectedColor] = useState<string | null>(null)

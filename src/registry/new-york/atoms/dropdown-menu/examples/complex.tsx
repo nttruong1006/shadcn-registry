@@ -48,8 +48,8 @@ import {
 export function DropdownMenuComplex() {
   const [notifications, setNotifications] = useState({
     email: true,
-    sms: false,
-    push: true
+    push: true,
+    sms: false
   })
   const [theme, setTheme] = useState('light')
 

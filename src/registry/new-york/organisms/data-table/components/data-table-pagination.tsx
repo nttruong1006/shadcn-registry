@@ -15,13 +15,14 @@ export default function DataTablePagination<TData extends RowData>({
 }: Pick<DataTableProps<TData>, 'table'> & {
   className?: string
 }) {
-  const pagination = table.getState().pagination
-  const page = pagination.pageIndex + 1
-  const pageSize = pagination.pageSize
+  const {
+    pagination: { pageIndex, pageSize }
+  } = table.getState()
+  const page = pageIndex + 1
   const pageCount = table.getPageCount()
 
   const changeNumberInputValue = debounce((values: NumberFormatValues) => {
-    if (values.floatValue == null || values.floatValue < 1) {
+    if (values.floatValue === undefined || values.floatValue < 1) {
       return
     }
     if (values.floatValue > pageCount) {

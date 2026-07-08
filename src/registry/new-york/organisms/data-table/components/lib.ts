@@ -28,7 +28,6 @@ function getBoxShadow({
   if (isFirstRightPinnedColumn) {
     return '2px 0 2px -2px gray inset'
   }
-  return undefined
 }
 
 export function getCommonPinningStyles<TData extends RowData>(column: Column<TData>): React.CSSProperties {
@@ -37,11 +36,11 @@ export function getCommonPinningStyles<TData extends RowData>(column: Column<TDa
   const isFirstRightPinnedColumn = pinningPosition === 'right' && column.getIsFirstColumn('right')
 
   return {
-    boxShadow: getBoxShadow({ isLastLeftPinnedColumn, isFirstRightPinnedColumn }),
+    boxShadow: getBoxShadow({ isFirstRightPinnedColumn, isLastLeftPinnedColumn }),
     left: pinningPosition === 'left' ? `${column.getStart('left')}px` : undefined,
-    right: pinningPosition === 'right' ? `${column.getAfter('right')}px` : undefined,
-    position: pinningPosition ? 'sticky' : 'relative',
     minWidth: column.getSize(),
+    position: pinningPosition ? 'sticky' : 'relative',
+    right: pinningPosition === 'right' ? `${column.getAfter('right')}px` : undefined,
     zIndex: pinningPosition ? 1 : 0
   }
 }

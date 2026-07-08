@@ -88,24 +88,24 @@ function PathSVG({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
       {circuits.map((path, index) => (
         <motion.path
           animate={{
-            pathLength: [0, 1, 0.8, 1],
-            opacity: [0, 1, 0.4, 1]
+            opacity: [0, 1, 0.4, 1],
+            pathLength: [0, 1, 0.8, 1]
           }}
           className='dark:filter-[url(#circuitGlowDark)] dark:stroke-[url(#circuitGradientDark)]'
           d={path}
           fill='none'
           filter='url(#circuitGlowLight)'
-          initial={{ pathLength: 0, opacity: 0 }}
+          initial={{ opacity: 0, pathLength: 0 }}
           // biome-ignore lint/suspicious/noArrayIndexKey: ignore
           key={`circuit-${index}`}
           stroke='url(#circuitGradientLight)'
           strokeLinecap='round'
           strokeWidth='3'
           transition={{
-            duration: duration || 6,
-            repeat: Number.POSITIVE_INFINITY,
             delay: index * 0.5,
-            ease: 'easeInOut'
+            duration: duration || 6,
+            ease: 'easeInOut',
+            repeat: Number.POSITIVE_INFINITY
           }}
         />
       ))}
@@ -123,10 +123,10 @@ function PathSVG({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
             initial={{ scale: 0 }}
             r='6'
             transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
               delay: index * 0.3,
-              ease: 'easeInOut'
+              duration: 2,
+              ease: 'easeInOut',
+              repeat: Number.POSITIVE_INFINITY
             }}
           />
           <motion.circle
@@ -141,10 +141,10 @@ function PathSVG({ opacityOnAnimate = 1, duration }: GradientPathBackgroundProps
             stroke='url(#circuitGradientLight)'
             strokeWidth='1'
             transition={{
-              duration: 3,
-              repeat: Number.POSITIVE_INFINITY,
               delay: index * 0.3,
-              ease: 'easeInOut'
+              duration: 3,
+              ease: 'easeInOut',
+              repeat: Number.POSITIVE_INFINITY
             }}
           />
         </motion.g>

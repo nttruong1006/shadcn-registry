@@ -1,13 +1,14 @@
 import { Checkbox } from '@/components/atoms/checkbox'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import SmartFormFieldContainer from './field-container'
+import type { BaseSmartFormFieldComponentProps } from './lib/base'
 import { useFieldContext } from './lib/form'
-import type { CheckboxFieldInputValue } from './lib/schema'
+import type { CheckboxFieldInputValue } from './lib/schemas/checkbox'
 
-export default function CheckboxField({ label, disabled, ...props }: BaseSmartFormFieldFieldProps) {
+export default function CheckboxField({ label, disabled, ...props }: BaseSmartFormFieldComponentProps) {
   const field = useFieldContext<CheckboxFieldInputValue>()
 
   return (
-    <FieldContainer
+    <SmartFormFieldContainer
       className='flex-row-reverse'
       errors={field.state.meta.errors}
       label={label}
@@ -22,6 +23,6 @@ export default function CheckboxField({ label, disabled, ...props }: BaseSmartFo
         name={field.name}
         onCheckedChange={(checked) => field.handleChange(checked === true)}
       />
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

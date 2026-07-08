@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/utils/ui'
 
 interface AnimatedTextProps {
-  text: string
-  className?: string
   blurEffect?: boolean
-  speed?: number
-  highlightWords?: string[]
+  className?: string
   highlightClassName?: string
-  linkWords?: string[]
-  linkUrls?: string[]
+  highlightWords?: string[]
   linkClassNames?: string[]
+  linkUrls?: string[]
+  linkWords?: string[]
+  speed?: number
+  text: string
 }
 
 export function AnimatedText({
@@ -56,13 +56,13 @@ export function AnimatedText({
             const wordElement = (
               <motion.span
                 animate={{
-                  opacity: 1,
-                  filter: blurEffect ? 'blur(0px)' : 'none'
+                  filter: blurEffect ? 'blur(0px)' : 'none',
+                  opacity: 1
                 }}
                 className={cn(isHighlight && `font-semibold text-primary ${highlightClassName}`)}
                 initial={{
-                  opacity: 0,
-                  filter: blurEffect ? 'blur(10px)' : 'none'
+                  filter: blurEffect ? 'blur(10px)' : 'none',
+                  opacity: 0
                 }}
                 // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                 key={`${word}-${index}`}
@@ -101,9 +101,9 @@ export function AnimatedText({
                 // biome-ignore lint/suspicious/noArrayIndexKey: ignore
                 key={`placeholder-${index}`}
                 style={{
-                  width: `${Math.max(word.length * 0.7, 2.5)}em`,
+                  display: 'inline-block',
                   height: '0.9em',
-                  display: 'inline-block'
+                  width: `${Math.max(word.length * 0.7, 2.5)}em`
                 }}
                 transition={{ duration: 0.2 }}
               />

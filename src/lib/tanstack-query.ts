@@ -50,16 +50,16 @@ function retry(failureCount: number, error: Error) {
 // Create a client
 export const queryClient = new QueryClient({
   defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-      placeholderData: (previousData: unknown) => previousData,
-      retry,
-      retryDelay: delayRetry
-    },
     mutations: {
       retry,
       retryDelay: delayRetry
+    },
+    queries: {
+      placeholderData: (previousData: unknown) => previousData,
+      refetchOnWindowFocus: false,
+      retry,
+      retryDelay: delayRetry,
+      staleTime: 1000 * 60 * 5
     }
   }
 })

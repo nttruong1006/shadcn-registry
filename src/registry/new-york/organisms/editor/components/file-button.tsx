@@ -28,37 +28,32 @@ export const defaultFileFormValue: z.input<typeof fileFormSchema> = {
 }
 
 export const fileUploaderDropzoneOptions: DropzoneOptions = {
-  maxFiles: 10,
-  multiple: true,
   accept: {
     'application/msword': ['.doc'],
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+    'application/pdf': ['.pdf'],
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-    'application/xml': ['.xml'],
-    'application/pdf': ['.pdf']
-  }
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+    'application/xml': ['.xml']
+  },
+  maxFiles: 10,
+  multiple: true
 }
 
 export default function FileButton({ id }: { id: string }) {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable
+    })
   })
 
   const [openPopover, setOpenPopover] = useState(false)
   const { fileUploadPending, uploadFile } = useFileUpload()
 
   const fileForm = useForm({
-    formId: `${id}-file-form`,
     defaultValues: defaultFileFormValue,
-    validators: {
-      onSubmit: fileFormSchema
-    },
+    formId: `${id}-file-form`,
     onSubmit: async ({ value }) => {
       try {
         const { files } = fileFormSchema.parse(value)
@@ -75,10 +70,10 @@ export default function FileButton({ id }: { id: string }) {
             .focus()
             // @ts-expect-error - custom command from FileExtension
             .insertFile({
-              url: getFileUrl(uploadedFile.path),
-              name: uploadedFile.original,
               mime: uploadedFile.mime,
-              size: uploadedFile.compress_info[''].size
+              name: uploadedFile.original,
+              size: uploadedFile.compress_info[''].size,
+              url: getFileUrl(uploadedFile.path)
             })
             .run()
         }
@@ -95,6 +90,9 @@ export default function FileButton({ id }: { id: string }) {
           description: 'An error occurred, please try again'
         })
       }
+    },
+    validators: {
+      onSubmit: fileFormSchema
     }
   })
 

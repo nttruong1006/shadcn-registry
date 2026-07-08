@@ -7,24 +7,24 @@ import { useSmartFilterContext } from './smart-filter'
 
 const operationLabels: Record<string, Record<string, string | undefined> | undefined> = {
   base: {
-    equalsTo: 'Equals to',
-    doesNotEqualTo: 'Does not equal to',
     contains: 'Contains',
-    isBetween: 'Is between',
+    doesNotEqualTo: 'Does not equal to',
+    equalsTo: 'Equals to',
+    hasAllOf: 'Has all of',
     hasAnyOf: 'Has any of',
-    hasAllOf: 'Has all of'
-  },
-  number: {
-    isLessThan: 'Is less than',
-    isLessThanOrEqualTo: 'Is less than or equal to',
-    isGreaterThan: 'Is greater than',
-    isGreaterThanOrEqualTo: 'Is greater than or equal to'
+    isBetween: 'Is between'
   },
   date: {
-    isLessThan: 'Is before',
-    isLessThanOrEqualTo: 'Is before or equal to',
     isGreaterThan: 'Is after',
-    isGreaterThanOrEqualTo: 'Is after or equal to'
+    isGreaterThanOrEqualTo: 'Is after or equal to',
+    isLessThan: 'Is before',
+    isLessThanOrEqualTo: 'Is before or equal to'
+  },
+  number: {
+    isGreaterThan: 'Is greater than',
+    isGreaterThanOrEqualTo: 'Is greater than or equal to',
+    isLessThan: 'Is less than',
+    isLessThanOrEqualTo: 'Is less than or equal to'
   }
 }
 
@@ -36,8 +36,8 @@ export default function AdvancedFilterOperationField({ formFilterName }: { formF
     const type = filters.find((filter) => filter.name === formFilterName)?.type
     return type
       ? operationsPerType[type].map((operation) => ({
-          value: operation,
-          label: operationLabels[type]?.[operation] ?? operationLabels.base?.[operation] ?? ''
+          label: operationLabels[type]?.[operation] ?? operationLabels.base?.[operation] ?? '',
+          value: operation
         }))
       : []
   }, [filters, formFilterName])

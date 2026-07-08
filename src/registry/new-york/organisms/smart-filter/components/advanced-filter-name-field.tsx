@@ -17,8 +17,8 @@ export default function AdvancedFilterNameField({
     return filters
       .filter((filter) => filter.name === field.state.value || !selectedFilters.includes(filter.name))
       .map((filter) => ({
-        value: filter.name,
-        label: filter.label
+        label: filter.label,
+        value: filter.name
       }))
   }, [filters, formFilters, field.state.value])
 

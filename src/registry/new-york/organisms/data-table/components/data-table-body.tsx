@@ -13,7 +13,7 @@ export default function DataTableBody<TData extends RowData>({
 }: Pick<DataTableProps<TData>, 'table' | 'onRenderSubComponent' | 'onRenderAdditionalRow'> & {
   className?: string
 }) {
-  const rows = table.getRowModel().rows
+  const { rows } = table.getRowModel()
 
   return (
     <TableBody className={cn('relative', className)}>

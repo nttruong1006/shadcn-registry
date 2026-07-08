@@ -10,11 +10,9 @@ export default function PreviewButton({ value }: { value: Content }) {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEmpty: editor.isEmpty
-      }
-    }
+    selector: ({ editor }) => ({
+      isEmpty: editor.isEmpty
+    })
   })
 
   return (

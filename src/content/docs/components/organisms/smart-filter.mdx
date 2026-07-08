@@ -3,59 +3,61 @@ title: Smart Filter
 description: Powerful component with search and filter by multiple conditions that can switch back and forth on top of TanStack Form.
 ---
 
-import CodePreview from '@/components/app/code-preview/index.astro'
-import InstallationCard from '@/components/app/installation-card/index.astro'
-import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+import CodePreview from "@/components/app/code-preview/index.astro";
+import InstallationCard from "@/components/app/installation-card/index.astro";
+import ShadcnLinkButton from "@/components/app/shadcn-link-button/index.astro";
 
-<CodePreview path='organisms/smart-filter/demo' />
+<CodePreview path="organisms/smart-filter/demo" />
 
 ## Installation
-<InstallationCard registryName='smart-filter' />
+
+<InstallationCard registryName="smart-filter" />
 
 ## Usage
+
 ```tsx
 import {
   type Filter,
   SmartFilter,
   type SmartFilterProps,
   SmartFilterType,
-  transformFormValueToApiFiltersParam
-} from '@/components/organisms/smart-filter'
+  transformFormValueToApiFiltersParam,
+} from "@/components/organisms/smart-filter";
 ```
 
 ```tsx
 const filters: Filter[] = [
   {
-    name: 'fullName',
-    label: 'Full name',
-    type: 'input'
+    name: "fullName",
+    label: "Full name",
+    type: "input",
   },
   {
-    name: 'age',
-    label: 'Age',
-    type: 'number'
+    name: "age",
+    label: "Age",
+    type: "number",
   },
   {
-    name: 'graduationDate',
-    label: 'Graduation date',
-    type: 'date'
+    name: "graduationDate",
+    label: "Graduation date",
+    type: "date",
   },
   {
-    name: 'department',
-    label: 'Department',
-    type: 'selectWithOptions',
+    name: "department",
+    label: "Department",
+    type: "selectWithOptions",
     options: [
-      { value: 'front-end', label: 'Front-end' },
-      { value: 'back-end', label: 'Back-end' }
-    ]
+      { value: "front-end", label: "Front-end" },
+      { value: "back-end", label: "Back-end" },
+    ],
   },
   {
-    name: 'technologies',
-    label: 'Technologies',
-    type: 'selectWithQuery',
-    apiPath: '/version/1.0/options/role'
-  }
-]
+    name: "technologies",
+    label: "Technologies",
+    type: "selectWithQuery",
+    apiPath: "/version/1.0/options/role",
+  },
+];
 ```
 
 ```tsx

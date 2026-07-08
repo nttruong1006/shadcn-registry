@@ -15,11 +15,9 @@ export default function TableButton({
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable
+    })
   })
 
   const isExtensionLoadedRef = useRef(false)
@@ -33,7 +31,7 @@ export default function TableButton({
       loading={isPending}
       onClick={() => {
         const callback: CallbackRef['current'] = (editor) => {
-          editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+          editor.chain().focus().insertTable({ cols: 3, rows: 3, withHeaderRow: true }).run()
         }
 
         if (isExtensionLoadedRef.current) {
@@ -48,7 +46,7 @@ export default function TableButton({
             setExtensions((prev) => [
               ...prev,
               TableKit.configure({
-                table: { resizable: true, allowTableNodeSelection: true }
+                table: { allowTableNodeSelection: true, resizable: true }
               })
             ])
             isExtensionLoadedRef.current = true

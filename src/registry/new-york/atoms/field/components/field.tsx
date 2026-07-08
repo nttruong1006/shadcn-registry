@@ -46,17 +46,17 @@ export function FieldGroup({ className, ...props }: ComponentProps<'div'>) {
 }
 
 const fieldVariants = cva('group/field flex w-full gap-2 data-[invalid=true]:text-destructive', {
+  defaultVariants: {
+    orientation: 'vertical'
+  },
   variants: {
     orientation: {
-      vertical: 'flex-col *:w-full [&>.sr-only]:w-auto',
       horizontal:
         'flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px',
       responsive:
-        '@md/field-group:flex-row flex-col @md/field-group:items-center *:w-full @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px'
+        '@md/field-group:flex-row flex-col @md/field-group:items-center *:w-full @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px',
+      vertical: 'flex-col *:w-full [&>.sr-only]:w-auto'
     }
-  },
-  defaultVariants: {
-    orientation: 'vertical'
   }
 })
 
@@ -170,7 +170,7 @@ export function FieldError({ className, children, errors, ...props }: FieldError
 
     const uniqueErrors = [...new Map(errors.map((error) => [error?.message, error])).values()]
 
-    if (uniqueErrors?.length === 1) {
+    if (uniqueErrors.length === 1) {
       return uniqueErrors[0]?.message
     }
 

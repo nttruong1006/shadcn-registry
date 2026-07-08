@@ -43,7 +43,7 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
           const selectedOptions = field.state.value as string[]
           const value = options.filter((item) => selectedOptions.includes(item.value))
           const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-          const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
+          const items = updateSelectedItemReferencesAndGetItems({ queryData: options, value })
 
           return (
             <Field data-invalid={invalid}>
@@ -62,9 +62,9 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
                   {getOptionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
 
                   <ComboboxValue>
-                    {(value: typeof items) => {
-                      return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
-                    }}
+                    {(value: typeof items) =>
+                      value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+                    }
                   </ComboboxValue>
 
                   <ComboboxChipsInput
@@ -117,7 +117,7 @@ export default function AdvancedFilterValueSelectWithInfiniteQueryField({
       {(field) => {
         const value = options.find((item) => item.value === field.state.value) ?? null
         const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-        const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
+        const items = updateSelectedItemReferencesAndGetItems({ queryData: options, value })
 
         return (
           <Field data-invalid={invalid}>

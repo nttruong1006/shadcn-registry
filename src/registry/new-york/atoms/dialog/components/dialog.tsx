@@ -69,13 +69,11 @@ export function DialogContent({
   )
 }
 
-export const DialogScroll = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => {
-  return (
-    <div className={cn('-m-4 overflow-y-auto overflow-x-hidden p-4', className)} data-slot='dialog-scroll' {...props}>
-      {children}
-    </div>
-  )
-}
+export const DialogScroll = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('-m-4 overflow-y-auto overflow-x-hidden p-4', className)} data-slot='dialog-scroll' {...props}>
+    {children}
+  </div>
+)
 
 export function DialogHeader({ className, ...props }: ComponentProps<'div'>) {
   return <div className={cn('flex flex-col gap-2', className)} data-slot='dialog-header' {...props} />

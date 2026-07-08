@@ -13,8 +13,8 @@ import { type SmartFilterOperation, smartFilterOperations, smartFilterTypes } fr
 const { fieldContext, formContext, useFieldContext, useFormContext } = createFormHookContexts()
 const { useAppForm, withForm } = createFormHook({
   fieldComponents: {},
-  formComponents: {},
   fieldContext,
+  formComponents: {},
   formContext
 })
 
@@ -27,7 +27,9 @@ export const basicSearchFormSchema = z.object({
 
 export type BasicSearchFormValueInput = z.input<typeof basicSearchFormSchema>
 export type BasicSearchFormValueOutput = z.output<typeof basicSearchFormSchema>
-export const defaultBasicSearchFormValue: BasicSearchFormValueInput = { keyword: '' }
+export const defaultBasicSearchFormValue: BasicSearchFormValueInput = {
+  keyword: ''
+}
 
 // Advanced filter form
 export const advancedFilterFormSchema = z.object({
@@ -38,11 +40,11 @@ export const advancedFilterFormSchema = z.object({
         operation: z.literal(smartFilterOperations),
         type: z.literal(smartFilterTypes),
         value: z.object({
-          default: z.union([z.string().trim(), z.array(z.string()).min(1, 'Please enter/select the information')]),
           additional: z.object({
             from: z.string(),
             to: z.string()
-          })
+          }),
+          default: z.union([z.string().trim(), z.array(z.string()).min(1, 'Please enter/select the information')])
         })
       })
       .superRefine((fieldValues, ctx) => {
@@ -53,9 +55,9 @@ export const advancedFilterFormSchema = z.object({
             const invalidFields = ['value.additional', 'value.additional.from']
             for (const invalidField of invalidFields) {
               ctx.addIssue({
-                path: [invalidField],
+                code: 'custom',
                 message: 'Please enter/select the information',
-                code: 'custom'
+                path: [invalidField]
               })
             }
           }
@@ -64,17 +66,17 @@ export const advancedFilterFormSchema = z.object({
             const invalidFields = ['value.additional', 'value.additional.to']
             for (const invalidField of invalidFields) {
               ctx.addIssue({
-                path: [invalidField],
+                code: 'custom',
                 message: 'Please enter/select the information',
-                code: 'custom'
+                path: [invalidField]
               })
             }
           }
         } else if (value.default === '') {
           ctx.addIssue({
-            path: ['value.default'],
+            code: 'custom',
             message: 'Please enter/select the information',
-            code: 'custom'
+            path: ['value.default']
           })
         }
       })
@@ -83,7 +85,9 @@ export const advancedFilterFormSchema = z.object({
 
 export type AdvancedFilterFormValueInput = z.input<typeof advancedFilterFormSchema>
 export type AdvancedFilterFormValueOutput = z.output<typeof advancedFilterFormSchema>
-export const defaultAdvancedFilterFormValue: AdvancedFilterFormValueInput = { filters: [] }
+export const defaultAdvancedFilterFormValue: AdvancedFilterFormValueInput = {
+  filters: []
+}
 
 export function useAdvancedFilterForm() {
   return useFormContext() as unknown as AppFieldExtendedReactFormApi<
@@ -106,20 +110,20 @@ export function useAdvancedFilterForm() {
 
 // Default string value
 export const defaultStringValue: AdvancedFilterFormValueInput['filters'][number]['value'] = {
-  default: '',
   additional: {
     from: '',
     to: ''
-  }
+  },
+  default: ''
 } as const
 
 // Default string array value
 export const defaultStringArrayValue: AdvancedFilterFormValueInput['filters'][number]['value'] = {
-  default: [],
   additional: {
     from: '',
     to: ''
-  }
+  },
+  default: []
 } as const
 
 // Default value per operation
@@ -127,20 +131,20 @@ export const defaultValuePerOperation: Record<
   SmartFilterOperation,
   AdvancedFilterFormValueInput['filters'][number]['value']
 > = {
-  equalsTo: defaultStringValue,
+  contains: defaultStringValue,
   doesNotEqualTo: defaultStringValue,
-  isLessThan: defaultStringValue,
-  isLessThanOrEqualTo: defaultStringValue,
+  equalsTo: defaultStringValue,
+  hasAllOf: defaultStringArrayValue,
+  hasAnyOf: defaultStringArrayValue,
+  isBetween: defaultStringValue,
   isGreaterThan: defaultStringValue,
   isGreaterThanOrEqualTo: defaultStringValue,
-  contains: defaultStringValue,
-  isBetween: defaultStringValue,
-  hasAnyOf: defaultStringArrayValue,
-  hasAllOf: defaultStringArrayValue
+  isLessThan: defaultStringValue,
+  isLessThanOrEqualTo: defaultStringValue
 } as const
 
 /**
- * Update reference of selected item bacause queryData will be changed after refetching
+ * @summary Update selected item reference because queryData will be changed after refetching
  */
 export function updateSelectedItemReferencesAndGetItems({
   value,
@@ -152,7 +156,6 @@ export function updateSelectedItemReferencesAndGetItems({
   // Multiple
   if (Array.isArray(value)) {
     if (value.length > 0) {
-      // Update reference of selected item bacause of queryData will be changed after refetching
       queryData.forEach((item, index) => {
         const valueIndex = value.findIndex((valueItem) => valueItem.value === item.value)
         if (valueIndex >= 0) {
@@ -168,7 +171,6 @@ export function updateSelectedItemReferencesAndGetItems({
   if (value) {
     const valueIndex = queryData.findIndex((item) => item.value === value.value)
     if (valueIndex >= 0) {
-      // Update reference of selected item bacause of queryData will be changed after refetching
       queryData[valueIndex] = value
     }
   }

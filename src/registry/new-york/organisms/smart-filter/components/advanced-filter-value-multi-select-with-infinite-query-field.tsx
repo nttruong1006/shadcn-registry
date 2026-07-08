@@ -38,7 +38,7 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
         const selectedOptions = field.state.value as string[]
         const value = options.filter((item) => selectedOptions.includes(item.value))
         const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-        const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
+        const items = updateSelectedItemReferencesAndGetItems({ queryData: options, value })
 
         return (
           <Field data-invalid={invalid}>
@@ -57,9 +57,9 @@ export default function AdvancedFilterValueMultiSelectWithQueryField({
                 {getOptionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
 
                 <ComboboxValue>
-                  {(value: typeof options) => {
-                    return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
-                  }}
+                  {(value: typeof options) =>
+                    value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+                  }
                 </ComboboxValue>
 
                 <ComboboxChipsInput

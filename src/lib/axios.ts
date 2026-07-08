@@ -2,8 +2,8 @@ import Axios, { type AxiosRequestConfig } from 'axios'
 
 export const axios = Axios.create({
   baseURL: 'https://gateway.dev.meu-solutions.com/fosco/api',
-  validateStatus: (status) => status < 400,
-  timeout: 10_000
+  timeout: 10_000,
+  validateStatus: (status) => status < 400
 })
 
 // Request middleware
@@ -27,9 +27,7 @@ export const executeAxios = <T>(config: AxiosRequestConfig, options?: AxiosReque
   const promise = axios<T>({
     ...config,
     ...options
-  }).then(({ data, status }) => {
-    return data instanceof Blob ? data : { ...data, statusCode: status }
-  })
+  }).then(({ data, status }) => (data instanceof Blob ? data : { ...data, statusCode: status }))
 
   // @ts-expect-error not exist cancel
   promise.cancel = () => {

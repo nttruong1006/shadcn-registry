@@ -7,16 +7,17 @@ import {
   ComboboxList
 } from '@/components/atoms/combobox'
 import type { Option } from '@/types/base'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import SmartFormFieldContainer from './field-container'
+import type { BaseSmartFormFieldComponentProps } from './lib/base'
 import { useFieldContext } from './lib/form'
-import type { SelectFieldInputValue } from './lib/schema'
+import type { SelectFieldInputValue } from './lib/schemas/select'
 
 export default function SelectWithOptionsField({
   label,
   disabled,
   options,
   ...props
-}: BaseSmartFormFieldFieldProps & {
+}: BaseSmartFormFieldComponentProps & {
   options: Option[]
 }) {
   const field = useFieldContext<SelectFieldInputValue>()
@@ -24,11 +25,17 @@ export default function SelectWithOptionsField({
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
 
   return (
-    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+    <SmartFormFieldContainer
+      errors={field.state.meta.errors}
+      invalid={invalid}
+      label={label}
+      name={field.name}
+      {...props}
+    >
       <Combobox
         items={options}
-        onValueChange={(value) => {
-          field.handleChange(value?.value ?? null)
+        onValueChange={(event) => {
+          field.handleChange(event?.value ?? null)
         }}
         value={value}
       >
@@ -38,6 +45,7 @@ export default function SelectWithOptionsField({
           disabled={disabled}
           id={`${field.form.formId}-${field.name}`}
           placeholder={typeof label === 'string' ? `Select ${label.toLowerCase()}` : undefined}
+          showClear
         />
         <ComboboxContent>
           <ComboboxEmpty>No items found.</ComboboxEmpty>
@@ -50,6 +58,6 @@ export default function SelectWithOptionsField({
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

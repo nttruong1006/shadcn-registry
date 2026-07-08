@@ -3,14 +3,14 @@ import { type HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { cn } from '@/utils/ui'
 
 interface HighlightedTextProps extends HTMLAttributes<HTMLDivElement> {
+  animate?: boolean
+  animationDelay?: number
+  animationDuration?: number
   highlightColorClassName?: string
   markerColorClassName?: string
   opacity?: number
-  animationDuration?: number
-  animationDelay?: number
-  animate?: boolean
-  triggerOnView?: boolean
   repeat?: boolean
+  triggerOnView?: boolean
 }
 
 const MARKER_SIZE = 8
@@ -54,7 +54,7 @@ export function HighlightedText({
           setIsVisible(false)
         }
       },
-      { threshold: 0.1, rootMargin: '-50px' }
+      { rootMargin: '-50px', threshold: 0.1 }
     )
     observerRef.current.observe(textRef.current)
     return () => observerRef.current?.disconnect()
@@ -70,13 +70,13 @@ export function HighlightedText({
           className={cn('rounded p-4', highlightColorClassName)}
           initial={{ opacity: 0 }}
           style={{
-            opacity,
             boxDecorationBreak: 'clone',
+            opacity,
             WebkitBoxDecorationBreak: 'clone'
           }}
           transition={{
-            duration: animationDuration,
             delay: animationDelay,
+            duration: animationDuration,
             ease: 'easeOut'
           }}
         >
@@ -88,23 +88,23 @@ export function HighlightedText({
           animate={isShouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: -5 }}
           className='absolute'
           initial={{ opacity: 0, y: -5 }}
-          style={{ top: `-${MARKER_OFFSET_X}px`, left: `-${MARKER_OFFSET_Y}px` }}
+          style={{ left: `-${MARKER_OFFSET_Y}px`, top: `-${MARKER_OFFSET_X}px` }}
           transition={{
-            duration: 0.3,
             delay: animationDelay + animationDuration * 0.8,
+            duration: 0.3,
             ease: 'easeOut'
           }}
         >
           <span
             className={cn('block rounded-full', markerColorClassName)}
-            style={{ width: `${MARKER_SIZE}px`, height: `${MARKER_SIZE}px` }}
+            style={{ height: `${MARKER_SIZE}px`, width: `${MARKER_SIZE}px` }}
           />
           <span
             className={cn('block', markerColorClassName)}
             style={{
-              width: `${MARKER_WIDTH}px`,
               height: `${LINE_HEIGHT}px`,
-              marginLeft: `${(MARKER_SIZE - 2) / 2}px`
+              marginLeft: `${(MARKER_SIZE - 2) / 2}px`,
+              width: `${MARKER_WIDTH}px`
             }}
           />
         </motion.span>
@@ -116,22 +116,22 @@ export function HighlightedText({
           initial={{ opacity: 0, y: 5 }}
           style={{ bottom: `-${MARKER_OFFSET_X}px`, right: `-${MARKER_OFFSET_Y}px` }}
           transition={{
-            duration: 0.3,
             delay: animationDelay + animationDuration,
+            duration: 0.3,
             ease: 'easeOut'
           }}
         >
           <span
             className={cn('block', markerColorClassName)}
             style={{
-              width: `${MARKER_WIDTH}px`,
               height: `${LINE_HEIGHT}px`,
-              marginLeft: `${(MARKER_SIZE - 2) / 2}px`
+              marginLeft: `${(MARKER_SIZE - 2) / 2}px`,
+              width: `${MARKER_WIDTH}px`
             }}
           />
           <span
             className={cn('block rounded-full', markerColorClassName)}
-            style={{ width: `${MARKER_SIZE}px`, height: `${MARKER_SIZE}px` }}
+            style={{ height: `${MARKER_SIZE}px`, width: `${MARKER_SIZE}px` }}
           />
         </motion.span>
       </div>

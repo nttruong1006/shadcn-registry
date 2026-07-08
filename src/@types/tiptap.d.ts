@@ -1,8 +1,8 @@
 export interface FileAttributes {
-  url: string
-  name: string
   mime: string
+  name: string
   size: number
+  url: string
 }
 
 declare module '@tiptap/core' {

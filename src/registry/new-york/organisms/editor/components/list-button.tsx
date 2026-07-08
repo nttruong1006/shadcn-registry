@@ -16,14 +16,12 @@ export default function ListButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isBulletListActive: editor.isActive('bulletList'),
-        isOrderedListActive: editor.isActive('orderedList'),
-        isTaskListActive: editor.isActive('taskList'),
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isBulletListActive: editor.isActive('bulletList'),
+      isEditable: editor.isEditable,
+      isOrderedListActive: editor.isActive('orderedList'),
+      isTaskListActive: editor.isActive('taskList')
+    })
   })
 
   return (

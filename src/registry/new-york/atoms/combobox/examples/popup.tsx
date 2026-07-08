@@ -11,55 +11,55 @@ import {
 } from '@/components/atoms/combobox'
 
 const countries = [
-  { code: '', value: '', continent: '', label: 'Select country' },
+  { code: '', continent: '', label: 'Select country', value: '' },
   {
     code: 'ar',
-    value: 'argentina',
+    continent: 'South America',
     label: 'Argentina',
-    continent: 'South America'
+    value: 'argentina'
   },
-  { code: 'au', value: 'australia', label: 'Australia', continent: 'Oceania' },
-  { code: 'br', value: 'brazil', label: 'Brazil', continent: 'South America' },
-  { code: 'ca', value: 'canada', label: 'Canada', continent: 'North America' },
-  { code: 'cn', value: 'china', label: 'China', continent: 'Asia' },
+  { code: 'au', continent: 'Oceania', label: 'Australia', value: 'australia' },
+  { code: 'br', continent: 'South America', label: 'Brazil', value: 'brazil' },
+  { code: 'ca', continent: 'North America', label: 'Canada', value: 'canada' },
+  { code: 'cn', continent: 'Asia', label: 'China', value: 'china' },
   {
     code: 'co',
-    value: 'colombia',
+    continent: 'South America',
     label: 'Colombia',
-    continent: 'South America'
+    value: 'colombia'
   },
-  { code: 'eg', value: 'egypt', label: 'Egypt', continent: 'Africa' },
-  { code: 'fr', value: 'france', label: 'France', continent: 'Europe' },
-  { code: 'de', value: 'germany', label: 'Germany', continent: 'Europe' },
-  { code: 'it', value: 'italy', label: 'Italy', continent: 'Europe' },
-  { code: 'jp', value: 'japan', label: 'Japan', continent: 'Asia' },
-  { code: 'ke', value: 'kenya', label: 'Kenya', continent: 'Africa' },
-  { code: 'mx', value: 'mexico', label: 'Mexico', continent: 'North America' },
+  { code: 'eg', continent: 'Africa', label: 'Egypt', value: 'egypt' },
+  { code: 'fr', continent: 'Europe', label: 'France', value: 'france' },
+  { code: 'de', continent: 'Europe', label: 'Germany', value: 'germany' },
+  { code: 'it', continent: 'Europe', label: 'Italy', value: 'italy' },
+  { code: 'jp', continent: 'Asia', label: 'Japan', value: 'japan' },
+  { code: 'ke', continent: 'Africa', label: 'Kenya', value: 'kenya' },
+  { code: 'mx', continent: 'North America', label: 'Mexico', value: 'mexico' },
   {
     code: 'nz',
-    value: 'new-zealand',
+    continent: 'Oceania',
     label: 'New Zealand',
-    continent: 'Oceania'
+    value: 'new-zealand'
   },
-  { code: 'ng', value: 'nigeria', label: 'Nigeria', continent: 'Africa' },
+  { code: 'ng', continent: 'Africa', label: 'Nigeria', value: 'nigeria' },
   {
     code: 'za',
-    value: 'south-africa',
+    continent: 'Africa',
     label: 'South Africa',
-    continent: 'Africa'
+    value: 'south-africa'
   },
-  { code: 'kr', value: 'south-korea', label: 'South Korea', continent: 'Asia' },
+  { code: 'kr', continent: 'Asia', label: 'South Korea', value: 'south-korea' },
   {
     code: 'gb',
-    value: 'united-kingdom',
+    continent: 'Europe',
     label: 'United Kingdom',
-    continent: 'Europe'
+    value: 'united-kingdom'
   },
   {
     code: 'us',
-    value: 'united-states',
+    continent: 'North America',
     label: 'United States',
-    continent: 'North America'
+    value: 'united-states'
   }
 ]
 

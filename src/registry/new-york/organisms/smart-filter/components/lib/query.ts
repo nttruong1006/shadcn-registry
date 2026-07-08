@@ -20,15 +20,11 @@ export function useGetOptionsQuery({ apiPath }: { apiPath: string }) {
       rows: Option[]
     }
   }>({
-    queryKey: apiPath.split('?'),
-    queryFn: ({ signal }) => {
-      return executeAxios({ url: apiPath, method: 'GET', signal })
-    }
+    queryFn: ({ signal }) => executeAxios({ method: 'GET', signal, url: apiPath }),
+    queryKey: apiPath.split('?')
   })
 
-  const options = useMemo(() => {
-    return getOptionsQuery.data?.responseData?.rows ?? []
-  }, [getOptionsQuery.data])
+  const options = useMemo(() => getOptionsQuery.data?.responseData?.rows ?? [], [getOptionsQuery.data])
 
   return {
     getOptionsQuery,
@@ -83,27 +79,27 @@ export function useGetOptionsInfiniteQuery({ apiPath }: { apiPath: string }) {
     QueryKey,
     number
   >({
-    queryKey: [...apiPath.split('?'), debouncedSearchKeyword],
-    queryFn: ({ signal, pageParam }) => {
-      return executeAxios({
-        url: `${apiPath}${apiPath.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
-        method: 'GET',
-        signal
-      })
-    },
+    getNextPageParam,
     initialPageParam: 1,
-    getNextPageParam
+    queryFn: ({ signal, pageParam }) =>
+      executeAxios({
+        method: 'GET',
+        signal,
+        url: `${apiPath}${apiPath.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
+      }),
+    queryKey: [...apiPath.split('?'), debouncedSearchKeyword]
   })
 
-  const options = useMemo<Option[]>(() => {
-    return getOptionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
-  }, [getOptionsInfiniteQuery.data])
+  const options = useMemo<Option[]>(
+    () => getOptionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? [],
+    [getOptionsInfiniteQuery.data]
+  )
 
   return {
+    debouncedSearchKeyword,
     getOptionsInfiniteQuery,
     options,
     searchKeyword,
-    debouncedSearchKeyword,
     setSearchKeyword
   }
 }

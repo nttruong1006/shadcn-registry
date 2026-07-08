@@ -22,18 +22,16 @@ export const useGetOptionsQuery = ({
   dependencyFieldsValue?: Record<string, unknown>
 }) => {
   const [apiPath, setApiPath] = useState(originalApiPath)
-  const [enabled, setEnabled] = useState(!originalApiPath?.includes('/{'))
+  const [enabled, setEnabled] = useState(!originalApiPath.includes('/{'))
 
   const getOptionsQuery = useQuery<{
     responseData: {
       rows: Option[]
     }
   }>({
-    queryKey: apiPath.split('?'),
-    queryFn: ({ signal }) => {
-      return executeAxios({ url: apiPath, method: 'GET', signal })
-    },
-    enabled
+    enabled,
+    queryFn: ({ signal }) => executeAxios({ method: 'GET', signal, url: apiPath }),
+    queryKey: apiPath.split('?')
   })
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export const useGetOptionsQuery = ({
 
     const newApiPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
       const value = dependencyFieldsValue[fieldName]
-      if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
+      if (value === null || (typeof value !== 'number' && typeof value !== 'string')) {
         return result
       }
       return result.replace(`{${fieldName}}`, value.toString())
@@ -53,17 +51,14 @@ export const useGetOptionsQuery = ({
     setEnabled(!newApiPath?.includes('/{'))
   }, [dependencyFieldsValue, originalApiPath])
 
-  const options = useMemo<Option[]>(() => {
-    if (!enabled) {
-      return []
-    }
-    return (
+  const options = useMemo<Option[]>(
+    () =>
       getOptionsQuery.data?.responseData?.rows.map((option) => ({
-        value: option.value,
-        label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label)
-      })) ?? []
-    )
-  }, [enabled, getOptionsQuery.data])
+        label: typeof option.label === 'string' ? option.label : JSON.stringify(option.label),
+        value: option.value
+      })) ?? [],
+    [getOptionsQuery.data]
+  )
 
   return {
     getOptionsQuery,
@@ -119,7 +114,7 @@ export function useGetOptionsInfiniteQuery({
   valueAsLabel?: boolean
 }) {
   const [apiPath, setApiPath] = useState(originalApiPath)
-  const [enabled, setEnabled] = useState(!originalApiPath?.includes('/{'))
+  const [enabled, setEnabled] = useState(!originalApiPath.includes('/{'))
   const [searchKeyword, setSearchKeyword] = useState('')
 
   const debouncedSearchKeyword = useDebounce(valueAsLabel ? selectedValue?.trim() : searchKeyword.trim(), 400)
@@ -131,19 +126,18 @@ export function useGetOptionsInfiniteQuery({
     QueryKey,
     number
   >({
-    queryKey: [...apiPath.split('?'), debouncedSearchKeyword],
-    queryFn: ({ signal, pageParam }) => {
-      return executeAxios({
+    enabled,
+    getNextPageParam,
+    initialPageParam: 1,
+    queryFn: ({ signal, pageParam }) =>
+      executeAxios({
+        method: 'GET',
+        signal,
         url: valueAsLabel
           ? `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
-          : `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${selectedValue ? `&preSelected=${selectedValue}` : ''}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`,
-        method: 'GET',
-        signal
-      })
-    },
-    enabled,
-    initialPageParam: 1,
-    getNextPageParam
+          : `${apiPath}${apiPath?.includes('?') ? '&' : '?'}page=${pageParam}&pageSize=${infiniteQueryPageSize}${selectedValue ? `&preSelected=${selectedValue}` : ''}${debouncedSearchKeyword ? `&searchQuery=${debouncedSearchKeyword}` : ''}`
+      }),
+    queryKey: [...apiPath.split('?'), debouncedSearchKeyword]
   })
 
   useEffect(() => {
@@ -153,7 +147,7 @@ export function useGetOptionsInfiniteQuery({
 
     const newApiPath = Object.keys(dependencyFieldsValue).reduce<string>((result, fieldName) => {
       const value = dependencyFieldsValue[fieldName]
-      if (value == null || (typeof value !== 'number' && typeof value !== 'string')) {
+      if (value === null || (typeof value !== 'number' && typeof value !== 'string')) {
         return result
       }
       return result.replace(`{${fieldName}}`, value.toString())
@@ -163,18 +157,16 @@ export function useGetOptionsInfiniteQuery({
     setEnabled(!newApiPath?.includes('/{'))
   }, [dependencyFieldsValue, apiPath])
 
-  const options = useMemo<Option[]>(() => {
-    if (!enabled) {
-      return []
-    }
-    return getOptionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? []
-  }, [enabled, getOptionsInfiniteQuery.data])
+  const options = useMemo<Option[]>(
+    () => getOptionsInfiniteQuery.data?.pages.flatMap((page) => page.responseData.rows) ?? [],
+    [getOptionsInfiniteQuery.data]
+  )
 
   return {
+    debouncedSearchKeyword,
     getOptionsInfiniteQuery,
     options,
     searchKeyword,
-    debouncedSearchKeyword,
     setSearchKeyword
   }
 }

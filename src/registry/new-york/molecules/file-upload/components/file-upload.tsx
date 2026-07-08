@@ -42,17 +42,17 @@ export function FileUpload({
   onValueChange,
   ...dropzoneOptions
 }: FileUploadProps) {
-  const { maxFiles = 1, maxSize = 20 * 1024 * 1024, ...restDropzoneOptions } = dropzoneOptions ?? {}
+  const { maxFiles = 1, maxSize = 20 * 1024 * 1024, ...restDropzoneOptions } = dropzoneOptions
   const replaceOnSelect = maxFiles === 1 ? true : replaceOnSelectProp
   const multiple = maxFiles > 1
   const disabled = Boolean(disabledProp === undefined ? value.length === maxFiles && !replaceOnSelect : disabledProp)
 
   // Dropzone
   const dropzoneState = useDropzone({
+    disabled,
     maxFiles,
     maxSize,
     multiple,
-    disabled,
     ...restDropzoneOptions,
     onDrop: useCallback(
       (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
@@ -89,7 +89,7 @@ export function FileUpload({
             }
 
             if (rejectedFile.errors[0]?.code === 'file-invalid-type') {
-              const acceptedExtensions = Object.values(dropzoneOptions?.accept ?? {}).reduce<string[]>((acc, cur) => {
+              const acceptedExtensions = Object.values(dropzoneOptions.accept ?? {}).reduce<string[]>((acc, cur) => {
                 acc.push(...cur.map((extension) => extension))
                 return acc
               }, [])
@@ -106,17 +106,17 @@ export function FileUpload({
           }
         }
       },
-      [value, replaceOnSelect, maxFiles, maxSize, dropzoneOptions?.accept, onValueChange]
+      [value, replaceOnSelect, maxFiles, maxSize, dropzoneOptions.accept, onValueChange]
     )
   })
 
   return (
     <FileUploadContext.Provider
       value={{
-        value,
-        dropzoneState,
         disabled,
-        onValueChange
+        dropzoneState,
+        onValueChange,
+        value
       }}
     >
       <div className={cn('flex w-full flex-col gap-2', className)} data-slot='file-upload'>

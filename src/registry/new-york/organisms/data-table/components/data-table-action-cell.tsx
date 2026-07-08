@@ -10,25 +10,25 @@ import {
 } from '@/components/atoms/dropdown-menu'
 
 export interface BaseMenu {
-  id: string
   icon?: ReactNode
+  id: string
   label?: ReactNode
   variant?: DropdownMenuItemVariant
 }
 
 export interface LinkMenu extends BaseMenu {
-  type: 'link'
   link: string
+  type: 'link'
 }
 
 export interface EventMenu extends BaseMenu {
-  type: 'event'
   onClick: () => void
+  type: 'event'
 }
 
 export interface SlotMenu extends BaseMenu {
-  type: 'slot'
   slot: ReactNode
+  type: 'slot'
 }
 
 export type Menu = LinkMenu | EventMenu | SlotMenu
@@ -51,9 +51,6 @@ export function DataTableActionCell({ menus, loading }: { menus: Menu[]; loading
       <DropdownMenuContent>
         {menus.map((menu) => {
           switch (menu.type) {
-            case 'slot':
-              return <Fragment key={menu.id}>{menu.slot}</Fragment>
-
             case 'link':
               return (
                 <DropdownMenuItem
@@ -74,6 +71,9 @@ export function DataTableActionCell({ menus, loading }: { menus: Menu[]; loading
                   {menu.label}
                 </DropdownMenuItem>
               )
+
+            case 'slot':
+              return <Fragment key={menu.id}>{menu.slot}</Fragment>
 
             default:
               return null

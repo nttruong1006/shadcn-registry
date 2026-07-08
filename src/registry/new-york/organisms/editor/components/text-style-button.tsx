@@ -50,20 +50,18 @@ export default function TextStyleButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: {
-          null: editor.isActive('paragraph'),
-          1: editor.isActive('heading', { level: 1 }),
-          2: editor.isActive('heading', { level: 2 }),
-          3: editor.isActive('heading', { level: 3 }),
-          4: editor.isActive('heading', { level: 4 }),
-          5: editor.isActive('heading', { level: 5 }),
-          6: editor.isActive('heading', { level: 6 })
-        },
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: {
+        1: editor.isActive('heading', { level: 1 }),
+        2: editor.isActive('heading', { level: 2 }),
+        3: editor.isActive('heading', { level: 3 }),
+        4: editor.isActive('heading', { level: 4 }),
+        5: editor.isActive('heading', { level: 5 }),
+        6: editor.isActive('heading', { level: 6 }),
+        null: editor.isActive('paragraph')
+      },
+      isEditable: editor.isEditable
+    })
   })
 
   function changeTextStyle(textStyle: (typeof textStyles)[number]) {

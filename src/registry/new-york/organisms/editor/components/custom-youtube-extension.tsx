@@ -193,8 +193,8 @@ function YoutubeComponent(props: ReactNodeViewProps<HTMLImageElement>) {
   const [src] = useState(
     () =>
       getEmbedUrlFromYoutubeUrl({
-        url: youtubeAttributes.src as string,
-        nocookie: true
+        nocookie: true,
+        url: youtubeAttributes.src as string
       }) ?? undefined
   )
   const [loaded, setLoaded] = useState(false)
@@ -211,11 +211,11 @@ function YoutubeComponent(props: ReactNodeViewProps<HTMLImageElement>) {
 
     if (alignment === 'justify') {
       updateAttributes({
-        width: containerRef.current?.clientWidth,
         containerStyle: {
           ...containerStyle,
           width: '100%'
-        }
+        },
+        width: containerRef.current?.clientWidth
       })
     }
 
@@ -334,12 +334,27 @@ function YoutubeComponent(props: ReactNodeViewProps<HTMLImageElement>) {
   )
 }
 
-export const CustomYoutubeExtension = Youtube.extend({
+const CustomYoutubeExtension = Youtube.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      alignment: {
+        default: 'center'
+      },
+      containerStyle: {
+        default: {
+          width: `${minWidth}px`
+        }
+      }
+    }
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(YoutubeComponent)
+  },
   renderHTML({ HTMLAttributes }) {
     const { alignment, containerStyle, ...youtubeAttributes } = HTMLAttributes as YoutubeAttributes
 
     const embedUrl = getEmbedUrlFromYoutubeUrl({
-      url: HTMLAttributes.src,
       allowFullscreen: this.options.allowFullscreen,
       autoplay: this.options.autoplay,
       ccLanguage: this.options.ccLanguage,
@@ -356,8 +371,9 @@ export const CustomYoutubeExtension = Youtube.extend({
       origin: this.options.origin,
       playlist: this.options.playlist,
       progressBarColor: this.options.progressBarColor,
+      rel: this.options.rel,
       startAt: HTMLAttributes.start || 0,
-      rel: this.options.rel
+      url: HTMLAttributes.src
     })
 
     if (embedUrl) {
@@ -383,8 +399,6 @@ export const CustomYoutubeExtension = Youtube.extend({
             ...mergeAttributes(
               this.options.HTMLAttributes,
               {
-                width: this.options.width,
-                height: this.options.height,
                 allowfullscreen: this.options.allowFullscreen,
                 autoplay: this.options.autoplay,
                 ccLanguage: this.options.ccLanguage,
@@ -392,6 +406,7 @@ export const CustomYoutubeExtension = Youtube.extend({
                 disableKBcontrols: this.options.disableKBcontrols,
                 enableIFrameApi: this.options.enableIFrameApi,
                 endTime: this.options.endTime,
+                height: this.options.height,
                 interfaceLanguage: this.options.interfaceLanguage,
                 ivLoadPolicy: this.options.ivLoadPolicy,
                 loop: this.options.loop,
@@ -399,7 +414,8 @@ export const CustomYoutubeExtension = Youtube.extend({
                 origin: this.options.origin,
                 playlist: this.options.playlist,
                 progressBarColor: this.options.progressBarColor,
-                rel: this.options.rel
+                rel: this.options.rel,
+                width: this.options.width
               },
               youtubeAttributes
             ),
@@ -408,22 +424,6 @@ export const CustomYoutubeExtension = Youtube.extend({
         ]
       ]
     ]
-  },
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      alignment: {
-        default: 'center'
-      },
-      containerStyle: {
-        default: {
-          width: `${minWidth}px`
-        }
-      }
-    }
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(YoutubeComponent)
   }
 })
 

@@ -39,13 +39,12 @@ function CountrySelectComponent({
   options: Option<Country | undefined>[]
   onChange: (value: Country | undefined) => void
 }) {
-  const items = useMemo(() => {
-    return options.filter((option) => !!option.value)
-  }, [options])
+  const items = useMemo(() => options.filter((option) => !!option.value), [options])
 
-  const comboboxValue = useMemo(() => {
-    return options.find((option) => option.value && option.value === value) ?? null
-  }, [options, value])
+  const comboboxValue = useMemo(
+    () => options.find((option) => option.value && option.value === value) ?? null,
+    [options, value]
+  )
 
   return (
     <Combobox disabled={disabled} items={items} onValueChange={(value) => onChange(value?.value)} value={comboboxValue}>

@@ -18,10 +18,6 @@ export type SmartFormFieldContainerProps = FieldProps & {
   errors?: FieldErrorProps['errors']
 }
 
-export type BaseSmartFormFieldFieldProps = Omit<SmartFormFieldContainerProps, 'name' | 'invalid' | 'errors'> & {
-  disabled?: boolean
-}
-
 export default function SmartFormFieldContainer({
   name,
   label,

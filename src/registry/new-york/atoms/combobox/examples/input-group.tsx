@@ -14,7 +14,6 @@ import { InputGroupAddon } from '@/components/atoms/input-group'
 
 const timezones = [
   {
-    value: 'Americas',
     items: [
       '(GMT-5) New York',
       '(GMT-8) Los Angeles',
@@ -22,14 +21,14 @@ const timezones = [
       '(GMT-5) Toronto',
       '(GMT-8) Vancouver',
       '(GMT-3) São Paulo'
-    ]
+    ],
+    value: 'Americas'
   },
   {
-    value: 'Europe',
-    items: ['(GMT+0) London', '(GMT+1) Paris', '(GMT+1) Berlin', '(GMT+1) Rome', '(GMT+1) Madrid', '(GMT+1) Amsterdam']
+    items: ['(GMT+0) London', '(GMT+1) Paris', '(GMT+1) Berlin', '(GMT+1) Rome', '(GMT+1) Madrid', '(GMT+1) Amsterdam'],
+    value: 'Europe'
   },
   {
-    value: 'Asia/Pacific',
     items: [
       '(GMT+9) Tokyo',
       '(GMT+8) Shanghai',
@@ -37,7 +36,8 @@ const timezones = [
       '(GMT+4) Dubai',
       '(GMT+11) Sydney',
       '(GMT+9) Seoul'
-    ]
+    ],
+    value: 'Asia/Pacific'
   }
 ] as const
 

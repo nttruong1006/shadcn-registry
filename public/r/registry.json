@@ -1845,6 +1845,71 @@
       "description": "Entire form component with custom field components on top of TanStack Form.",
       "files": [
         {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/autocomplete.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/autocomplete.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/checkbox.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/checkbox.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/date.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/date.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/editor.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/editor.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/file.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/file.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/input.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/input.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/multi-file.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/multi-file.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/multi-select.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/multi-select.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/number.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/number.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/password.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/password.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/phone-number.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/phone-number.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/select.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/select.ts"
+        },
+        {
+          "path": "src/registry/new-york/organisms/smart-form/components/lib/schemas/textarea.ts",
+          "type": "registry:file",
+          "target": "src/components/organisms/smart-form/lib/schemas/textarea.ts"
+        },
+        {
           "path": "src/registry/new-york/organisms/smart-form/components/lib/base.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/base.ts"
@@ -1858,11 +1923,6 @@
           "path": "src/registry/new-york/organisms/smart-form/components/lib/query.ts",
           "type": "registry:file",
           "target": "src/components/organisms/smart-form/lib/query.ts"
-        },
-        {
-          "path": "src/registry/new-york/organisms/smart-form/components/lib/schema.ts",
-          "type": "registry:file",
-          "target": "src/components/organisms/smart-form/lib/schema.ts"
         },
         {
           "path": "src/types/base.ts",

@@ -3,10 +3,6 @@ import { toast } from 'sonner'
 
 // Uploaded file
 export interface UploadedFile {
-  id: string
-  path: string
-  original: string
-  mime: string
   compress_info: Record<
     string,
     {
@@ -14,6 +10,10 @@ export interface UploadedFile {
       size: number
     }
   >
+  id: string
+  mime: string
+  original: string
+  path: string
 }
 
 // Get file url
@@ -25,9 +25,8 @@ export const getFileUrl = (path: string) => {
 }
 
 // Get size text
-export const getSizeText = (size: number) => {
-  return size < 1024 * 1024 ? `${(size / 1024).toFixed(2)}Kb` : `${(size / 1024 / 1024).toFixed(2)}MB`
-}
+export const getSizeText = (size: number) =>
+  size < 1024 * 1024 ? `${(size / 1024).toFixed(2)}Kb` : `${(size / 1024 / 1024).toFixed(2)}MB`
 
 // Use file upload
 export const useFileUpload = (args?: { throwError?: boolean }) => {
@@ -43,9 +42,11 @@ export const useFileUpload = (args?: { throwError?: boolean }) => {
 
         // Extract response and return value
         return Promise.resolve(null)
-      } catch {
+      } catch (error) {
         if (throwError) {
-          throw new Error('An error occurred when upload the file')
+          throw new Error('An error occurred when upload the file', {
+            cause: error
+          })
         }
         toast.error('Failure', {
           description: 'An error occurred when upload the file'
@@ -57,7 +58,7 @@ export const useFileUpload = (args?: { throwError?: boolean }) => {
   )
 
   return {
-    uploadFile,
-    fileUploadPending: false
+    fileUploadPending: false,
+    uploadFile
   }
 }

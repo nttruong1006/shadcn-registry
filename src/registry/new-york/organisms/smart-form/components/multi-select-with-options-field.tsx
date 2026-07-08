@@ -11,16 +11,17 @@ import {
   useComboboxAnchor
 } from '@/components/atoms/combobox'
 import type { Option } from '@/types/base'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import SmartFormFieldContainer from './field-container'
+import type { BaseSmartFormFieldComponentProps } from './lib/base'
 import { useFieldContext } from './lib/form'
-import type { MultiSelectFieldInputValue } from './lib/schema'
+import type { MultiSelectFieldInputValue } from './lib/schemas/multi-select'
 
 export default function MultiSelectWithOptionsField({
   label,
   disabled,
   options,
   ...props
-}: BaseSmartFormFieldFieldProps & {
+}: BaseSmartFormFieldComponentProps & {
   options: Option[]
 }) {
   const anchor = useComboboxAnchor()
@@ -30,7 +31,13 @@ export default function MultiSelectWithOptionsField({
   const value = options.filter((item) => selectedOptions.includes(item.value))
 
   return (
-    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+    <SmartFormFieldContainer
+      errors={field.state.meta.errors}
+      invalid={invalid}
+      label={label}
+      name={field.name}
+      {...props}
+    >
       <Combobox
         items={options}
         multiple
@@ -41,9 +48,7 @@ export default function MultiSelectWithOptionsField({
       >
         <ComboboxChips ref={anchor}>
           <ComboboxValue>
-            {(value: typeof options) => {
-              return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
-            }}
+            {(value: typeof options) => value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)}
           </ComboboxValue>
           <ComboboxChipsInput
             aria-invalid={invalid}
@@ -67,6 +72,6 @@ export default function MultiSelectWithOptionsField({
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

@@ -6,8 +6,8 @@ import { CodePreviewModule } from './_module'
 
 // Props
 interface Props {
-  path: string
   className?: string
+  path: string
 }
 const { path, className } = Astro.props
 
@@ -16,6 +16,6 @@ const [type, name, example] = path.split('/')
 const componentFileContent = readFileSync(`src/registry/new-york/${type}/${name}/examples/${example}.tsx`, 'utf-8')
 ---
 
-<CodePreviewModule client:load path={path} className={className}>
+<CodePreviewModule className={className} path={path} client:load>
   <Code code={componentFileContent} lang="tsx" />
 </CodePreviewModule>

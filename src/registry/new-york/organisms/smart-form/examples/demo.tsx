@@ -11,68 +11,66 @@ import {
 } from '@/components/atoms/dialog'
 import { FieldDescription, FieldLegend, FieldSet } from '@/components/atoms/field'
 import { useAppForm } from '@/components/organisms/smart-form/lib/form'
-import {
-  getAutocompleteFieldSchema,
-  getCheckboxFieldSchema,
-  getDateFieldSchema,
-  getEditorFieldSchema,
-  getInputFieldSchema,
-  getMultiFileFieldSchema,
-  getMultiSelectFieldSchema,
-  getNumberFieldSchema,
-  getPasswordFieldSchema,
-  getPhoneNumberFieldSchema,
-  getSelectFieldSchema,
-  getTextareaFieldSchema
-} from '@/components/organisms/smart-form/lib/schema'
+import { getAutocompleteFieldSchema } from '@/components/organisms/smart-form/lib/schemas/autocomplete'
+import { getCheckboxFieldSchema } from '@/components/organisms/smart-form/lib/schemas/checkbox'
+import { getDateFieldSchema } from '@/components/organisms/smart-form/lib/schemas/date'
+import { getEditorFieldSchema } from '@/components/organisms/smart-form/lib/schemas/editor'
+import { getInputFieldSchema } from '@/components/organisms/smart-form/lib/schemas/input'
+import { getMultiFileFieldSchema } from '@/components/organisms/smart-form/lib/schemas/multi-file'
+import { getMultiSelectFieldSchema } from '@/components/organisms/smart-form/lib/schemas/multi-select'
+import { getNumberFieldSchema } from '@/components/organisms/smart-form/lib/schemas/number'
+import { getPasswordFieldSchema } from '@/components/organisms/smart-form/lib/schemas/password'
+import { getPhoneNumberFieldSchema } from '@/components/organisms/smart-form/lib/schemas/phone-number'
+import { getSelectFieldSchema } from '@/components/organisms/smart-form/lib/schemas/select'
+import { getTextareaFieldSchema } from '@/components/organisms/smart-form/lib/schemas/textarea'
 
 const formSchema = z
   .object({
-    fullName: getInputFieldSchema({
-      required: 'Please enter the full name'
-    }),
     age: getNumberFieldSchema({
       required: 'Please enter the age'
     }),
     birthdate: getDateFieldSchema({
       required: 'Please enter the birthdate'
     }),
-    gender: getSelectFieldSchema({
-      required: 'Please select the gender'
-    }),
-    phoneNumber: getPhoneNumberFieldSchema({
-      required: 'Please enter the phone number',
-      phone: 'Please enter a valid phone number'
-    }),
-    email: getInputFieldSchema({
-      required: 'Please enter the email',
-      email: 'Please enter a valid email'
+    department: getSelectFieldSchema({
+      required: 'Please select the department'
     }),
     description: getTextareaFieldSchema({
       required: 'Please enter the description'
     }),
-    department: getSelectFieldSchema({
-      required: 'Please select the department'
+    email: getInputFieldSchema({
+      email: 'Please enter a valid email',
+      required: 'Please enter the email'
     }),
-    technologies: getMultiSelectFieldSchema({
-      required: 'Please select the technologies'
+    fullName: getInputFieldSchema({
+      required: 'Please enter the full name'
+    }),
+    gender: getSelectFieldSchema({
+      required: 'Please select the gender'
     }),
     graduatedUniversity: getAutocompleteFieldSchema({
       required: 'Please enter the graduated university'
     }),
-    resumes: getMultiFileFieldSchema({
-      required: 'Please upload the resumes'
+    hobby: getEditorFieldSchema({
+      required: 'Please enter the hobby'
     }),
     isDeepKnowledge: getCheckboxFieldSchema(),
-    username: getInputFieldSchema({
-      required: 'Please enter the username'
-    }),
     password: getPasswordFieldSchema({
       required: 'Please enter the password'
     }),
     passwordConfirmation: getPasswordFieldSchema(),
-    hobby: getEditorFieldSchema({
-      required: 'Please enter the hobby'
+    phoneNumber: getPhoneNumberFieldSchema({
+      phone: 'Please enter a valid phone number',
+      required: 'Please enter the phone number'
+    }),
+    resumes: getMultiFileFieldSchema({
+      required: 'Please upload the resumes'
+    }),
+    technologies: getMultiSelectFieldSchema({
+      required: 'Please select the technologies'
+    }),
+    username: getInputFieldSchema({
+      required: 'Please enter the username'
     })
   })
   .superRefine((value, context) => {
@@ -80,43 +78,43 @@ const formSchema = z
     if (password !== passwordConfirmation) {
       context.addIssue({
         code: 'custom',
-        path: ['passwordConfirmation'],
-        message: 'Passwords do not match'
+        message: 'Passwords do not match',
+        path: ['passwordConfirmation']
       })
     }
   })
 
 const defaultFormValue: z.input<typeof formSchema> = {
-  fullName: '',
   age: '',
   birthdate: null,
-  gender: null,
-  phoneNumber: '',
-  email: '',
-  description: '',
   department: null,
-  technologies: [],
+  description: '',
+  email: '',
+  fullName: '',
+  gender: null,
   graduatedUniversity: '',
-  resumes: [],
+  hobby: '',
   isDeepKnowledge: false,
-  username: '',
   password: '',
   passwordConfirmation: '',
-  hobby: ''
+  phoneNumber: '',
+  resumes: [],
+  technologies: [],
+  username: ''
 }
 
 // Component
 export const SmartFormDemo = () => {
   // Hooks
   const form = useAppForm({
-    formId: 'smart-form-demo',
     defaultValues: defaultFormValue,
-    validators: {
-      onSubmit: formSchema
-    },
+    formId: 'smart-form-demo',
     onSubmit: ({ value }) => {
       const safeValue = formSchema.parse(value)
       console.log(safeValue)
+    },
+    validators: {
+      onSubmit: formSchema
     }
   })
 
@@ -180,8 +178,8 @@ export const SmartFormDemo = () => {
                         <field.SelectWithOptions
                           label='Gender'
                           options={[
-                            { value: 'male', label: 'Male' },
-                            { value: 'female', label: 'Female' }
+                            { label: 'Male', value: 'male' },
+                            { label: 'Female', value: 'female' }
                           ]}
                           required
                         />
@@ -209,9 +207,9 @@ export const SmartFormDemo = () => {
                         <field.SelectWithOptions
                           label='Department'
                           options={[
-                            { value: 'development', label: 'Development' },
-                            { value: 'design', label: 'Design' },
-                            { value: 'marketing', label: 'Marketing' }
+                            { label: 'Development', value: 'development' },
+                            { label: 'Design', value: 'design' },
+                            { label: 'Marketing', value: 'marketing' }
                           ]}
                           required
                         />
@@ -222,10 +220,10 @@ export const SmartFormDemo = () => {
                         <field.MultiSelectWithOptions
                           label='Technologies'
                           options={[
-                            { value: 'react', label: 'React' },
-                            { value: 'nextjs', label: 'Next.js' },
-                            { value: 'tailwindcss', label: 'Tailwind CSS' },
-                            { value: 'typescript', label: 'TypeScript' }
+                            { label: 'React', value: 'react' },
+                            { label: 'Next.js', value: 'nextjs' },
+                            { label: 'Tailwind CSS', value: 'tailwindcss' },
+                            { label: 'TypeScript', value: 'typescript' }
                           ]}
                           required
                         />

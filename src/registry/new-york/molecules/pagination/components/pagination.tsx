@@ -5,15 +5,15 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { cn } from '@/utils/ui'
 
 export interface PaginationProps {
+  isHasNextPage?: boolean
+  isHasPreviousPage?: boolean
+  jumpedPageCount?: number
+  neighborPageCount?: number
+  onChangePage: (page: number) => void
+  onGoToNextPage?: () => void
+  onGoToPreviousPage?: () => void
   page: number
   pageCount: number
-  isHasPreviousPage?: boolean
-  isHasNextPage?: boolean
-  neighborPageCount?: number
-  jumpedPageCount?: number
-  onGoToPreviousPage?: () => void
-  onGoToNextPage?: () => void
-  onChangePage: (page: number) => void
 }
 
 export function Pagination({

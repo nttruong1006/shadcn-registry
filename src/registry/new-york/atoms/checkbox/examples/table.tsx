@@ -4,27 +4,27 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 
 const tableData = [
   {
+    email: 'sarah.chen@example.com',
     id: '1',
     name: 'Sarah Chen',
-    email: 'sarah.chen@example.com',
     role: 'Admin'
   },
   {
+    email: 'marcus.rodriguez@example.com',
     id: '2',
     name: 'Marcus Rodriguez',
-    email: 'marcus.rodriguez@example.com',
     role: 'User'
   },
   {
+    email: 'priya.patel@example.com',
     id: '3',
     name: 'Priya Patel',
-    email: 'priya.patel@example.com',
     role: 'User'
   },
   {
+    email: 'david.kim@example.com',
     id: '4',
     name: 'David Kim',
-    email: 'david.kim@example.com',
     role: 'Editor'
   }
 ]

@@ -7,14 +7,14 @@ import { Calendar } from '@/components/atoms/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/atoms/popover'
 
 export interface DatePickerProps {
-  id?: string
-  value: Date | null | undefined
   canRemove?: boolean
   className?: string
   disabled?: boolean
+  id?: string
   invalid?: boolean
-  placeholder?: string
   onValueChange: (value: Date | null | undefined) => void
+  placeholder?: string
+  value: Date | null | undefined
 }
 
 export function DatePicker({
@@ -86,12 +86,12 @@ export function DatePicker({
 }
 
 export interface DateRangePickerProps {
-  value?: DateRange
   canRemove?: boolean
   className?: string
   disabled?: boolean
-  placeholder?: string
   onValueChange: (value: DateRange) => void
+  placeholder?: string
+  value?: DateRange
 }
 
 export function DateRangePicker({

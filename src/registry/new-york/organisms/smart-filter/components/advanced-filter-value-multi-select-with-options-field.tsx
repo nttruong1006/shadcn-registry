@@ -43,9 +43,9 @@ export default function AdvancedFilterValueMultiSelectWithOptionsField({
             >
               <ComboboxChips ref={anchor}>
                 <ComboboxValue>
-                  {(value: typeof items) => {
-                    return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
-                  }}
+                  {(value: typeof items) =>
+                    value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
+                  }
                 </ComboboxValue>
                 <ComboboxChipsInput
                   aria-invalid={invalid}

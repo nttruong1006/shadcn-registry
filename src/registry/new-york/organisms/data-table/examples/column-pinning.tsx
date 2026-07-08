@@ -13,66 +13,66 @@ import { DataTable } from '@/components/organisms/data-table/data-table'
 import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
-  id: string
-  firstName: string
-  lastName: string
-  age: number
   address: string
+  age: number
+  firstName: string
   hobby: string
+  id: string
+  lastName: string
 }
 
 const COLUMNS: ColumnDef<Row>[] = [
   {
-    id: 'firstName',
     accessorKey: 'firstName',
-    header: 'First name'
+    header: 'First name',
+    id: 'firstName'
   },
   {
-    id: 'lastName',
     accessorKey: 'lastName',
-    header: 'Last name'
+    header: 'Last name',
+    id: 'lastName'
   },
   {
-    id: 'age',
     accessorKey: 'age',
-    header: 'Age'
+    header: 'Age',
+    id: 'age'
   },
   {
-    id: 'address',
     accessorKey: 'address',
-    header: 'Address'
+    header: 'Address',
+    id: 'address'
   },
   {
-    id: 'hobby',
     accessorKey: 'hobby',
-    header: 'Hobby'
+    header: 'Hobby',
+    id: 'hobby'
   }
 ]
 
 const DATA: Row[] = [
   {
-    id: '1',
-    firstName: 'tanner',
-    lastName: 'linsley',
-    age: 24,
     address: 'Address 1',
-    hobby: 'Hobby 1'
+    age: 24,
+    firstName: 'tanner',
+    hobby: 'Hobby 1',
+    id: '1',
+    lastName: 'linsley'
   },
   {
-    id: '2',
-    firstName: 'tandy',
-    lastName: 'miller',
-    age: 40,
     address: 'Address 2',
-    hobby: 'Hobby 2'
+    age: 40,
+    firstName: 'tandy',
+    hobby: 'Hobby 2',
+    id: '2',
+    lastName: 'miller'
   },
   {
-    id: '3',
-    firstName: 'joe',
-    lastName: 'dirte',
-    age: 45,
     address: 'Address 3',
-    hobby: 'Hobby 3'
+    age: 45,
+    firstName: 'joe',
+    hobby: 'Hobby 3',
+    id: '3',
+    lastName: 'dirte'
   }
 ]
 

@@ -12,11 +12,11 @@ import {
   useComboboxAnchor
 } from '@/components/atoms/combobox'
 import { Spinner } from '@/components/atoms/spinner'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
-import { updateSelectedItemReferencesAndGetItems } from './lib/base'
+import SmartFormFieldContainer from './field-container'
+import { type BaseSmartFormFieldComponentProps, updateSelectedItemReferencesAndGetItems } from './lib/base'
 import { useFieldContext } from './lib/form'
 import { fetchNextPage, useGetOptionsInfiniteQuery } from './lib/query'
-import type { MultiSelectFieldInputValue } from './lib/schema'
+import type { MultiSelectFieldInputValue } from './lib/schemas/multi-select'
 
 export default function MultiSelectWithInfiniteQueryField({
   label,
@@ -24,23 +24,32 @@ export default function MultiSelectWithInfiniteQueryField({
   originalApiPath,
   dependencyFieldsValue,
   ...props
-}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
+}: BaseSmartFormFieldComponentProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
   const anchor = useComboboxAnchor()
   const field = useFieldContext<MultiSelectFieldInputValue>()
 
   const { getOptionsInfiniteQuery, options, searchKeyword, debouncedSearchKeyword, setSearchKeyword } =
     useGetOptionsInfiniteQuery({
-      originalApiPath,
       dependencyFieldsValue,
+      originalApiPath,
       selectedValue: field.state.value.length > 0 ? field.state.value.join(',') : null
     })
 
   const value = options.filter((item) => field.state.value.includes(item.value))
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
-  const items = updateSelectedItemReferencesAndGetItems({ value, queryData: options })
+  const items = updateSelectedItemReferencesAndGetItems({
+    queryData: options,
+    value
+  })
 
   return (
-    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+    <SmartFormFieldContainer
+      errors={field.state.meta.errors}
+      invalid={invalid}
+      label={label}
+      name={field.name}
+      {...props}
+    >
       <Combobox
         filter={null}
         inputValue={searchKeyword}
@@ -56,9 +65,7 @@ export default function MultiSelectWithInfiniteQueryField({
           {getOptionsInfiniteQuery.isLoading && <Spinner className='text-muted-foreground' />}
 
           <ComboboxValue>
-            {(value: typeof options) => {
-              return value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)
-            }}
+            {(value: typeof options) => value.map((item) => <ComboboxChip key={item.value}>{item.label}</ComboboxChip>)}
           </ComboboxValue>
 
           <ComboboxChipsInput
@@ -99,6 +106,6 @@ export default function MultiSelectWithInfiniteQueryField({
           )}
         </ComboboxContent>
       </Combobox>
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

@@ -1,43 +1,43 @@
 export const themeOption = {
   accent: {
     primary: 'var(--primary)',
-    primaryHover: 'var(--accent)',
     primaryActive: 'var(--primary)',
-    primaryLight: 'var(--primary)',
-    primaryForeground: 'var(--primary-foreground)'
+    primaryForeground: 'var(--primary-foreground)',
+    primaryHover: 'var(--accent)',
+    primaryLight: 'var(--primary)'
   },
   background: {
     app: 'var(--background)',
-    surface: 'var(--background)',
-    surfaceAlt: 'var(--background)',
     elevated: 'var(--popover)',
-    input: 'var(--input)'
-  },
-  foreground: {
-    primary: 'var(--foreground)',
-    secondary: 'var(--secondary-foreground)',
-    muted: 'var(--muted-foreground)',
-    onAccent: 'var(--primary-foreground)'
-  },
-  interactive: {
-    hover: 'var(--accent)',
-    active: 'var(--primary)',
-    selected: 'var(--accent)',
-    focus: 'var(--primary)'
+    input: 'var(--input)',
+    surface: 'var(--background)',
+    surfaceAlt: 'var(--background)'
   },
   border: {
     default: 'var(--border)',
-    subtle: 'var(--border)',
-    strong: 'var(--border)'
+    strong: 'var(--border)',
+    subtle: 'var(--border)'
+  },
+  foreground: {
+    muted: 'var(--muted-foreground)',
+    onAccent: 'var(--primary-foreground)',
+    primary: 'var(--foreground)',
+    secondary: 'var(--secondary-foreground)'
+  },
+  interactive: {
+    active: 'var(--primary)',
+    focus: 'var(--primary)',
+    hover: 'var(--accent)',
+    selected: 'var(--accent)'
   },
   state: {
     error: 'var(--destructive)',
     errorLight: 'var(--destructive)',
-    warning: 'var(--warning)',
-    warningLight: 'var(--warning)',
+    info: 'var(--info)',
+    infoLight: 'var(--info)',
     success: 'var(--success)',
     successLight: 'var(--success)',
-    info: 'var(--info)',
-    infoLight: 'var(--info)'
+    warning: 'var(--warning)',
+    warningLight: 'var(--warning)'
   }
 } as const

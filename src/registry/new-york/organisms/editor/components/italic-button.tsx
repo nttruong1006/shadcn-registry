@@ -7,12 +7,10 @@ export default function ItalicButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: editor.isActive('italic'),
-        isEditable: editor.isEditable && editor.can().toggleItalic()
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: editor.isActive('italic'),
+      isEditable: editor.isEditable && editor.can().toggleItalic()
+    })
   })
 
   return (

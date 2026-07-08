@@ -13,48 +13,48 @@ import { DataTable } from '@/components/organisms/data-table/data-table'
 import { useDataTable } from '@/components/organisms/data-table/lib'
 
 interface Row {
-  id: string
-  firstName: string
-  lastName: string
   age: number
+  firstName: string
+  id: string
+  lastName: string
 }
 
 const COLUMNS: ColumnDef<Row>[] = [
   {
-    id: 'firstName',
     accessorKey: 'firstName',
-    header: 'First name'
+    header: 'First name',
+    id: 'firstName'
   },
   {
-    id: 'lastName',
     accessorKey: 'lastName',
-    header: 'Last name'
+    header: 'Last name',
+    id: 'lastName'
   },
   {
-    id: 'age',
     accessorKey: 'age',
-    header: 'Age'
+    header: 'Age',
+    id: 'age'
   }
 ]
 
 const DATA: Row[] = [
   {
-    id: '1',
+    age: 24,
     firstName: 'tanner',
-    lastName: 'linsley',
-    age: 24
+    id: '1',
+    lastName: 'linsley'
   },
   {
-    id: '2',
+    age: 40,
     firstName: 'tandy',
-    lastName: 'miller',
-    age: 40
+    id: '2',
+    lastName: 'miller'
   },
   {
-    id: '3',
+    age: 45,
     firstName: 'joe',
-    lastName: 'dirte',
-    age: 45
+    id: '3',
+    lastName: 'dirte'
   }
 ]
 

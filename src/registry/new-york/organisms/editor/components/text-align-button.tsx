@@ -24,17 +24,15 @@ export default function TextAlignButton({
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: {
-          left: editor.isActive('paragraph', { textAlign: 'left' }),
-          center: editor.isActive('paragraph', { textAlign: 'center' }),
-          right: editor.isActive('paragraph', { textAlign: 'right' }),
-          justify: editor.isActive('paragraph', { textAlign: 'justify' })
-        },
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: {
+        center: editor.isActive('paragraph', { textAlign: 'center' }),
+        justify: editor.isActive('paragraph', { textAlign: 'justify' }),
+        left: editor.isActive('paragraph', { textAlign: 'left' }),
+        right: editor.isActive('paragraph', { textAlign: 'right' })
+      },
+      isEditable: editor.isEditable
+    })
   })
 
   const [isPending, startTransition] = useTransition()

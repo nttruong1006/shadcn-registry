@@ -19,11 +19,9 @@ export default function ColorPickerButton(props: ColorPickerProps) {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable
+    })
   })
 
   return (

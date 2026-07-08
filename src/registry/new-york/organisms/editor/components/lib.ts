@@ -31,10 +31,10 @@ export const defaultExtensions = [
       levels: [1, 2, 3, 4]
     },
     link: {
+      autolink: true,
       defaultProtocol: 'https',
-      protocols: ['https'],
       openOnClick: false,
-      autolink: true
+      protocols: ['https']
     }
   }),
   Highlight.configure({ multicolor: true }),
@@ -101,10 +101,10 @@ export const defaultExtensions = [
 
 // Container class name per alignment
 export const containerClassNamePerAlignment: Record<Alignment, string> = {
-  left: 'justify-start',
   center: 'justify-center',
-  right: 'justify-end',
-  justify: 'justify-stretch'
+  justify: 'justify-stretch',
+  left: 'justify-start',
+  right: 'justify-end'
 }
 
 // Alignments
@@ -115,28 +115,28 @@ export const alignments: Array<{
   shortcut: string
 }> = [
   {
-    value: 'left',
     icon: AlignLeft,
     label: 'Align left',
-    shortcut: 'Ctrl Shift L'
+    shortcut: 'Ctrl Shift L',
+    value: 'left'
   },
   {
-    value: 'center',
     icon: AlignCenter,
     label: 'Align center',
-    shortcut: 'Ctrl Shift E'
+    shortcut: 'Ctrl Shift E',
+    value: 'center'
   },
   {
-    value: 'right',
     icon: AlignRight,
     label: 'Align right',
-    shortcut: 'Ctrl Shift R'
+    shortcut: 'Ctrl Shift R',
+    value: 'right'
   },
   {
-    value: 'justify',
     icon: AlignJustify,
     label: 'Align justify',
-    shortcut: 'Ctrl Shift J'
+    shortcut: 'Ctrl Shift J',
+    value: 'justify'
   }
 ]
 
@@ -156,6 +156,4 @@ export const getEditorValue = (editor: Editor, format: 'html' | 'json' | 'text')
 export const youtubeUrlRegex =
   /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu\.be|youtube-nocookie\.com))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
 
-export const isValidYoutubeUrl = (url: string) => {
-  return url.match(youtubeUrlRegex)
-}
+export const isValidYoutubeUrl = (url: string) => url.match(youtubeUrlRegex)

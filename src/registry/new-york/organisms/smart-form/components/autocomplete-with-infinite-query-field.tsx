@@ -8,10 +8,11 @@ import {
 } from '@/components/atoms/autocomplete'
 import { InputGroupAddon } from '@/components/atoms/input-group'
 import { Spinner } from '@/components/atoms/spinner'
-import FieldContainer, { type BaseSmartFormFieldFieldProps } from './field-container'
+import SmartFormFieldContainer from './field-container'
+import type { BaseSmartFormFieldComponentProps } from './lib/base'
 import { useFieldContext } from './lib/form'
 import { fetchNextPage, useGetOptionsInfiniteQuery } from './lib/query'
-import type { AutocompleteFieldInputValue } from './lib/schema'
+import type { AutocompleteFieldInputValue } from './lib/schemas/autocomplete'
 
 export default function AutocompleteWithInfiniteQueryField({
   label,
@@ -19,24 +20,31 @@ export default function AutocompleteWithInfiniteQueryField({
   originalApiPath,
   dependencyFieldsValue,
   ...props
-}: BaseSmartFormFieldFieldProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
+}: BaseSmartFormFieldComponentProps & Parameters<typeof useGetOptionsInfiniteQuery>[0]) {
   const field = useFieldContext<AutocompleteFieldInputValue>()
   const invalid = field.state.meta.isTouched && !field.state.meta.isValid
   const { getOptionsInfiniteQuery, options } = useGetOptionsInfiniteQuery({
-    originalApiPath,
     dependencyFieldsValue,
+    originalApiPath,
     selectedValue: field.state.value,
     valueAsLabel: true
   })
 
   return (
-    <FieldContainer errors={field.state.meta.errors} invalid={invalid} label={label} name={field.name} {...props}>
+    <SmartFormFieldContainer
+      errors={field.state.meta.errors}
+      invalid={invalid}
+      label={label}
+      name={field.name}
+      {...props}
+    >
       <Autocomplete items={options} onValueChange={field.handleChange} openOnInputClick value={field.state.value}>
         <AutocompleteInput
           aria-invalid={invalid}
           disabled={disabled || getOptionsInfiniteQuery.isLoading}
           id={`${field.form.formId}-${field.name}`}
           placeholder={typeof label === 'string' ? `Enter ${label.toLowerCase()}` : undefined}
+          showClear
         >
           {getOptionsInfiniteQuery.isLoading && (
             <InputGroupAddon>
@@ -61,6 +69,6 @@ export default function AutocompleteWithInfiniteQueryField({
           )}
         </AutocompleteContent>
       </Autocomplete>
-    </FieldContainer>
+    </SmartFormFieldContainer>
   )
 }

@@ -51,8 +51,8 @@ export function SonnerRichColor() {
       <Button
         onClick={() =>
           toast.success('Event has been created', {
-            richColors: true,
-            closeButton: true
+            closeButton: true,
+            richColors: true
           })
         }
         variant='outline'

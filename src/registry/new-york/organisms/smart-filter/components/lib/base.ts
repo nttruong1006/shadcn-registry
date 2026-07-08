@@ -35,22 +35,22 @@ export type SmartFilterType = (typeof smartFilterTypes)[number]
 
 // Smart filter api operation
 export const smartFilterApiOperations = {
-  equal: '==',
-  notEqual: '!=',
-  lessThan: '<',
-  greaterThan: '>',
-  lessThanOrEqual: '<=',
-  greaterThanOrEqual: '>=',
-  contain: '@=',
-  startWith: '_=',
-  notStartWith: '!_=',
-  caseInsensitiveStringContain: '@=*',
-  caseInsensitiveStringNotContain: '!@=*',
-  caseInsensitiveStartWith: '_=*',
-  caseInsensitiveNotStartWith: '!_=*',
   caseInsensitiveEqual: '==*',
   caseInsensitiveNotEqual: '!=*',
-  equalArray: '[]'
+  caseInsensitiveNotStartWith: '!_=*',
+  caseInsensitiveStartWith: '_=*',
+  caseInsensitiveStringContain: '@=*',
+  caseInsensitiveStringNotContain: '!@=*',
+  contain: '@=',
+  equal: '==',
+  equalArray: '[]',
+  greaterThan: '>',
+  greaterThanOrEqual: '>=',
+  lessThan: '<',
+  lessThanOrEqual: '<=',
+  notEqual: '!=',
+  notStartWith: '!_=',
+  startWith: '_='
 } as const
 
 export type SmartFilterApiOperation = (typeof smartFilterApiOperations)[keyof typeof smartFilterApiOperations]
@@ -63,7 +63,11 @@ export const smartFilterLogicalOperation = {
 
 // Operation per type
 export const operationsPerType: Record<SmartFilterType, SmartFilterOperation[]> = {
+  date: ['equalsTo', 'isLessThan', 'isLessThanOrEqualTo', 'isGreaterThan', 'isGreaterThanOrEqualTo', 'isBetween'],
   input: ['equalsTo', 'doesNotEqualTo', 'contains'],
+  multiSelectWithInfiniteQuery: ['hasAnyOf', 'hasAllOf'],
+  multiSelectWithOptions: ['hasAnyOf', 'hasAllOf'],
+  multiSelectWithQuery: ['hasAnyOf', 'hasAllOf'],
   number: [
     'equalsTo',
     'doesNotEqualTo',
@@ -73,24 +77,20 @@ export const operationsPerType: Record<SmartFilterType, SmartFilterOperation[]> 
     'isGreaterThanOrEqualTo',
     'isBetween'
   ],
-  date: ['equalsTo', 'isLessThan', 'isLessThanOrEqualTo', 'isGreaterThan', 'isGreaterThanOrEqualTo', 'isBetween'],
-  selectWithOptions: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
-  selectWithQuery: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
   selectWithInfiniteQuery: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
-  multiSelectWithOptions: ['hasAnyOf', 'hasAllOf'],
-  multiSelectWithQuery: ['hasAnyOf', 'hasAllOf'],
-  multiSelectWithInfiniteQuery: ['hasAnyOf', 'hasAllOf']
+  selectWithOptions: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf'],
+  selectWithQuery: ['equalsTo', 'doesNotEqualTo', 'hasAnyOf']
 } as const
 
 // Api operation per operation
 export const apiOperationPerOperation: Partial<Record<SmartFilterOperation, SmartFilterApiOperation>> = {
-  equalsTo: '==',
+  contains: '@=',
   doesNotEqualTo: '!=',
-  isLessThan: '<',
-  isLessThanOrEqualTo: '<=',
+  equalsTo: '==',
   isGreaterThan: '>',
   isGreaterThanOrEqualTo: '>=',
-  contains: '@='
+  isLessThan: '<',
+  isLessThanOrEqualTo: '<='
 } as const
 
 // Filter
@@ -108,19 +108,19 @@ type FilterTypeWithQuery = (typeof filterTypesWithQuery)[number]
 type OtherFilterType = Exclude<SmartFilterType, FilterTypeWithOptions | FilterTypeWithQuery>
 
 export interface BaseFilter {
+  dateFormat?: 'date' | 'month' | 'year'
   label: string
   name: string
-  dateFormat?: 'date' | 'month' | 'year'
 }
 
 export interface FilterWithOptions extends BaseFilter {
-  type: FilterTypeWithOptions
   options: Option<string>[]
+  type: FilterTypeWithOptions
 }
 
 export interface FilterWithQuery extends BaseFilter {
-  type: FilterTypeWithQuery
   apiPath: string
+  type: FilterTypeWithQuery
 }
 
 interface OtherFilter extends BaseFilter {
@@ -137,9 +137,9 @@ const periodHandlerPerDateFormat: Record<
     end: (date: DateArg<Date>) => Date
   }
 > = {
-  date: { start: startOfDay, end: endOfDay },
-  month: { start: startOfMonth, end: endOfMonth },
-  year: { start: startOfYear, end: endOfYear }
+  date: { end: endOfDay, start: startOfDay },
+  month: { end: endOfMonth, start: startOfMonth },
+  year: { end: endOfYear, start: startOfYear }
 }
 
 export function transformFormValueToApiFiltersParam(
@@ -153,7 +153,7 @@ export function transformFormValueToApiFiltersParam(
   // Base filter
   if (typeof value === 'string') {
     if (value === '') {
-      return undefined
+      return
     }
 
     if (typeof handler?.basicSearch === 'function') {

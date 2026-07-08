@@ -20,16 +20,16 @@ const formats = ['hex', 'rgb', 'hsl'] as const
 type Format = (typeof formats)[number]
 
 interface ColorPickerContextValue {
-  hue: number
-  saturation: number
-  lightness: number
   alpha: number
   format: Format
-  setHue: (hue: number) => void
-  setSaturation: (saturation: number) => void
-  setLightness: (lightness: number) => void
+  hue: number
+  lightness: number
+  saturation: number
   setAlpha: (alpha: number) => void
   setFormat: (mode: Format) => void
+  setHue: (hue: number) => void
+  setLightness: (lightness: number) => void
+  setSaturation: (saturation: number) => void
 }
 
 const ColorPickerContext = createContext<ColorPickerContextValue | null>(null)
@@ -80,16 +80,16 @@ export function ColorPicker({ value, defaultValue = '#FFFFFF', onValueChange, cl
   return (
     <ColorPickerContext.Provider
       value={{
-        hue,
-        saturation,
-        lightness,
         alpha,
         format,
-        setHue,
-        setSaturation,
-        setLightness,
+        hue,
+        lightness,
+        saturation,
         setAlpha,
-        setFormat
+        setFormat,
+        setHue,
+        setLightness,
+        setSaturation
       }}
     >
       <div className={cn('flex w-full flex-col gap-4', className)} {...props} />
@@ -157,9 +157,9 @@ export function ColorPickerSelection({ className, ...props }: ColorPickerSelecti
       <div
         className='pointer-events-none absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white'
         style={{
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.5)',
           left: `${positionX * 100}%`,
-          top: `${positionY * 100}%`,
-          boxShadow: '0 0 0 1px rgba(0,0,0,0.5)'
+          top: `${positionY * 100}%`
         }}
       />
     </div>

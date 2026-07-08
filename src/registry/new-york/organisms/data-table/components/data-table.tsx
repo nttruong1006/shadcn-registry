@@ -11,12 +11,6 @@ import DataTablePagination from './data-table-pagination'
 import DataTableRowSelect from './data-table-row-select'
 
 export interface DataTableProps<TData extends RowData> {
-  id?: string
-  table: ReactTable<TData>
-  loading?: boolean
-  error?: boolean
-  showFooter?: boolean
-  showPagination?: boolean
   className?: {
     container?: string
     table?: string
@@ -25,8 +19,14 @@ export interface DataTableProps<TData extends RowData> {
     tableFooter?: string
     tablePagination?: string
   }
-  onRenderSubComponent?: (row: Row<TData>) => ReactNode
+  error?: boolean
+  id?: string
+  loading?: boolean
   onRenderAdditionalRow?: (table: ReactTable<TData>) => ReactNode
+  onRenderSubComponent?: (row: Row<TData>) => ReactNode
+  showFooter?: boolean
+  showPagination?: boolean
+  table: ReactTable<TData>
 }
 
 export function DataTable<TData extends RowData>({

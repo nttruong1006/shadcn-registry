@@ -4,40 +4,40 @@ import { SmartFilter, type SmartFilterProps } from '@/components/organisms/smart
 
 const filters: Filter[] = [
   {
-    name: 'fullName',
     label: 'Full name',
+    name: 'fullName',
     type: 'input'
   },
   {
-    name: 'age',
     label: 'Age',
+    name: 'age',
     type: 'number'
   },
   {
-    name: 'graduationDate',
     label: 'Graduation date',
+    name: 'graduationDate',
     type: 'date'
   },
   {
-    name: 'department',
     label: 'Department',
-    type: 'selectWithOptions',
+    name: 'department',
     options: [
-      { value: 'front-end', label: 'Front-end' },
-      { value: 'back-end', label: 'Back-end' }
-    ]
+      { label: 'Front-end', value: 'front-end' },
+      { label: 'Back-end', value: 'back-end' }
+    ],
+    type: 'selectWithOptions'
   },
   {
-    name: 'role',
+    apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/role',
     label: 'Role',
-    type: 'selectWithQuery',
-    apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/role'
+    name: 'role',
+    type: 'selectWithQuery'
   },
   {
-    name: 'sender',
+    apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender',
     label: 'Sender',
-    type: 'selectWithInfiniteQuery',
-    apiPath: 'https://gateway.dev.meu-solutions.com/fosco/api/version/1.0/options/clerical/sender'
+    name: 'sender',
+    type: 'selectWithInfiniteQuery'
   }
 ]
 

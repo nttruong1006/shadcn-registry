@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/biome/core", "ultracite/biome/astro"],
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -24,7 +25,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "nursery": {
         "useSortedClasses": {
           "level": "info",
@@ -40,6 +41,17 @@
       },
       "complexity": {
         "noExcessiveCognitiveComplexity": "off"
+      },
+      "performance": {
+        "noJsxPropsBind": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "noAmbiguousAnchorText": "off"
+      },
+      "suspicious": {
+        "noShadow": "off",
+        "noUnnecessaryConditions": "off"
       }
     }
   },
@@ -83,6 +95,5 @@
         }
       }
     }
-  ],
-  "extends": ["ultracite/biome/core", "ultracite/biome/astro"]
+  ]
 }

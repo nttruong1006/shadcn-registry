@@ -11,18 +11,18 @@ import {
 } from '@/components/atoms/autocomplete'
 
 interface ProduceGroupItem {
-  value: string
   items: string[]
+  value: string
 }
 
 const groups: ProduceGroupItem[] = [
   {
-    value: 'Fruits',
-    items: ['Apple', 'Banana', 'Orange']
+    items: ['Apple', 'Banana', 'Orange'],
+    value: 'Fruits'
   },
   {
-    value: 'Vegetables',
-    items: ['Carrot', 'Lettuce', 'Spinach']
+    items: ['Carrot', 'Lettuce', 'Spinach'],
+    value: 'Vegetables'
   }
 ]
 

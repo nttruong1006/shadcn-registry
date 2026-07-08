@@ -34,16 +34,14 @@ export function NumberInput({
   ...props
 }: NumberInputProps) {
   const increment = () => {
-    // Using == for checking both null or undefined
-    if (value == null) {
+    if (value === null || value === undefined) {
       return
     }
     onFieldChange?.(+value + +step)
   }
 
   const decrement = () => {
-    // Using == for checking both null or undefined
-    if (value == null) {
+    if (value === null || value === undefined) {
       return
     }
     onFieldChange?.(+value - +step)
@@ -53,7 +51,7 @@ export function NumberInput({
     props.onBlur?.(e)
 
     // Using == for checking both null or undefined
-    if (value == null) {
+    if (value === null || value === undefined) {
       return
     }
     if (value < min) {
@@ -93,7 +91,7 @@ export function NumberInput({
         <>
           <Button
             aria-label='Decrease value'
-            disabled={disabled || (value != null && +value <= +min)}
+            disabled={disabled || (value !== null && value !== undefined && +value <= +min)}
             onClick={decrement}
             size='icon'
             variant='outline'
@@ -103,7 +101,7 @@ export function NumberInput({
 
           <Button
             aria-label='Increase value'
-            disabled={disabled || (value != null && +value >= +max)}
+            disabled={disabled || (value !== null && value !== undefined && +value >= +max)}
             onClick={increment}
             size='icon'
             variant='outline'

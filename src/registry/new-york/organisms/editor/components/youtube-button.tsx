@@ -35,11 +35,9 @@ export default function YoutubeButton({
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isEditable: editor.isEditable
-      }
-    }
+    selector: ({ editor }) => ({
+      isEditable: editor.isEditable
+    })
   })
 
   const isExtensionLoadedRef = useRef(false)
@@ -47,11 +45,8 @@ export default function YoutubeButton({
   const [isPending, startTransition] = useTransition()
 
   const youtubeForm = useForm({
-    formId: `${id}-youtube-form`,
     defaultValues: defaultYoutubeFormValue,
-    validators: {
-      onSubmit: youtubeFormSchema
-    },
+    formId: `${id}-youtube-form`,
     onSubmit: ({ value }) => {
       const { url } = youtubeFormSchema.parse(value)
       const callback: CallbackRef['current'] = (editor) => {
@@ -80,9 +75,9 @@ export default function YoutubeButton({
           setExtensions((prev) => [
             ...prev,
             CustomYoutubeExtension.configure({
+              height: 180,
               nocookie: true,
-              width: minWidth,
-              height: 180
+              width: minWidth
             })
           ])
 
@@ -94,6 +89,9 @@ export default function YoutubeButton({
 
       // Close popover
       setOpenPopover(false)
+    },
+    validators: {
+      onSubmit: youtubeFormSchema
     }
   })
 

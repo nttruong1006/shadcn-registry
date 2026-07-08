@@ -11,8 +11,8 @@ export default function BasicSearch() {
   const { id, setFilters } = useSmartFilterContext()
 
   const basicSearchForm = useAppForm({
-    formId: `${id}-basic-search`,
     defaultValues: defaultBasicSearchFormValue,
+    formId: `${id}-basic-search`,
     validators: {
       onSubmit: basicSearchFormSchema
     }

@@ -7,12 +7,10 @@ export default function UnderlineButton() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isActive: editor?.isActive('underline'),
-        isEditable: editor.isEditable && editor.can().toggleUnderline()
-      }
-    }
+    selector: ({ editor }) => ({
+      isActive: editor?.isActive('underline'),
+      isEditable: editor.isEditable && editor.can().toggleUnderline()
+    })
   })
 
   return (

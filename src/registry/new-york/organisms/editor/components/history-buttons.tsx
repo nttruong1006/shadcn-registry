@@ -7,12 +7,10 @@ export default function HistoryButtons() {
   const editor = useInternalEditor()
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }) => {
-      return {
-        isUndoEnabled: editor.isEditable && editor.can().undo(),
-        isRedoEnabled: editor.isEditable && editor.can().redo()
-      }
-    }
+    selector: ({ editor }) => ({
+      isRedoEnabled: editor.isEditable && editor.can().redo(),
+      isUndoEnabled: editor.isEditable && editor.can().undo()
+    })
   })
 
   return (

@@ -41,8 +41,8 @@ export const observeTheme = (themeLocalStorageKey: string) => {
   })
 
   observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['class', 'data-theme']
+    attributeFilter: ['class', 'data-theme'],
+    attributes: true
   })
 
   return observer

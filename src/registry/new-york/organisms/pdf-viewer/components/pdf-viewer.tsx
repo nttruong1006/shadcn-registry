@@ -7,8 +7,8 @@ export function PDFViewer(props: PDFViewerProps) {
       {...props}
       config={{
         theme: {
-          light: themeOption,
-          dark: themeOption
+          dark: themeOption,
+          light: themeOption
         },
         ...props.config
       }}

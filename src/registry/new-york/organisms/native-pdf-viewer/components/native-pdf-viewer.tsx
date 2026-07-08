@@ -5,7 +5,6 @@ import { cn } from '@/utils/ui'
 
 export function NativePDFViewer({ src, className, ...props }: IframeHTMLAttributes<HTMLIFrameElement>) {
   const getPdfQuery = useQuery({
-    queryKey: ['pdf', src],
     queryFn: src
       ? async () => {
           const response = await fetch(src)
@@ -15,6 +14,7 @@ export function NativePDFViewer({ src, className, ...props }: IframeHTMLAttribut
           return await response.blob()
         }
       : skipToken,
+    queryKey: ['pdf', src],
     retry: 0
   })
 

@@ -53,26 +53,19 @@ export function Editor({ id, value, placeholder, editable = true, onValueChange,
 
   const editor = useEditor(
     {
-      extensions,
+      editable,
       editorProps: {
         attributes: {
+          autocapitalize: 'off',
           autocomplete: 'off',
-          autocorrect: 'off',
-          autocapitalize: 'off'
+          autocorrect: 'off'
         }
       },
+      extensions,
       immediatelyRender: false,
-      onUpdate: useMemo(() => {
-        return throttle(
-          ({ editor }) => {
-            onValueChange(getEditorValue(editor, 'html'))
-          },
-          1000,
-          {
-            trailing: false
-          }
-        )
-      }, [onValueChange]),
+      onBlur: ({ editor }) => {
+        onValueChange(getEditorValue(editor, 'html'))
+      },
       onCreate: ({ editor }) => {
         if (value && editor.isEmpty) {
           editor.commands.setContent(value)
@@ -80,10 +73,19 @@ export function Editor({ id, value, placeholder, editable = true, onValueChange,
         callbackRef.current?.(editor)
         callbackRef.current = null
       },
-      onBlur: ({ editor }) => {
-        onValueChange(getEditorValue(editor, 'html'))
-      },
-      editable,
+      onUpdate: useMemo(
+        () =>
+          throttle(
+            ({ editor }) => {
+              onValueChange(getEditorValue(editor, 'html'))
+            },
+            1000,
+            {
+              trailing: false
+            }
+          ),
+        [onValueChange]
+      ),
       ...props
     },
     [editable, extensions]

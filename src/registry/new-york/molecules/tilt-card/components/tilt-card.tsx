@@ -10,10 +10,10 @@ const TiltCardContext = createContext<{
 
 interface TiltCardProps extends PropsWithChildren {
   className?: string
-  tiltMaxAngle?: number
-  tiltReverse?: boolean
   glareEnable?: boolean
   scale?: number
+  tiltMaxAngle?: number
+  tiltReverse?: boolean
 }
 
 export function TiltCard({
@@ -27,9 +27,9 @@ export function TiltCard({
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 })
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 })
-  const scaleValue = useSpring(1, { stiffness: 300, damping: 30 })
+  const mouseXSpring = useSpring(x, { damping: 30, stiffness: 300 })
+  const mouseYSpring = useSpring(y, { damping: 30, stiffness: 300 })
+  const scaleValue = useSpring(1, { damping: 30, stiffness: 300 })
 
   const rotateX = useTransform(
     mouseYSpring,
@@ -49,11 +49,9 @@ export function TiltCard({
       return
     }
 
-    const rect = containerRef.current.getBoundingClientRect()
-    const width = rect.width
-    const height = rect.height
-    const mouseX = e.clientX - rect.left
-    const mouseY = e.clientY - rect.top
+    const { width, height, left, top } = containerRef.current.getBoundingClientRect()
+    const mouseX = e.clientX - left
+    const mouseY = e.clientY - top
     const xPct = mouseX / width - 0.5
     const yPct = mouseY / height - 0.5
 
