@@ -56,7 +56,8 @@
       },
       "suspicious": {
         "noShadow": "off",
-        "noUnnecessaryConditions": "off"
+        "noUnnecessaryConditions": "off",
+        "noLeakedRender": "off"
       }
     }
   },
