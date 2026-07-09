@@ -51,6 +51,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
-  },
-  "editor.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace"
+  }
 }
