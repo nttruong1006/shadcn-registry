@@ -11,12 +11,11 @@
     "prepare": "husky || true",
     "lint-staged": "lint-staged",
     "biome-migrate": "biome migrate --write",
-    "check": "biome check --write --unsafe",
-    "test": "ultracite fix"
+    "check": "biome check --write --unsafe"
   },
   "lint-staged": {
     "src/**/*.{astro,mdx,ts,tsx}": [
-      "biome check --staged --write --files-ignore-unknown=true --no-errors-on-unmatched"
+      "ultracite fix"
     ]
   },
   "commitlint": {
