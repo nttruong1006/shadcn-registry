@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noNestedComponentDefinitions: base on the lib */
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { type ComponentProps, useEffect, useRef } from 'react'
 import { type DayButton, DayPicker, getDefaultClassNames, type Locale } from 'react-day-picker'
@@ -24,7 +25,7 @@ export function Calendar({
     <DayPicker
       captionLayout={captionLayout}
       className={cn(
-        'group/calendar bg-background in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)]',
+        'group/calendar bg-background in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent p-3 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(9)]',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
@@ -43,7 +44,7 @@ export function Calendar({
         caption_label: cn(
           'select-none font-medium',
           captionLayout === 'label'
-            ? 'text-sm'
+            ? 'cn-calendar-caption text-sm'
             : 'cn-calendar-caption-label flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
           defaultClassNames.caption_label
         ),
@@ -70,7 +71,7 @@ export function Calendar({
           'flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)',
           defaultClassNames.month_caption
         ),
-        month_grid: 'w-full border-collapse',
+        month_grid: cn('w-full border-collapse', defaultClassNames.month_grid),
         months: cn('relative flex flex-col gap-4 md:flex-row', defaultClassNames.months),
         nav: cn('absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1', defaultClassNames.nav),
         outside: cn('text-muted-foreground aria-selected:text-muted-foreground', defaultClassNames.outside),
@@ -103,9 +104,11 @@ export function Calendar({
           if (orientation === 'left') {
             return <ChevronLeftIcon className={cn('cn-rtl-flip size-4', className)} {...props} />
           }
+
           if (orientation === 'right') {
             return <ChevronRightIcon className={cn('cn-rtl-flip size-4', className)} {...props} />
           }
+
           return <ChevronDownIcon className={cn('size-4', className)} {...props} />
         },
         DayButton: ({ ...props }) => <CalendarDayButton locale={locale} {...props} />,
@@ -148,8 +151,9 @@ export function CalendarDayButton({
   return (
     <Button
       className={cn(
-        'relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 font-normal leading-none data-[range-start=true]:data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-(--cell-radius) data-[range-middle=true]:rounded-none data-[range-end=true]:rounded-r-(--cell-radius) data-[range-start=true]:rounded-r-none data-[range-end=true]:rounded-l-none data-[range-start=true]:rounded-l-(--cell-radius) data-[range-end=true]:bg-primary data-[range-middle=true]:bg-muted data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground data-[range-end=true]:hover:bg-primary data-[range-start=true]:hover:bg-primary data-[selected-single=true]:hover:bg-primary data-[range-end=true]:hover:text-primary-foreground data-[range-start=true]:hover:text-primary-foreground data-[selected-single=true]:hover:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring dark:hover:text-foreground',
+        'relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 font-normal leading-none data-[range-end=true]:rounded-(--cell-radius) data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-end=true]:bg-primary data-[range-middle=true]:bg-muted data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 dark:hover:text-foreground [&>span]:text-xs [&>span]:opacity-70',
         'data-[outside=false]:text-foreground',
+        'data-[range-start=true]:data-[range-end=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-r-none data-[range-end=true]:rounded-l-none data-[range-end=true]:hover:bg-primary data-[range-start=true]:hover:bg-primary data-[selected-single=true]:hover:bg-primary data-[range-end=true]:hover:text-primary-foreground data-[range-start=true]:hover:text-primary-foreground data-[selected-single=true]:hover:text-primary-foreground',
         defaultClassNames.day,
         className
       )}
