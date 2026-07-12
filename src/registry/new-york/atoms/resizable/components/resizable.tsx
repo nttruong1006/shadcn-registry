@@ -11,7 +11,7 @@ export function ResizablePanelGroup({ className, ...props }: GroupProps) {
   )
 }
 
-export function ResizablePanel({ ...props }: PanelProps) {
+export function ResizablePanel(props: PanelProps) {
   return <Panel data-slot='resizable-panel' {...props} />
 }
 

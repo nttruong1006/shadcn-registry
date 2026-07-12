@@ -5,11 +5,11 @@ export function TooltipProvider({ delay = 0, ...props }: TooltipPrimitive.Provid
   return <TooltipPrimitive.Provider data-slot='tooltip-provider' delay={delay} {...props} />
 }
 
-export function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
+export function Tooltip(props: TooltipPrimitive.Root.Props) {
   return <TooltipPrimitive.Root data-slot='tooltip' {...props} />
 }
 
-export function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
+export function TooltipTrigger(props: TooltipPrimitive.Trigger.Props) {
   return <TooltipPrimitive.Trigger data-slot='tooltip-trigger' {...props} />
 }
 

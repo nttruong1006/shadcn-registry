@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScroll,
+  DialogScroller,
   DialogTitle,
   DialogTrigger
 } from '@/components/atoms/dialog'
@@ -75,9 +75,9 @@ export function DataTableDemo() {
           <DialogDescription>Demo</DialogDescription>
         </DialogHeader>
 
-        <DialogScroll>
+        <DialogScroller>
           <DataTable table={table} />
-        </DialogScroll>
+        </DialogScroller>
       </DialogContent>
     </Dialog>
   )

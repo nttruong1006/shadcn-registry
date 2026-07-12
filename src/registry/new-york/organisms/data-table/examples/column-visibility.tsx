@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScroll,
+  DialogScroller,
   DialogTitle,
   DialogTrigger
 } from '@/components/atoms/dialog'
@@ -79,14 +79,14 @@ export function DataTableColumnVisibility() {
           <DialogDescription>Column visibility</DialogDescription>
         </DialogHeader>
 
-        <DialogScroll>
+        <DialogScroller>
           <div className='space-y-4'>
             <div className='flex justify-end'>
               <DataTableColumnVisibilitySelect table={table} />
             </div>
             <DataTable table={table} />
           </div>
-        </DialogScroll>
+        </DialogScroller>
       </DialogContent>
     </Dialog>
   )

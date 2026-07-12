@@ -4,19 +4,19 @@ import type { ComponentProps } from 'react'
 import { Button } from '@/components/atoms/button'
 import { cn } from '@/utils/ui'
 
-export function Sheet({ ...props }: SheetPrimitive.Root.Props) {
+export function Sheet(props: SheetPrimitive.Root.Props) {
   return <SheetPrimitive.Root data-slot='sheet' {...props} />
 }
 
-export function SheetTrigger({ ...props }: SheetPrimitive.Trigger.Props) {
+export function SheetTrigger(props: SheetPrimitive.Trigger.Props) {
   return <SheetPrimitive.Trigger data-slot='sheet-trigger' {...props} />
 }
 
-export function SheetClose({ ...props }: SheetPrimitive.Close.Props) {
+export function SheetClose(props: SheetPrimitive.Close.Props) {
   return <SheetPrimitive.Close data-slot='sheet-close' {...props} />
 }
 
-export function SheetPortal({ ...props }: SheetPrimitive.Portal.Props) {
+export function SheetPortal(props: SheetPrimitive.Portal.Props) {
   return <SheetPrimitive.Portal data-slot='sheet-portal' {...props} />
 }
 
@@ -59,13 +59,11 @@ export function SheetContent({
         {showCloseButton && (
           <SheetPrimitive.Close
             data-slot='sheet-close'
-            render={
-              <Button className='absolute top-3 right-3' size='icon-sm' variant='ghost'>
-                <XIcon />
-                <span className='sr-only'>Close</span>
-              </Button>
-            }
-          />
+            render={<Button className='absolute top-4 right-4' size='icon-sm' variant='ghost' />}
+          >
+            <XIcon />
+            <span className='sr-only'>Close</span>
+          </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Popup>
     </SheetPortal>
@@ -73,7 +71,7 @@ export function SheetContent({
 }
 
 export function SheetHeader({ className, ...props }: ComponentProps<'div'>) {
-  return <div className={cn('flex flex-col gap-0.5 p-4', className)} data-slot='sheet-header' {...props} />
+  return <div className={cn('flex flex-col gap-1.5 p-4', className)} data-slot='sheet-header' {...props} />
 }
 
 export function SheetFooter({ className, ...props }: ComponentProps<'div'>) {
@@ -83,7 +81,7 @@ export function SheetFooter({ className, ...props }: ComponentProps<'div'>) {
 export function SheetTitle({ className, ...props }: SheetPrimitive.Title.Props) {
   return (
     <SheetPrimitive.Title
-      className={cn('cn-font-heading font-medium text-base text-foreground', className)}
+      className={cn('cn-font-heading font-medium text-foreground', className)}
       data-slot='sheet-title'
       {...props}
     />

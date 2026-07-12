@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScroll,
+  DialogScroller,
   DialogTitle,
   DialogTrigger
 } from '@/components/atoms/dialog'
@@ -129,7 +129,7 @@ export const SmartFormDemo = () => {
           <DialogDescription>Fill information below to create the account</DialogDescription>
         </DialogHeader>
 
-        <DialogScroll>
+        <DialogScroller>
           <form
             className='space-y-6'
             id={form.formId}
@@ -295,7 +295,7 @@ export const SmartFormDemo = () => {
               </form.FormContainer>
             </form.AppForm>
           </form>
-        </DialogScroll>
+        </DialogScroller>
       </DialogContent>
     </Dialog>
   )

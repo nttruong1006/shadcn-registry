@@ -3,7 +3,7 @@ import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group'
 import { cn } from '@/utils/ui'
 
 export function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
-  return <RadioGroupPrimitive className={cn('grid w-full gap-2', className)} data-slot='radio-group' {...props} />
+  return <RadioGroupPrimitive className={cn('grid w-full gap-3', className)} data-slot='radio-group' {...props} />
 }
 
 export function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {

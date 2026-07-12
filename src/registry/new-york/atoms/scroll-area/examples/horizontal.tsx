@@ -1,11 +1,11 @@
 import { ScrollArea, ScrollBar } from '@/components/atoms/scroll-area'
 
-export interface Artwork {
+interface Artwork {
   art: string
   artist: string
 }
 
-export const works: Artwork[] = [
+const works: Artwork[] = [
   {
     art: 'https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?auto=format&fit=crop&w=300&q=80',
     artist: 'Ornella Binni'

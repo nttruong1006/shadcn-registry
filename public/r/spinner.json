@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "src/registry/new-york/atoms/spinner/components/spinner.tsx",
-      "content": "import { Loader2Icon } from 'lucide-react'\nimport type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function Spinner({ className, ...props }: ComponentProps<'svg'>) {\n  return <Loader2Icon aria-label='Loading' className={cn('size-4 animate-spin', className)} role='status' {...props} />\n}\n",
+      "content": "import { Loader2Icon } from 'lucide-react'\nimport type { ComponentProps } from 'react'\nimport { cn } from '@/utils/ui'\n\nexport function Spinner({ className, ...props }: ComponentProps<'svg'>) {\n  return (\n    <Loader2Icon\n      aria-label='Loading'\n      className={cn('size-4 animate-spin', className)}\n      data-slot='spinner'\n      role='status'\n      {...props}\n    />\n  )\n}\n",
       "type": "registry:ui",
       "target": "src/components/atoms/spinner.tsx"
     },

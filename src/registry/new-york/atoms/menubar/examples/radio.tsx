@@ -15,7 +15,7 @@ export function MenubarRadio() {
   const [theme, setTheme] = useState('system')
 
   return (
-    <Menubar className='w-72'>
+    <Menubar>
       <MenubarMenu>
         <MenubarTrigger>Profiles</MenubarTrigger>
         <MenubarContent>

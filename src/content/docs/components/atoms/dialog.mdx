@@ -3,18 +3,20 @@ title: Dialog
 description: A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
 ---
 
-import CodePreview from '@/components/app/code-preview/index.astro'
-import InstallationCard from '@/components/app/installation-card/index.astro'
-import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+import CodePreview from "@/components/app/code-preview/index.astro";
+import InstallationCard from "@/components/app/installation-card/index.astro";
+import ShadcnLinkButton from "@/components/app/shadcn-link-button/index.astro";
 
-<ShadcnLinkButton registryName='dialog' />
+<ShadcnLinkButton registryName="dialog" />
 
-<CodePreview path='atoms/dialog/demo' />
+<CodePreview path="atoms/dialog/demo" />
 
 ## Installation
-<InstallationCard registryName='dialog' />
+
+<InstallationCard registryName="dialog" />
 
 ## Usage
+
 ```tsx
 import {
   Dialog,
@@ -23,7 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/atoms/dialog"
+} from "@/components/atoms/dialog";
 ```
 
 ```tsx
@@ -42,14 +44,19 @@ import {
 ```
 
 ## Examples
+
 ### Custom Close Button
+
 Replace the default close control with your own button.
-<CodePreview path='atoms/dialog/custom-close-button' />
+
+<CodePreview path="atoms/dialog/custom-close-button" />
 
 ### No Close Button
+
 Use `showCloseButton={false}` to hide the close button.
-<CodePreview path='atoms/dialog/no-close-button' />
+
+<CodePreview path="atoms/dialog/no-close-button" />
 
 ### Sticky Footer
-Use `showCloseButton={false}` to hide the close button.
-<CodePreview path='atoms/dialog/sticky-footer' />
+
+<CodePreview path="atoms/dialog/sticky-footer" />

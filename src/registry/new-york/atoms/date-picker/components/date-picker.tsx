@@ -41,7 +41,7 @@ export function DatePicker({
               <Button
                 aria-expanded={openPopover}
                 aria-invalid={invalid}
-                className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground'
+                className='w-full justify-start pr-8 font-normal data-[empty=true]:text-muted-foreground'
                 data-empty={!value}
                 disabled={disabled}
                 id={id}
@@ -51,7 +51,7 @@ export function DatePicker({
               </Button>
 
               <Button
-                className='absolute top-1/2 right-1 -translate-y-1/2 [&>svg:not([class*="size-"])]:size-4'
+                className="absolute top-1/2 right-1.5 -translate-y-1/2 text-muted-foreground [&_svg:not([class*='size-'])]:size-4"
                 disabled={disabled}
                 onClick={(e) => {
                   if (canRemove) {
@@ -114,7 +114,7 @@ export function DateRangePicker({
             <div className='relative'>
               <Button
                 aria-expanded={openPopover}
-                className='w-full justify-start font-normal data-[empty=true]:text-muted-foreground'
+                className='w-full justify-start pr-8 font-normal data-[empty=true]:text-muted-foreground'
                 data-empty={!(value?.from && value?.to)}
                 disabled={disabled}
                 variant='outline'
@@ -127,7 +127,7 @@ export function DateRangePicker({
               </Button>
 
               <Button
-                className='absolute top-1/2 right-1 -translate-y-1/2 [&>svg:not([class*="size-"])]:size-4'
+                className="absolute top-1/2 right-1.5 -translate-y-1/2 text-muted-foreground [&_svg:not([class*='size-'])]:size-4"
                 disabled={disabled}
                 onClick={(e) => {
                   if (canRemove) {

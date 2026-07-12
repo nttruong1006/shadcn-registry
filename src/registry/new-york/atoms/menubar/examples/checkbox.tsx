@@ -11,10 +11,10 @@ import {
 
 export function MenubarCheckbox() {
   return (
-    <Menubar className='w-72'>
+    <Menubar>
       <MenubarMenu>
         <MenubarTrigger>View</MenubarTrigger>
-        <MenubarContent className='w-64'>
+        <MenubarContent className='w-fit'>
           <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
           <MenubarCheckboxItem checked>Always Show Full URLs</MenubarCheckboxItem>
           <MenubarSeparator />
@@ -28,7 +28,7 @@ export function MenubarCheckbox() {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>Format</MenubarTrigger>
-        <MenubarContent>
+        <MenubarContent className='w-fit'>
           <MenubarCheckboxItem checked>Strikethrough</MenubarCheckboxItem>
           <MenubarCheckboxItem>Code</MenubarCheckboxItem>
           <MenubarCheckboxItem>Superscript</MenubarCheckboxItem>

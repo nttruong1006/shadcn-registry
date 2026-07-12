@@ -13,7 +13,7 @@ import {
 
 export function MenubarSubmenu() {
   return (
-    <Menubar className='w-72'>
+    <Menubar>
       <MenubarMenu>
         <MenubarTrigger>File</MenubarTrigger>
         <MenubarContent>

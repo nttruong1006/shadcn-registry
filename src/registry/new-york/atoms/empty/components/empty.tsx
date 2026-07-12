@@ -6,7 +6,7 @@ export function Empty({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 text-balance rounded-xl border-dashed p-6 text-center',
+        'flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 text-balance rounded-lg border-dashed p-12 text-center',
         className
       )}
       data-slot='empty'
@@ -30,7 +30,7 @@ const emptyMediaVariants = cva(
     variants: {
       variant: {
         default: 'bg-transparent',
-        icon: "flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground [&_svg:not([class*='size-'])]:size-4"
+        icon: "flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground [&_svg:not([class*='size-'])]:size-6"
       }
     }
   }
@@ -54,7 +54,7 @@ export function EmptyMedia({
 export function EmptyTitle({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
-      className={cn('cn-font-heading font-medium text-sm tracking-tight', className)}
+      className={cn('cn-font-heading font-medium text-lg tracking-tight', className)}
       data-slot='empty-title'
       {...props}
     />
@@ -77,7 +77,7 @@ export function EmptyDescription({ className, ...props }: ComponentProps<'p'>) {
 export function EmptyContent({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
-      className={cn('flex w-full min-w-0 max-w-sm flex-col items-center gap-2.5 text-balance text-sm', className)}
+      className={cn('flex w-full min-w-0 max-w-sm flex-col items-center gap-4 text-balance text-sm', className)}
       data-slot='empty-content'
       {...props}
     />

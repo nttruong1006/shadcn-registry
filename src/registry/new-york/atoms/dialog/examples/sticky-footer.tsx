@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogScroll,
+  DialogScroller,
   DialogTitle,
   DialogTrigger
 } from '@/components/atoms/dialog'
@@ -22,10 +22,11 @@ export function DialogStickyFooter() {
             This dialog has a sticky footer that stays visible while the content scrolls.
           </DialogDescription>
         </DialogHeader>
-        <DialogScroll>
-          {Array.from({ length: 10 }).map((_, index) => (
+
+        <DialogScroller>
+          {Array.from({ length: 20 }).map((_, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: ignore
-            <p className='mb-4 leading-normal' key={index}>
+            <p className='leading-normal' key={index}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
               dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
               ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -33,7 +34,7 @@ export function DialogStickyFooter() {
               mollit anim id est laborum.
             </p>
           ))}
-        </DialogScroll>
+        </DialogScroller>
         <DialogFooter>
           <DialogClose render={<Button variant='outline'>Close</Button>} />
         </DialogFooter>

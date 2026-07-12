@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogScroll,
+  DialogScroller,
   DialogTitle,
   DialogTrigger
 } from '@/components/atoms/dialog'
@@ -127,9 +127,9 @@ export function DataTableColumnSpanning() {
           <DialogDescription>Column spanning</DialogDescription>
         </DialogHeader>
 
-        <DialogScroll>
+        <DialogScroller>
           <DataTable table={table} />
-        </DialogScroll>
+        </DialogScroller>
       </DialogContent>
     </Dialog>
   )

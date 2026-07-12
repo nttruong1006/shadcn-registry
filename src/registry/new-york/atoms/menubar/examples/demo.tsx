@@ -17,10 +17,10 @@ import {
 
 export function MenubarDemo() {
   return (
-    <Menubar className='w-72'>
+    <Menubar>
       <MenubarMenu>
         <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent>
+        <MenubarContent className='w-fit'>
           <MenubarGroup>
             <MenubarItem>
               New Tab <MenubarShortcut>⌘T</MenubarShortcut>
@@ -89,7 +89,7 @@ export function MenubarDemo() {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>View</MenubarTrigger>
-        <MenubarContent className='w-44'>
+        <MenubarContent className='w-fit'>
           <MenubarGroup>
             <MenubarCheckboxItem>Bookmarks Bar</MenubarCheckboxItem>
             <MenubarCheckboxItem checked>Full URLs</MenubarCheckboxItem>

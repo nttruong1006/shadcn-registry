@@ -56,7 +56,7 @@ export function DropdownMenuComplex() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant='outline'>Complex Menu</Button>} />
-      <DropdownMenuContent className='w-44'>
+      <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuLabel>File</DropdownMenuLabel>
           <DropdownMenuItem>

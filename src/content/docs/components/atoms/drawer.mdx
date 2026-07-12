@@ -3,18 +3,20 @@ title: Drawer
 description: A drawer component for React.
 ---
 
-import CodePreview from '@/components/app/code-preview/index.astro'
-import InstallationCard from '@/components/app/installation-card/index.astro'
-import ShadcnLinkButton from '@/components/app/shadcn-link-button/index.astro'
+import CodePreview from "@/components/app/code-preview/index.astro";
+import InstallationCard from "@/components/app/installation-card/index.astro";
+import ShadcnLinkButton from "@/components/app/shadcn-link-button/index.astro";
 
-<ShadcnLinkButton registryName='drawer' />
+<ShadcnLinkButton registryName="drawer" />
 
-<CodePreview path='atoms/drawer/demo' />
+<CodePreview path="atoms/drawer/demo" />
 
 ## Installation
-<InstallationCard registryName='drawer' />
+
+<InstallationCard registryName="drawer" />
 
 ## Usage
+
 ```tsx
 import {
   Drawer,
@@ -25,7 +27,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/atoms/drawer"
+} from "@/components/atoms/drawer";
 ```
 
 ```tsx
@@ -47,10 +49,34 @@ import {
 ```
 
 ## Examples
-### Scrollable Content
-Keep actions visible while the content scrolls.
-<CodePreview path='atoms/drawer/scrollable-content' />
 
-### Sides
-Use the `direction` prop to set the side of the drawer. Available options are `top`, `right`, `bottom`, and `left`.
-<CodePreview path='atoms/drawer/sides' />
+### Position
+
+Use the `swipeDirection` prop to set the side of the drawer.
+Available options are `up`, `right`, `down`, and `left`.
+
+<CodePreview path="atoms/drawer/position" />
+
+### Swipe Handle
+
+Use `showSwipeHandle` on Drawer to render a swipe handle.
+
+<CodePreview path="atoms/drawer/swipe-handle" />
+
+### Nested
+
+Open drawers from inside another drawer. Parent drawers stay mounted and stack behind the frontmost drawer.
+
+<CodePreview path="atoms/drawer/nested" />
+
+### Non Modal
+
+Set `modal={false}` to allow interaction with the rest of the page while the drawer is open. Combine with `disablePointerDismissal` to prevent the drawer from closing on outside presses. Use `modal="trap-focus"` to keep focus inside the drawer while leaving scroll and pointer interaction unrestricted.
+
+<CodePreview path="atoms/drawer/non-modal" />
+
+### Snap Points
+
+Use `snapPoints` to snap a drawer to preset heights. Numbers between `0` and `1` represent fractions of the viewport. Numbers greater than `1` 1are treated as pixel values. String values support `px` and `rem` units. Snap points apply to vertical drawers.
+
+<CodePreview path="atoms/drawer/snap-points" />

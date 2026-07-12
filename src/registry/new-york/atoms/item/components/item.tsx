@@ -25,7 +25,7 @@ export function ItemSeparator({ className, ...props }: ComponentProps<typeof Sep
 }
 
 const itemVariants = cva(
-  'group/item flex w-full flex-wrap items-center rounded-lg border text-sm outline-none transition-colors duration-100 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted',
+  'group/item flex w-full flex-wrap items-center rounded-md border text-sm outline-none transition-colors duration-100 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted',
   {
     defaultVariants: {
       size: 'default',
@@ -33,7 +33,7 @@ const itemVariants = cva(
     },
     variants: {
       size: {
-        default: 'gap-2.5 px-3 py-2.5',
+        default: 'gap-3.5 px-4 py-3.5',
         sm: 'gap-2.5 px-3 py-2.5',
         xs: 'gap-2 in-data-[slot=dropdown-menu-content]:p-0 px-2.5 py-2'
       },
@@ -119,7 +119,7 @@ export function ItemTitle({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'cn-font-heading line-clamp-1 flex w-fit items-center gap-2 font-medium text-sm leading-snug underline-offset-4',
+        'line-clamp-1 flex w-fit items-center gap-2 font-medium text-sm leading-snug underline-offset-4',
         className
       )}
       data-slot='item-title'
